@@ -163,8 +163,8 @@
     /* featured mips */
     .mips-feat{display:grid;grid-template-columns:1fr 1.2fr;border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin-bottom:2rem;transition:border-color .2s}
     .mips-feat:hover{border-color:rgba(204,31,31,.3)}
-    .mips-vis{background:var(--ink);padding:3rem 2.5rem;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;min-height:320px}
-    .mips-vis::before{content:'MIPS';position:absolute;font-family:var(--serif);font-size:9rem;font-weight:600;color:rgba(255,255,255,.04);letter-spacing:.1em;user-select:none}
+    .mips-vis{background:var(--ink);padding:0;display:flex;align-items:stretch;justify-content:flex-start;flex-direction:column;position:relative;overflow:hidden;min-height:320px}
+    .mips-vis::before{content:''}
     /* photo slot in featured */
     .mips-photo-slot{
       width:100%;max-width:340px;position:relative;z-index:1;
@@ -394,16 +394,14 @@
         <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
         <div class="panel-title-bar">MIPS Controller &mdash; Live System</div>
       </div>
-      <div class="panel-body">
-        <div class="panel-pname">MIPS</div>
+      <!-- MIPS front panel photo in hero -->
+      <div style="padding:0;background:#111;">
+        <img src="images/mips-front.jpg" alt="MIPS controller front panel" style="width:100%;display:block;object-fit:cover;max-height:220px;" />
+      </div>
+      <div class="panel-body" style="padding:1rem 1.25rem;">
+        <div class="panel-pname" style="font-size:1.3rem;">MIPS</div>
         <div class="panel-psub">Modular Intelligent Power Sources</div>
-        <div class="panel-mods">
-          <div class="pmod"><div class="pmod-n">DC Bias</div><div class="pmod-d">Up to 32 channels</div></div>
-          <div class="pmod"><div class="pmod-n">RF Driver</div><div class="pmod-d">500 KHz &ndash; 5 MHz</div></div>
-          <div class="pmod"><div class="pmod-n">ARB / Twave</div><div class="pmod-d">Waveform generation</div></div>
-          <div class="pmod"><div class="pmod-n">FAIMS</div><div class="pmod-d">Ion mobility control</div></div>
-        </div>
-        <div class="panel-chips">
+        <div class="panel-chips" style="margin-top:.5rem;">
           <span class="chip chip-r">USB</span><span class="chip chip-r">Ethernet</span><span class="chip chip-r">WiFi</span>
           <span class="chip">84 MHz ARM</span><span class="chip">Open Source</span><span class="chip">macOS + Windows</span>
         </div>
@@ -462,20 +460,46 @@
 
     <!-- MIPS featured card -->
     <div class="mips-feat fade">
-      <div class="mips-vis">
-        <div class="mips-photo-slot">
-          <!-- SWAP: replace src with images/mips-front.jpg when you have the photo -->
-          <div class="photo-placeholder">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-            <span>MIPS front panel<br/>photo coming soon</span>
-          </div>
+      <!-- Left visual panel: front panel banner + internal photo -->
+      <div class="mips-vis" style="padding:0;flex-direction:column;align-items:stretch;justify-content:flex-start;min-height:0;">
+
+        <!-- Front panel banner — natural wide aspect ratio -->
+        <div style="flex-shrink:0;">
+          <div style="font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);padding:.6rem 1rem .4rem;background:rgba(0,0,0,.4);">Front panel</div>
+          <img src="images/mips-front.jpg"
+            alt="MIPS controller front panel showing display, controls and GAACE branding"
+            style="width:100%;display:block;object-fit:cover;" />
         </div>
+
+        <!-- Divider -->
+        <div style="height:1px;background:rgba(255,255,255,.08);flex-shrink:0;"></div>
+
+        <!-- Internal photo filling remaining space -->
+        <div style="flex:1;overflow:hidden;position:relative;min-height:200px;">
+          <div style="font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);padding:.6rem 1rem .4rem;background:rgba(0,0,0,.4);position:relative;z-index:1;">Internal — plug-in modules &amp; controller board</div>
+          <img src="images/mips-internal.jpg"
+            alt="MIPS internal view showing controller board, plug-in modules and EMCO high-voltage supplies"
+            style="width:100%;height:calc(100% - 32px);object-fit:cover;object-position:center top;display:block;" />
+        </div>
+
       </div>
       <div class="mips-body">
         <div class="mips-tag">Flagship Platform</div>
         <div class="mips-name">MIPS</div>
         <div class="mips-subname">Modular Intelligent Power Sources</div>
         <p class="mips-desc">The heart of GAACE's instrument ecosystem. A fully modular, software-configurable control platform that unifies DC bias, RF drive, digital IO, and pulse generation — controlled from a single application on your PC or Mac.</p>
+
+        <!-- Rear panel detail -->
+        <div style="margin-bottom:1.25rem;">
+          <div style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-bottom:.4rem;">Rear panel — fully populated</div>
+          <div style="border-radius:4px;overflow:hidden;border:1px solid var(--rule);">
+            <img src="images/mips-rear.jpg"
+              alt="MIPS rear panel showing BNC connectors, module slots, DB connectors and power input"
+              style="width:100%;display:block;" />
+          </div>
+          <div style="font-size:.73rem;color:var(--mid);margin-top:.35rem;">DC bias outputs, RF connectors, digital IO, trigger inputs, and 24VDC power input</div>
+        </div>
+
         <ul class="mips-feats">
           <li>84 MHz ARM processor with color graphics display</li>
           <li>Plug-in modules: DCbias, RF driver, ARB, TWAVE, FAIMS &amp; more</li>
@@ -637,9 +661,7 @@
         <text x="565" y="102" font-size="10" fill="#0F6E56" text-anchor="middle">Tabs · sliders · plots · status lights · pulse editors</text>
         <text x="565" y="118" font-size="10" fill="#0F6E56" text-anchor="middle">JavaScript scripting for automated sequences &amp; workflows</text>
         <text x="565" y="134" font-size="10" fill="#0F6E56" text-anchor="middle">Defined by a plain-text .cfg file — no compiled code required</text>
-        <rect x="650" y="50" width="158" height="96" rx="4" fill="rgba(0,0,0,0.02)" stroke="#E4E4EA" stroke-width="1" stroke-dasharray="3 3"/>
-        <text x="729" y="95" font-size="9" fill="#B4B2A9" text-anchor="middle">[ Control panel</text>
-        <text x="729" y="108" font-size="9" fill="#B4B2A9" text-anchor="middle">screenshot here ]</text>
+
         <text x="430" y="188" font-size="10" fill="#888780" text-anchor="middle" font-style="italic">USB · Ethernet · WiFi — simple ASCII protocol — same interface for all devices</text>
         <line x1="162" y1="168" x2="162" y2="210" stroke="#378ADD" stroke-width="1.5" marker-end="url(#earr)"/>
         <line x1="430" y1="168" x2="430" y2="210" stroke="#378ADD" stroke-width="1.5" marker-end="url(#earr)"/>
@@ -757,8 +779,8 @@
         <rect x="490" y="525" width="54" height="14" rx="2" fill="none" stroke="#E4E4EA" stroke-width="0.5"/>
         <text x="517" y="536" font-size="10" fill="#3d3d3a" text-anchor="middle">1145000 Hz</text>
         <text x="446" y="552" font-size="10" fill="#888780">RF+  <tspan fill="#BA7517">479.81 Vpp</tspan>  Power  <tspan fill="#BA7517">14.18 W</tspan></text>
-        <rect x="636" y="464" width="192" height="100" rx="4" fill="white" stroke="#E4E4EA" stroke-width="0.5" stroke-dasharray="4 3"/>
-        <text x="732" y="510" font-size="10" fill="#D3D1C7" text-anchor="middle">[ Control panel screenshot ]</text>
+        <rect x="636" y="464" width="192" height="100" rx="4" fill="var(--surface)" stroke="#E4E4EA" stroke-width="0.5" stroke-dasharray="4 3"/>
+        <text x="732" y="505" font-size="9" fill="#B4B2A9" text-anchor="middle">see panels below</text>
         <text x="40" y="590" font-size="10" fill="#3d3d3a">▶ Run scan   ■ Abort   ⚙ Auto-tune RF   💾 Save method</text>
         <rect x="36" y="600" width="788" height="16" rx="3" fill="white" stroke="#E4E4EA" stroke-width="0.5"/>
         <circle cx="50" cy="608" r="3.5" fill="#27C93F"/>
@@ -803,9 +825,47 @@
         <p>Write scripts that run automated scan sequences, respond to trigger events, log data, and control every connected instrument — all from within the MIPS app.</p>
       </div>
     </div>
-    <div class="photo-note fade">
-      <span style="font-size:1.1rem;">📷</span>
-      <p style="margin:0;"><strong>Photo placeholders:</strong> Two spots in the diagram above are reserved for your actual control panel screenshots. Send them when ready and they'll drop straight in.</p>
+    <!-- Control panel screenshots — side by side below diagram -->
+    <div class="fade" style="margin-top:2rem;">
+      <div class="lbl" style="margin-bottom:1rem;">Example Custom Control Panels</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+
+        <div style="background:var(--white);border:1px solid var(--rule);border-radius:6px;overflow:hidden;">
+          <div style="background:var(--ink);padding:.5rem 1rem;display:flex;align-items:center;gap:.5rem;">
+            <div style="width:10px;height:10px;border-radius:50%;background:#FF5F56;"></div>
+            <div style="width:10px;height:10px;border-radius:50%;background:#FFBD2E;"></div>
+            <div style="width:10px;height:10px;border-radius:50%;background:#27C93F;"></div>
+            <span style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-left:auto;">Custom control panel</span>
+          </div>
+          <img src="images/control-panel-1.jpg"
+            alt="MIPS custom control panel showing 2 RF channels, 24 DC bias channels and ESI control for a mass spectrometry experiment"
+            style="width:100%;display:block;" />
+          <div style="padding:.75rem 1rem;border-top:1px solid var(--rule);">
+            <div style="font-family:'DM Mono',monospace;font-size:.65rem;font-weight:500;color:var(--ink);margin-bottom:.2rem;">2 RF · 24 DCbias · 1 ESI</div>
+            <div style="font-size:.78rem;color:var(--mid);">Two RF channels, 24 DC bias outputs, ESI control, digital IO, ADC readback, and timing generation — all in one panel.</div>
+          </div>
+        </div>
+
+        <div style="background:var(--white);border:1px solid var(--rule);border-radius:6px;overflow:hidden;">
+          <div style="background:var(--ink);padding:.5rem 1rem;display:flex;align-items:center;gap:.5rem;">
+            <div style="width:10px;height:10px;border-radius:50%;background:#FF5F56;"></div>
+            <div style="width:10px;height:10px;border-radius:50%;background:#FFBD2E;"></div>
+            <div style="width:10px;height:10px;border-radius:50%;background:#27C93F;"></div>
+            <span style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-left:auto;">Custom control panel</span>
+          </div>
+          <img src="images/control-panel-2.jpg"
+            alt="MIPS custom control panel showing 2 RF channels and 16 DC bias channels for Astraea instrument configuration"
+            style="width:100%;display:block;" />
+          <div style="padding:.75rem 1rem;border-top:1px solid var(--rule);">
+            <div style="font-family:'DM Mono',monospace;font-size:.65rem;font-weight:500;color:var(--ink);margin-bottom:.2rem;">2 RF · 16 DCbias · Astraea</div>
+            <div style="font-size:.78rem;color:var(--mid);">Two RF channels, 16 DC bias outputs with live readbacks, digital IO, and timing generation — configured for the Astraea instrument.</div>
+          </div>
+        </div>
+
+      </div>
+      <div style="margin-top:.75rem;font-size:.8rem;color:var(--mid);text-align:center;">
+        Each panel is defined by a plain-text configuration file — no programming required. Green values show live hardware readbacks from a running experiment.
+      </div>
     </div>
   </div>
 </section>

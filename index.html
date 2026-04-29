@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GAA Custom Electronics, LLC — Mass Spec Research Electronics</title>
+  <meta name="description" content="Supporting mass spectrometry research through custom electronics monitoring and control systems. Serving universities, national labs, and instrument companies worldwide since 2014." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --red:      #CC1F1F;
+      --red-dk:   #A01515;
+      --red-pale: #FDF0F0;
+      --ink:      #1A1A1C;
+      --ink2:     #2E2E32;
+      --ink3:     #4A4A52;
+      --mid:      #7A7A84;
+      --rule:     #E4E4EA;
+      --rule2:    #EFEFF4;
+      --surface:  #F7F7FA;
+      --white:    #FFFFFF;
+      /* dark palette for hero / contact */
+      --d-bg:     #0E0E10;
+      --d-bg2:    #1A1A1D;
+      --d-bg3:    #252528;
+      --d-rule:   #2E2E33;
+      --d-mid:    #5A5A62;
+      --d-silver: #B8B8C0;
+      --mono:    'DM Mono', monospace;
+      --serif:   'Fraunces', serif;
+      --sans:    'DM Sans', sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--sans);background:var(--white);color:var(--ink);overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:1160px;margin:0 auto;padding:0 2rem}
+    .lbl{font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:.75rem}
+    .lbl-lt{color:rgba(204,31,31,.75)}
+    .h2{font-family:var(--serif);font-size:clamp(2rem,5vw,3rem);font-weight:600;line-height:1.1;color:var(--ink)}
+    .h2 em{font-style:italic;color:var(--red);font-weight:300}
+    .h2-lt{color:var(--white)}
+    .h2-lt em{color:var(--red)}
+
+    /* ── NAV — always light bg, transitions on scroll ── */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:200;
+      background:rgba(14,14,16,.96);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--d-rule);
+      transition:background .3s,border-color .3s;
+    }
+    nav.scrolled{
+      background:rgba(255,255,255,.97);
+      border-bottom:1px solid var(--rule);
+    }
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 2rem;max-width:1160px;margin:0 auto}
+    .nav-logo{display:flex;align-items:center;gap:.75rem}
+    .nav-logo img{width:38px;height:38px;border-radius:50%;object-fit:cover}
+    .nav-logo-words{display:flex;flex-direction:column;line-height:1.15}
+    .nav-logo-words strong{font-family:var(--serif);font-weight:600;font-size:1rem;color:var(--white);letter-spacing:.01em;transition:color .3s}
+    .nav-logo-words span{font-family:var(--mono);font-size:.55rem;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase;transition:color .3s}
+    nav.scrolled .nav-logo-words strong{color:var(--ink)}
+    nav.scrolled .nav-logo-words span{color:var(--mid)}
+    .nav-links{display:flex;align-items:center;gap:2rem;list-style:none}
+    .nav-links a{font-size:.87rem;font-weight:500;color:rgba(255,255,255,.65);transition:color .2s}
+    .nav-links a:hover{color:var(--white)}
+    nav.scrolled .nav-links a{color:var(--ink3)}
+    nav.scrolled .nav-links a:hover{color:var(--red)}
+    .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:.45rem 1.2rem;border-radius:3px;font-size:.84rem!important}
+    .nav-cta:hover{background:var(--red-dk)!important;color:var(--white)!important}
+    nav.scrolled .nav-cta{color:var(--white)!important}
+    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px}
+    .hamburger span{display:block;width:22px;height:1.5px;background:rgba(255,255,255,.7);margin:5px 0;transition:.3s}
+    nav.scrolled .hamburger span{background:var(--ink3)}
+
+    /* ── HERO — dark ── */
+    #hero{
+      min-height:100vh;display:flex;align-items:center;
+      padding-top:64px;
+      background:var(--d-bg);
+      position:relative;overflow:hidden;
+    }
+    .hero-grid{
+      position:absolute;inset:0;
+      background-image:
+        linear-gradient(rgba(204,31,31,.05) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(204,31,31,.05) 1px,transparent 1px);
+      background-size:52px 52px;
+    }
+    .hero-glow{
+      position:absolute;width:700px;height:700px;
+      background:radial-gradient(circle,rgba(204,31,31,.12) 0%,transparent 68%);
+      top:-120px;right:-120px;pointer-events:none;
+    }
+    .hero-glow2{
+      position:absolute;width:400px;height:400px;
+      background:radial-gradient(circle,rgba(204,31,31,.07) 0%,transparent 70%);
+      bottom:-80px;left:10%;pointer-events:none;
+    }
+    .hero-content{
+      position:relative;z-index:2;
+      max-width:1160px;margin:0 auto;padding:5rem 2rem;
+      display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;
+    }
+    .hero-kicker{display:flex;align-items:center;gap:.65rem;margin-bottom:1.5rem}
+    .hero-kicker-line{width:28px;height:1px;background:var(--red)}
+    .hero-kicker span{font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--red)}
+    .hero-h1{
+      font-family:var(--serif);font-size:clamp(3rem,7vw,5.2rem);
+      font-weight:600;line-height:.98;color:var(--white);margin-bottom:1.5rem;
+    }
+    .hero-h1 em{font-style:italic;color:var(--red);font-weight:300}
+    .hero-sub{font-size:1rem;font-weight:300;color:var(--d-silver);line-height:1.75;margin-bottom:2.5rem;max-width:480px}
+    .hero-stats{display:flex;gap:2rem;padding:1.25rem 0;border-top:1px solid var(--d-rule);border-bottom:1px solid var(--d-rule);margin-bottom:2rem}
+    .stat-num{font-family:var(--serif);font-size:2.2rem;font-weight:600;color:var(--red);line-height:1}
+    .stat-lbl{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--d-mid);margin-top:.25rem}
+    .hero-btns{display:flex;gap:.75rem;flex-wrap:wrap}
+    .btn-p{display:inline-flex;align-items:center;gap:.4rem;background:var(--red);color:var(--white);font-weight:500;font-size:.9rem;padding:.8rem 1.6rem;border-radius:3px;transition:background .2s,transform .15s}
+    .btn-p:hover{background:var(--red-dk);transform:translateY(-1px)}
+    .btn-s{display:inline-flex;align-items:center;gap:.4rem;background:transparent;color:var(--d-silver);font-weight:500;font-size:.9rem;padding:.8rem 1.6rem;border-radius:3px;border:1px solid var(--d-rule);transition:border-color .2s,color .2s}
+    .btn-s:hover{border-color:var(--red);color:var(--white)}
+
+    /* hero right panel */
+    .hero-panel{background:var(--d-bg2);border:1px solid var(--d-rule);border-radius:8px;overflow:hidden}
+    .panel-bar{background:var(--d-bg3);border-bottom:1px solid var(--d-rule);padding:.75rem 1rem;display:flex;align-items:center;gap:.5rem}
+    .dot{width:10px;height:10px;border-radius:50%}
+    .dot-r{background:#FF5F56}.dot-y{background:#FFBD2E}.dot-g{background:#27C93F}
+    .panel-title-bar{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;color:var(--d-mid);text-transform:uppercase;margin-left:auto}
+    .panel-body{padding:1.5rem}
+    .panel-pname{font-family:var(--serif);font-size:1.7rem;font-weight:600;color:var(--white);margin-bottom:.15rem}
+    .panel-psub{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--d-mid);margin-bottom:1rem}
+    .panel-mods{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;margin-bottom:1rem}
+    .pmod{background:var(--d-bg);border:1px solid var(--d-rule);border-left:3px solid var(--red);border-radius:3px;padding:.6rem .75rem}
+    .pmod-n{font-family:var(--mono);font-size:.66rem;font-weight:500;color:var(--d-silver);letter-spacing:.05em}
+    .pmod-d{font-size:.7rem;color:var(--d-mid);margin-top:.1rem}
+    .panel-chips{display:flex;gap:.4rem;flex-wrap:wrap}
+    .chip{font-family:var(--mono);font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;background:var(--d-bg3);border:1px solid var(--d-rule);color:var(--d-mid);padding:.22rem .55rem;border-radius:2px}
+    .chip-r{background:rgba(204,31,31,.12);border-color:rgba(204,31,31,.25);color:rgba(204,31,31,.85)}
+    .panel-foot{border-top:1px solid var(--d-rule);padding:.75rem 1rem;display:flex;justify-content:space-between;align-items:center}
+    .panel-price{font-family:var(--serif);font-size:1.15rem;font-weight:600;color:var(--white)}
+    .panel-price small{font-size:.68rem;font-weight:300;color:var(--d-mid)}
+
+    /* ── TRANSITION WAVE ── */
+    .wave-divider{background:var(--d-bg);line-height:0;overflow:hidden}
+    .wave-divider svg{display:block;width:100%}
+
+    /* ── MARQUEE ── */
+    .marquee{background:var(--red);padding:.6rem 0;overflow:hidden;white-space:nowrap}
+    .marquee-inner{display:inline-flex;animation:mq 35s linear infinite}
+    .mq-item{font-family:var(--mono);font-size:.66rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.8);padding:0 2rem}
+    .mq-sep{color:rgba(255,255,255,.4)}
+    @keyframes mq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+    /* ── LIGHT BODY SECTIONS ── */
+    /* products */
+    #products{padding:6rem 0;background:var(--white)}
+    .sec-hd{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--rule)}
+    .sec-intro{font-size:.95rem;color:var(--mid);max-width:340px;line-height:1.7}
+
+    /* featured mips */
+    .mips-feat{display:grid;grid-template-columns:1fr 1.2fr;border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin-bottom:2rem;transition:border-color .2s}
+    .mips-feat:hover{border-color:rgba(204,31,31,.3)}
+    .mips-vis{background:var(--ink);padding:3rem 2.5rem;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;min-height:320px}
+    .mips-vis::before{content:'MIPS';position:absolute;font-family:var(--serif);font-size:9rem;font-weight:600;color:rgba(255,255,255,.04);letter-spacing:.1em;user-select:none}
+    /* photo slot in featured */
+    .mips-photo-slot{
+      width:100%;max-width:340px;position:relative;z-index:1;
+      background:var(--d-bg3);border:1px solid var(--d-rule);border-radius:4px;
+      overflow:hidden;aspect-ratio:4/3;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .mips-photo-slot img{width:100%;height:100%;object-fit:cover}
+    .photo-placeholder{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:.5rem;padding:2rem;text-align:center;
+    }
+    .photo-placeholder span{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;color:var(--d-mid);text-transform:uppercase}
+    .photo-placeholder svg{opacity:.2}
+
+    .mips-body{padding:2.5rem;display:flex;flex-direction:column;justify-content:center}
+    .mips-tag{display:inline-flex;font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);background:var(--red-pale);border:1px solid rgba(204,31,31,.15);padding:.22rem .6rem;border-radius:2px;margin-bottom:.75rem;width:fit-content}
+    .mips-name{font-family:var(--serif);font-size:2.4rem;font-weight:600;color:var(--ink);line-height:1;margin-bottom:.2rem}
+    .mips-subname{font-size:.8rem;color:var(--mid);margin-bottom:1rem}
+    .mips-desc{font-size:.92rem;color:var(--ink3);line-height:1.7;margin-bottom:1.25rem}
+    .mips-feats{list-style:none;margin-bottom:1.5rem}
+    .mips-feats li{font-size:.87rem;color:var(--ink3);padding:.4rem 0;border-bottom:1px solid var(--rule2);display:flex;gap:.6rem;align-items:flex-start}
+    .mips-feats li::before{content:'—';color:var(--red);flex-shrink:0}
+    .mips-foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+    .mips-pr{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--ink)}
+    .mips-pr small{font-size:.7rem;font-weight:300;color:var(--mid)}
+    .mips-cta{font-size:.85rem;font-weight:500;color:var(--red);display:inline-flex;align-items:center;gap:.4rem;transition:gap .2s}
+    .mips-cta:hover{gap:.7rem}
+
+    /* product grid */
+    .prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+    .prod-card{background:var(--white);padding:1.75rem;transition:background .2s;cursor:pointer}
+    .prod-card:hover{background:var(--surface)}
+    .prod-photo{width:100%;aspect-ratio:16/9;background:var(--surface);border-radius:4px;overflow:hidden;margin-bottom:1rem;display:flex;align-items:center;justify-content:center;border:1px solid var(--rule2)}
+    .prod-photo img{width:100%;height:100%;object-fit:cover}
+    .prod-badge{font-family:var(--mono);font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:.6rem}
+    .prod-badge span{background:var(--surface);border:1px solid var(--rule);padding:.18rem .5rem;border-radius:2px}
+    .prod-name{font-family:var(--serif);font-size:1.4rem;font-weight:600;color:var(--ink);margin-bottom:.15rem}
+    .prod-sub{font-size:.76rem;color:var(--mid);margin-bottom:.65rem}
+    .prod-desc{font-size:.84rem;color:var(--ink3);line-height:1.65;margin-bottom:.9rem}
+    .prod-specs{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.9rem}
+    .spec{font-family:var(--mono);font-size:.57rem;letter-spacing:.05em;color:var(--ink3);background:var(--surface);border:1px solid var(--rule);padding:.18rem .5rem;border-radius:2px}
+    .prod-price{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--red)}
+    .prod-price small{font-size:.68rem;font-weight:300;color:var(--mid)}
+
+    /* ── ARCHITECTURE — light bg ── */
+    #how-it-works{padding:6rem 0;background:var(--surface);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+    .arch-hd{text-align:center;margin-bottom:3.5rem}
+    .arch-hd .h2{margin-bottom:.75rem}
+    .arch-hd p{color:var(--mid);max-width:560px;margin:0 auto;font-size:.97rem;line-height:1.7}
+    .arch-wrap{background:var(--white);border:1px solid var(--rule);border-radius:8px;padding:2rem;margin-bottom:2rem;overflow-x:auto}
+    .arch-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin-top:2rem}
+    .arch-card{background:var(--white);padding:1.75rem}
+    .arch-card-bar{width:32px;height:2px;margin-bottom:1rem;border-radius:1px}
+    .arch-card-sub{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);margin-bottom:.4rem}
+    .arch-card-title{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:.5rem}
+    .arch-card p{font-size:.84rem;color:var(--ink3);line-height:1.65}
+    .photo-note{margin-top:1.5rem;padding:1rem 1.25rem;background:var(--red-pale);border:1px solid rgba(204,31,31,.15);border-radius:4px;display:flex;align-items:center;gap:.9rem;font-size:.82rem;color:var(--ink3);line-height:1.5}
+    .photo-note strong{color:var(--ink)}
+
+    /* ── CAPABILITIES — white ── */
+    #capabilities{padding:6rem 0;background:var(--white)}
+    .caps-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+    .caps-left .h2{margin-bottom:1.25rem}
+    .caps-left>p{color:var(--mid);font-size:.97rem;line-height:1.7;margin-bottom:2rem}
+    .steps{display:flex;flex-direction:column;gap:1.25rem}
+    .step{display:flex;gap:1.25rem;align-items:flex-start}
+    .step-n{font-family:var(--mono);font-size:.66rem;color:var(--red);background:var(--red-pale);border:1px solid rgba(204,31,31,.15);width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:3px;flex-shrink:0}
+    .step h4{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:.2rem}
+    .step p{font-size:.84rem;color:var(--mid);line-height:1.6}
+    .cap-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+    .cap-cell{background:var(--white);padding:1.5rem;transition:background .2s}
+    .cap-cell:hover{background:var(--surface)}
+    .cap-icon{font-size:1.2rem;margin-bottom:.55rem}
+    .cap-title{font-family:var(--serif);font-size:.97rem;font-weight:600;color:var(--ink);margin-bottom:.35rem}
+    .cap-desc{font-size:.8rem;color:var(--mid);line-height:1.55}
+
+    /* ── ABOUT — surface ── */
+    #about{padding:6rem 0;background:var(--surface);border-top:1px solid var(--rule)}
+    .about-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+    .about-left .h2{margin-bottom:1.25rem}
+    .about-left p{color:var(--mid);font-size:.97rem;line-height:1.7;margin-bottom:1rem}
+    .highlights{margin-top:1.5rem;display:flex;flex-direction:column;gap:.5rem}
+    .hi{display:flex;align-items:flex-start;gap:.6rem;font-size:.87rem;color:var(--ink3);padding:.5rem 0;border-bottom:1px solid var(--rule2)}
+    .hi::before{content:'✓';color:var(--red);flex-shrink:0;font-size:.8rem;margin-top:.1rem}
+    .team-lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);margin-bottom:1.25rem}
+    .team-list{display:flex;flex-direction:column;gap:.75rem}
+    .team-card{background:var(--white);border:1px solid var(--rule);border-radius:4px;padding:1.25rem;display:flex;gap:1rem;align-items:flex-start;transition:border-color .2s}
+    .team-card:hover{border-color:rgba(204,31,31,.3)}
+    .av{width:42px;height:42px;border-radius:3px;background:var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--white);flex-shrink:0}
+    .tc-name{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink)}
+    .tc-role{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin:.15rem 0 .4rem}
+    .tc-bio{font-size:.81rem;color:var(--mid);line-height:1.55}
+
+    /* ── DOWNLOADS — white ── */
+    #support{padding:6rem 0;background:var(--white);border-top:1px solid var(--rule)}
+    .sup-hd{text-align:center;margin-bottom:3.5rem}
+    .sup-hd .h2{margin-bottom:.75rem}
+    .sup-hd p{color:var(--mid);max-width:480px;margin:0 auto;font-size:.95rem}
+    .dl-sec{margin-bottom:2.5rem}
+    .dl-sec-title{font-family:var(--mono);font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid var(--rule)}
+    .dl-table{width:100%;border-collapse:collapse}
+    .dl-table tr{border-bottom:1px solid var(--rule2);transition:background .15s}
+    .dl-table tr:hover{background:var(--surface)}
+    .dl-table td{padding:.7rem .5rem;font-size:.87rem;color:var(--ink3);vertical-align:middle}
+    .dl-table td:first-child{font-weight:500;color:var(--ink)}
+    .dl-table td:nth-child(2){font-family:var(--mono);font-size:.7rem;color:var(--mid)}
+    .dl-link{display:inline-flex;align-items:center;gap:.3rem;font-family:var(--mono);font-size:.63rem;letter-spacing:.08em;text-transform:uppercase;color:var(--red);background:var(--red-pale);border:1px solid rgba(204,31,31,.15);padding:.22rem .55rem;border-radius:2px;transition:background .15s}
+    .dl-link:hover{background:rgba(204,31,31,.1)}
+    .warranty-bar{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--red);border-radius:4px;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1.25rem;margin-top:2.5rem}
+    .warranty-bar h4{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:.2rem}
+    .warranty-bar p{font-size:.84rem;color:var(--mid);line-height:1.55}
+
+    /* ── CONTACT — dark ── */
+    #contact{padding:6rem 0;background:var(--d-bg);border-top:1px solid var(--d-rule)}
+    .contact-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:5rem;align-items:start}
+    .c-head{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:600;color:var(--white);margin-bottom:1rem;line-height:1.1}
+    .c-head em{font-style:italic;color:var(--red);font-weight:300}
+    .c-sub{font-size:.97rem;color:rgba(255,255,255,.45);line-height:1.7;margin-bottom:2rem}
+    .c-items{display:flex;flex-direction:column;gap:1rem}
+    .ci{display:flex;gap:1rem;align-items:flex-start}
+    .ci-icon{width:34px;height:34px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+    .ci-lbl{font-family:var(--mono);font-size:.57rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.15rem}
+    .ci-val{font-size:.9rem;color:rgba(255,255,255,.7)}
+    .ci-val a{color:rgba(255,255,255,.7);transition:color .2s}
+    .ci-val a:hover{color:var(--red)}
+    .c-form{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:2rem}
+    .c-form-hd{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:1px solid rgba(255,255,255,.08)}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+    .fg{margin-bottom:.75rem}
+    .fg label{display:block;font-family:var(--mono);font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.35rem}
+    .fg input,.fg select,.fg textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:3px;padding:.65rem .9rem;font-family:var(--sans);font-size:.9rem;color:var(--white);transition:border-color .2s}
+    .fg input::placeholder,.fg textarea::placeholder{color:rgba(255,255,255,.2)}
+    .fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:rgba(204,31,31,.5)}
+    .fg select option{background:var(--d-bg2)}
+    .fg textarea{min-height:110px;resize:vertical}
+    .form-btn{width:100%;background:var(--red);color:var(--white);font-family:var(--sans);font-weight:500;font-size:.9rem;padding:.8rem;border:none;border-radius:3px;cursor:pointer;transition:background .2s;margin-top:.25rem}
+    .form-btn:hover{background:var(--red-dk)}
+    .form-note{font-size:.73rem;color:rgba(255,255,255,.22);text-align:center;margin-top:.6rem}
+
+    /* ── FOOTER — darkest ── */
+    footer{background:#0A0A0C;border-top:1px solid rgba(255,255,255,.06);padding:3rem 0 2rem}
+    .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:3rem;max-width:1160px;margin:0 auto;padding:0 2rem 2.5rem;border-bottom:1px solid rgba(255,255,255,.05)}
+    .footer-brand p{font-size:.82rem;color:rgba(255,255,255,.28);line-height:1.65;margin-top:.75rem;max-width:220px}
+    .footer-logo{display:flex;align-items:center;gap:.75rem}
+    .footer-logo img{width:30px;height:30px;border-radius:50%;object-fit:cover;opacity:.85}
+    .footer-logo-text{font-family:var(--serif);font-size:.95rem;font-weight:600;color:rgba(255,255,255,.6)}
+    .fcol-title{font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:1rem}
+    .fcol-links{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+    .fcol-links a{font-size:.84rem;color:rgba(255,255,255,.38);transition:color .2s}
+    .fcol-links a:hover{color:rgba(255,255,255,.75)}
+    .footer-btm{max-width:1160px;margin:0 auto;padding:1.5rem 2rem 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+    .footer-copy{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;color:rgba(255,255,255,.18)}
+
+    /* ── SCROLL ANIMATIONS ── */
+    .fade{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+    .fade.in{opacity:1;transform:translateY(0)}
+
+    /* ── MOBILE ── */
+    @media(max-width:900px){
+      .hero-content{grid-template-columns:1fr;gap:2.5rem}
+      .hero-panel{display:none}
+      .mips-feat{grid-template-columns:1fr}
+      .mips-vis{display:none}
+      .caps-layout,.about-layout,.contact-layout{grid-template-columns:1fr;gap:3rem}
+      .arch-cards{grid-template-columns:1fr}
+      .sec-hd{flex-direction:column;align-items:flex-start;gap:1rem}
+      .footer-grid{grid-template-columns:1fr 1fr}
+      .nav-links{display:none}
+      .hamburger{display:block}
+    }
+    @media(max-width:600px){
+      .cap-grid{grid-template-columns:1fr}
+      .footer-grid{grid-template-columns:1fr;gap:2rem}
+      .form-row{grid-template-columns:1fr}
+      .hero-stats{gap:1.25rem}
+      .prod-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <img src="data:image/jpeg;base64,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" alt="GAA Custom Electronics logo" />
+      <div class="nav-logo-words">
+        <strong>GAA Custom Electronics</strong>
+        <span>Mass Spec Research Electronics</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#products">Products</a></li>
+      <li><a href="#how-it-works">Software</a></li>
+      <li><a href="#capabilities">Capabilities</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#support">Downloads</a></li>
+      <li><a href="#contact" class="nav-cta">Request Quote</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ── HERO (dark) ── -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="fade">
+      <div class="hero-kicker"><div class="hero-kicker-line"></div><span>Kennewick, WA &mdash; Est. 2014</span></div>
+      <h1 class="hero-h1">Electronics<br/>for <em>Mass Spec</em><br/>Research</h1>
+      <p class="hero-sub">Supporting mass spectrometry research through the development of custom electronics monitoring and control systems &mdash; tailored to your exact experimental needs.</p>
+      <div class="hero-stats">
+        <div><div class="stat-num">200+</div><div class="stat-lbl">Systems Deployed</div></div>
+        <div><div class="stat-num">10+</div><div class="stat-lbl">Years Experience</div></div>
+        <div><div class="stat-num">Global</div><div class="stat-lbl">Customer Base</div></div>
+      </div>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-p">Request a Quote &rarr;</a>
+        <a href="#products" class="btn-s">Explore Products</a>
+      </div>
+    </div>
+    <div class="hero-panel fade">
+      <div class="panel-bar">
+        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+        <div class="panel-title-bar">MIPS Controller &mdash; Live System</div>
+      </div>
+      <div class="panel-body">
+        <div class="panel-pname">MIPS</div>
+        <div class="panel-psub">Modular Intelligent Power Sources</div>
+        <div class="panel-mods">
+          <div class="pmod"><div class="pmod-n">DC Bias</div><div class="pmod-d">Up to 32 channels</div></div>
+          <div class="pmod"><div class="pmod-n">RF Driver</div><div class="pmod-d">500 KHz &ndash; 5 MHz</div></div>
+          <div class="pmod"><div class="pmod-n">ARB / Twave</div><div class="pmod-d">Waveform generation</div></div>
+          <div class="pmod"><div class="pmod-n">FAIMS</div><div class="pmod-d">Ion mobility control</div></div>
+        </div>
+        <div class="panel-chips">
+          <span class="chip chip-r">USB</span><span class="chip chip-r">Ethernet</span><span class="chip chip-r">WiFi</span>
+          <span class="chip">84 MHz ARM</span><span class="chip">Open Source</span><span class="chip">macOS + Windows</span>
+        </div>
+      </div>
+      <div class="panel-foot">
+        <div class="panel-price">$3,000 &ndash; $10,000 <small>configured to order</small></div>
+        <a href="#contact" style="font-size:.82rem;color:var(--red);font-weight:500;">Quote &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WAVE TRANSITION ── -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 48" preserveAspectRatio="none" height="48" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0 L1440 0 L1440 20 Q1080 48 720 28 Q360 8 0 36 Z" fill="#0E0E10"/>
+  </svg>
+</div>
+
+<!-- ── MARQUEE ── -->
+<div class="marquee">
+  <div class="marquee-inner">
+    <span class="mq-item">MIPS Controller <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">RF Generator <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">RF Mega <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Electrometer <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">FET Switch <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">SLIM Reverser <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Multi-Function Twave <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">MIPS Quad <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">FAIMS System <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Custom Engineering <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">MIPS Controller <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">RF Generator <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">RF Mega <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Electrometer <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">FET Switch <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">SLIM Reverser <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Multi-Function Twave <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">MIPS Quad <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">FAIMS System <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Custom Engineering <span class="mq-sep">&middot;</span></span>
+  </div>
+</div>
+
+<!-- ── PRODUCTS (light) ── -->
+<section id="products">
+  <div class="container">
+    <div class="sec-hd fade">
+      <div>
+        <div class="lbl">Product Lineup</div>
+        <h2 class="h2">Instruments Built<br/>for <em>Research</em></h2>
+      </div>
+      <p class="sec-intro">Every system configured to your exact needs. From the modular MIPS platform to purpose-built standalone instruments.</p>
+    </div>
+
+    <!-- MIPS featured card -->
+    <div class="mips-feat fade">
+      <div class="mips-vis">
+        <div class="mips-photo-slot">
+          <!-- SWAP: replace src with images/mips-front.jpg when you have the photo -->
+          <div class="photo-placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span>MIPS front panel<br/>photo coming soon</span>
+          </div>
+        </div>
+      </div>
+      <div class="mips-body">
+        <div class="mips-tag">Flagship Platform</div>
+        <div class="mips-name">MIPS</div>
+        <div class="mips-subname">Modular Intelligent Power Sources</div>
+        <p class="mips-desc">The heart of GAACE's instrument ecosystem. A fully modular, software-configurable control platform that unifies DC bias, RF drive, digital IO, and pulse generation — controlled from a single application on your PC or Mac.</p>
+        <ul class="mips-feats">
+          <li>84 MHz ARM processor with color graphics display</li>
+          <li>Plug-in modules: DCbias, RF driver, ARB, TWAVE, FAIMS &amp; more</li>
+          <li>Connect multiple controllers — one unified GUI for all hardware</li>
+          <li>JavaScript scripting for complex automation sequences</li>
+          <li>Custom control panel builder — no coding required</li>
+          <li>Open-source schematics, PCB designs, and software on GitHub</li>
+        </ul>
+        <div class="mips-foot">
+          <div class="mips-pr">$3,000 – $10,000 <small>configured to order</small></div>
+          <a href="#contact" class="mips-cta">Request Quote →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Standalone grid -->
+    <div class="prod-grid">
+
+      <div class="prod-card fade">
+        <div class="prod-photo">
+          <div class="photo-placeholder" style="flex-direction:column;gap:.4rem;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B4B2A9" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:#B4B2A9;text-transform:uppercase;">RF Generator photo</span>
+          </div>
+        </div>
+        <div class="prod-badge"><span>Standalone</span></div>
+        <div class="prod-name">RF Generator</div>
+        <div class="prod-sub">Standalone RF Driver System</div>
+        <p class="prod-desc">High-performance standalone RF driver for ion funnels and ion guides. Phase and anti-phase outputs, internal DC bias, full USB/Ethernet control.</p>
+        <div class="prod-specs">
+          <span class="spec">500 KHz – 5 MHz</span><span class="spec">USB + Ethernet</span>
+          <span class="spec">±50V DC Bias</span><span class="spec">Auto Tune</span>
+        </div>
+        <div class="prod-price">$2,295 <small>starting</small></div>
+      </div>
+
+      <div class="prod-card fade">
+        <div class="prod-photo">
+          <div class="photo-placeholder" style="flex-direction:column;gap:.4rem;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B4B2A9" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:#B4B2A9;text-transform:uppercase;">RF Mega photo</span>
+          </div>
+        </div>
+        <div class="prod-badge"><span>Standalone</span></div>
+        <div class="prod-name">RF Mega</div>
+        <div class="prod-sub">High-Power RF Driver</div>
+        <p class="prod-desc">Our most powerful RF driver. Drives capacitance loads up to 5000 pF with 120–200W output. Ideal for large ion funnels and demanding RF applications.</p>
+        <div class="prod-specs">
+          <span class="spec">120–200W Output</span><span class="spec">Up to 5000 pF</span>
+          <span class="spec">500 KHz – 5 MHz</span><span class="spec">Freq Switching</span>
+        </div>
+        <div class="prod-price">$1,995 <small>+ options</small></div>
+      </div>
+
+      <div class="prod-card fade">
+        <div class="prod-photo">
+          <div class="photo-placeholder" style="flex-direction:column;gap:.4rem;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B4B2A9" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:#B4B2A9;text-transform:uppercase;">MFT photo</span>
+          </div>
+        </div>
+        <div class="prod-badge"><span>Standalone</span></div>
+        <div class="prod-name">MFT</div>
+        <div class="prod-sub">Multi-Function Twave Driver</div>
+        <p class="prod-desc">Standalone traveling wave generator with two independent 8-channel output sets. Supports SLIM operations, accumulation, CRIMP, and programmable waveforms.</p>
+        <div class="prod-specs">
+          <span class="spec">2× 8-Channel TW</span><span class="spec">3–50V Output</span>
+          <span class="spec">Up to 25 KHz</span><span class="spec">CRIMP Support</span>
+        </div>
+        <div class="prod-price">$995</div>
+      </div>
+
+      <div class="prod-card fade">
+        <div class="prod-photo">
+          <div class="photo-placeholder" style="flex-direction:column;gap:.4rem;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B4B2A9" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:#B4B2A9;text-transform:uppercase;">SLIM Reverser photo</span>
+          </div>
+        </div>
+        <div class="prod-badge"><span>Accessory</span></div>
+        <div class="prod-name">SLIM Reverser</div>
+        <div class="prod-sub">TWAVE Direction Control Switch</div>
+        <p class="prod-desc">16-pole analog bi-directional switch for reversing traveling wave direction in SLIM devices. Preserves signal shape and amplitude with isolated control input.</p>
+        <div class="prod-specs">
+          <span class="spec">16-Pole Analog</span><span class="spec">100 Vp-p Max</span>
+          <span class="spec">Isolated Control</span><span class="spec">12VDC Powered</span>
+        </div>
+        <div class="prod-price">$395</div>
+      </div>
+
+      <div class="prod-card fade">
+        <div class="prod-photo">
+          <div class="photo-placeholder" style="flex-direction:column;gap:.4rem;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B4B2A9" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:#B4B2A9;text-transform:uppercase;">Electrometer photo</span>
+          </div>
+        </div>
+        <div class="prod-badge"><span>Sensor</span></div>
+        <div class="prod-name">Electrometer</div>
+        <div class="prod-sub">Pico-Ampere Current Detector</div>
+        <p class="prod-desc">Ultra-sensitive current measurement down to 1 pA. Selectable gain and polarity, DC bias input, adjustable bandwidth. Compact 2.3″ × 1.75″ PCB.</p>
+        <div class="prod-specs">
+          <span class="spec">1 pA Sensitivity</span><span class="spec">±5V Bias Input</span>
+          <span class="spec">Selectable Polarity</span><span class="spec">24VDC Powered</span>
+        </div>
+        <div class="prod-price" style="color:var(--ink3);font-size:.9rem;">Contact for pricing</div>
+      </div>
+
+      <div class="prod-card fade">
+        <div class="prod-photo">
+          <div class="photo-placeholder" style="flex-direction:column;gap:.4rem;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B4B2A9" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:#B4B2A9;text-transform:uppercase;">FET Switch photo</span>
+          </div>
+        </div>
+        <div class="prod-badge"><span>Switch</span></div>
+        <div class="prod-name">FET TW Switch</div>
+        <div class="prod-sub">High-Speed FET SPDT Switch</div>
+        <p class="prod-desc">15 ns rise/fall time FET switch for TWAVE applications. Passes analog signals and DC levels. Overvoltage protected with 300V GDTs. Powered from MIPS D15 connector.</p>
+        <div class="prod-specs">
+          <span class="spec">~15 ns Rise/Fall</span><span class="spec">300V GDT Protection</span>
+          <span class="spec">SPDT</span><span class="spec">MIPS Compatible</span>
+        </div>
+        <div class="prod-price">$295</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── SOFTWARE ARCHITECTURE (light) ── -->
+<section id="how-it-works">
+  <div class="container">
+    <div class="arch-hd fade">
+      <div class="lbl">Software Architecture</div>
+      <h2 class="h2">One Interface.<br/><em>Every Instrument.</em></h2>
+      <p>The MIPS host application runs on your PC or Mac and simultaneously communicates with multiple MIPS controllers and standalone instruments. Each researcher gets a custom GUI built for their experiment — all hardware unified behind one screen.</p>
+    </div>
+    <div class="arch-wrap fade">
+      <svg width="100%" viewBox="0 0 860 700" role="img" xmlns="http://www.w3.org/2000/svg" style="font-family:'DM Mono',monospace;min-width:560px;">
+        <title>MIPS system architecture</title>
+        <desc>Host PC running MIPS application communicates via USB, Ethernet, WiFi to multiple MIPS controllers and standalone instruments, unified in one custom control panel.</desc>
+        <defs>
+          <marker id="earr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+        <rect x="20" y="16" width="820" height="152" rx="8" fill="rgba(55,138,221,0.05)" stroke="#185FA5" stroke-width="1" stroke-dasharray="4 3"/>
+        <text x="36" y="34" font-size="10" fill="#185FA5" letter-spacing="1">HOST COMPUTER — macOS or Windows</text>
+        <rect x="38" y="44" width="248" height="108" rx="6" fill="rgba(83,74,183,0.08)" stroke="#7F77DD" stroke-width="1"/>
+        <text x="162" y="68" font-size="13" font-weight="500" fill="#3C3489" text-anchor="middle">MIPS Host Application</text>
+        <text x="162" y="86" font-size="10" fill="#7F77DD" text-anchor="middle">Qt-based · macOS &amp; Windows · Open source</text>
+        <text x="162" y="102" font-size="10" fill="#7F77DD" text-anchor="middle">USB · Ethernet · WiFi · RS232</text>
+        <text x="162" y="118" font-size="10" fill="#7F77DD" text-anchor="middle">Free download — GitHub / Google Drive</text>
+        <line x1="288" y1="98" x2="308" y2="98" stroke="#7F77DD" stroke-width="1.5" marker-end="url(#earr)"/>
+        <rect x="310" y="44" width="510" height="108" rx="6" fill="rgba(15,110,86,0.07)" stroke="#0F6E56" stroke-width="1"/>
+        <text x="565" y="68" font-size="13" font-weight="500" fill="#085041" text-anchor="middle">Custom Control Panels</text>
+        <text x="565" y="86" font-size="10" fill="#0F6E56" text-anchor="middle">User-designed GUI — one screen for ALL connected hardware</text>
+        <text x="565" y="102" font-size="10" fill="#0F6E56" text-anchor="middle">Tabs · sliders · plots · status lights · pulse editors</text>
+        <text x="565" y="118" font-size="10" fill="#0F6E56" text-anchor="middle">JavaScript scripting for automated sequences &amp; workflows</text>
+        <text x="565" y="134" font-size="10" fill="#0F6E56" text-anchor="middle">Defined by a plain-text .cfg file — no compiled code required</text>
+        <rect x="650" y="50" width="158" height="96" rx="4" fill="rgba(0,0,0,0.02)" stroke="#E4E4EA" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="729" y="95" font-size="9" fill="#B4B2A9" text-anchor="middle">[ Control panel</text>
+        <text x="729" y="108" font-size="9" fill="#B4B2A9" text-anchor="middle">screenshot here ]</text>
+        <text x="430" y="188" font-size="10" fill="#888780" text-anchor="middle" font-style="italic">USB · Ethernet · WiFi — simple ASCII protocol — same interface for all devices</text>
+        <line x1="162" y1="168" x2="162" y2="210" stroke="#378ADD" stroke-width="1.5" marker-end="url(#earr)"/>
+        <line x1="430" y1="168" x2="430" y2="210" stroke="#378ADD" stroke-width="1.5" marker-end="url(#earr)"/>
+        <line x1="720" y1="168" x2="720" y2="210" stroke="#378ADD" stroke-width="1.5" marker-end="url(#earr)"/>
+        <line x1="80" y1="210" x2="800" y2="210" stroke="#378ADD" stroke-width="1.5"/>
+        <line x1="80" y1="210" x2="80" y2="226" stroke="#378ADD" stroke-width="1.5"/>
+        <line x1="430" y1="210" x2="430" y2="226" stroke="#378ADD" stroke-width="1.5"/>
+        <line x1="720" y1="210" x2="720" y2="226" stroke="#378ADD" stroke-width="1.5"/>
+        <text x="120" y="208" font-size="9" fill="#378ADD">USB</text>
+        <text x="395" y="208" font-size="9" fill="#378ADD">Ethernet</text>
+        <text x="683" y="208" font-size="9" fill="#378ADD">WiFi</text>
+        <rect x="20" y="226" width="275" height="52" rx="6" fill="rgba(204,31,31,0.07)" stroke="#CC1F1F" stroke-width="1"/>
+        <text x="157" y="248" font-size="13" font-weight="500" fill="#791F1F" text-anchor="middle">MIPS Controller  A</text>
+        <text x="157" y="266" font-size="10" fill="#A32D2D" text-anchor="middle">84 MHz ARM · color display · 24VDC</text>
+        <rect x="305" y="226" width="275" height="52" rx="6" fill="rgba(204,31,31,0.07)" stroke="#CC1F1F" stroke-width="1"/>
+        <text x="442" y="248" font-size="13" font-weight="500" fill="#791F1F" text-anchor="middle">MIPS Controller  B</text>
+        <text x="442" y="266" font-size="10" fill="#A32D2D" text-anchor="middle">84 MHz ARM · color display · 24VDC</text>
+        <rect x="590" y="226" width="250" height="52" rx="6" fill="rgba(186,117,23,0.08)" stroke="#BA7517" stroke-width="1"/>
+        <text x="715" y="245" font-size="12" font-weight="500" fill="#633806" text-anchor="middle">RF Generator  /  RF Mega</text>
+        <text x="715" y="263" font-size="10" fill="#854F0B" text-anchor="middle">Standalone · USB or Ethernet</text>
+        <text x="590" y="222" font-size="9" fill="#BA7517">standalone instrument</text>
+        <text x="157" y="298" font-size="9" fill="#888780" text-anchor="middle">Plug-in modules — auto-detected on connect</text>
+        <rect x="24" y="304" width="74" height="40" rx="4" fill="rgba(127,119,221,0.08)" stroke="#AFA9EC" stroke-width="0.75"/>
+        <text x="61" y="321" font-size="11" font-weight="500" fill="#3C3489" text-anchor="middle">DCbias</text>
+        <text x="61" y="336" font-size="9" fill="#7F77DD" text-anchor="middle">up to 32 ch</text>
+        <rect x="104" y="304" width="74" height="40" rx="4" fill="rgba(29,158,117,0.08)" stroke="#5DCAA5" stroke-width="0.75"/>
+        <text x="141" y="321" font-size="11" font-weight="500" fill="#085041" text-anchor="middle">RF driver</text>
+        <text x="141" y="336" font-size="9" fill="#0F6E56" text-anchor="middle">500kHz–5MHz</text>
+        <rect x="184" y="304" width="60" height="40" rx="4" fill="rgba(99,153,34,0.08)" stroke="#97C459" stroke-width="0.75"/>
+        <text x="214" y="321" font-size="11" font-weight="500" fill="#173404" text-anchor="middle">ARB</text>
+        <text x="214" y="336" font-size="9" fill="#3B6D11" text-anchor="middle">TWAVE</text>
+        <rect x="250" y="304" width="42" height="40" rx="4" fill="rgba(212,83,126,0.08)" stroke="#ED93B1" stroke-width="0.75"/>
+        <text x="271" y="321" font-size="11" font-weight="500" fill="#4B1528" text-anchor="middle">FAIMS</text>
+        <text x="271" y="336" font-size="9" fill="#993556" text-anchor="middle">+ more</text>
+        <text x="442" y="298" font-size="9" fill="#888780" text-anchor="middle">Plug-in modules — auto-detected on connect</text>
+        <rect x="309" y="304" width="74" height="40" rx="4" fill="rgba(127,119,221,0.08)" stroke="#AFA9EC" stroke-width="0.75"/>
+        <text x="346" y="321" font-size="11" font-weight="500" fill="#3C3489" text-anchor="middle">DCbias</text>
+        <text x="346" y="336" font-size="9" fill="#7F77DD" text-anchor="middle">up to 32 ch</text>
+        <rect x="389" y="304" width="74" height="40" rx="4" fill="rgba(29,158,117,0.08)" stroke="#5DCAA5" stroke-width="0.75"/>
+        <text x="426" y="321" font-size="11" font-weight="500" fill="#085041" text-anchor="middle">RF driver</text>
+        <text x="426" y="336" font-size="9" fill="#0F6E56" text-anchor="middle">Quad control</text>
+        <rect x="469" y="304" width="54" height="40" rx="4" fill="rgba(99,153,34,0.08)" stroke="#97C459" stroke-width="0.75"/>
+        <text x="496" y="321" font-size="11" font-weight="500" fill="#173404" text-anchor="middle">PSG</text>
+        <text x="496" y="336" font-size="9" fill="#3B6D11" text-anchor="middle">pulse seq</text>
+        <rect x="529" y="304" width="48" height="40" rx="4" fill="rgba(186,117,23,0.08)" stroke="#FAC775" stroke-width="0.75"/>
+        <text x="553" y="321" font-size="11" font-weight="500" fill="#412402" text-anchor="middle">DIO</text>
+        <text x="553" y="336" font-size="9" fill="#854F0B" text-anchor="middle">digital IO</text>
+        <text x="715" y="298" font-size="9" fill="#888780" text-anchor="middle">Controls via MIPS app</text>
+        <rect x="594" y="304" width="68" height="40" rx="4" fill="rgba(186,117,23,0.08)" stroke="#FAC775" stroke-width="0.75"/>
+        <text x="628" y="321" font-size="11" font-weight="500" fill="#412402" text-anchor="middle">Drive</text>
+        <text x="628" y="336" font-size="9" fill="#854F0B" text-anchor="middle">Freq · Vpp</text>
+        <rect x="668" y="304" width="68" height="40" rx="4" fill="rgba(186,117,23,0.08)" stroke="#FAC775" stroke-width="0.75"/>
+        <text x="702" y="321" font-size="11" font-weight="500" fill="#412402" text-anchor="middle">Bias</text>
+        <text x="702" y="336" font-size="9" fill="#854F0B" text-anchor="middle">Relays · Tune</text>
+        <rect x="742" y="304" width="94" height="40" rx="4" fill="rgba(186,117,23,0.08)" stroke="#FAC775" stroke-width="0.75"/>
+        <text x="789" y="321" font-size="11" font-weight="500" fill="#412402" text-anchor="middle">Monitor</text>
+        <text x="789" y="336" font-size="9" fill="#854F0B" text-anchor="middle">ADC readbacks</text>
+        <line x1="20" y1="364" x2="840" y2="364" stroke="#E4E4EA" stroke-width="1" stroke-dasharray="5 4"/>
+        <text x="430" y="378" font-size="10" fill="#888780" text-anchor="middle" font-style="italic">What the researcher sees — one unified interface for all connected hardware</text>
+        <rect x="20" y="390" width="820" height="288" rx="8" fill="#F7F7FA" stroke="#E4E4EA" stroke-width="1"/>
+        <text x="36" y="408" font-size="10" fill="#888780" letter-spacing="1">CUSTOM CONTROL PANEL — defined by .cfg file, loaded by MIPS app</text>
+        <rect x="36" y="415" width="788" height="22" rx="4" fill="white" stroke="#E4E4EA" stroke-width="0.5"/>
+        <circle cx="50" cy="426" r="4" fill="#FF5F56"/>
+        <circle cx="63" cy="426" r="4" fill="#FFBD2E"/>
+        <circle cx="76" cy="426" r="4" fill="#27C93F"/>
+        <text x="430" y="430" font-size="10" fill="#B4B2A9" text-anchor="middle">Custom control panel  ·  right-click for options</text>
+        <rect x="36" y="441" width="128" height="18" rx="3" fill="white" stroke="#D3D1C7" stroke-width="0.5"/>
+        <text x="100" y="453" font-size="10" fill="#3d3d3a" text-anchor="middle">Ion optics</text>
+        <rect x="170" y="441" width="108" height="18" rx="3" fill="none" stroke="#E4E4EA" stroke-width="0.5"/>
+        <text x="224" y="453" font-size="10" fill="#B4B2A9" text-anchor="middle">RF sources</text>
+        <rect x="284" y="441" width="120" height="18" rx="3" fill="none" stroke="#E4E4EA" stroke-width="0.5"/>
+        <text x="344" y="453" font-size="10" fill="#B4B2A9" text-anchor="middle">Pulse sequences</text>
+        <rect x="410" y="441" width="88" height="18" rx="3" fill="none" stroke="#E4E4EA" stroke-width="0.5"/>
+        <text x="454" y="453" font-size="10" fill="#B4B2A9" text-anchor="middle">Scripts</text>
+        <rect x="40" y="464" width="188" height="100" rx="4" fill="white" stroke="#E4E4EA" stroke-width="0.5"/>
+        <text x="134" y="478" font-size="10" fill="#7F77DD" text-anchor="middle">MIPS-A DC bias</text>
+        <line x1="40" y1="482" x2="228" y2="482" stroke="#E4E4EA" stroke-width="0.5"/>
+        <text x="58" y="497" font-size="10" fill="#888780">CH 1</text>
+        <rect x="86" y="487" width="54" height="14" rx="2" fill="none" stroke="#E4E4EA" stroke-width="0.5"/>
+        <text x="113" y="498" font-size="10" fill="#3d3d3a" text-anchor="middle">200.00</text>
+        <rect x="146" y="487" width="54" height="14" rx="2" fill="none" stroke="#1D9E75" stroke-width="0.5"/>
+        <text x="173" y="498" font-size="10" fill="#0F6E56" text-anchor="middle">199.89</text>
+        <text x="208" y="498" font-size="10" fill="#888780">V</text>
+        <text x="58" y="516" font-size="10" fill="#888780">CH 2</text>
+        <rect x="86" y="506" width="54" height="14" rx="2" fill="none" stroke="#E4E4EA" stroke-width="0.5"/>
+        <text x="113" y="517" font-size="10" fill="#3d3d3a" text-anchor="middle">-200.00</text>
+        <rect x="146" y="506" width="54" height="14" rx="2" fill="none" stroke="#1D9E75" stroke-width="0.5"/>
+        <text x="173" y="517" font-size="10" fill="#0F6E56" text-anchor="middle">-200.14</text>
+        <text x="208" y="517" font-size="10" fill="#888780">V</text>
+        <text x="56" y="552" font-size="10" fill="#3d3d3a">☑ DC bias enable  |  Offset 0.00 V</text>
+        <rect x="234" y="464" width="188" height="100" rx="4" fill="white" stroke="#E4E4EA" stroke-width="0.5"/>
+        <text x="328" y="478" font-size="10" fill="#7F77DD" text-anchor="middle">MIPS-B DC bias</text>
+        <line x1="234" y1="482" x2="422" y2="482" stroke="#E4E4EA" stroke-width="0.5"/>
+        <text x="252" y="497" font-size="10" fill="#888780">CH 1</text>
+        <rect x="280" y="487" width="54" height="14" rx="2" fill="none" stroke="#E4E4EA" stroke-width="0.5"/>
+        <text x="307" y="498" font-size="10" fill="#3d3d3a" text-anchor="middle">-200.00</text>
+        <rect x="340" y="487" width="54" height="14" rx="2" fill="none" stroke="#1D9E75" stroke-width="0.5"/>
+        <text x="367" y="498" font-size="10" fill="#0F6E56" text-anchor="middle">-200.14</text>
+        <text x="402" y="498" font-size="10" fill="#888780">V</text>
+        <text x="252" y="516" font-size="10" fill="#888780">CH 2</text>
+        <rect x="280" y="506" width="54" height="14" rx="2" fill="none" stroke="#E4E4EA" stroke-width="0.5"/>
+        <text x="307" y="517" font-size="10" fill="#3d3d3a" text-anchor="middle">200.00</text>
+        <rect x="340" y="506" width="54" height="14" rx="2" fill="none" stroke="#1D9E75" stroke-width="0.5"/>
+        <text x="367" y="517" font-size="10" fill="#0F6E56" text-anchor="middle">199.90</text>
+        <text x="402" y="517" font-size="10" fill="#888780">V</text>
+        <text x="250" y="552" font-size="10" fill="#3d3d3a">☑ DC bias enable  |  Offset 0.00 V</text>
+        <rect x="428" y="464" width="200" height="100" rx="4" fill="white" stroke="#E4E4EA" stroke-width="0.5"/>
+        <text x="528" y="478" font-size="10" fill="#854F0B" text-anchor="middle">RF generator</text>
+        <line x1="428" y1="482" x2="628" y2="482" stroke="#E4E4EA" stroke-width="0.5"/>
+        <text x="446" y="497" font-size="10" fill="#888780">Enable ☑</text>
+        <text x="446" y="516" font-size="10" fill="#888780">Drive</text>
+        <rect x="490" y="506" width="54" height="14" rx="2" fill="none" stroke="#E4E4EA" stroke-width="0.5"/>
+        <text x="517" y="517" font-size="10" fill="#3d3d3a" text-anchor="middle">20.00 %</text>
+        <text x="446" y="535" font-size="10" fill="#888780">Freq</text>
+        <rect x="490" y="525" width="54" height="14" rx="2" fill="none" stroke="#E4E4EA" stroke-width="0.5"/>
+        <text x="517" y="536" font-size="10" fill="#3d3d3a" text-anchor="middle">1145000 Hz</text>
+        <text x="446" y="552" font-size="10" fill="#888780">RF+  <tspan fill="#BA7517">479.81 Vpp</tspan>  Power  <tspan fill="#BA7517">14.18 W</tspan></text>
+        <rect x="636" y="464" width="192" height="100" rx="4" fill="white" stroke="#E4E4EA" stroke-width="0.5" stroke-dasharray="4 3"/>
+        <text x="732" y="510" font-size="10" fill="#D3D1C7" text-anchor="middle">[ Control panel screenshot ]</text>
+        <text x="40" y="590" font-size="10" fill="#3d3d3a">▶ Run scan   ■ Abort   ⚙ Auto-tune RF   💾 Save method</text>
+        <rect x="36" y="600" width="788" height="16" rx="3" fill="white" stroke="#E4E4EA" stroke-width="0.5"/>
+        <circle cx="50" cy="608" r="3.5" fill="#27C93F"/>
+        <text x="60" y="612" font-size="9" fill="#888780">MIPS-A connected</text>
+        <circle cx="168" cy="608" r="3.5" fill="#27C93F"/>
+        <text x="178" y="612" font-size="9" fill="#888780">MIPS-B connected</text>
+        <circle cx="284" cy="608" r="3.5" fill="#27C93F"/>
+        <text x="294" y="612" font-size="9" fill="#888780">RF Generator connected</text>
+        <rect x="36" y="626" width="788" height="22" rx="3" fill="white" stroke="#E4E4EA" stroke-width="0.5"/>
+        <text x="430" y="641" font-size="10" fill="#888780" text-anchor="middle" font-style="italic">The researcher sees one panel — MIPS handles all hardware communication transparently</text>
+        <rect x="20" y="686" width="10" height="10" rx="2" fill="rgba(55,138,221,0.1)" stroke="#185FA5" stroke-width="0.75"/>
+        <text x="36" y="695" font-size="9" fill="#888780">Host / app</text>
+        <rect x="120" y="686" width="10" height="10" rx="2" fill="rgba(204,31,31,0.08)" stroke="#CC1F1F" stroke-width="0.75"/>
+        <text x="136" y="695" font-size="9" fill="#888780">MIPS controller</text>
+        <rect x="240" y="686" width="10" height="10" rx="2" fill="rgba(186,117,23,0.08)" stroke="#BA7517" stroke-width="0.75"/>
+        <text x="256" y="695" font-size="9" fill="#888780">Standalone instrument</text>
+        <rect x="390" y="686" width="10" height="10" rx="2" fill="rgba(127,119,221,0.08)" stroke="#7F77DD" stroke-width="0.75"/>
+        <text x="406" y="695" font-size="9" fill="#888780">Plug-in module</text>
+        <rect x="510" y="686" width="10" height="10" rx="2" fill="rgba(15,110,86,0.08)" stroke="#0F6E56" stroke-width="0.75"/>
+        <text x="526" y="695" font-size="9" fill="#888780">Custom GUI panel</text>
+        <rect x="636" y="683" width="192" height="14" rx="2" fill="none" stroke="#E4E4EA" stroke-width="0.5" stroke-dasharray="3 2"/>
+        <text x="732" y="694" font-size="9" fill="#D3D1C7" text-anchor="middle">photo placeholder</text>
+      </svg>
+    </div>
+    <div class="arch-cards fade">
+      <div class="arch-card">
+        <div class="arch-card-bar" style="background:var(--red);"></div>
+        <div class="arch-card-sub">MIPS App</div>
+        <div class="arch-card-title">Multiple Systems, One App</div>
+        <p>Connect multiple MIPS controllers simultaneously. Each gets a unique name and its modules appear automatically — no configuration needed.</p>
+      </div>
+      <div class="arch-card">
+        <div class="arch-card-bar" style="background:#0F6E56;"></div>
+        <div class="arch-card-sub">Custom Panels</div>
+        <div class="arch-card-title">GUI Built for Your Experiment</div>
+        <p>Define a control panel in a plain text file. Place voltage sliders, RF controls, status lights, plots, and script buttons exactly where your workflow needs them.</p>
+      </div>
+      <div class="arch-card">
+        <div class="arch-card-bar" style="background:#BA7517;"></div>
+        <div class="arch-card-sub">Scripting</div>
+        <div class="arch-card-title">JavaScript Automation</div>
+        <p>Write scripts that run automated scan sequences, respond to trigger events, log data, and control every connected instrument — all from within the MIPS app.</p>
+      </div>
+    </div>
+    <div class="photo-note fade">
+      <span style="font-size:1.1rem;">📷</span>
+      <p style="margin:0;"><strong>Photo placeholders:</strong> Two spots in the diagram above are reserved for your actual control panel screenshots. Send them when ready and they'll drop straight in.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── CAPABILITIES (white) ── -->
+<section id="capabilities">
+  <div class="container">
+    <div class="caps-layout">
+      <div class="caps-left fade">
+        <div class="lbl">How We Work</div>
+        <h2 class="h2">From Problem<br/>to <em>Solution</em></h2>
+        <p>Most engagements start with a phone call. We listen to what you're trying to accomplish, then find the fastest, most cost-effective path — often adapting proven designs from our library.</p>
+        <div class="steps">
+          <div class="step"><div class="step-n">01</div><div><h4>Describe Your Need</h4><p>Call or email with your requirements. First 30 minutes of consultation is always free.</p></div></div>
+          <div class="step"><div class="step-n">02</div><div><h4>We Develop a Quote</h4><p>We identify how our existing designs can be adapted — keeping development costs low.</p></div></div>
+          <div class="step"><div class="step-n">03</div><div><h4>Build &amp; Test In-House</h4><p>Circuit design, PCB fabrication, pick-and-place assembly, and full bench testing at our Kennewick facility.</p></div></div>
+          <div class="step"><div class="step-n">04</div><div><h4>Ongoing Support</h4><p>One-year warranty, free firmware updates, phone support, and full open-source documentation with every system.</p></div></div>
+        </div>
+      </div>
+      <div class="cap-grid fade">
+        <div class="cap-cell"><div class="cap-icon">⚡</div><div class="cap-title">Electronic Design</div><div class="cap-desc">Analog &amp; digital circuit design, SPICE simulation, PCB layout, prototyping and low-volume production.</div></div>
+        <div class="cap-cell"><div class="cap-icon">🔧</div><div class="cap-title">Embedded Software</div><div class="cap-desc">ARM microcontroller firmware, real-time control software, Python scripting, and MIPS JavaScript automation.</div></div>
+        <div class="cap-cell"><div class="cap-icon">🏭</div><div class="cap-title">In-House Fabrication</div><div class="cap-desc">SMT pick-and-place, reflow oven, 3-axis CNC mill, lathe, drill press, and 3D printing (FDM &amp; resin).</div></div>
+        <div class="cap-cell"><div class="cap-icon">🔬</div><div class="cap-title">Mass Spec Expertise</div><div class="cap-desc">In-house triple TOF and triple quad instruments for development and validation. Deep knowledge of ion optics.</div></div>
+        <div class="cap-cell"><div class="cap-icon">📐</div><div class="cap-title">Mechanical Design</div><div class="cap-desc">3D CAD, bespoke enclosure design, custom panel fabrication, and chassis sourcing from METCASE and others.</div></div>
+        <div class="cap-cell"><div class="cap-icon">🌐</div><div class="cap-title">Open Source</div><div class="cap-desc">All schematics, PCB layouts, firmware, and software available on GitHub. Full documentation with every system.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT (surface) ── -->
+<section id="about">
+  <div class="container">
+    <div class="about-layout">
+      <div class="about-left fade">
+        <div class="lbl">Our Story</div>
+        <h2 class="h2">A Family Business<br/>Built for <em>Science</em></h2>
+        <p>GAA Custom Electronics was founded in 2014 with a simple mission: give the mass spectrometry research community access to high-quality custom electronics at a price that doesn't require a grant committee.</p>
+        <p>We keep overhead low so researchers get more. By reusing and adapting proven designs, we deliver fast — without sacrificing quality. Over 200 MIPS systems are running worldwide, with customers at universities, national labs, pharmaceutical companies, and instrument manufacturers across the globe.</p>
+        <div class="highlights">
+          <div class="hi">International customer base — universities, national labs, instrument OEMs</div>
+          <div class="hi">Open-source hardware and software — full design transparency</div>
+          <div class="hi">Eco-friendly assembly using water-based cleaning processes</div>
+          <div class="hi">PCB fabrication via PCBWay, in-house SMT assembly</div>
+          <div class="hi">800 sq ft instrument development laboratory, Kennewick WA</div>
+        </div>
+      </div>
+      <div class="fade">
+        <div class="team-lbl">The Team</div>
+        <div class="team-list">
+          <div class="team-card"><div class="av">GA</div><div><div class="tc-name">Gordon Anderson</div><div class="tc-role">Founder · Electrical Engineer</div><div class="tc-bio">Lead engineer responsible for circuit design, embedded software, client relationships, and quote development. Over a decade of mass spectrometry electronics experience.</div></div></div>
+          <div class="team-card"><div class="av">CA</div><div><div class="tc-name">Christopher Anderson</div><div class="tc-role">Mechanical Design</div><div class="tc-bio">Specializes in mechanical design and CAD. Proficient with FDM and resin 3D printing for custom enclosures and instrument packaging.</div></div></div>
+          <div class="team-card"><div class="av">MA</div><div><div class="tc-name">Mary Anderson</div><div class="tc-role">Administration &amp; Operations</div><div class="tc-bio">Manages company administration, customer communications, and office operations — keeping everything running smoothly behind the scenes.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DOWNLOADS (white) ── -->
+<section id="support">
+  <div class="container">
+    <div class="sup-hd fade">
+      <div class="lbl">Resources</div>
+      <h2 class="h2">Support &amp; <em>Downloads</em></h2>
+      <p>Every system ships with full documentation. All source code and hardware designs are open-source and freely available — no login required.</p>
+    </div>
+    <div class="dl-sec fade">
+      <div class="dl-sec-title">Operations Manuals</div>
+      <table class="dl-table">
+        <tr><td>MIPS System</td><td>Operations Manual · R1.11</td><td><a href="docs/manuals/MIPSoperationsManualR1_11.pdf" class="dl-link" download>PDF ↓</a></td></tr>
+        <tr><td>MIPS Host Application</td><td>User Manual · v4.1 · March 2026</td><td><a href="docs/manuals/MIPS_User_Manual_v4_1.pdf" class="dl-link" download>PDF ↓</a></td></tr>
+        <tr><td>RF Generator</td><td>Operations Manual · R2.0 · July 2025</td><td><a href="docs/manuals/RFgeneratorR2_0.pdf" class="dl-link" download>PDF ↓</a></td></tr>
+        <tr><td>RF Mega</td><td>Operations Manual · R3.1</td><td><a href="docs/manuals/RFmegaR3_1.pdf" class="dl-link" download>PDF ↓</a></td></tr>
+        <tr><td>Multi-Function Twave (MFT)</td><td>Operations Manual · R4.0 · July 2024</td><td><a href="docs/manuals/MFT_R4_0.pdf" class="dl-link" download>PDF ↓</a></td></tr>
+        <tr><td>SLIM Reverser</td><td>Operations Manual · R4.0</td><td><a href="docs/manuals/SLIMrev4_0.pdf" class="dl-link" download>PDF ↓</a></td></tr>
+        <tr><td>Electrometer</td><td>Operations Manual · v4.0</td><td><a href="docs/manuals/Electrometer4_0.pdf" class="dl-link" download>PDF ↓</a></td></tr>
+        <tr><td>FET TW Switch</td><td>Operations Manual · R3.0</td><td><a href="docs/manuals/FET_TW_switchR3_0.pdf" class="dl-link" download>PDF ↓</a></td></tr>
+        <tr><td>Level Detection Module (LDM)</td><td>Operations Manual · R1.0</td><td><a href="docs/manuals/LDMrev1_0.pdf" class="dl-link" download>PDF ↓</a></td></tr>
+        <tr><td>MIPS Quad</td><td>RF Quad Operations Manual · R3.0</td><td><a href="docs/manuals/MIPSquadOperationsR3_0.pdf" class="dl-link" download>PDF ↓</a></td></tr>
+        <tr><td>FAIMS System</td><td>Operations Manual · v3.0</td><td><a href="docs/manuals/FAIMS_3_0.pdf" class="dl-link" download>PDF ↓</a></td></tr>
+      </table>
+    </div>
+    <div class="dl-sec fade">
+      <div class="dl-sec-title">Software</div>
+      <table class="dl-table">
+        <tr><td>MIPS App — macOS</td><td>Latest release · Free</td><td><a href="https://github.com/GordonAnderson" target="_blank" class="dl-link">GitHub ↗</a></td></tr>
+        <tr><td>MIPS App — Windows</td><td>Latest release · Free</td><td><a href="https://github.com/GordonAnderson" target="_blank" class="dl-link">GitHub ↗</a></td></tr>
+        <tr><td>Example Control Panels &amp; Scripts</td><td>Sample .cfg files for common setups</td><td><a href="https://github.com/GordonAnderson" target="_blank" class="dl-link">GitHub ↗</a></td></tr>
+        <tr><td>MIPS Firmware</td><td>Field-upgradable via MIPS app</td><td><a href="https://github.com/GordonAnderson" target="_blank" class="dl-link">GitHub ↗</a></td></tr>
+      </table>
+    </div>
+    <div class="dl-sec fade">
+      <div class="dl-sec-title">Technical &amp; Business Documents</div>
+      <table class="dl-table">
+        <tr><td>Rate Sheet</td><td>Consulting &amp; Engineering Rates · March 2026</td><td><a href="docs/resources/RateSheet03292026.pdf" class="dl-link" download>PDF ↓</a></td></tr>
+        <tr><td>Warranty Statement</td><td>One-Year Limited Warranty</td><td><a href="docs/resources/Warranty_Statement.pdf" class="dl-link" download>PDF ↓</a></td></tr>
+        <tr><td>Capabilities Overview</td><td>Resources &amp; Capabilities</td><td><a href="docs/resources/ResourcesCapabilities.pdf" class="dl-link" download>PDF ↓</a></td></tr>
+      </table>
+    </div>
+    <div class="warranty-bar fade">
+      <span style="font-size:1.5rem;">🛡️</span>
+      <div><h4>One-Year Warranty</h4><p>All products warranted against defects in workmanship and materials for 12 months from date of sale. Includes free phone support and firmware updates for one year.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT (dark) ── -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-layout">
+      <div class="fade">
+        <div class="lbl lbl-lt">Get In Touch</div>
+        <h2 class="c-head">Tell Us About<br/><em>Your Project</em></h2>
+        <p class="c-sub">Most projects start with a conversation. Describe what you're trying to accomplish and we'll respond quickly with ideas and pricing. First 30 minutes is always free.</p>
+        <div class="c-items">
+          <div class="ci"><div class="ci-icon">📍</div><div><div class="ci-lbl">Location</div><div class="ci-val">101904 Wiser Parkway, Suite 105<br/>Kennewick, WA 99320</div></div></div>
+          <div class="ci"><div class="ci-icon">📞</div><div><div class="ci-lbl">Phone</div><div class="ci-val"><a href="tel:+15096286851">509.628.6851</a></div></div></div>
+          <div class="ci"><div class="ci-icon">✉️</div><div><div class="ci-lbl">Email</div><div class="ci-val"><a href="mailto:gaa@gaa-ce.com">gaa@gaa-ce.com</a></div></div></div>
+          <div class="ci"><div class="ci-icon">🌐</div><div><div class="ci-lbl">Web</div><div class="ci-val"><a href="http://www.GAAcustom.com">www.GAAcustom.com</a></div></div></div>
+        </div>
+      </div>
+      <div class="c-form fade">
+        <div class="c-form-hd">// Request a Quote or More Information</div>
+        <div class="form-row">
+          <div class="fg"><label>First Name *</label><input type="text" placeholder="Jane"/></div>
+          <div class="fg"><label>Last Name *</label><input type="text" placeholder="Smith"/></div>
+        </div>
+        <div class="fg"><label>Email *</label><input type="email" placeholder="jane@university.edu"/></div>
+        <div class="fg"><label>Institution / Company</label><input type="text" placeholder="University of Washington"/></div>
+        <div class="fg"><label>Area of Interest</label>
+          <select>
+            <option value="">— Select —</option>
+            <option>MIPS System (quote)</option>
+            <option>RF Generator / RF Mega</option>
+            <option>MFT / SLIM Reverser</option>
+            <option>Electrometer / FET Switch</option>
+            <option>Custom Engineering Project</option>
+            <option>Technical Support</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="fg"><label>Describe Your Project *</label><textarea placeholder="Tell us about your experimental needs, the signals you're working with, and any specific requirements..."></textarea></div>
+        <button class="form-btn" onclick="submitForm()">Send Message →</button>
+        <p class="form-note">We typically respond within one business day. First 30-minute consultation is free.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER (darkest) ── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <img src="data:image/jpeg;base64,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" alt="GAA Custom Electronics logo" />
+        <div class="footer-logo-text">GAA Custom Electronics</div>
+      </div>
+      <p>Supporting mass spectrometry research through custom electronics monitoring and control systems. Kennewick, WA — Est. 2014.</p>
+    </div>
+    <div>
+      <div class="fcol-title">Products</div>
+      <ul class="fcol-links">
+        <li><a href="#products">MIPS System</a></li>
+        <li><a href="#products">RF Generator</a></li>
+        <li><a href="#products">RF Mega</a></li>
+        <li><a href="#products">MFT Twave</a></li>
+        <li><a href="#products">SLIM Reverser</a></li>
+        <li><a href="#products">Electrometer</a></li>
+        <li><a href="#products">FET Switch</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fcol-title">Company</div>
+      <ul class="fcol-links">
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#capabilities">Capabilities</a></li>
+        <li><a href="#how-it-works">Software</a></li>
+        <li><a href="#support">Downloads</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fcol-title">Resources</div>
+      <ul class="fcol-links">
+        <li><a href="#support">Operations Manuals</a></li>
+        <li><a href="https://github.com/GordonAnderson" target="_blank">GitHub Repository</a></li>
+        <li><a href="#support">Rate Sheet</a></li>
+        <li><a href="#support">Warranty Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-btm">
+    <div class="footer-copy">&copy; 2025 GAA Custom Electronics, LLC &middot; Kennewick, WA &middot; All Rights Reserved</div>
+    <div class="footer-copy">GAAcustom.com &middot; gaa@gaa-ce.com &middot; 509.628.6851</div>
+  </div>
+</footer>
+
+<script>
+  /* Nav color transition on scroll */
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  });
+
+  /* Scroll-triggered fade-ins */
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('in'), i * 80);
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+
+  /* Contact form */
+  function submitForm() {
+    const email = document.querySelector('input[type="email"]').value;
+    const msg = document.querySelector('textarea').value;
+    if (!email || !msg) { alert('Please fill in your email and project description.'); return; }
+    window.location.href = `mailto:gaa@gaa-ce.com?subject=Quote Request&body=${encodeURIComponent(msg)}`;
+  }
+</script>
+</body>
+</html>

@@ -344,6 +344,8 @@
       .prod-grid{grid-template-columns:1fr}
     }
   </style>
+  <!-- Leaflet CSS for deployment map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
 
@@ -1103,6 +1105,174 @@
   </div>
 </section>
 
+
+<!-- ── GLOBAL DEPLOYMENTS MAP ── -->
+<section id="deployments" style="padding:6rem 0;background:var(--surface);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:3rem;" class="fade">
+      <div class="lbl">Global Reach</div>
+      <h2 class="h2">Deployed <em>Worldwide</em></h2>
+      <p style="color:var(--mid);max-width:540px;margin:.75rem auto 0;font-size:.97rem;line-height:1.7;">
+        MIPS systems and GAACE instruments are running at universities, national laboratories, pharmaceutical companies, and instrument manufacturers across 47 locations in 14 countries.
+      </p>
+    </div>
+
+    <!-- Stats row -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin-bottom:2rem;" class="fade">
+      <div style="background:var(--white);padding:1.25rem;text-align:center;">
+        <div style="font-family:var(--serif);font-size:2rem;font-weight:600;color:var(--red);line-height:1;">200+</div>
+        <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-top:.3rem;">Systems Deployed</div>
+      </div>
+      <div style="background:var(--white);padding:1.25rem;text-align:center;">
+        <div style="font-family:var(--serif);font-size:2rem;font-weight:600;color:var(--red);line-height:1;">14+</div>
+        <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-top:.3rem;">Countries</div>
+      </div>
+      <div style="background:var(--white);padding:1.25rem;text-align:center;">
+        <div style="font-family:var(--serif);font-size:2rem;font-weight:600;color:var(--red);line-height:1;">47</div>
+        <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-top:.3rem;">Institutions</div>
+      </div>
+      <div style="background:var(--white);padding:1.25rem;text-align:center;">
+        <div style="font-family:var(--serif);font-size:2rem;font-weight:600;color:var(--red);line-height:1;">10+</div>
+        <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-top:.3rem;">Years in Service</div>
+      </div>
+    </div>
+
+    <!-- Leaflet map -->
+    <div class="fade" style="border:1px solid var(--rule);border-radius:6px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06);">
+      <div id="deploy-map" style="height:480px;width:100%;"></div>
+    </div>
+    <div style="margin-top:.75rem;font-size:.78rem;color:var(--mid);text-align:center;">
+      Hover or tap a pin to see location details. Data shown through invoice #732.
+    </div>
+
+    <!-- Leaflet JS — free, no API key required -->
+    <script>
+    // Load Leaflet JS dynamically, then init map once loaded
+    (function() {
+      var script = document.createElement('script');
+      script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+      script.onload = function() { initDeployMap(); };
+      document.head.appendChild(script);
+    })();
+
+    function initDeployMap() {
+      var locations = [
+    [34.6834, -82.8374, "Clemson, SC", "Clemson, SC"],
+    [42.5584, -71.2689, "Billerica, MA", "Billerica, MA"],
+    [40.0301, -75.621, "Exton, PA", "Exton, PA"],
+    [32.3199, -106.7637, "Las Cruces, NM", "Las Cruces, NM"],
+    [46.2112, -119.1372, "Kennewick, WA", "Kennewick, WA"],
+    [46.2856, -119.2845, "Richland, WA", "Richland, WA"],
+    [25.7617, -80.1918, "Miami, FL", "Miami, FL"],
+    [30.628, -96.3344, "College Station, TX", "College Station, TX"],
+    [40.4259, -86.9081, "West Lafayette, IN", "West Lafayette, IN"],
+    [47.6062, -122.3321, "Seattle, WA", "Seattle, WA"],
+    [30.2672, -97.7431, "Austin, TX", "Austin, TX"],
+    [37.3382, -121.8863, "San Jose, CA", "San Jose, CA"],
+    [39.9612, -82.9988, "Columbus, OH", "Columbus, OH"],
+    [39.7684, -86.1581, "Indianapolis, IN", "Indianapolis, IN"],
+    [39.7392, -104.9903, "Denver, CO", "Denver, CO"],
+    [46.7298, -117.1817, "Pullman, WA", "Pullman, WA"],
+    [38.9072, -77.0369, "Washington, DC", "Washington, DC"],
+    [43.0731, -89.4012, "Madison, WI", "Madison, WI"],
+    [45.5229, -122.9898, "Hillsboro, OR", "Hillsboro, OR"],
+    [44.5646, -123.262, "Corvallis, OR", "Corvallis, OR"],
+    [39.8668, -75.5916, "Chadds Ford, PA", "Chadds Ford, PA"],
+    [47.7543, -122.149, "Woodinville, WA", "Woodinville, WA"],
+    [41.3537, -73.011, "Woodbridge, CT", "Woodbridge, CT"],
+    [37.4852, -122.2364, "Redwood City, CA", "Redwood City, CA"],
+    [42.737, -84.4839, "East Lansing, MI", "East Lansing, MI"],
+    [37.6872, -97.3301, "Wichita, KS", "Wichita, KS"],
+    [40.1776, -79.8567, "Ardara, PA", "Ardara, PA"],
+    [46.758, 7.628, "Thun, Switzerland", "Thun, Switzerland"],
+    [46.5197, 6.6323, "Lausanne, Switzerland", "Lausanne, Switzerland"],
+    [47.3769, 8.5417, "Zürich, Switzerland", "Zürich, Switzerland"],
+    [52.7721, -1.2062, "Loughborough, UK", "Loughborough, UK"],
+    [55.883, -3.522, "Livingston, UK", "Livingston, UK"],
+    [51.8126, 5.8372, "Nijmegen, Netherlands", "Nijmegen, Netherlands"],
+    [53.2194, 6.5665, "Groningen, Netherlands", "Groningen, Netherlands"],
+    [53.5511, 9.9937, "Hamburg, Germany", "Hamburg, Germany"],
+    [51.3397, 12.3731, "Leipzig, Germany", "Leipzig, Germany"],
+    [59.3293, 18.0686, "Stockholm, Sweden", "Stockholm, Sweden"],
+    [45.4215, -75.6919, "Ottawa, Canada", "Ottawa, Canada"],
+    [44.6488, -63.5752, "Halifax, Canada", "Halifax, Canada"],
+    [46.0878, -64.7782, "Moncton, Canada", "Moncton, Canada"],
+    [43.4668, -80.5164, "Waterloo, ON", "Waterloo, Canada"],
+    [36.019, 129.3435, "Pohang, South Korea", "Pohang, South Korea"],
+    [29.8683, 121.544, "Ningbo, China", "Ningbo, China"],
+    [24.8138, 120.9675, "Hsinchu, Taiwan", "Hsinchu, Taiwan"],
+    [48.697, 2.188, "Orsay, France", "Orsay, France"],
+    [48.728, 2.143, "Saint-Aubin, France", "Saint-Aubin, France"],
+    [49.522, 5.919, "Belvaux, Luxembourg", "Belvaux, Luxembourg"]
+  ];
+
+      var map = L.map('deploy-map', {
+        center: [30, 10],
+        zoom: 2,
+        zoomControl: true,
+        scrollWheelZoom: false,
+      });
+
+      // CartoDB Positron tiles — no API key, no referer restriction, works locally
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19,
+        crossOrigin: true,
+      }).addTo(map);
+
+      var redIcon = L.divIcon({
+        className: '',
+        html: '<div style="width:12px;height:12px;background:#CC1F1F;border:2px solid white;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.4);"></div>',
+        iconSize: [12, 12],
+        iconAnchor: [6, 6],
+        popupAnchor: [0, -8],
+      });
+
+      var homeIcon = L.divIcon({
+        className: '',
+        html: '<div style="width:16px;height:16px;background:#CC1F1F;border:3px solid white;border-radius:50%;box-shadow:0 2px 6px rgba(204,31,31,.5);"></div>',
+        iconSize: [16, 16],
+        iconAnchor: [8, 8],
+        popupAnchor: [0, -10],
+      });
+
+      L.marker([46.1955, -119.2843], {icon: homeIcon})
+        .bindTooltip('<strong>GAA Custom Electronics, LLC</strong><br/>Kennewick, WA — Headquarters', {
+          direction: 'top', offset: [0, -8]
+        })
+        .addTo(map);
+
+      locations.forEach(function(loc) {
+        L.marker([loc[0], loc[1]], {icon: redIcon})
+          .bindTooltip(loc[3], {
+            direction: 'top',
+            offset: [0, -6],
+            className: 'gaace-tooltip'
+          })
+          .addTo(map);
+      });
+    }
+    </script>
+
+    <style>
+      .gaace-tooltip {
+        font-family: 'DM Sans', sans-serif;
+        font-size: .8rem;
+        line-height: 1.45;
+        border: none !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,.15) !important;
+        border-radius: 3px !important;
+        padding: .4rem .65rem !important;
+      }
+      .leaflet-tooltip-top.gaace-tooltip::before {
+        border-top-color: white !important;
+      }
+    </style>
+  </div>
+</section>
+<!-- ── END GLOBAL DEPLOYMENTS MAP ── -->
+
 <!-- ── CAPABILITIES (white) ── -->
 <section id="capabilities">
   <div class="container">
@@ -1216,10 +1386,34 @@
         <h2 class="c-head">Tell Us About<br/><em>Your Project</em></h2>
         <p class="c-sub">Most projects start with a conversation. Describe what you're trying to accomplish and we'll respond quickly with ideas and pricing. First 30 minutes is always free.</p>
         <div class="c-items">
-          <div class="ci"><div class="ci-icon">📍</div><div><div class="ci-lbl">Location</div><div class="ci-val">101904 Wiser Parkway, Suite 105<br/>Kennewick, WA 99320</div></div></div>
+          <div class="ci"><div class="ci-icon">📍</div><div><div class="ci-lbl">Location</div><div class="ci-val">101904 Wiser Pkwy, Suite 105<br/>Kennewick, WA 99338</div></div></div>
           <div class="ci"><div class="ci-icon">📞</div><div><div class="ci-lbl">Phone</div><div class="ci-val"><a href="tel:+15096286851">509.628.6851</a></div></div></div>
           <div class="ci"><div class="ci-icon">✉️</div><div><div class="ci-lbl">Email</div><div class="ci-val"><a href="mailto:gaa@gaa-ce.com">gaa@gaa-ce.com</a></div></div></div>
           <div class="ci"><div class="ci-icon">🌐</div><div><div class="ci-lbl">Web</div><div class="ci-val"><a href="http://www.GAAcustom.com">www.GAAcustom.com</a></div></div></div>
+        </div>
+
+        <!-- Google Maps embed — facility location -->
+        <div style="margin-top:1.5rem;border-radius:6px;overflow:hidden;border:1px solid rgba(255,255,255,.08);">
+          <div style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);padding:.5rem .75rem;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.08);">
+            📍 Our facility — Kennewick, WA
+          </div>
+          <iframe
+            title="GAA Custom Electronics location map"
+            src="https://maps.google.com/maps?q=101904+Wiser+Pkwy+Suite+105,+Kennewick,+WA+99338&t=m&z=15&output=embed&iwloc=near"
+            width="100%"
+            height="240"
+            style="border:0;display:block;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+          <a href="https://maps.google.com/?q=101904+Wiser+Pkwy+Suite+105+Kennewick+WA+99338"
+             target="_blank"
+             style="display:block;text-align:center;padding:.6rem;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);background:rgba(255,255,255,.03);border-top:1px solid rgba(255,255,255,.06);transition:color .2s;"
+             onmouseover="this.style.color='rgba(255,255,255,.6)'"
+             onmouseout="this.style.color='rgba(255,255,255,.3)'">
+            Open in Google Maps ↗
+          </a>
         </div>
       </div>
       <div class="c-form fade">

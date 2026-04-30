@@ -161,9 +161,9 @@
     .sec-intro{font-size:.95rem;color:var(--mid);max-width:340px;line-height:1.7}
 
     /* featured mips */
-    .mips-feat{display:grid;grid-template-columns:1fr 1.2fr;border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin-bottom:2rem;transition:border-color .2s}
+    .mips-feat{display:grid;grid-template-columns:1fr 1.2fr;border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin-bottom:2rem;transition:border-color .2s;align-items:start;}
     .mips-feat:hover{border-color:rgba(204,31,31,.3)}
-    .mips-vis{background:var(--ink);padding:0;display:flex;align-items:stretch;justify-content:flex-start;flex-direction:column;position:relative;overflow:hidden;min-height:320px}
+    .mips-vis{background:var(--ink);padding:0;display:flex;align-items:stretch;justify-content:flex-start;flex-direction:column;position:relative;overflow:hidden;}
     .mips-vis::before{content:''}
     /* photo slot in featured */
     .mips-photo-slot{
@@ -434,15 +434,15 @@
     <span class="mq-item">MIPS Quad <span class="mq-sep">&middot;</span></span>
     <span class="mq-item">FAIMS System <span class="mq-sep">&middot;</span></span>
     <span class="mq-item">Custom Engineering <span class="mq-sep">&middot;</span></span>
-    <span class="mq-item">MIPS Controller <span class="mq-sep">&middot;</span></span>
-    <span class="mq-item">RF Generator <span class="mq-sep">&middot;</span></span>
-    <span class="mq-item">RF Mega <span class="mq-sep">&middot;</span></span>
-    <span class="mq-item">Electrometer <span class="mq-sep">&middot;</span></span>
-    <span class="mq-item">FET Switch <span class="mq-sep">&middot;</span></span>
-    <span class="mq-item">SLIM Reverser <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Astraea <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Digital quad drivers <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">High Q RF heads <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">FPGA module <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Pulse sequence generation <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Twave Reverser <span class="mq-sep">&middot;</span></span>
     <span class="mq-item">Multi-Function Twave <span class="mq-sep">&middot;</span></span>
     <span class="mq-item">MIPS Quad <span class="mq-sep">&middot;</span></span>
-    <span class="mq-item">FAIMS System <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Ion funnels <span class="mq-sep">&middot;</span></span>
     <span class="mq-item">Custom Engineering <span class="mq-sep">&middot;</span></span>
   </div>
 </div>
@@ -474,12 +474,12 @@
         <!-- Divider -->
         <div style="height:1px;background:rgba(255,255,255,.08);flex-shrink:0;"></div>
 
-        <!-- Internal photo filling remaining space -->
-        <div style="flex:1;overflow:hidden;position:relative;min-height:200px;">
-          <div style="font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);padding:.6rem 1rem .4rem;background:rgba(0,0,0,.4);position:relative;z-index:1;">Internal — plug-in modules &amp; controller board</div>
-          <img src="images/mips-internal.jpg"
-            alt="MIPS internal view showing controller board, plug-in modules and EMCO high-voltage supplies"
-            style="width:100%;height:calc(100% - 32px);object-fit:cover;object-position:center top;display:block;" />
+        <!-- MIPS host app home screen -->
+        <div style="flex:1;overflow:hidden;position:relative;">
+          <div style="font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);padding:.6rem 1rem .4rem;background:rgba(0,0,0,.4);">MIPS host application — system tab</div>
+          <img src="images/mips-home.jpg"
+            alt="MIPS host application home screen showing system tab with connected modules, version info and connection status"
+            style="width:100%;height:auto;display:block;" />
         </div>
 
       </div>
@@ -489,16 +489,61 @@
         <div class="mips-subname">Modular Intelligent Power Sources</div>
         <p class="mips-desc">The heart of GAACE's instrument ecosystem. A fully modular, software-configurable control platform that unifies DC bias, RF drive, digital IO, and pulse generation — controlled from a single application on your PC or Mac.</p>
 
-        <!-- Rear panel detail -->
+        <!-- Rear Panel / Internal tab switcher -->
         <div style="margin-bottom:1.25rem;">
-          <div style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-bottom:.4rem;">Rear panel — fully populated</div>
-          <div style="border-radius:4px;overflow:hidden;border:1px solid var(--rule);">
-            <img src="images/mips-rear.jpg"
-              alt="MIPS rear panel showing BNC connectors, module slots, DB connectors and power input"
-              style="width:100%;display:block;" />
+          <div style="display:flex;gap:.4rem;margin-bottom:.6rem;">
+            <button onclick="showMipsTab('rear')" id="mtab-rear"
+              style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .75rem;border-radius:2px;border:1px solid var(--red);background:var(--red);color:white;cursor:pointer;transition:all .2s;">
+              Rear Panel
+            </button>
+            <button onclick="showMipsTab('internal')" id="mtab-internal"
+              style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .75rem;border-radius:2px;border:1px solid var(--rule);background:transparent;color:var(--mid);cursor:pointer;transition:all .2s;">
+              Internal
+            </button>
           </div>
-          <div style="font-size:.73rem;color:var(--mid);margin-top:.35rem;">DC bias outputs, RF connectors, digital IO, trigger inputs, and 24VDC power input</div>
+          <div style="border-radius:4px;overflow:hidden;border:1px solid var(--rule);">
+            <img id="mtab-img-rear" src="images/mips-rear.jpg"
+              alt="MIPS rear panel showing BNC connectors, module slots, DB connectors and power input"
+              style="width:100%;height:auto;display:block;" />
+            <img id="mtab-img-internal" src="images/mips-internal.jpg"
+              alt="MIPS internal view showing controller board, plug-in modules, EMCO HV supplies and ribbon cable interconnects"
+              style="width:100%;height:auto;display:none;" />
+          </div>
+          <div id="mtab-caption" style="font-size:.73rem;color:var(--mid);margin-top:.35rem;">
+            DC bias outputs, RF connectors, digital IO, trigger inputs, and 24VDC power input
+          </div>
         </div>
+
+        <script>
+        function showMipsTab(view) {
+          var rear     = document.getElementById('mtab-img-rear');
+          var internal = document.getElementById('mtab-img-internal');
+          var caption  = document.getElementById('mtab-caption');
+          var btnRear  = document.getElementById('mtab-rear');
+          var btnInt   = document.getElementById('mtab-internal');
+          if (view === 'rear') {
+            rear.style.display     = 'block';
+            internal.style.display = 'none';
+            btnRear.style.background = 'var(--red)';
+            btnRear.style.borderColor = 'var(--red)';
+            btnRear.style.color = 'white';
+            btnInt.style.background = 'transparent';
+            btnInt.style.borderColor = 'var(--rule)';
+            btnInt.style.color = 'var(--mid)';
+            caption.textContent = 'DC bias outputs, RF connectors, digital IO, trigger inputs, and 24VDC power input';
+          } else {
+            rear.style.display     = 'none';
+            internal.style.display = 'block';
+            btnRear.style.background = 'transparent';
+            btnRear.style.borderColor = 'var(--rule)';
+            btnRear.style.color = 'var(--mid)';
+            btnInt.style.background = 'var(--red)';
+            btnInt.style.borderColor = 'var(--red)';
+            btnInt.style.color = 'white';
+            caption.textContent = 'Controller board, plug-in modules, EMCO high-voltage supplies, and ribbon cable interconnects';
+          }
+        }
+        </script>
 
         <ul class="mips-feats">
           <li>84 MHz ARM processor with color graphics display</li>
@@ -515,15 +560,208 @@
       </div>
     </div>
 
+
+    <!-- ── MIPS MODULE OPTIONS ── -->
+    <div class="fade" style="margin-bottom:2rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--rule);">
+        <div>
+          <div class="lbl">Plug-In Modules</div>
+          <div style="font-family:var(--serif);font-size:1.4rem;font-weight:600;color:var(--ink);">MIPS Module Options</div>
+        </div>
+        <div style="font-size:.82rem;color:var(--mid);max-width:320px;text-align:right;">Up to 4 modules can be installed in one MIPS system. Mix and match to build the exact configuration your experiment needs.</div>
+      </div>
+
+      <!-- Category accordion -->
+      <div id="mips-modules" style="display:flex;flex-direction:column;gap:.5rem;">
+
+        <!-- DC Bias -->
+        <div class="mod-cat">
+          <button onclick="toggleCat(this)" class="mod-cat-btn" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.1rem;background:var(--surface);border:1px solid var(--rule);border-radius:4px;cursor:pointer;transition:background .2s;">
+            <div style="display:flex;align-items:center;gap:.75rem;">
+              <span style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:white;background:#7F77DD;padding:.18rem .5rem;border-radius:2px;">DC</span>
+              <span style="font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);">DC Bias Modules</span>
+              <span style="font-size:.8rem;color:var(--mid);">8 channels per module · up to 4 modules</span>
+            </div>
+            <span class="cat-arrow" style="font-size:.8rem;color:var(--mid);transition:transform .2s;">▼</span>
+          </button>
+          <div class="mod-cat-body" style="display:none;border:1px solid var(--rule);border-top:none;border-radius:0 0 4px 4px;overflow:hidden;">
+            <div class="mod-row"><div class="mod-name">DC Bias ±50V <span class="mod-pn">DC50</span></div><div class="mod-desc">8-channel programmable DC bias supply, ±50V range. Ideal for ion optics, lenses, and low-voltage electrodes.</div><div class="mod-price">$795</div></div>
+            <div class="mod-row"><div class="mod-name">DC Bias ±250V <span class="mod-pn">DC250</span></div><div class="mod-desc">8-channel programmable DC bias supply, ±250V range. Most common choice for ion funnel and ion guide systems.</div><div class="mod-price">$1,295</div></div>
+            <div class="mod-row"><div class="mod-name">DC Bias ±750V <span class="mod-pn">DC750</span></div><div class="mod-desc">8-channel programmable DC bias supply, ±750V range. For high-voltage ion optics and trap applications.</div><div class="mod-price">$1,995</div></div>
+          </div>
+        </div>
+
+        <!-- RF Driver & Heads -->
+        <div class="mod-cat">
+          <button onclick="toggleCat(this)" class="mod-cat-btn" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.1rem;background:var(--surface);border:1px solid var(--rule);border-radius:4px;cursor:pointer;transition:background .2s;">
+            <div style="display:flex;align-items:center;gap:.75rem;">
+              <span style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:white;background:#0F6E56;padding:.18rem .5rem;border-radius:2px;">RF</span>
+              <span style="font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);">RF Driver &amp; High-Q Heads</span>
+              <span style="font-size:.8rem;color:var(--mid);">500 KHz – 5 MHz · 2 channels per module</span>
+            </div>
+            <span class="cat-arrow" style="font-size:.8rem;color:var(--mid);transition:transform .2s;">▼</span>
+          </button>
+          <div class="mod-cat-body" style="display:none;border:1px solid var(--rule);border-top:none;border-radius:0 0 4px 4px;overflow:hidden;">
+            <div class="mod-row"><div class="mod-name">RF Driver <span class="mod-pn">RFDRV</span></div><div class="mod-desc">Drives up to 2 RF High-Q heads for ion funnels and multipoles. 2 modules can be installed per MIPS system for 4 total RF channels.</div><div class="mod-price">$695</div></div>
+            <div class="mod-row"><div class="mod-name">RF High-Q Head <span class="mod-pn">RFHQH</span></div><div class="mod-desc">Standard resonant RF head for ion funnels and ion guides. Adjustable inductance, auto-tuning, scope test points. Requires RFDRV module.</div><div class="mod-price">$695</div></div>
+            <div class="mod-row"><div class="mod-name">RF Ultra Power High-Q Head <span class="mod-pn">UPRFHQH</span></div><div class="mod-desc">Highest-power RF head for very capacitive loads or high frequency and voltage applications.</div><div class="mod-price">$995</div></div>
+            <div class="mod-row"><div class="mod-name">Twave RF Deck <span class="mod-pn">TWAVERF</span></div><div class="mod-desc">Combines RF and Twave signals, superimposing Twave on each RF phase. Provides 16 RF+Twave output signals. Requires TWAVE and RFDRV modules.</div><div class="mod-price">$1,995</div></div>
+            <div class="mod-row"><div class="mod-name">RF Quad High-Q Head <span class="mod-pn">RF_QUAD</span></div><div class="mod-desc">Designed for analytical quadrupole mass filters. Configured for 100 KHz – 1.5 MHz with up to 5 KV peak-to-peak per output phase.</div><div class="mod-price">$1,995</div></div>
+          </div>
+        </div>
+
+        <!-- Waveform & Pulse -->
+        <div class="mod-cat">
+          <button onclick="toggleCat(this)" class="mod-cat-btn" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.1rem;background:var(--surface);border:1px solid var(--rule);border-radius:4px;cursor:pointer;transition:background .2s;">
+            <div style="display:flex;align-items:center;gap:.75rem;">
+              <span style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:white;background:#639922;padding:.18rem .5rem;border-radius:2px;">WAVE</span>
+              <span style="font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);">Waveform &amp; Pulse Modules</span>
+              <span style="font-size:.8rem;color:var(--mid);">TWAVE · ARB · Pulse sequence generation</span>
+            </div>
+            <span class="cat-arrow" style="font-size:.8rem;color:var(--mid);transition:transform .2s;">▼</span>
+          </button>
+          <div class="mod-cat-body" style="display:none;border:1px solid var(--rule);border-top:none;border-radius:0 0 4px 4px;overflow:hidden;">
+            <div class="mod-row"><div class="mod-name">Twave Module <span class="mod-pn">TWAVE</span></div><div class="mod-desc">Generates 8 traveling wave output channels with 2 guard supplies. Supports SLIM, CRIMP, and compression logic. Up to 100 Vp-p output.</div><div class="mod-price">$1,595</div></div>
+            <div class="mod-row"><div class="mod-name">ARB Module <span class="mod-pn">ARB</span></div><div class="mod-desc">8-channel arbitrary waveform generator with 1.28 MHz digitization rate. Sine, ramp, triangle, pulse and user-defined waveforms. 0–100 Vp-p, floatable. Supports Twave and conventional ARB modes.</div><div class="mod-price">$1,595</div></div>
+            <div class="mod-row"><div class="mod-name">Pulse Sequence Generation <span class="mod-pn">PSG</span></div><div class="mod-desc">Hardware pulse sequence generator with sub-microsecond timing. Programmable via the MIPS host application PSG editor. Trigger input and output.</div><div class="mod-price">Contact us</div></div>
+          </div>
+        </div>
+
+        <!-- Ion Mobility & FAIMS -->
+        <div class="mod-cat">
+          <button onclick="toggleCat(this)" class="mod-cat-btn" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.1rem;background:var(--surface);border:1px solid var(--rule);border-radius:4px;cursor:pointer;transition:background .2s;">
+            <div style="display:flex;align-items:center;gap:.75rem;">
+              <span style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:white;background:#D4537E;padding:.18rem .5rem;border-radius:2px;">IMS</span>
+              <span style="font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);">Ion Mobility &amp; FAIMS</span>
+              <span style="font-size:.8rem;color:var(--mid);">High-field asymmetric waveform ion mobility</span>
+            </div>
+            <span class="cat-arrow" style="font-size:.8rem;color:var(--mid);transition:transform .2s;">▼</span>
+          </button>
+          <div class="mod-cat-body" style="display:none;border:1px solid var(--rule);border-top:none;border-radius:0 0 4px 4px;overflow:hidden;">
+            <div class="mod-row"><div class="mod-name">FAIMS Module <span class="mod-pn">FAIMS</span></div><div class="mod-desc">Adjustable bi-sinusoidal waveform at 1 MHz, up to 5.5 KV. Integrated DC bias, CV control, user-programmable CV scanning, arc detection and safety shutdown. Supports field-driven FAIMS.</div><div class="mod-price">$8,995 <span style="font-size:.7rem;color:var(--mid);">system</span></div></div>
+            <div class="mod-row"><div class="mod-name">RF Quad Module <span class="mod-pn">QUAD</span></div><div class="mod-desc">Includes ±400V DC bias for resolving quad voltages and controls the 40W RF amplifier to drive the quad RF High-Q head for mass filter applications.</div><div class="mod-price">$1,295</div></div>
+          </div>
+        </div>
+
+        <!-- Specialty Voltage -->
+        <div class="mod-cat">
+          <button onclick="toggleCat(this)" class="mod-cat-btn" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.1rem;background:var(--surface);border:1px solid var(--rule);border-radius:4px;cursor:pointer;transition:background .2s;">
+            <div style="display:flex;align-items:center;gap:.75rem;">
+              <span style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:white;background:#BA7517;padding:.18rem .5rem;border-radius:2px;">HV</span>
+              <span style="font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);">Specialty Voltage &amp; Source Modules</span>
+              <span style="font-size:.8rem;color:var(--mid);">ESI · Filament · DAC · ADC</span>
+            </div>
+            <span class="cat-arrow" style="font-size:.8rem;color:var(--mid);transition:transform .2s;">▼</span>
+          </button>
+          <div class="mod-cat-body" style="display:none;border:1px solid var(--rule);border-top:none;border-radius:0 0 4px 4px;overflow:hidden;">
+            <div class="mod-row"><div class="mod-name">ESI Module ±4kV <span class="mod-pn">ESI-B</span></div><div class="mod-desc">Low-current adjustable voltage supply for electrospray ionization sources. Software-switchable polarity, ±4,000V output.</div><div class="mod-price">$1,395</div></div>
+            <div class="mod-row"><div class="mod-name">ESI Module ±6kV <span class="mod-pn">ESI-C</span></div><div class="mod-desc">Higher-voltage ESI supply with software-switchable polarity. ±6,000V output for demanding electrospray applications.</div><div class="mod-price">$1,595</div></div>
+            <div class="mod-row"><div class="mod-name">Filament Driver <span class="mod-pn">FIL</span></div><div class="mod-desc">Two-channel low-voltage, high-current filament driver for electron ionization sources. Current ramp control and power monitoring.</div><div class="mod-price">$695</div></div>
+            <div class="mod-row"><div class="mod-name">Analog Output (DAC) <span class="mod-pn">DAC</span></div><div class="mod-desc">8-channel analog output module. Seven single-ended plus one differential output. Isolated ground for floating applications.</div><div class="mod-price">$695</div></div>
+            <div class="mod-row"><div class="mod-name">Analog Input (ADC) <span class="mod-pn">ADC</span></div><div class="mod-desc">High-speed analog data acquisition up to 1 MHz. Monitors voltages and currents in real time within the MIPS host application.</div><div class="mod-price">Contact us</div></div>
+          </div>
+        </div>
+
+        <!-- Digital & System -->
+        <div class="mod-cat">
+          <button onclick="toggleCat(this)" class="mod-cat-btn" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.1rem;background:var(--surface);border:1px solid var(--rule);border-radius:4px;cursor:pointer;transition:background .2s;">
+            <div style="display:flex;align-items:center;gap:.75rem;">
+              <span style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:white;background:#378ADD;padding:.18rem .5rem;border-radius:2px;">DIO</span>
+              <span style="font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);">Digital &amp; System Modules</span>
+              <span style="font-size:.8rem;color:var(--mid);">IO · Isolation · Connectivity</span>
+            </div>
+            <span class="cat-arrow" style="font-size:.8rem;color:var(--mid);transition:transform .2s;">▼</span>
+          </button>
+          <div class="mod-cat-body" style="display:none;border:1px solid var(--rule);border-top:none;border-radius:0 0 4px 4px;overflow:hidden;">
+            <div class="mod-row"><div class="mod-name">Digital IO Module <span class="mod-pn">DIO</span></div><div class="mod-desc">16 digital outputs and 8 digital inputs. Trigger input/output for synchronizing with external instruments.</div><div class="mod-price">Contact us</div></div>
+            <div class="mod-row"><div class="mod-name">Digital IO Isolator <span class="mod-pn">DIO_ISO</span></div><div class="mod-desc">8-channel digital IO isolator for driving signals floating at elevated voltages. Includes connection cable assemblies.</div><div class="mod-price">$495</div></div>
+            <div class="mod-row"><div class="mod-name">Level Detection Module <span class="mod-pn">LEVDET</span></div><div class="mod-desc">Monitors an external voltage and triggers configurable control actions when a change is detected.</div><div class="mod-price">$295</div></div>
+            <div class="mod-row"><div class="mod-name">Ethernet Interface <span class="mod-pn">ETH</span></div><div class="mod-desc">Adds TCP/IP network connectivity to the MIPS controller for remote control over Ethernet.</div><div class="mod-price">$95</div></div>
+            <div class="mod-row"><div class="mod-name">WiFi Interface <span class="mod-pn">WIFI</span></div><div class="mod-desc">Adds wireless connectivity to the MIPS controller. Compatible with the MIPS host application over TCP/IP.</div><div class="mod-price">$95</div></div>
+            <div class="mod-row"><div class="mod-name">Hardware Interlock <span class="mod-pn">ITRLK</span></div><div class="mod-desc">Hardware interlock that disables all RF and DC voltages on trigger. Essential for safety-critical vacuum system installations.</div><div class="mod-price">$295</div></div>
+            <div class="mod-row"><div class="mod-name">Heater Controller <span class="mod-pn">HTR-B</span></div><div class="mod-desc">Intelligent temperature controller for capillary heater input. USB interface to host computer, isolated 24VDC heater control.</div><div class="mod-price">$795</div></div>
+          </div>
+        </div>
+
+      </div><!-- end #mips-modules -->
+
+      <div style="margin-top:1rem;padding:.85rem 1.1rem;background:var(--red-pale);border:1px solid rgba(204,31,31,.15);border-radius:4px;display:flex;align-items:center;gap:.75rem;font-size:.82rem;color:var(--ink3);">
+        <span style="color:var(--red);font-size:1rem;">💬</span>
+        <span>Need a module not listed here, or a custom configuration? <strong><a href="#contact" style="color:var(--red);">Contact us</a></strong> — we develop new modules and are always happy to discuss your requirements.</span>
+      </div>
+
+      <script>
+      function toggleCat(btn) {
+        var body = btn.nextElementSibling;
+        var arrow = btn.querySelector('.cat-arrow');
+        var isOpen = body.style.display === 'block';
+        body.style.display = isOpen ? 'none' : 'block';
+        arrow.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+        btn.style.background = isOpen ? 'var(--surface)' : 'var(--white)';
+        btn.style.borderBottomLeftRadius = isOpen ? '4px' : '0';
+        btn.style.borderBottomRightRadius = isOpen ? '4px' : '0';
+      }
+      </script>
+
+      <style>
+        .mod-row {
+          display: grid;
+          grid-template-columns: 1.6fr 3fr 0.7fr;
+          gap: 1rem;
+          padding: .7rem 1.1rem;
+          border-bottom: 1px solid var(--rule2);
+          align-items: start;
+          transition: background .15s;
+        }
+        .mod-row:last-child { border-bottom: none; }
+        .mod-row:hover { background: var(--surface); }
+        .mod-name {
+          font-family: var(--serif);
+          font-size: .9rem;
+          font-weight: 600;
+          color: var(--ink);
+          line-height: 1.3;
+        }
+        .mod-pn {
+          display: inline-block;
+          font-family: var(--mono);
+          font-size: .55rem;
+          letter-spacing: .08em;
+          color: var(--mid);
+          background: var(--surface);
+          border: 1px solid var(--rule);
+          padding: .1rem .35rem;
+          border-radius: 2px;
+          margin-left: .3rem;
+          vertical-align: middle;
+          font-weight: 400;
+        }
+        .mod-desc { font-size: .82rem; color: var(--ink3); line-height: 1.55; }
+        .mod-price {
+          font-family: var(--serif);
+          font-size: .9rem;
+          font-weight: 600;
+          color: var(--red);
+          white-space: nowrap;
+          text-align: right;
+        }
+        .mod-cat-btn:hover { background: var(--white) !important; }
+        @media (max-width: 700px) {
+          .mod-row { grid-template-columns: 1fr; gap: .3rem; }
+          .mod-price { text-align: left; }
+        }
+      </style>
+
+    </div>
+    <!-- ── END MIPS MODULE OPTIONS ── -->
     <!-- Standalone grid -->
     <div class="prod-grid">
 
       <div class="prod-card fade">
         <div class="prod-photo">
-          <div class="photo-placeholder" style="flex-direction:column;gap:.4rem;">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B4B2A9" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-            <span style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:#B4B2A9;text-transform:uppercase;">RF Generator photo</span>
-          </div>
+          <img src="images/rf-generator.jpg"
+            alt="RF Generator standalone RF driver — front panel showing Ethernet, USB, Bias and Trig/Gate connectors"
+            style="width:100%;height:100%;object-fit:cover;display:block;" />
         </div>
         <div class="prod-badge"><span>Standalone</span></div>
         <div class="prod-name">RF Generator</div>
@@ -538,10 +776,9 @@
 
       <div class="prod-card fade">
         <div class="prod-photo">
-          <div class="photo-placeholder" style="flex-direction:column;gap:.4rem;">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B4B2A9" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-            <span style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:#B4B2A9;text-transform:uppercase;">RF Mega photo</span>
-          </div>
+          <img src="images/rf-mega.jpg"
+            alt="RF Mega high-power standalone RF driver front panel"
+            style="width:100%;height:100%;object-fit:cover;display:block;" />
         </div>
         <div class="prod-badge"><span>Standalone</span></div>
         <div class="prod-name">RF Mega</div>
@@ -556,10 +793,9 @@
 
       <div class="prod-card fade">
         <div class="prod-photo">
-          <div class="photo-placeholder" style="flex-direction:column;gap:.4rem;">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B4B2A9" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-            <span style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:#B4B2A9;text-transform:uppercase;">MFT photo</span>
-          </div>
+          <img src="images/mft.jpg"
+            alt="Multi-Function Twave driver module showing SLIM interface and connection ports"
+            style="width:100%;height:100%;object-fit:cover;display:block;" />
         </div>
         <div class="prod-badge"><span>Standalone</span></div>
         <div class="prod-name">MFT</div>
@@ -574,10 +810,9 @@
 
       <div class="prod-card fade">
         <div class="prod-photo">
-          <div class="photo-placeholder" style="flex-direction:column;gap:.4rem;">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B4B2A9" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-            <span style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:#B4B2A9;text-transform:uppercase;">SLIM Reverser photo</span>
-          </div>
+          <img src="images/slim-reverser.jpg"
+            alt="SLIM Reverser TWAVE direction control switch PCB with power supply and cables"
+            style="width:100%;height:100%;object-fit:cover;display:block;" />
         </div>
         <div class="prod-badge"><span>Accessory</span></div>
         <div class="prod-name">SLIM Reverser</div>
@@ -592,10 +827,9 @@
 
       <div class="prod-card fade">
         <div class="prod-photo">
-          <div class="photo-placeholder" style="flex-direction:column;gap:.4rem;">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B4B2A9" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-            <span style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:#B4B2A9;text-transform:uppercase;">Electrometer photo</span>
-          </div>
+          <img src="images/electrometer.jpg"
+            alt="Electrometer pico-ampere current detector PCB — compact 2.3 x 1.75 inch format"
+            style="width:100%;height:100%;object-fit:cover;display:block;" />
         </div>
         <div class="prod-badge"><span>Sensor</span></div>
         <div class="prod-name">Electrometer</div>
@@ -610,10 +844,9 @@
 
       <div class="prod-card fade">
         <div class="prod-photo">
-          <div class="photo-placeholder" style="flex-direction:column;gap:.4rem;">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B4B2A9" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-            <span style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:#B4B2A9;text-transform:uppercase;">FET Switch photo</span>
-          </div>
+          <img src="images/fet-switch.jpg"
+            alt="FET TW Switch high-speed SPDT switch module"
+            style="width:100%;height:100%;object-fit:cover;display:block;" />
         </div>
         <div class="prod-badge"><span>Switch</span></div>
         <div class="prod-name">FET TW Switch</div>
@@ -666,13 +899,13 @@
         <line x1="162" y1="168" x2="162" y2="210" stroke="#378ADD" stroke-width="1.5" marker-end="url(#earr)"/>
         <line x1="430" y1="168" x2="430" y2="210" stroke="#378ADD" stroke-width="1.5" marker-end="url(#earr)"/>
         <line x1="720" y1="168" x2="720" y2="210" stroke="#378ADD" stroke-width="1.5" marker-end="url(#earr)"/>
-        <line x1="80" y1="210" x2="800" y2="210" stroke="#378ADD" stroke-width="1.5"/>
+        <line x1="80" y1="210" x2="720" y2="210" stroke="#378ADD" stroke-width="1.5"/>
         <line x1="80" y1="210" x2="80" y2="226" stroke="#378ADD" stroke-width="1.5"/>
         <line x1="430" y1="210" x2="430" y2="226" stroke="#378ADD" stroke-width="1.5"/>
         <line x1="720" y1="210" x2="720" y2="226" stroke="#378ADD" stroke-width="1.5"/>
-        <text x="120" y="208" font-size="9" fill="#378ADD">USB</text>
-        <text x="395" y="208" font-size="9" fill="#378ADD">Ethernet</text>
-        <text x="683" y="208" font-size="9" fill="#378ADD">WiFi</text>
+        <text x="115" y="204" font-size="9" fill="#378ADD">USB</text>
+        <text x="350" y="204" font-size="9" fill="#378ADD">Ethernet</text>
+        <text x="638" y="204" font-size="9" fill="#378ADD">WiFi</text>
         <rect x="20" y="226" width="275" height="52" rx="6" fill="rgba(204,31,31,0.07)" stroke="#CC1F1F" stroke-width="1"/>
         <text x="157" y="248" font-size="13" font-weight="500" fill="#791F1F" text-anchor="middle">MIPS Controller  A</text>
         <text x="157" y="266" font-size="10" fill="#A32D2D" text-anchor="middle">84 MHz ARM · color display · 24VDC</text>

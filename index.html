@@ -1715,7 +1715,6 @@
 <!-- ── PRICE LOADER ── -->
 <script>
 (function() {
-  // Fallback prices used when prices.json cannot be loaded (e.g. local desktop testing)
   var fallback = {
     "mips_range":       "$3,000 – $10,000",
     "mips_range_sub":   "configured to order",
@@ -1757,7 +1756,9 @@
   };
 
   function applyPrices(prices) {
-    document.querySelectorAll('[data-price]').forEach(function(el) {
+    var els = document.querySelectorAll('[data-price]');
+    console.log('GAACE prices: applying to', els.length, 'elements');
+    els.forEach(function(el) {
       var key = el.getAttribute('data-price');
       if (prices[key] !== undefined) {
         el.textContent = prices[key];
@@ -1765,15 +1766,31 @@
     });
   }
 
-  // Try to load prices.json — apply fallback immediately, override if file loads
-  applyPrices(fallback);
+  function loadPrices() {
+    // Apply fallback first so prices always show
+    applyPrices(fallback);
 
-  fetch('prices.json')
-    .then(function(r) { return r.json(); })
-    .then(function(data) { applyPrices(data); })
-    .catch(function() {
-      // prices.json not available — fallback already applied, nothing to do
-    });
+    // Then try to load prices.json and override
+    fetch('prices.json?v=' + Date.now())
+      .then(function(r) {
+        if (!r.ok) throw new Error('prices.json returned ' + r.status);
+        return r.json();
+      })
+      .then(function(data) {
+        console.log('GAACE prices: loaded prices.json successfully');
+        applyPrices(data);
+      })
+      .catch(function(err) {
+        console.log('GAACE prices: using fallback values -', err.message);
+      });
+  }
+
+  // Wait for DOM to be fully ready before applying prices
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadPrices);
+  } else {
+    loadPrices();
+  }
 })();
 </script>
 <!-- ── END PRICE LOADER ── -->

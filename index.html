@@ -1420,51 +1420,145 @@
   </div>
 </section>
 
-<!-- ── DOWNLOADS (white) ── -->
-<section id="support">
+<!-- ── DOWNLOADS (accordion style) ── -->
+<section id="support" style="padding:6rem 0;background:var(--white);border-top:1px solid var(--rule);">
   <div class="container">
     <div class="sup-hd fade">
       <div class="lbl">Resources</div>
       <h2 class="h2">Support &amp; <em>Downloads</em></h2>
-      <p>Every system ships with full documentation. All source code and hardware designs are open-source and freely available — no login required.</p>
+      <p>All documentation is freely available — no login required. Files are updated in place so links never change when new revisions are released.</p>
     </div>
-    <div class="dl-sec fade">
-      <div class="dl-sec-title">Operations Manuals</div>
-      <table class="dl-table">
-        <tr><td>MIPS System</td><td>Operations Manual · R1.11</td><td><a href="docs/manuals/MIPSoperationsManualR1_11.pdf" class="dl-link" download>PDF ↓</a></td></tr>
-        <tr><td>MIPS Host Application</td><td>User Manual · v4.1 · March 2026</td><td><a href="docs/manuals/MIPS_User_Manual_v4_1.pdf" class="dl-link" download>PDF ↓</a></td></tr>
-        <tr><td>RF Generator</td><td>Operations Manual · R2.0 · July 2025</td><td><a href="docs/manuals/RFgeneratorR2_0.pdf" class="dl-link" download>PDF ↓</a></td></tr>
-        <tr><td>RF Mega</td><td>Operations Manual · R3.1</td><td><a href="docs/manuals/RFmegaR3_1.pdf" class="dl-link" download>PDF ↓</a></td></tr>
-        <tr><td>Multi-Function Twave (MFT)</td><td>Operations Manual · R4.0 · July 2024</td><td><a href="docs/manuals/MFT_R4_0.pdf" class="dl-link" download>PDF ↓</a></td></tr>
-        <tr><td>SLIM Reverser</td><td>Operations Manual · R4.0</td><td><a href="docs/manuals/SLIMrev4_0.pdf" class="dl-link" download>PDF ↓</a></td></tr>
-        <tr><td>Electrometer</td><td>Operations Manual · v4.0</td><td><a href="docs/manuals/Electrometer4_0.pdf" class="dl-link" download>PDF ↓</a></td></tr>
-        <tr><td>FET TW Switch</td><td>Operations Manual · R3.0</td><td><a href="docs/manuals/FET_TW_switchR3_0.pdf" class="dl-link" download>PDF ↓</a></td></tr>
-        <tr><td>Level Detection Module (LDM)</td><td>Operations Manual · R1.0</td><td><a href="docs/manuals/LDMrev1_0.pdf" class="dl-link" download>PDF ↓</a></td></tr>
-        <tr><td>MIPS Quad</td><td>RF Quad Operations Manual · R3.0</td><td><a href="docs/manuals/MIPSquadOperationsR3_0.pdf" class="dl-link" download>PDF ↓</a></td></tr>
-        <tr><td>FAIMS System</td><td>Operations Manual · v3.0</td><td><a href="docs/manuals/FAIMS_3_0.pdf" class="dl-link" download>PDF ↓</a></td></tr>
-      </table>
+    <div style="display:flex;flex-direction:column;gap:.5rem;" class="fade">
+
+      <!-- MIPS SYSTEM -->
+      <div class="dl-cat">
+        <button onclick="toggleDL(this)" class="dl-cat-btn">
+          <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;">
+            <span class="dl-badge" style="background:var(--red);">MIPS</span>
+            <span class="dl-cat-title">MIPS System</span>
+            <span class="dl-cat-sub">Operations manuals for MIPS controller and all plug-in modules</span>
+          </div>
+          <span class="dl-arrow">&#9660;</span>
+        </button>
+        <div class="dl-cat-body" style="display:none;">
+          <a href="docs/mips/MIPS_Operations_Manual.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">MIPS Operations Manual</div><div class="dl-desc">Complete hardware operations manual for the MIPS controller — installation, setup, modules, and specifications</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/mips/ARB_Module.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">ARB Module</div><div class="dl-desc">8-channel arbitrary waveform generator — Twave, sine, ramp, pulse, and user-defined waveforms</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/mips/Quad_Module.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Quad Module</div><div class="dl-desc">RF quadrupole mass filter control module — DC bias, RF amplitude, and scan control</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/mips/DCbias_Switch_Module.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">DCbias Switch Module</div><div class="dl-desc">Digital switching module for DC bias channels — fast switching for pulsed ion optics applications</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/mips/DCbias_Analog_Control_Module.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">DCbias Analog Control Module</div><div class="dl-desc">Analog control interface for DC bias outputs — external voltage control of bias channels</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/mips/DCbias_Output_Current_Monitor.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">DCbias Output Current Monitor Module</div><div class="dl-desc">Real-time current monitoring on DC bias output channels — leak detection and load monitoring</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/mips/FAIMS_Module.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">FAIMS Module</div><div class="dl-desc">High-field asymmetric waveform ion mobility module — bi-sinusoidal waveform up to 5.5 KV at 1 MHz</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/mips/Level_Detection_Module.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Level Detection Module</div><div class="dl-desc">Monitors an external voltage and triggers configurable control actions on state change</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/mips/Filament_Module.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Filament Module</div><div class="dl-desc">Two-channel filament driver for electron ionization sources — current ramp and power monitoring</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/mips/FPGA_Module.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">FPGA Module</div><div class="dl-desc">FPGA-based high-speed digital processing module for advanced timing and control applications</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/mips/RF_Head_Calibration.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">RF Head Calibration Procedure</div><div class="dl-desc">Step-by-step calibration for MIPS RF High-Q heads — inductance adjustment and auto-tune setup</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/mips/Ultra_RF_High_Q_Head.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Ultra RF High-Q Head</div><div class="dl-desc">Operations manual for the ultra high-power RF head — high-capacitance and high-voltage RF applications</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/mips/RF_Gating.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">RF Gating</div><div class="dl-desc">Application note — gating RF signals for pulsed ion injection and trapping experiments</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/mips/Multiple_Tables.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Multiple Tables</div><div class="dl-desc">Application note — using multiple parameter tables for complex scan sequences and method switching</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/mips/ADC_Change_Detection.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">ADC Change Detection</div><div class="dl-desc">Application note — using ADC input monitoring to trigger events on signal level changes</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/mips/Delayed_Triggering.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Delayed Triggering</div><div class="dl-desc">Application note — implementing precise delayed trigger sequences for time-resolved experiments</div></div><div class="dl-btn">PDF &#8595;</div></a>
+        </div>
+      </div>
+
+      <!-- MIPS SOFTWARE -->
+      <div class="dl-cat">
+        <button onclick="toggleDL(this)" class="dl-cat-btn">
+          <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;">
+            <span class="dl-badge" style="background:#0F6E56;">SW</span>
+            <span class="dl-cat-title">MIPS Host Software</span>
+            <span class="dl-cat-sub">User manual, application notes, and software downloads</span>
+          </div>
+          <span class="dl-arrow">&#9660;</span>
+        </button>
+        <div class="dl-cat-body" style="display:none;">
+          <a href="docs/software/MIPS_User_Manual.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">MIPS User Manual</div><div class="dl-desc">Complete guide to the MIPS host application — connection, custom control panels, scripting, and all module interfaces</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/software/Timing_Generator.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Timing Generator</div><div class="dl-desc">Application note — using the MIPS timing generator for synchronized multi-channel pulse sequences</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/software/Pulse_Sequence_Generation.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Pulse Sequence Generation</div><div class="dl-desc">Application note — building complex pulse sequences using the MIPS PSG editor and table commands</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="https://github.com/GordonAnderson" target="_blank" class="dl-row"><div class="dl-icon">&#128187;</div><div class="dl-info"><div class="dl-name">Example Configuration Files</div><div class="dl-desc">Sample .cfg control panel files for common instrument configurations — ready to load in the MIPS app</div></div><div class="dl-btn dl-btn-gh">GitHub &#8599;</div></a>
+          <a href="https://github.com/GordonAnderson" target="_blank" class="dl-row"><div class="dl-icon">&#128187;</div><div class="dl-info"><div class="dl-name">MIPS Software Download</div><div class="dl-desc">Latest MIPS host application for macOS and Windows — free, open source, always current on GitHub</div></div><div class="dl-btn dl-btn-gh">GitHub &#8599;</div></a>
+        </div>
+      </div>
+
+      <!-- STANDALONE INSTRUMENTS -->
+      <div class="dl-cat">
+        <button onclick="toggleDL(this)" class="dl-cat-btn">
+          <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;">
+            <span class="dl-badge" style="background:#BA7517;">INST</span>
+            <span class="dl-cat-title">Standalone Instrument Manuals</span>
+            <span class="dl-cat-sub">Operations manuals for all standalone GAACE instruments</span>
+          </div>
+          <span class="dl-arrow">&#9660;</span>
+        </button>
+        <div class="dl-cat-body" style="display:none;">
+          <a href="docs/standalone/Electrometer.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Electrometer</div><div class="dl-desc">Pico-ampere current detector — 1 pA sensitivity, selectable gain and polarity, DC bias input</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/standalone/FAIMS_Rectangular_Waveform_Generator.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">FAIMS Rectangular Waveform Generator</div><div class="dl-desc">Standalone rectangular waveform generator for FAIMS applications — high voltage, adjustable duty cycle</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/standalone/FET_Pulsers.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">FET Pulsers</div><div class="dl-desc">High-speed FET-based pulse generators for ion gating and switching applications</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/standalone/FET_Switch.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">FET TW Switch</div><div class="dl-desc">High-speed FET SPDT switch — 15 ns rise/fall, 300V GDT overvoltage protection, MIPS compatible</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/standalone/MFT.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Multi-Function Twave (MFT)</div><div class="dl-desc">Standalone traveling wave driver — 2x 8-channel outputs, SLIM, CRIMP, and accumulation support</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/standalone/RF_Generator.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">RF Generator</div><div class="dl-desc">Standalone RF driver for ion funnels and guides — 500 KHz to 5 MHz, USB/Ethernet, auto-tune</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/standalone/RF_Mega.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">RF Mega</div><div class="dl-desc">High-power standalone RF driver — 120 to 200W output, drives up to 5000 pF capacitive loads</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/standalone/SLIM_Reverser.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">SLIM Reverser</div><div class="dl-desc">16-pole analog TWAVE direction control switch — isolated control input, 100 Vp-p maximum</div></div><div class="dl-btn">PDF &#8595;</div></a>
+        </div>
+      </div>
+
+      <!-- TECHNICAL & BUSINESS -->
+      <div class="dl-cat">
+        <button onclick="toggleDL(this)" class="dl-cat-btn">
+          <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;">
+            <span class="dl-badge" style="background:#378ADD;">BIZ</span>
+            <span class="dl-cat-title">Technical &amp; Business Documents</span>
+            <span class="dl-cat-sub">Rates, warranty, and capabilities overview</span>
+          </div>
+          <span class="dl-arrow">&#9660;</span>
+        </button>
+        <div class="dl-cat-body" style="display:none;">
+          <a href="docs/resources/Rate_Sheet.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Rate Sheet</div><div class="dl-desc">Current consulting and engineering rates for custom development projects</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/resources/Warranty_Statement.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Warranty Statement</div><div class="dl-desc">One-year limited warranty terms covering all GAACE products — workmanship and materials</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/resources/Capabilities_Overview.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Capabilities Overview</div><div class="dl-desc">Full summary of GAACE engineering capabilities, equipment, and services</div></div><div class="dl-btn">PDF &#8595;</div></a>
+        </div>
+      </div>
+
     </div>
-    <div class="dl-sec fade">
-      <div class="dl-sec-title">Software</div>
-      <table class="dl-table">
-        <tr><td>MIPS App — macOS</td><td>Latest release · Free</td><td><a href="https://github.com/GordonAnderson" target="_blank" class="dl-link">GitHub ↗</a></td></tr>
-        <tr><td>MIPS App — Windows</td><td>Latest release · Free</td><td><a href="https://github.com/GordonAnderson" target="_blank" class="dl-link">GitHub ↗</a></td></tr>
-        <tr><td>Example Control Panels &amp; Scripts</td><td>Sample .cfg files for common setups</td><td><a href="https://github.com/GordonAnderson" target="_blank" class="dl-link">GitHub ↗</a></td></tr>
-        <tr><td>MIPS Firmware</td><td>Field-upgradable via MIPS app</td><td><a href="https://github.com/GordonAnderson" target="_blank" class="dl-link">GitHub ↗</a></td></tr>
-      </table>
-    </div>
-    <div class="dl-sec fade">
-      <div class="dl-sec-title">Technical &amp; Business Documents</div>
-      <table class="dl-table">
-        <tr><td>Rate Sheet</td><td>Consulting &amp; Engineering Rates · March 2026</td><td><a href="docs/resources/RateSheet03292026.pdf" class="dl-link" download>PDF ↓</a></td></tr>
-        <tr><td>Warranty Statement</td><td>One-Year Limited Warranty</td><td><a href="docs/resources/Warranty_Statement.pdf" class="dl-link" download>PDF ↓</a></td></tr>
-        <tr><td>Capabilities Overview</td><td>Resources &amp; Capabilities</td><td><a href="docs/resources/ResourcesCapabilities.pdf" class="dl-link" download>PDF ↓</a></td></tr>
-      </table>
-    </div>
-    <div class="warranty-bar fade">
-      <span style="font-size:1.5rem;">🛡️</span>
+
+    <div class="warranty-bar fade" style="margin-top:2rem;">
+      <span style="font-size:1.5rem;">&#128737;</span>
       <div><h4>One-Year Warranty</h4><p>All products warranted against defects in workmanship and materials for 12 months from date of sale. Includes free phone support and firmware updates for one year.</p></div>
     </div>
+
+    <script>
+    function toggleDL(btn) {
+      var body = btn.nextElementSibling;
+      var arrow = btn.querySelector('.dl-arrow');
+      var isOpen = body.style.display === 'block';
+      body.style.display = isOpen ? 'none' : 'block';
+      arrow.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+      btn.style.background = isOpen ? 'var(--surface)' : 'var(--white)';
+      btn.style.borderBottomLeftRadius = isOpen ? '4px' : '0';
+      btn.style.borderBottomRightRadius = isOpen ? '4px' : '0';
+    }
+    </script>
+
+    <style>
+      .dl-cat-btn { width:100%;display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.1rem;background:var(--surface);border:1px solid var(--rule);border-radius:4px;cursor:pointer;transition:background .2s;text-align:left; }
+      .dl-cat-btn:hover { background:var(--white); }
+      .dl-badge { font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:white;padding:.18rem .55rem;border-radius:2px;flex-shrink:0; }
+      .dl-cat-title { font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink); }
+      .dl-cat-sub { font-size:.8rem;color:var(--mid); }
+      .dl-arrow { font-size:.78rem;color:var(--mid);transition:transform .2s;flex-shrink:0; }
+      .dl-cat-body { border:1px solid var(--rule);border-top:none;border-radius:0 0 4px 4px;overflow:hidden; }
+      .dl-row { display:grid;grid-template-columns:2rem 1fr auto;gap:.75rem;padding:.85rem 1.1rem;border-bottom:1px solid var(--rule2);align-items:center;text-decoration:none;transition:background .15s;color:inherit; }
+      .dl-row:last-child { border-bottom:none; }
+      .dl-row:hover { background:var(--surface); }
+      .dl-icon { font-size:1rem;text-align:center; }
+      .dl-name { font-family:var(--serif);font-size:.92rem;font-weight:600;color:var(--ink);margin-bottom:.15rem; }
+      .dl-desc { font-size:.78rem;color:var(--mid);line-height:1.45; }
+      .dl-btn { font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--red);background:var(--red-pale);border:1px solid rgba(204,31,31,.15);padding:.28rem .7rem;border-radius:2px;white-space:nowrap;transition:background .15s; }
+      .dl-row:hover .dl-btn { background:rgba(204,31,31,.12); }
+      .dl-btn-gh { color:var(--ink3);background:var(--surface);border-color:var(--rule); }
+      .dl-row:hover .dl-btn-gh { background:var(--rule2); }
+      @media(max-width:600px) { .dl-cat-sub{display:none;} }
+    </style>
+
   </div>
 </section>
 

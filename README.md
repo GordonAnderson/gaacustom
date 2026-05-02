@@ -48,42 +48,42 @@ gaacustom/
 └── docs/
       │
       ├── mips/                         ← MIPS system & module manuals
-      │     ├── MIPS_Operations_Manual.pdf              ○ Pending
-      │     ├── ARB_Module.pdf                          ○ Pending
-      │     ├── Quad_Module.pdf                         ○ Pending
-      │     ├── DCbias_Switch_Module.pdf                ○ Pending
-      │     ├── DCbias_Analog_Control_Module.pdf        ○ Pending
-      │     ├── DCbias_Output_Current_Monitor.pdf       ○ Pending
-      │     ├── FAIMS_Module.pdf                        ○ Pending
-      │     ├── Level_Detection_Module.pdf              ○ Pending
-      │     ├── Filament_Module.pdf                     ○ Pending
-      │     ├── FPGA_Module.pdf                         ○ Pending
-      │     ├── RF_Head_Calibration.pdf                 ○ Pending
-      │     ├── Ultra_RF_High_Q_Head.pdf                ○ Pending
-      │     ├── RF_Gating.pdf                           ○ Pending
-      │     ├── Multiple_Tables.pdf                     ○ Pending
-      │     ├── ADC_Change_Detection.pdf                ○ Pending
-      │     └── Delayed_Triggering.pdf                  ○ Pending
+      │     ├── MIPS_Operations_Manual.pdf              ✓ Done
+      │     ├── ARB_Module.pdf                          ✓ Done
+      │     ├── Quad_Module.pdf                         ✓ Done
+      │     ├── DCbias_Switch_Module.pdf                ✓ Done
+      │     ├── DCbias_Analog_Control_Module.pdf        ✓ Done
+      │     ├── DCbias_Output_Current_Monitor.pdf       ✓ Done
+      │     ├── FAIMS_Module.pdf                        ✓ Done
+      │     ├── Level_Detection_Module.pdf              ✓ Done
+      │     ├── Filament_Module.pdf                     ✓ Done
+      │     ├── FPGA_Module.pdf                         ✓ Done
+      │     ├── RF_Head_Calibration.pdf                 ✓ Done
+      │     ├── Ultra_RF_High_Q_Head.pdf                ✓ Done
+      │     ├── RF_Gating.pdf                           ✓ Done
+      │     ├── Multiple_Tables.pdf                     ✓ Done
+      │     ├── ADC_Change_Detection.pdf                ✓ Done
+      │     └── Delayed_Triggering.pdf                  ✓ Done
       │
       ├── software/                     ← MIPS host software docs
-      │     ├── MIPS_User_Manual.pdf                    ○ Pending
-      │     ├── Timing_Generator.pdf                    ○ Pending
-      │     └── Pulse_Sequence_Generation.pdf           ○ Pending
+      │     ├── MIPS_User_Manual.pdf                    ✓ Done
+      │     ├── Timing_Generator.pdf                    ✓ Done
+      │     └── Pulse_Sequence_Generation.pdf           ✓ Done
       │     (Example config files and software download → GitHub links)
       │
       ├── standalone/                   ← Standalone instrument manuals
-      │     ├── Electrometer.pdf                        ○ Pending
+      │     ├── Electrometer.pdf                        ✓ Done
       │     ├── FAIMS_Rectangular_Waveform_Generator.pdf ○ Pending
       │     ├── FET_Pulsers.pdf                         ○ Pending
       │     ├── FET_Switch.pdf                          ○ Pending
-      │     ├── MFT.pdf                                 ○ Pending
-      │     ├── RF_Generator.pdf                        ○ Pending
-      │     ├── RF_Mega.pdf                             ○ Pending
-      │     └── SLIM_Reverser.pdf                       ○ Pending
+      │     ├── MFT.pdf                                 ✓ Done
+      │     ├── RF_Generator.pdf                        ✓ Done
+      │     ├── RF_Mega.pdf                             ✓ Done
+      │     └── SLIM_Reverser.pdf                       ✓ Done
       │
       └── resources/                    ← Business & technical documents
-            ├── Rate_Sheet.pdf                          ○ Pending
-            ├── Warranty_Statement.pdf                  ○ Pending
+            ├── Rate_Sheet.pdf                          ✓ Done
+            ├── Warranty_Statement.pdf                  ✓ Done
             └── Capabilities_Overview.pdf               ○ Pending
 ```
 

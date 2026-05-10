@@ -14,7 +14,7 @@ Paste this document along with `index.html` at the start of any new Claude chat 
 **GitHub Pages URL:** https://GordonAnderson.github.io/gaacustom  
 **Email:** gaa@gaa-ce.com  
 **Phone:** 509.628.6851  
-**Address:** 101904 Wiser Pkwy, Suite 105, Kennewick, WA 99338  
+**Address:** 101904 Wiser Pkwy, **Suites 105 & 106**, Kennewick, WA 99338  
 
 ---
 
@@ -25,6 +25,8 @@ GAA Custom Electronics develops custom electronics monitoring and control system
 **Primary product:** MIPS (Modular Intelligent Power Sources) — a modular, software-configurable control platform for ion optics, RF drive, DC bias, traveling wave, FAIMS, and more.
 
 **Customers:** Universities, national laboratories, pharmaceutical companies, and instrument manufacturers (Bruker, Thermo Fisher, Agilent). 200+ systems deployed in 16+ countries.
+
+**Facility:** 1,800 sq ft across two attached suites (105 & 106) at 101904 Wiser Pkwy, Kennewick WA. Includes electronics R&D lab, SMT assembly, machine shop (mill, lathe, CNC), vacuum/instrument development lab, and main office.
 
 ---
 
@@ -102,8 +104,14 @@ gaacustom/
 │     ├── soft-landing.jpg        ✓ GAACE soft landing system
 │     ├── slim-wsu.jpg            ✓ WSU 8-meter SLIM system
 │     ├── og-preview.jpg          ✓ Open Graph social preview
-│     ├── lab-facility.jpg        ○ pending
-│     └── team.jpg                ○ pending
+│     ├── ElectronicsRD.jpg       ✓ Electronics R&D lab — used in Facility gallery + About
+│     ├── MassSpecs.jpg           ✓ SCIEX 6500/6600 mass specs — used in Facility gallery + Capabilities card
+│     ├── PickNplace.jpg          ✓ HW-T4-50F pick-and-place robot — used in Facility gallery + Capabilities card
+│     ├── millLath.jpg            ✓ Mill and lathe with DRO — used in Facility gallery + Capabilities card
+│     ├── 3axisCNC.jpg            ✓ 3-axis CNC mill table — used in Facility gallery
+│     ├── SystemAssembly.jpg      ✓ Assembly bench with team member — used in Facility gallery
+│     ├── VacuuumDevSystems.jpg   ✓ Vacuum/instrument dev lab — used in Facility gallery (note: double-u in filename)
+│     └── Office.jpg              ✓ Main office Suite 105 — used in Facility gallery
 │
 └── docs/
       ├── mips/                   ○ 16 PDFs pending upload
@@ -118,7 +126,7 @@ See README.md in the repo for complete filename list for all pending PDFs.
 
 ## Website Sections (in order)
 
-1. **Nav** — fixed, dark on hero / transitions to white on scroll. Logo + links + "Request Quote" CTA.
+1. **Nav** — fixed, dark on hero / transitions to white on scroll. Logo + links + "Request Quote" CTA. CTA has `white-space:nowrap` to prevent line-break on narrow viewports.
 2. **Hero** — dark background, animated grid, red glow. MIPS panel card on right.
 3. **Wave divider** — SVG wave transitioning dark hero to light body.
 4. **Marquee** — red scrolling strip with product names.
@@ -128,11 +136,12 @@ See README.md in the repo for complete filename list for all pending PDFs.
 8. **Applications** — two examples so far: (1) GAACE soft landing system, (2) Prof. Brian Clowers WSU 8-meter SLIM system. Layout alternates photo left/right.
 9. **Global Deployments** — Leaflet interactive map. Stats: 200+ systems, 16+ countries, 64+ institutions, 10+ years. 64 pins. CartoDB Positron tiles.
 10. **Testimonials** — dark background section. Currently one testimonial: Dr. Brian Clowers, Professor of Chemistry, WSU. Links to his faculty page.
-11. **Capabilities** — "From Problem to Solution." 4-step process + 6 capability cards grid.
-12. **About** — company story + team cards (Gordon, Christopher, Meri).
-13. **Downloads** — accordion style, 4 categories: MIPS System (16 docs), MIPS Host Software (5 items), Standalone Instruments (8 docs), Technical & Business (3 docs). PDFs not yet uploaded to GitHub but links are wired up with correct filenames.
-14. **Contact** — dark background. Contact details + Google Maps embed (101904 Wiser Pkwy, Kennewick WA) + contact form (mailto: gaa@gaa-ce.com).
-15. **Footer** — darkest background. Links + contact info.
+11. **Capabilities** — "From Problem to Solution." 4-step process + 6 capability cards grid. Three cards (In-House Fabrication, Mass Spec Expertise, Mechanical Design) now have photo headers using PickNplace.jpg, MassSpecs.jpg, millLath.jpg respectively.
+12. **Facility Gallery** — *(new section added May 2026)* "1,800 sq ft of Capability." 8 facility photos in 3 rows: Row 1 (2-up large): ElectronicsRD + VacuuumDevSystems. Row 2 (3-up): PickNplace + millLath + 3axisCNC. Row 3 (2-up): SystemAssembly + Office. Each photo has a red category label and caption.
+13. **About** — company story + ElectronicsRD.jpg facility photo above team cards + team cards (Gordon, Christopher, Meri).
+14. **Downloads** — accordion style, 4 categories: MIPS System (16 docs), MIPS Host Software (5 items), Standalone Instruments (8 docs), Technical & Business (3 docs). PDFs not yet uploaded to GitHub but links are wired up with correct filenames.
+15. **Contact** — dark background. Contact details + Google Maps embed (101904 Wiser Pkwy, Kennewick WA) + contact form (mailto: gaa@gaa-ce.com). Address updated to Suites 105 & 106.
+16. **Footer** — darkest background. Links + contact info. Company column now includes "Our Facility" link → `#facility`.
 
 ---
 
@@ -205,14 +214,24 @@ To update: edit prices.json on GitHub only. index.html contains fallback values 
 ## Outstanding To-Do Items
 
 - [ ] Upload all PDFs to docs/ folders (see README.md for filenames)
+- [ ] Upload 8 facility photos to `images/` folder on GitHub (exact filenames listed in File Structure above — note the double-u in `VacuuumDevSystems.jpg`)
 - [ ] More customer testimonials (emails sent to select customers)
 - [ ] Customer lab photos for Applications section
 - [ ] Module list corrections from Gordon (detailed list promised)
 - [ ] GitHub MIPS software repo URL (to update 4 software download links from generic github.com/GordonAnderson to specific repo)
-- [ ] Lab/facility photo for About section
-- [ ] Team photos (optional)
+- [ ] Team photos (optional — currently showing initials avatars)
 - [ ] More sales location data (invoices 1,036+)
 - [ ] Additional application examples (FAIMS, quadrupole MS, ion funnels)
+
+---
+
+## Other Project Documents
+
+The following documents are maintained separately and used to generate the PDF Capabilities Overview:
+
+- **Capabilities_Overview.docx** — full capabilities and resources document with embedded facility photos (5 photos: ElectronicsRD, PickNplace, millLath, MassSpecs, SystemAssembly). Generated with docx-js. Source build script: `build_capabilities.js`.
+- **RateSheet03292026.docx** — current rate sheet
+- **Warranty_Statement.docx** — warranty policy document
 
 ---
 
@@ -229,7 +248,7 @@ To update: edit prices.json on GitHub only. index.html contains fallback values 
 Edit prices.json on GitHub only — never need to touch index.html
 
 **For new photos:**
-Upload photo here in chat → Claude processes and optimizes it → adds to index.html with correct img tag → you upload both index.html and the photo to GitHub
+Upload photo here in chat → Claude adds to index.html with correct img tag → upload both index.html and the photo to GitHub in the `images/` folder
 
 **For new PDFs:**
 Rename to exact filename from README.md → upload to correct docs/ subfolder on GitHub → download link goes live automatically, no HTML change needed
@@ -239,6 +258,9 @@ Provide city/state or city/country list → Claude adds pins to the Leaflet loca
 
 **For new testimonials:**
 Provide quote text, name, title, institution, and optionally a profile URL → Claude adds a new card to the Testimonials section
+
+**For Capabilities_Overview.docx updates:**
+Paste this document + build_capabilities.js into a new Claude chat → describe changes → Claude regenerates the .docx
 
 ---
 
@@ -254,3 +276,6 @@ Provide quote text, name, title, institution, and optionally a profile URL → C
 - Favicon tags already in `<head>` referencing `favicons/` folder
 - Open Graph tags already in `<head>` referencing `images/og-preview.jpg`
 - Sitemap reference already in `<head>`
+- **Facility section** (`id="facility"`) sits between Capabilities and About — preserve this order
+- **VacuuumDevSystems.jpg** has a double-u typo in the filename — this matches what is referenced in index.html, do not "correct" it or the image will break
+- Address is **Suites 105 & 106** throughout — the facility occupies two attached units

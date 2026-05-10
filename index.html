@@ -87,7 +87,7 @@
     .nav-links a:hover{color:var(--white)}
     nav.scrolled .nav-links a{color:var(--ink3)}
     nav.scrolled .nav-links a:hover{color:var(--red)}
-    .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:.45rem 1.2rem;border-radius:3px;font-size:.84rem!important}
+    .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:.45rem 1.2rem;border-radius:3px;font-size:.84rem!important;white-space:nowrap}
     .nav-cta:hover{background:var(--red-dk)!important;color:var(--white)!important}
     nav.scrolled .nav-cta{color:var(--white)!important}
     .hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px}
@@ -408,6 +408,7 @@
       <li><a href="#applications">Applications</a></li>
       <li><a href="#testimonials">Testimonials</a></li>
       <li><a href="#capabilities">Capabilities</a></li>
+      <li><a href="#facility">Facility</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#support">Downloads</a></li>
       <li><a href="#contact" class="nav-cta">Request Quote</a></li>
@@ -1514,14 +1515,96 @@
       <div class="cap-grid fade">
         <div class="cap-cell"><div class="cap-icon">⚡</div><div class="cap-title">Electronic Design</div><div class="cap-desc">Analog &amp; digital circuit design, SPICE simulation, PCB layout, prototyping and low-volume production.</div></div>
         <div class="cap-cell"><div class="cap-icon">🔧</div><div class="cap-title">Embedded Software</div><div class="cap-desc">ARM microcontroller firmware, real-time control software, Python scripting, and MIPS JavaScript automation.</div></div>
-        <div class="cap-cell"><div class="cap-icon">🏭</div><div class="cap-title">In-House Fabrication</div><div class="cap-desc">SMT pick-and-place, reflow oven, 3-axis CNC mill, lathe, drill press, and 3D printing (FDM &amp; resin).</div></div>
-        <div class="cap-cell"><div class="cap-icon">🔬</div><div class="cap-title">Mass Spec Expertise</div><div class="cap-desc">In-house triple TOF and triple quad instruments for development and validation. Deep knowledge of ion optics.</div></div>
-        <div class="cap-cell"><div class="cap-icon">📐</div><div class="cap-title">Mechanical Design</div><div class="cap-desc">3D CAD, bespoke enclosure design, custom panel fabrication, and chassis sourcing from METCASE and others.</div></div>
+        <div class="cap-cell cap-cell-photo">
+          <img src="images/PickNplace.jpg" alt="Automatic SMT pick-and-place robot for PCB assembly" style="width:100%;height:160px;object-fit:cover;display:block;border-radius:3px 3px 0 0;margin:-1.5rem -1.5rem .75rem -1.5rem;width:calc(100% + 3rem);" />
+          <div class="cap-icon">🏭</div><div class="cap-title">In-House Fabrication</div><div class="cap-desc">SMT pick-and-place, reflow oven, 3-axis CNC mill, lathe, drill press, and 3D printing (FDM &amp; resin).</div>
+        </div>
+        <div class="cap-cell cap-cell-photo">
+          <img src="images/MassSpecs.jpg" alt="SCIEX 6500 and 6600 mass spectrometers" style="width:100%;height:160px;object-fit:cover;display:block;border-radius:3px 3px 0 0;margin:-1.5rem -1.5rem .75rem -1.5rem;width:calc(100% + 3rem);" />
+          <div class="cap-icon">🔬</div><div class="cap-title">Mass Spec Expertise</div><div class="cap-desc">In-house SCIEX 6500 triple quad and 6600 Triple TOF for development and validation. Deep knowledge of ion optics.</div>
+        </div>
+        <div class="cap-cell cap-cell-photo">
+          <img src="images/millLath.jpg" alt="Precision mill and lathe with DRO" style="width:100%;height:160px;object-fit:cover;display:block;border-radius:3px 3px 0 0;margin:-1.5rem -1.5rem .75rem -1.5rem;width:calc(100% + 3rem);" />
+          <div class="cap-icon">📐</div><div class="cap-title">Mechanical Design</div><div class="cap-desc">3D CAD, bespoke enclosure design, CNC and manual machining, custom panel fabrication and chassis work.</div>
+        </div>
         <div class="cap-cell"><div class="cap-icon">🌐</div><div class="cap-title">Open Source</div><div class="cap-desc">All schematics, PCB layouts, firmware, and software available on GitHub. Full documentation with every system.</div></div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- ── FACILITY GALLERY ── -->
+<section id="facility" style="padding:6rem 0;background:var(--surface);border-top:1px solid var(--rule);">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:3rem;" class="fade">
+      <div class="lbl">Our Facility</div>
+      <h2 class="h2">1,800 sq ft of <em>Capability</em></h2>
+      <p style="color:var(--mid);max-width:560px;margin:.75rem auto 0;font-size:.97rem;line-height:1.7;">Two attached suites in Kennewick, WA — fully equipped for every stage of development from concept through finished instrument.</p>
+    </div>
+
+    <!-- Row 1: two large photos -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem;" class="fade">
+      <div style="border-radius:6px;overflow:hidden;border:1px solid var(--rule);box-shadow:0 2px 12px rgba(0,0,0,.06);">
+        <img src="images/ElectronicsRD.jpg" alt="Electronics R&D laboratory with oscilloscopes, spectrum analyzer, and active development bench" style="width:100%;height:300px;object-fit:cover;display:block;" />
+        <div style="padding:.9rem 1rem;background:var(--white);border-top:1px solid var(--rule);">
+          <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.25rem;">Electronics R&amp;D Lab</div>
+          <div style="font-size:.9rem;color:var(--ink3);">Full-spectrum test bench — oscilloscopes, spectrum analyzer, logic analyzer, function generators, and precision power supplies</div>
+        </div>
+      </div>
+      <div style="border-radius:6px;overflow:hidden;border:1px solid var(--rule);box-shadow:0 2px 12px rgba(0,0,0,.06);">
+        <img src="images/VacuuumDevSystems.jpg" alt="Vacuum system development lab with mass spectrometers, turbo pumps, and test chambers" style="width:100%;height:300px;object-fit:cover;display:block;" />
+        <div style="padding:.9rem 1rem;background:var(--white);border-top:1px solid var(--rule);">
+          <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.25rem;">Vacuum &amp; Instrument Dev Lab</div>
+          <div style="font-size:.9rem;color:var(--ink3);">Turbo and mechanical pumps, test chambers, vacuum gauges, and feedthroughs — plus in-house mass specs for real-world validation</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: three photos -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-bottom:1.5rem;" class="fade">
+      <div style="border-radius:6px;overflow:hidden;border:1px solid var(--rule);box-shadow:0 2px 12px rgba(0,0,0,.06);">
+        <img src="images/PickNplace.jpg" alt="HW-T4-50F automatic pick-and-place robot for SMT PCB assembly" style="width:100%;height:210px;object-fit:cover;display:block;" />
+        <div style="padding:.9rem 1rem;background:var(--white);border-top:1px solid var(--rule);">
+          <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.25rem;">SMT Assembly</div>
+          <div style="font-size:.88rem;color:var(--ink3);">Automatic pick-and-place robot and reflow oven for in-house PCB production</div>
+        </div>
+      </div>
+      <div style="border-radius:6px;overflow:hidden;border:1px solid var(--rule);box-shadow:0 2px 12px rgba(0,0,0,.06);">
+        <img src="images/millLath.jpg" alt="Precision mill and lathe with digital read-out" style="width:100%;height:210px;object-fit:cover;display:block;" />
+        <div style="padding:.9rem 1rem;background:var(--white);border-top:1px solid var(--rule);">
+          <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.25rem;">Machine Shop</div>
+          <div style="font-size:.88rem;color:var(--ink3);">Mill and lathe with DRO, drill press — precision machining for panels and custom parts</div>
+        </div>
+      </div>
+      <div style="border-radius:6px;overflow:hidden;border:1px solid var(--rule);box-shadow:0 2px 12px rgba(0,0,0,.06);">
+        <img src="images/3axisCNC.jpg" alt="3-axis CNC mill table for precision panel and fixture fabrication" style="width:100%;height:210px;object-fit:cover;display:block;" />
+        <div style="padding:.9rem 1rem;background:var(--white);border-top:1px solid var(--rule);">
+          <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.25rem;">CNC Fabrication</div>
+          <div style="font-size:.88rem;color:var(--ink3);">3-axis CNC mill for repeatable precision panel cutouts and custom fixtures</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 3: two photos -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;" class="fade">
+      <div style="border-radius:6px;overflow:hidden;border:1px solid var(--rule);box-shadow:0 2px 12px rgba(0,0,0,.06);">
+        <img src="images/SystemAssembly.jpg" alt="System assembly and integration bench with component inventory shelving" style="width:100%;height:240px;object-fit:cover;display:block;" />
+        <div style="padding:.9rem 1rem;background:var(--white);border-top:1px solid var(--rule);">
+          <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.25rem;">System Assembly</div>
+          <div style="font-size:.9rem;color:var(--ink3);">Dedicated assembly and integration bench with organized component inventory and full hand-tool complement</div>
+        </div>
+      </div>
+      <div style="border-radius:6px;overflow:hidden;border:1px solid var(--rule);box-shadow:0 2px 12px rgba(0,0,0,.06);">
+        <img src="images/Office.jpg" alt="Main office with design workstation, 3D printer, and company awards" style="width:100%;height:240px;object-fit:cover;display:block;" />
+        <div style="padding:.9rem 1rem;background:var(--white);border-top:1px solid var(--rule);">
+          <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.25rem;">Main Office — Suite 105</div>
+          <div style="font-size:.9rem;color:var(--ink3);">Design workstation, 3D printer, and project management hub — where every customer engagement begins</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ── END FACILITY GALLERY ── -->
 
 <!-- ── ABOUT (surface) ── -->
 <section id="about">
@@ -1537,10 +1620,13 @@
           <div class="hi">Open-source hardware and software — full design transparency</div>
           <div class="hi">Eco-friendly assembly using water-based cleaning processes</div>
           <div class="hi">PCB fabrication via PCBWay, in-house SMT assembly</div>
-          <div class="hi">800 sq ft instrument development laboratory, Kennewick WA</div>
+          <div class="hi">1,800 sq ft instrument development laboratory (Suites 105 &amp; 106), Kennewick WA</div>
         </div>
       </div>
       <div class="fade">
+        <div style="border-radius:6px;overflow:hidden;border:1px solid var(--rule);margin-bottom:1.5rem;box-shadow:0 2px 12px rgba(0,0,0,.06);">
+          <img src="images/ElectronicsRD.jpg" alt="GAA Custom Electronics R&D laboratory — active electronics development bench" style="width:100%;height:220px;object-fit:cover;display:block;" />
+        </div>
         <div class="team-lbl">The Team</div>
         <div class="team-list">
           <div class="team-card"><div class="av">GA</div><div><div class="tc-name">Gordon Anderson</div><div class="tc-role">Founder · Electrical Engineer</div><div class="tc-bio">Lead engineer responsible for circuit design, embedded software, client relationships, and quote development. Over a decade of mass spectrometry electronics experience.</div></div></div>
@@ -1703,7 +1789,7 @@
         <h2 class="c-head">Tell Us About<br/><em>Your Project</em></h2>
         <p class="c-sub">Most projects start with a conversation. Describe what you're trying to accomplish and we'll respond quickly with ideas and pricing. First 30 minutes is always free.</p>
         <div class="c-items">
-          <div class="ci"><div class="ci-icon">📍</div><div><div class="ci-lbl">Location</div><div class="ci-val">101904 Wiser Pkwy, Suite 105<br/>Kennewick, WA 99338</div></div></div>
+          <div class="ci"><div class="ci-icon">📍</div><div><div class="ci-lbl">Location</div><div class="ci-val">101904 Wiser Pkwy, Suites 105 &amp; 106<br/>Kennewick, WA 99338</div></div></div>
           <div class="ci"><div class="ci-icon">📞</div><div><div class="ci-lbl">Phone</div><div class="ci-val"><a href="tel:+15096286851">509.628.6851</a></div></div></div>
           <div class="ci"><div class="ci-icon">✉️</div><div><div class="ci-lbl">Email</div><div class="ci-val"><a href="mailto:gaa@gaa-ce.com">gaa@gaa-ce.com</a></div></div></div>
           <div class="ci"><div class="ci-icon">🌐</div><div><div class="ci-lbl">Web</div><div class="ci-val"><a href="http://www.GAAcustom.com">www.GAAcustom.com</a></div></div></div>
@@ -1788,6 +1874,7 @@
       <ul class="fcol-links">
         <li><a href="#about">About Us</a></li>
         <li><a href="#capabilities">Capabilities</a></li>
+        <li><a href="#facility">Our Facility</a></li>
         <li><a href="#how-it-works">Software</a></li>
         <li><a href="#applications">Applications</a></li>
         <li><a href="#support">Downloads</a></li>

@@ -1563,10 +1563,14 @@
     <!-- Row 2: three photos -->
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-bottom:1.5rem;" class="fade">
       <div style="border-radius:6px;overflow:hidden;border:1px solid var(--rule);box-shadow:0 2px 12px rgba(0,0,0,.06);">
-        <img src="images/PickNplace.jpg" alt="HW-T4-50F automatic pick-and-place robot for SMT PCB assembly" style="width:100%;height:210px;object-fit:cover;display:block;" />
+        <div style="position:relative;height:210px;overflow:hidden;background:#000;" id="pnp-wrap">
+          <img id="pnp-img" src="images/PickNplace.jpg" alt="HW-T4-50F automatic pick-and-place robot for SMT PCB assembly" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          <video id="pnp-vid" src="images/picknplace-demo.mp4" muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:none;position:absolute;top:0;left:0;"></video>
+          <button onclick="toggleVid('pnp')" id="pnp-btn" style="position:absolute;bottom:.6rem;right:.6rem;background:rgba(0,0,0,.65);color:white;border:1px solid rgba(255,255,255,.35);border-radius:3px;padding:.3rem .65rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;backdrop-filter:blur(4px);">▶ Watch</button>
+        </div>
         <div style="padding:.9rem 1rem;background:var(--white);border-top:1px solid var(--rule);">
           <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.25rem;">SMT Assembly</div>
-          <div style="font-size:.88rem;color:var(--ink3);">Automatic pick-and-place robot and reflow oven for in-house PCB production</div>
+          <div style="font-size:.88rem;color:var(--ink3);">Automatic pick-and-place robot assembling a Funnel PCB — in-house SMT production</div>
         </div>
       </div>
       <div style="border-radius:6px;overflow:hidden;border:1px solid var(--rule);box-shadow:0 2px 12px rgba(0,0,0,.06);">
@@ -1577,10 +1581,14 @@
         </div>
       </div>
       <div style="border-radius:6px;overflow:hidden;border:1px solid var(--rule);box-shadow:0 2px 12px rgba(0,0,0,.06);">
-        <img src="images/3axisCNC.jpg" alt="3-axis CNC mill table for precision panel and fixture fabrication" style="width:100%;height:210px;object-fit:cover;display:block;" />
+        <div style="position:relative;height:210px;overflow:hidden;background:#000;" id="cnc-wrap">
+          <img id="cnc-img" src="images/3axisCNC.jpg" alt="3-axis CNC mill table for precision panel and fixture fabrication" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          <video id="cnc-vid" src="images/cnc-milling.mp4" muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:none;position:absolute;top:0;left:0;"></video>
+          <button onclick="toggleVid('cnc')" id="cnc-btn" style="position:absolute;bottom:.6rem;right:.6rem;background:rgba(0,0,0,.65);color:white;border:1px solid rgba(255,255,255,.35);border-radius:3px;padding:.3rem .65rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;backdrop-filter:blur(4px);">▶ Watch</button>
+        </div>
         <div style="padding:.9rem 1rem;background:var(--white);border-top:1px solid var(--rule);">
           <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.25rem;">CNC Fabrication</div>
-          <div style="font-size:.88rem;color:var(--ink3);">3-axis CNC mill for repeatable precision panel cutouts and custom fixtures</div>
+          <div style="font-size:.88rem;color:var(--ink3);">3-axis CNC mill cutting a panel — repeatable precision cutouts and custom fixtures</div>
         </div>
       </div>
     </div>
@@ -1603,6 +1611,25 @@
       </div>
     </div>
   </div>
+  <script>
+  function toggleVid(id) {
+    var img = document.getElementById(id+'-img');
+    var vid = document.getElementById(id+'-vid');
+    var btn = document.getElementById(id+'-btn');
+    var showing = vid.style.display === 'block';
+    if (showing) {
+      vid.pause();
+      vid.style.display = 'none';
+      img.style.display = 'block';
+      btn.textContent = '▶ Watch';
+    } else {
+      img.style.display = 'none';
+      vid.style.display = 'block';
+      vid.play();
+      btn.textContent = '✕ Photo';
+    }
+  }
+  </script>
 </section>
 <!-- ── END FACILITY GALLERY ── -->
 

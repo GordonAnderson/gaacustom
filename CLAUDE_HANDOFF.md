@@ -105,13 +105,15 @@ gaacustom/
 │     ├── slim-wsu.jpg            ✓ WSU 8-meter SLIM system
 │     ├── og-preview.jpg          ✓ Open Graph social preview
 │     ├── ElectronicsRD.jpg       ✓ Electronics R&D lab — used in Facility gallery + About
-│     ├── MassSpecs.jpg           ✓ SCIEX 6500/6600 mass specs — used in Facility gallery + Capabilities card
-│     ├── PickNplace.jpg          ✓ HW-T4-50F pick-and-place robot — used in Facility gallery + Capabilities card
+│     ├── MassSpecs.jpg           ✓ SCIEX 6500/6600 mass specs — used in Capabilities card
+│     ├── PickNplace.jpg          ✓ HW-T4-50F pick-and-place robot — used in Facility gallery (still photo) + Capabilities card
 │     ├── millLath.jpg            ✓ Mill and lathe with DRO — used in Facility gallery + Capabilities card
-│     ├── 3axisCNC.jpg            ✓ 3-axis CNC mill table — used in Facility gallery
+│     ├── 3axisCNC.jpg            ✓ 3-axis CNC mill table — used in Facility gallery (still photo)
 │     ├── SystemAssembly.jpg      ✓ Assembly bench with team member — used in Facility gallery
 │     ├── VacuuumDevSystems.jpg   ✓ Vacuum/instrument dev lab — used in Facility gallery (note: double-u in filename)
-│     └── Office.jpg              ✓ Main office Suite 105 — used in Facility gallery
+│     ├── Office.jpg              ✓ Main office Suite 105 — used in Facility gallery
+│     ├── picknplace-demo.mp4     ✓ Pick-and-place robot video — toggleable in Facility gallery (added May 2026)
+│     └── cnc-milling.mp4         ✓ 3-axis CNC milling video — toggleable in Facility gallery (added May 2026)
 │
 └── docs/
       ├── mips/                   ○ 16 PDFs pending upload
@@ -126,7 +128,7 @@ See README.md in the repo for complete filename list for all pending PDFs.
 
 ## Website Sections (in order)
 
-1. **Nav** — fixed, dark on hero / transitions to white on scroll. Logo + links + "Request Quote" CTA. CTA has `white-space:nowrap` to prevent line-break on narrow viewports.
+1. **Nav** — fixed, dark on hero / transitions to white on scroll. Logo + links + "Request Quote" CTA. CTA has `white-space:nowrap` to prevent line-break on narrow viewports. Nav links include: Products, Applications, Testimonials, Capabilities, Facility, About, Downloads, Contact.
 2. **Hero** — dark background, animated grid, red glow. MIPS panel card on right.
 3. **Wave divider** — SVG wave transitioning dark hero to light body.
 4. **Marquee** — red scrolling strip with product names.
@@ -136,12 +138,18 @@ See README.md in the repo for complete filename list for all pending PDFs.
 8. **Applications** — two examples so far: (1) GAACE soft landing system, (2) Prof. Brian Clowers WSU 8-meter SLIM system. Layout alternates photo left/right.
 9. **Global Deployments** — Leaflet interactive map. Stats: 200+ systems, 16+ countries, 64+ institutions, 10+ years. 64 pins. CartoDB Positron tiles.
 10. **Testimonials** — dark background section. Currently one testimonial: Dr. Brian Clowers, Professor of Chemistry, WSU. Links to his faculty page.
-11. **Capabilities** — "From Problem to Solution." 4-step process + 6 capability cards grid. Three cards (In-House Fabrication, Mass Spec Expertise, Mechanical Design) now have photo headers using PickNplace.jpg, MassSpecs.jpg, millLath.jpg respectively.
-12. **Facility Gallery** — *(new section added May 2026)* "1,800 sq ft of Capability." 8 facility photos in 3 rows: Row 1 (2-up large): ElectronicsRD + VacuuumDevSystems. Row 2 (3-up): PickNplace + millLath + 3axisCNC. Row 3 (2-up): SystemAssembly + Office. Each photo has a red category label and caption.
+11. **Capabilities** — "From Problem to Solution." 4-step process + 6 capability cards grid. Three cards (In-House Fabrication, Mass Spec Expertise, Mechanical Design) have photo headers using PickNplace.jpg, MassSpecs.jpg, millLath.jpg respectively.
+12. **Facility Gallery** — "1,800 sq ft of Capability." 3 rows of facility photos/videos:
+    - Row 1 (2-up large): ElectronicsRD.jpg + VacuuumDevSystems.jpg (static photos)
+    - Row 2 (3-up): **SMT Assembly** card + millLath.jpg + **CNC Fabrication** card
+      - SMT Assembly: shows PickNplace.jpg still photo by default; visitor clicks **"▶ Watch"** button to swap to `picknplace-demo.mp4` looping video; button changes to **"✕ Photo"** to switch back
+      - CNC Fabrication: shows 3axisCNC.jpg still photo by default; same toggle behavior with `cnc-milling.mp4`
+      - Toggle logic handled by `toggleVid(id)` JS function defined at the bottom of the facility section
+    - Row 3 (2-up): SystemAssembly.jpg + Office.jpg (static photos)
 13. **About** — company story + ElectronicsRD.jpg facility photo above team cards + team cards (Gordon, Christopher, Meri).
 14. **Downloads** — accordion style, 4 categories: MIPS System (16 docs), MIPS Host Software (5 items), Standalone Instruments (8 docs), Technical & Business (3 docs). PDFs not yet uploaded to GitHub but links are wired up with correct filenames.
 15. **Contact** — dark background. Contact details + Google Maps embed (101904 Wiser Pkwy, Kennewick WA) + contact form (mailto: gaa@gaa-ce.com). Address updated to Suites 105 & 106.
-16. **Footer** — darkest background. Links + contact info. Company column now includes "Our Facility" link → `#facility`.
+16. **Footer** — darkest background. Links + contact info. Company column includes "Our Facility" link → `#facility`.
 
 ---
 
@@ -214,7 +222,6 @@ To update: edit prices.json on GitHub only. index.html contains fallback values 
 ## Outstanding To-Do Items
 
 - [ ] Upload all PDFs to docs/ folders (see README.md for filenames)
-- [ ] Upload 8 facility photos to `images/` folder on GitHub (exact filenames listed in File Structure above — note the double-u in `VacuuumDevSystems.jpg`)
 - [ ] More customer testimonials (emails sent to select customers)
 - [ ] Customer lab photos for Applications section
 - [ ] Module list corrections from Gordon (detailed list promised)
@@ -250,6 +257,9 @@ Edit prices.json on GitHub only — never need to touch index.html
 **For new photos:**
 Upload photo here in chat → Claude adds to index.html with correct img tag → upload both index.html and the photo to GitHub in the `images/` folder
 
+**For new videos:**
+Convert iPhone .MOV to .MP4 (rename extension or use FreeConvert.com to compress), place in `images/` folder on GitHub. Reference as `images/filename.mp4` in a `<video>` element. See the facility gallery toggle pattern for how to pair a still photo with a video.
+
 **For new PDFs:**
 Rename to exact filename from README.md → upload to correct docs/ subfolder on GitHub → download link goes live automatically, no HTML change needed
 
@@ -271,7 +281,8 @@ Paste this document + build_capabilities.js into a new Claude chat → describe 
 - The nav color transition (dark over hero → white on scroll) uses `nav.classList.toggle('scrolled', window.scrollY > 80)` — preserve this
 - The MIPS featured card left panel uses flexbox column layout with front panel banner on top and mips-home.jpg below — don't revert to the old fixed-height layout
 - All external links (GitHub, Google Maps, WSU faculty pages) use `target="_blank"`
-- The `toggleDL()` function handles the downloads accordion, `toggleCat()` handles the modules accordion — both must be preserved
+- The `toggleDL()` function handles the downloads accordion, `toggleCat()` handles the modules accordion, `toggleVid(id)` handles the photo/video swap in the facility gallery — all three must be preserved
+- `toggleVid(id)` uses element IDs in the pattern `{id}-img`, `{id}-vid`, `{id}-btn` (e.g. `pnp-img`, `pnp-vid`, `pnp-btn` for pick-and-place; `cnc-img`, `cnc-vid`, `cnc-btn` for CNC). Follow this pattern for any additional video toggles.
 - Google Analytics ID: G-TBTBP7GLEK — already in the `<head>`
 - Favicon tags already in `<head>` referencing `favicons/` folder
 - Open Graph tags already in `<head>` referencing `images/og-preview.jpg`
@@ -279,3 +290,4 @@ Paste this document + build_capabilities.js into a new Claude chat → describe 
 - **Facility section** (`id="facility"`) sits between Capabilities and About — preserve this order
 - **VacuuumDevSystems.jpg** has a double-u typo in the filename — this matches what is referenced in index.html, do not "correct" it or the image will break
 - Address is **Suites 105 & 106** throughout — the facility occupies two attached units
+- Videos in the facility gallery are **not autoplay** — they only play when the visitor clicks "▶ Watch". Do not add autoplay to facility video elements.

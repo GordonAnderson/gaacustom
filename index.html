@@ -2030,5 +2030,54 @@
 })();
 </script>
 <!-- ── END PRICE LOADER ── -->
+
+<!-- ── KIOSK AUTO-SCROLL ── -->
+<!-- Activate by loading the page with ?kiosk=1 in the URL -->
+<!-- Example: https://www.GAAcustom.com?kiosk=1             -->
+<script>
+(function() {
+  if (new URLSearchParams(window.location.search).get('kiosk') !== '1') return;
+
+  const SPEED        = 1;     // pixels per frame (~60fps). Try 0.5 (slower) or 1.5 (faster)
+  const PAUSE_TOP    = 4000;  // ms to pause at top before scrolling down
+  const PAUSE_BOTTOM = 3000;  // ms to pause at bottom before jumping back to top
+
+  let active  = true;
+  let pausing = false;
+
+  function autoScroll() {
+    if (!active || pausing) return;
+    const atBottom = (window.innerHeight + window.scrollY) >= document.body.scrollHeight - 2;
+    if (atBottom) {
+      pausing = true;
+      setTimeout(function() {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        pausing = false;
+        setTimeout(autoScroll, PAUSE_TOP);
+      }, PAUSE_BOTTOM);
+      return;
+    }
+    window.scrollBy(0, SPEED);
+    requestAnimationFrame(autoScroll);
+  }
+
+  // Pause when someone interacts; resume 5 seconds after they stop
+  let resumeTimer;
+  function pauseAndResume() {
+    active = false;
+    clearTimeout(resumeTimer);
+    resumeTimer = setTimeout(function() {
+      active = true;
+      autoScroll();
+    }, 5000);
+  }
+  window.addEventListener('mousemove', pauseAndResume);
+  window.addEventListener('touchstart', pauseAndResume);
+
+  // Begin after initial pause at top
+  setTimeout(autoScroll, PAUSE_TOP);
+})();
+</script>
+<!-- ── END KIOSK AUTO-SCROLL ── -->
 </body>
 </html>

@@ -84,7 +84,7 @@ gaacustom/
       └── resources/                    ← Business & technical documents
             ├── Rate_Sheet.pdf                          ✓ Done
             ├── Warranty_Statement.pdf                  ✓ Done
-            └── Capabilities_Overview.pdf               ○ Pending
+            └── Capabilities_Overview.pdf               ✓ Done
 ```
 
 **Legend:**

@@ -2151,6 +2151,11 @@
 
   // Begin after initial pause at top
   setTimeout(autoScroll, PAUSE_TOP);
+
+  // Reload the page every 60 minutes to pick up any site updates
+  setTimeout(function() {
+    location.reload(true);
+  }, 60 * 60 * 1000);
 })();
 </script>
 <!-- ── END KIOSK AUTO-SCROLL ── -->

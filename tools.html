@@ -4,7 +4,52 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mass Spec Tools &amp; Calculators — GAA Custom Electronics</title>
-  <meta name="description" content="Free online calculators for mass spectrometry researchers. Quadrupole RF/DC voltage calculator with Mathieu stability diagram, ion kinetic energy, RF resonant circuit, and more." />
+
+  <!-- ── SEO ── -->
+  <meta name="description" content="Free online calculators for mass spectrometry researchers — quadrupole RF/DC voltage, Mathieu stability diagram, RF resonant circuit design, ion kinetic energy, capacitive load power, and useful reference links. All calculations run in your browser." />
+  <meta name="keywords" content="quadrupole calculator, Mathieu stability diagram, RF resonant circuit, ion kinetic energy, mass spectrometry tools, FAIMS calculator, ion guide, LC resonance, Wheeler formula, coil inductance, capacitive load power, CID collision energy, mass spec calculator, GAA Custom Electronics" />
+  <meta name="author" content="GAA Custom Electronics, LLC" />
+  <link rel="canonical" href="https://gaacustom.com/tools.html" />
+
+  <!-- ── OPEN GRAPH (LinkedIn, Facebook, Slack previews) ── -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://gaacustom.com/tools.html" />
+  <meta property="og:title"       content="Mass Spec Engineering Tools &amp; Calculators — GAA Custom Electronics" />
+  <meta property="og:description" content="Free interactive calculators for mass spectrometry researchers. Quadrupole RF/DC voltage, Mathieu stability diagram, RF resonant circuit, ion kinetic energy, capacitive load power, and curated reference links. No signup required." />
+  <meta property="og:image"       content="https://gaacustom.com/images/tools-preview.png" />
+  <meta property="og:site_name"   content="GAA Custom Electronics" />
+  <meta property="og:locale"      content="en_US" />
+
+  <!-- ── TWITTER / X CARD ── -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:url"         content="https://gaacustom.com/tools.html" />
+  <meta name="twitter:title"       content="Free Mass Spec Calculators — GAA Custom Electronics" />
+  <meta name="twitter:description" content="Quadrupole RF/DC, Mathieu stability diagram, RF resonant circuit, ion kinetic energy &amp; more. All run in your browser, no signup needed." />
+  <meta name="twitter:image"       content="https://gaacustom.com/images/tools-preview.png" />
+
+  <!-- ── SCHEMA.ORG STRUCTURED DATA ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Mass Spec Engineering Tools & Calculators",
+    "description": "Free interactive calculators for mass spectrometry researchers including quadrupole RF/DC voltage, Mathieu stability diagram, RF resonant circuit design, ion kinetic energy, and capacitive load power calculators.",
+    "url": "https://gaacustom.com/tools.html",
+    "author": {
+      "@type": "Organization",
+      "name": "GAA Custom Electronics, LLC",
+      "url": "https://gaacustom.com",
+      "email": "gaa@gaa-ce.com",
+      "telephone": "+1-509-628-6851"
+    },
+    "mainEntity": [
+      { "@type": "SoftwareApplication", "name": "Quadrupole RF/DC Calculator", "applicationCategory": "ScientificApplication", "operatingSystem": "Web Browser", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } },
+      { "@type": "SoftwareApplication", "name": "RF Resonant Circuit Calculator", "applicationCategory": "ScientificApplication", "operatingSystem": "Web Browser", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } },
+      { "@type": "SoftwareApplication", "name": "Ion Kinetic Energy Calculator", "applicationCategory": "ScientificApplication", "operatingSystem": "Web Browser", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } },
+      { "@type": "SoftwareApplication", "name": "Capacitive Load Power Calculator", "applicationCategory": "ScientificApplication", "operatingSystem": "Web Browser", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet" />
   <style>
@@ -208,6 +253,41 @@
       .footer-grid{grid-template-columns:1fr;gap:2rem}
       .metrics-row{grid-template-columns:1fr 1fr}
     }
+
+    /* ── BOOKMARK BANNER ── */
+    .bm-banner{position:fixed;bottom:1.5rem;right:1.5rem;z-index:300;background:var(--ink2);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:.85rem 1.1rem;display:flex;align-items:center;gap:.9rem;box-shadow:0 8px 32px rgba(0,0,0,.35);max-width:320px;animation:bmSlide .4s ease}
+    @keyframes bmSlide{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+    .bm-banner.hidden{display:none}
+    .bm-icon{font-size:1.3rem;flex-shrink:0}
+    .bm-text{font-size:.78rem;color:rgba(255,255,255,.8);line-height:1.5}
+    .bm-text strong{color:var(--white);display:block;margin-bottom:.15rem}
+    .bm-text kbd{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:3px;padding:.05rem .35rem;font-family:var(--mono);font-size:.7rem;color:var(--white)}
+    .bm-close{background:none;border:none;color:rgba(255,255,255,.35);cursor:pointer;font-size:1rem;padding:0;flex-shrink:0;line-height:1;transition:color .15s}
+    .bm-close:hover{color:rgba(255,255,255,.75)}
+
+    /* ── SHARE STRIP ── */
+    .share-strip{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:6px;padding:1.5rem;margin-top:2rem;max-width:860px}
+    .share-strip-title{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:1rem}
+    .share-btns{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+    .share-btn{display:inline-flex;align-items:center;gap:.45rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.45rem .9rem;border-radius:3px;text-decoration:none;cursor:pointer;border:none;transition:all .15s;white-space:nowrap}
+    .share-btn-copy{background:rgba(255,255,255,.08);color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.12)}
+    .share-btn-copy:hover{background:rgba(255,255,255,.14);color:var(--white)}
+    .share-btn-copy.copied{background:rgba(74,163,74,.2);color:#7dd97d;border-color:rgba(74,163,74,.3)}
+    .share-btn-li{background:#0A66C2;color:var(--white)}
+    .share-btn-li:hover{background:#085298}
+    .share-btn-x{background:#000;color:var(--white);border:1px solid rgba(255,255,255,.15)}
+    .share-btn-x:hover{background:#111}
+    .share-btn-email{background:rgba(204,31,31,.8);color:var(--white)}
+    .share-btn-email:hover{background:var(--red)}
+    .share-btn-bm{background:rgba(255,165,0,.15);color:#ffa500;border:1px solid rgba(255,165,0,.25)}
+    .share-btn-bm:hover{background:rgba(255,165,0,.25)}
+    .share-divider{width:1px;height:24px;background:rgba(255,255,255,.1);margin:0 .2rem}
+    .cite-block{margin-top:1.1rem;padding:.75rem 1rem;background:rgba(0,0,0,.25);border-radius:4px;border:1px solid rgba(255,255,255,.07)}
+    .cite-lbl{font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.4rem}
+    .cite-text{font-family:var(--mono);font-size:.7rem;color:rgba(255,255,255,.55);line-height:1.6;word-break:break-word}
+    .cite-copy{background:none;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);border-radius:3px;padding:.2rem .6rem;font-family:var(--mono);font-size:.58rem;cursor:pointer;float:right;margin-left:.5rem;transition:all .15s}
+    .cite-copy:hover{color:var(--white);border-color:rgba(255,255,255,.3)}
+    .cite-copy.copied{color:#7dd97d;border-color:rgba(74,163,74,.4)}
   </style>
 </head>
 <body>
@@ -1259,6 +1339,41 @@
       </div>
     </div>
 
+    <!-- Share strip -->
+    <div class="share-strip">
+      <div class="share-strip-title">&#x1F4E4; Share these tools with your colleagues</div>
+      <div class="share-btns">
+        <button class="share-btn share-btn-copy" id="copy-btn" onclick="copyLink()">
+          <span>&#x1F517;</span> Copy link
+        </button>
+        <a class="share-btn share-btn-li" id="li-btn" href="#" target="_blank" rel="noopener" onclick="shareLinkedIn(event)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+        <a class="share-btn share-btn-x" href="#" target="_blank" rel="noopener" onclick="shareTwitter(event)">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Share on X
+        </a>
+        <a class="share-btn share-btn-email" href="#" onclick="shareEmail(event)">
+          <span>&#x2709;</span> Email
+        </a>
+        <span class="share-divider"></span>
+        <button class="share-btn share-btn-bm" onclick="promptBookmark()">
+          <span>&#x1F516;</span> Bookmark
+        </button>
+      </div>
+
+      <!-- Citation block -->
+      <div class="cite-block">
+        <div class="cite-lbl">&#x1F4CB; Cite these tools in your work</div>
+        <div>
+          <button class="cite-copy" id="cite-btn" onclick="copyCitation()">Copy</button>
+          <div class="cite-text" id="cite-text">GAA Custom Electronics, LLC. (2025). <em>Mass Spectrometry Engineering Tools &amp; Calculators</em> [Online]. Available: https://gaacustom.com/tools.html [Accessed: <span id="cite-date"></span>]</div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 </section>
 
@@ -2150,6 +2265,126 @@ function setJumpActive(id) {
     }
   });
 })();
+</script>
+
+<!-- ── BOOKMARK BANNER ── -->
+<div class="bm-banner" id="bm-banner">
+  <span class="bm-icon">&#x1F516;</span>
+  <div class="bm-text">
+    <strong>Bookmark this page</strong>
+    Press <kbd>Ctrl+D</kbd> <span style="color:rgba(255,255,255,.4)">·</span> <kbd>&#x2318;D</kbd> on Mac to save for quick access and share with your lab.
+  </div>
+  <button class="bm-close" onclick="dismissBookmark()" aria-label="Dismiss">&times;</button>
+</div>
+
+<!-- ── SHARE + BOOKMARK JAVASCRIPT ── -->
+<script>
+const TOOLS_URL  = 'https://gaacustom.com/tools.html';
+const TOOLS_TITLE = 'Free Mass Spec Calculators — GAA Custom Electronics';
+const TOOLS_DESC  = 'Interactive calculators for mass spectrometry researchers: quadrupole RF/DC, Mathieu stability diagram, RF resonant circuit, ion kinetic energy, capacitive load power, and curated reference links. All run in your browser, no signup needed.';
+
+/* ── Set citation date ─────────────────────────────────────── */
+(function() {
+  const el = document.getElementById('cite-date');
+  if (el) {
+    const now = new Date();
+    el.textContent = now.toLocaleDateString('en-US', { day:'numeric', month:'long', year:'numeric' });
+  }
+})();
+
+/* ── Copy link ─────────────────────────────────────────────── */
+function copyLink() {
+  navigator.clipboard.writeText(TOOLS_URL).then(function() {
+    const btn = document.getElementById('copy-btn');
+    btn.classList.add('copied');
+    btn.innerHTML = '<span>&#x2713;</span> Copied!';
+    setTimeout(function() {
+      btn.classList.remove('copied');
+      btn.innerHTML = '<span>&#x1F517;</span> Copy link';
+    }, 2500);
+  }).catch(function() {
+    /* fallback for older browsers */
+    const ta = document.createElement('textarea');
+    ta.value = TOOLS_URL;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  });
+}
+
+/* ── LinkedIn share ────────────────────────────────────────── */
+function shareLinkedIn(e) {
+  e.preventDefault();
+  const url = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(TOOLS_URL);
+  window.open(url, '_blank', 'width=600,height=600,noopener');
+}
+
+/* ── Twitter / X share ─────────────────────────────────────── */
+function shareTwitter(e) {
+  e.preventDefault();
+  const text = 'Free mass spec calculators from @GAACustomElec — quadrupole RF/DC, Mathieu stability diagram, RF resonant circuit, ion kinetic energy & more. All run in your browser:';
+  const url  = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(TOOLS_URL) + '&hashtags=massspec,instrumentation,analytical';
+  window.open(url, '_blank', 'width=600,height=400,noopener');
+}
+
+/* ── Email share ───────────────────────────────────────────── */
+function shareEmail(e) {
+  e.preventDefault();
+  const subject = encodeURIComponent('Useful mass spec calculators — ' + TOOLS_TITLE);
+  const body    = encodeURIComponent(
+    'Hi,\n\nI thought you might find these free mass spectrometry calculators useful:\n\n' +
+    TOOLS_URL + '\n\n' +
+    'The page includes:\n' +
+    '  • Quadrupole RF/DC calculator with Mathieu stability diagram\n' +
+    '  • RF resonant circuit, coil inductance & wire gauge tools\n' +
+    '  • Ion kinetic energy & CID collision energy calculator\n' +
+    '  • Capacitive load power calculator for switched ion optics\n' +
+    '  • Curated links to mass spec databases, software & journals\n\n' +
+    'All calculations run in the browser — no signup needed.\n\nBest regards'
+  );
+  window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
+}
+
+/* ── Copy citation ─────────────────────────────────────────── */
+function copyCitation() {
+  const el   = document.getElementById('cite-text');
+  const btn  = document.getElementById('cite-btn');
+  const date = document.getElementById('cite-date').textContent;
+  const text = 'GAA Custom Electronics, LLC. (2025). Mass Spectrometry Engineering Tools & Calculators [Online]. Available: ' + TOOLS_URL + ' [Accessed: ' + date + ']';
+  navigator.clipboard.writeText(text).then(function() {
+    btn.classList.add('copied');
+    btn.textContent = 'Copied!';
+    setTimeout(function() {
+      btn.classList.remove('copied');
+      btn.textContent = 'Copy';
+    }, 2500);
+  });
+}
+
+/* ── Bookmark banner ───────────────────────────────────────── */
+(function() {
+  const KEY = 'gaa_bm_dismissed';
+  const banner = document.getElementById('bm-banner');
+  if (!banner) return;
+  /* show after 8 seconds if not previously dismissed */
+  if (!localStorage.getItem(KEY)) {
+    setTimeout(function() { banner.classList.remove('hidden'); }, 8000);
+  } else {
+    banner.classList.add('hidden');
+  }
+})();
+
+function dismissBookmark() {
+  document.getElementById('bm-banner').classList.add('hidden');
+  try { localStorage.setItem('gaa_bm_dismissed', '1'); } catch(e) {}
+}
+
+function promptBookmark() {
+  const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+  alert('Press ' + (isMac ? '⌘ Cmd + D' : 'Ctrl + D') + ' to bookmark this page for quick access.');
+  dismissBookmark();
+}
 </script>
 
 </body>

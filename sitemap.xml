@@ -12,7 +12,7 @@
 
     After uploading, go to:
     Search Console → Sitemaps → Add sitemap URL:
-    https://gaacustom.com/sitemap.xml
+    https://www.gaacustom.com/sitemap.xml
 
     Update <lastmod> dates whenever a page is significantly changed.
     Priority scale: 1.0 = most important, 0.1 = least important.
@@ -21,7 +21,7 @@
 
   <!-- ── HOMEPAGE ─────────────────────────────────────────────────────── -->
   <url>
-    <loc>https://gaacustom.com/</loc>
+    <loc>https://www.gaacustom.com/</loc>
     <lastmod>2025-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
@@ -29,7 +29,7 @@
 
   <!-- ── TOOLS & CALCULATORS PAGE ─────────────────────────────────────── -->
   <url>
-    <loc>https://gaacustom.com/tools.html</loc>
+    <loc>https://www.gaacustom.com/tools.html</loc>
     <lastmod>2025-05-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -43,7 +43,7 @@
 
   <!-- ── PRODUCTS SECTION ─────────────────────────────────────────────── -->
   <url>
-    <loc>https://gaacustom.com/#products</loc>
+    <loc>https://www.gaacustom.com/#products</loc>
     <lastmod>2025-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -51,7 +51,7 @@
 
   <!-- ── SOFTWARE / MIPS SECTION ──────────────────────────────────────── -->
   <url>
-    <loc>https://gaacustom.com/#how-it-works</loc>
+    <loc>https://www.gaacustom.com/#how-it-works</loc>
     <lastmod>2025-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -59,7 +59,7 @@
 
   <!-- ── APPLICATIONS SECTION ─────────────────────────────────────────── -->
   <url>
-    <loc>https://gaacustom.com/#applications</loc>
+    <loc>https://www.gaacustom.com/#applications</loc>
     <lastmod>2025-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -67,7 +67,7 @@
 
   <!-- ── CAPABILITIES SECTION ─────────────────────────────────────────── -->
   <url>
-    <loc>https://gaacustom.com/#capabilities</loc>
+    <loc>https://www.gaacustom.com/#capabilities</loc>
     <lastmod>2025-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -75,7 +75,7 @@
 
   <!-- ── FACILITY SECTION ─────────────────────────────────────────────── -->
   <url>
-    <loc>https://gaacustom.com/#facility</loc>
+    <loc>https://www.gaacustom.com/#facility</loc>
     <lastmod>2025-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -83,7 +83,7 @@
 
   <!-- ── ABOUT SECTION ────────────────────────────────────────────────── -->
   <url>
-    <loc>https://gaacustom.com/#about</loc>
+    <loc>https://www.gaacustom.com/#about</loc>
     <lastmod>2025-05-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
@@ -91,7 +91,7 @@
 
   <!-- ── TESTIMONIALS SECTION ─────────────────────────────────────────── -->
   <url>
-    <loc>https://gaacustom.com/#testimonials</loc>
+    <loc>https://www.gaacustom.com/#testimonials</loc>
     <lastmod>2025-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -99,7 +99,7 @@
 
   <!-- ── DOWNLOADS / SUPPORT SECTION ─────────────────────────────────── -->
   <url>
-    <loc>https://gaacustom.com/#support</loc>
+    <loc>https://www.gaacustom.com/#support</loc>
     <lastmod>2025-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -107,7 +107,7 @@
 
   <!-- ── CONTACT SECTION ──────────────────────────────────────────────── -->
   <url>
-    <loc>https://gaacustom.com/#contact</loc>
+    <loc>https://www.gaacustom.com/#contact</loc>
     <lastmod>2025-05-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
@@ -120,7 +120,7 @@
 
   <!-- ── QUADRUPOLE CALCULATOR ────────────────────────────────────────── -->
   <url>
-    <loc>https://gaacustom.com/tools.html#quad-calc</loc>
+    <loc>https://www.gaacustom.com/tools.html#quad-calc</loc>
     <lastmod>2025-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -128,7 +128,7 @@
 
   <!-- ── RF RESONANT CIRCUIT CALCULATOR ──────────────────────────────── -->
   <url>
-    <loc>https://gaacustom.com/tools.html#rf-circuit</loc>
+    <loc>https://www.gaacustom.com/tools.html#rf-circuit</loc>
     <lastmod>2025-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -136,7 +136,7 @@
 
   <!-- ── ION KINETIC ENERGY CALCULATOR ───────────────────────────────── -->
   <url>
-    <loc>https://gaacustom.com/tools.html#ion-ke</loc>
+    <loc>https://www.gaacustom.com/tools.html#ion-ke</loc>
     <lastmod>2025-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -144,7 +144,7 @@
 
   <!-- ── CAPACITIVE LOAD POWER CALCULATOR ────────────────────────────── -->
   <url>
-    <loc>https://gaacustom.com/tools.html#cap-power</loc>
+    <loc>https://www.gaacustom.com/tools.html#cap-power</loc>
     <lastmod>2025-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -152,7 +152,7 @@
 
   <!-- ── USEFUL LINKS SECTION ─────────────────────────────────────────── -->
   <url>
-    <loc>https://gaacustom.com/tools.html#useful-links</loc>
+    <loc>https://www.gaacustom.com/tools.html#useful-links</loc>
     <lastmod>2025-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

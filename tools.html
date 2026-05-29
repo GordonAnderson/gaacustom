@@ -1,0 +1,2156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mass Spec Tools &amp; Calculators — GAA Custom Electronics</title>
+  <meta name="description" content="Free online calculators for mass spectrometry researchers. Quadrupole RF/DC voltage calculator with Mathieu stability diagram, ion kinetic energy, RF resonant circuit, and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --red:      #CC1F1F;
+      --red-dk:   #A01515;
+      --red-pale: #FDF0F0;
+      --ink:      #1A1A1C;
+      --ink2:     #2E2E32;
+      --ink3:     #4A4A52;
+      --mid:      #7A7A84;
+      --rule:     #E4E4EA;
+      --rule2:    #EFEFF4;
+      --surface:  #F7F7FA;
+      --white:    #FFFFFF;
+      --d-bg:     #0E0E10;
+      --d-bg2:    #1A1A1D;
+      --d-bg3:    #252528;
+      --d-rule:   #2E2E33;
+      --d-mid:    #5A5A62;
+      --d-silver: #B8B8C0;
+      --mono:    'DM Mono', monospace;
+      --serif:   'Fraunces', serif;
+      --sans:    'DM Sans', sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--sans);background:var(--white);color:var(--ink);overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:1160px;margin:0 auto;padding:0 2rem}
+    .lbl{font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:.75rem}
+
+    /* ── NAV ── */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(14,14,16,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--d-rule);transition:background .3s,border-color .3s}
+    nav.scrolled{background:rgba(255,255,255,.97);border-bottom:1px solid var(--rule)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 1.5rem;max-width:1400px;margin:0 auto;gap:1rem}
+    .nav-logo{display:flex;align-items:center;gap:.6rem;flex-shrink:0;text-decoration:none}
+    .nav-logo img{width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0}
+    .nav-logo-words{display:flex;flex-direction:column;line-height:1.15}
+    .nav-logo-words strong{font-family:var(--serif);font-weight:600;font-size:.92rem;color:var(--white);letter-spacing:.01em;transition:color .3s;white-space:nowrap}
+    .nav-logo-words span{display:none}
+    nav.scrolled .nav-logo-words strong{color:var(--ink)}
+    .nav-links{display:flex;align-items:center;gap:.1rem;list-style:none;flex-wrap:nowrap}
+    .nav-links a{font-size:.78rem;font-weight:500;color:rgba(255,255,255,.65);transition:color .2s;padding:.25rem .55rem;white-space:nowrap;border-radius:3px}
+    .nav-links a:hover{color:var(--white)}
+    nav.scrolled .nav-links a{color:var(--ink3)}
+    nav.scrolled .nav-links a:hover{color:var(--red)}
+    .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:.35rem 1rem!important;border-radius:3px;font-size:.78rem!important;white-space:nowrap}
+    .nav-cta:hover{background:var(--red-dk)!important}
+    .nav-active{color:var(--white)!important;border-bottom:2px solid var(--red);padding-bottom:2px}
+    nav.scrolled .nav-active{color:var(--red)!important}
+    /* hamburger for narrow screens */
+    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;flex-shrink:0}
+    .hamburger span{display:block;width:22px;height:1.5px;background:rgba(255,255,255,.7);margin:5px 0;transition:.3s}
+    nav.scrolled .hamburger span{background:var(--ink3)}
+    /* mobile nav drawer */
+    .nav-drawer{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(14,14,16,.98);border-bottom:1px solid var(--d-rule);padding:1rem 1.5rem;z-index:199;flex-direction:column;gap:.25rem}
+    .nav-drawer.open{display:flex}
+    .nav-drawer a{font-size:.88rem;font-weight:500;color:rgba(255,255,255,.7);padding:.6rem 0;border-bottom:0.5px solid rgba(255,255,255,.06);display:block}
+    .nav-drawer a:last-child{border-bottom:none}
+    .nav-drawer a:hover{color:var(--white)}
+    .nav-drawer .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:.6rem 1rem!important;border-radius:3px;margin-top:.5rem;text-align:center}
+    @media(max-width:1100px){
+      .nav-links{gap:0}
+      .nav-links a{padding:.25rem .4rem;font-size:.74rem}
+    }
+    @media(max-width:860px){
+      .nav-links{display:none}
+      .hamburger{display:block}
+    }
+
+    /* ── PAGE HERO (dark, shorter than main) ── */
+    .page-hero{
+      background:var(--d-bg);
+      padding:120px 0 64px;
+      position:relative;overflow:hidden;
+    }
+    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(204,31,31,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(204,31,31,.05) 1px,transparent 1px);background-size:52px 52px}
+    .hero-glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(204,31,31,.10) 0%,transparent 68%);top:-100px;right:-80px;pointer-events:none}
+    .page-hero-inner{position:relative;z-index:2}
+    .page-hero-kicker{display:flex;align-items:center;gap:.65rem;margin-bottom:1.25rem}
+    .page-hero-kicker-line{width:28px;height:1px;background:var(--red)}
+    .page-hero-kicker span{font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--red)}
+    .page-hero h1{font-family:var(--serif);font-size:clamp(2.4rem,5vw,3.8rem);font-weight:600;line-height:1.05;color:var(--white);margin-bottom:1rem}
+    .page-hero h1 em{font-style:italic;color:var(--red);font-weight:300}
+    .page-hero-sub{font-size:1rem;font-weight:300;color:var(--d-silver);line-height:1.75;max-width:620px}
+
+    /* ── WAVE TRANSITION ── */
+    .wave-divider{background:var(--d-bg);line-height:0;overflow:hidden}
+    .wave-divider svg{display:block;width:100%}
+
+    /* ── MARQUEE ── */
+    .marquee{background:var(--red);padding:.6rem 0;overflow:hidden;white-space:nowrap}
+    .marquee-inner{display:inline-flex;animation:mq 35s linear infinite}
+    .mq-item{font-family:var(--mono);font-size:.66rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.8);padding:0 2rem}
+    .mq-sep{color:rgba(255,255,255,.4)}
+    @keyframes mq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+    /* ── TOOLS LAYOUT ── */
+    .tools-section{padding:5rem 0;background:var(--white)}
+    .tools-intro{margin-bottom:3.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--rule)}
+    .tools-intro h2{font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.6rem);font-weight:600;line-height:1.1;color:var(--ink);margin-bottom:.6rem}
+    .tools-intro h2 em{font-style:italic;color:var(--red);font-weight:300}
+    .tools-intro p{font-size:.95rem;color:var(--mid);line-height:1.7;max-width:680px}
+
+    /* ── TOOL CARD ── */
+    .tool-card{border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin-bottom:2.5rem;transition:border-color .2s}
+    .tool-card:hover{border-color:rgba(204,31,31,.25)}
+    .tool-card-header{background:var(--surface);border-bottom:1px solid var(--rule);padding:1.25rem 1.75rem;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+    .tool-card-meta{display:flex;flex-direction:column;gap:.3rem}
+    .tool-tag{display:inline-flex;font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);background:var(--red-pale);border:1px solid rgba(204,31,31,.15);padding:.22rem .6rem;border-radius:2px;width:fit-content;margin-bottom:.25rem}
+    .tool-title{font-family:var(--serif);font-size:1.5rem;font-weight:600;color:var(--ink);line-height:1.1}
+    .tool-desc{font-size:.88rem;color:var(--ink3);line-height:1.65;margin-top:.3rem;max-width:600px}
+    .tool-badge-row{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
+    .tool-badge{font-family:var(--mono);font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;background:var(--d-bg3);border:1px solid var(--d-rule);color:var(--d-silver);padding:.2rem .5rem;border-radius:2px}
+    .tool-body{padding:1.75rem}
+
+    /* ── CALC INPUTS (site-styled) ── */
+    .calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.5rem}
+    @media(max-width:680px){.calc-grid{grid-template-columns:1fr}}
+    .calc-field{display:flex;flex-direction:column;gap:.35rem}
+    .calc-field label{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid)}
+    .calc-field input,.calc-field select{
+      font-family:var(--sans);font-size:.92rem;color:var(--ink);
+      background:var(--white);border:1px solid var(--rule);border-radius:3px;
+      padding:.55rem .75rem;transition:border-color .2s;width:100%;
+    }
+    .calc-field input:focus,.calc-field select:focus{outline:none;border-color:var(--red)}
+
+    /* ── OUTPUT METRICS ── */
+    .metrics-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1.5rem}
+    @media(max-width:640px){.metrics-row{grid-template-columns:repeat(2,1fr)}}
+    .metric{background:var(--surface);border:1px solid var(--rule2);border-radius:4px;padding:.9rem 1rem}
+    .metric-lbl{font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:.3rem}
+    .metric-val{font-family:var(--serif);font-size:1.65rem;font-weight:600;color:var(--ink);line-height:1}
+    .metric-unit{font-size:.7rem;color:var(--mid);margin-top:.15rem}
+    .metric-sm .metric-val{font-size:1.3rem}
+
+    /* stable/unstable badge */
+    .status-badge{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .75rem;border-radius:2px;margin-bottom:1rem}
+    .status-ok{background:#EAF3DE;color:#3B6D11;border:1px solid #97C459}
+    .status-bad{background:var(--red-pale);color:var(--red-dk);border:1px solid rgba(204,31,31,.3)}
+    .status-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+
+    /* ── DIAGRAM SECTION ── */
+    .diag-tabs{display:flex;gap:.4rem;margin-bottom:1rem}
+    .diag-tab{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.32rem .85rem;border-radius:2px;border:1px solid var(--rule);background:transparent;color:var(--mid);cursor:pointer;transition:all .2s}
+    .diag-tab.on{background:var(--red);border-color:var(--red);color:var(--white)}
+    .diag-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:.6rem}
+
+    .prog-wrap{display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem}
+    .prog-bar{flex:1;height:3px;background:var(--rule);border-radius:2px;overflow:hidden}
+    .prog-fill{height:100%;width:0%;background:var(--red);border-radius:2px;transition:width .1s}
+    .prog-lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;color:var(--mid);min-width:90px}
+
+    canvas{display:block;width:100%}
+
+    /* ── DIVIDER ── */
+    .section-rule{border:none;border-top:1px solid var(--rule);margin:1.5rem 0}
+
+
+    /* ── QUICK-JUMP NAV ── */
+    .jump-nav{background:var(--white);border-bottom:1px solid var(--rule);position:sticky;top:64px;z-index:100;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+    .jump-nav::-webkit-scrollbar{display:none}
+    .jump-nav-inner{display:inline-flex;align-items:center;gap:0;padding:0 2rem;max-width:100%;min-width:100%;box-sizing:border-box}
+    .jump-btn{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.75rem .9rem;color:var(--mid);border-bottom:2px solid transparent;transition:color .15s,border-color .15s;text-decoration:none;white-space:nowrap;cursor:pointer;flex-shrink:0}
+    .jump-btn:hover{color:var(--ink);border-bottom-color:var(--rule)}
+    .jump-btn.active{color:var(--red);border-bottom-color:var(--red)}
+    .jump-sep{color:var(--rule);font-size:.7rem;padding:0 .1rem;flex-shrink:0;pointer-events:none}
+
+    /* ── COMING SOON CARDS ── */
+    .coming-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin-top:1rem}
+    .coming-card{background:var(--white);padding:1.5rem 1.75rem;transition:background .2s}
+    .coming-card:hover{background:var(--surface)}
+    .coming-icon{font-size:1.4rem;margin-bottom:.5rem;opacity:.5}
+    .coming-name{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:.25rem}
+    .coming-desc{font-size:.82rem;color:var(--mid);line-height:1.6}
+    .coming-pill{display:inline-block;font-family:var(--mono);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;background:var(--rule2);color:var(--mid);padding:.15rem .5rem;border-radius:2px;margin-top:.6rem}
+
+    /* ── FOOTER ── */
+    footer{background:#0A0A0C;border-top:1px solid rgba(255,255,255,.06);padding:3rem 0 2rem}
+    .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:3rem;max-width:1160px;margin:0 auto;padding:0 2rem 2.5rem;border-bottom:1px solid rgba(255,255,255,.05)}
+    .footer-brand p{font-size:.82rem;color:rgba(255,255,255,.28);line-height:1.65;margin-top:.75rem;max-width:220px}
+    .footer-logo{display:flex;align-items:center;gap:.75rem}
+    .footer-logo img{width:30px;height:30px;border-radius:50%;object-fit:cover;opacity:.85}
+    .footer-logo-text{font-family:var(--serif);font-size:.95rem;font-weight:600;color:rgba(255,255,255,.6)}
+    .fcol-title{font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:1rem}
+    .fcol-links{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+    .fcol-links a{font-size:.84rem;color:rgba(255,255,255,.38);transition:color .2s}
+    .fcol-links a:hover{color:rgba(255,255,255,.75)}
+    .footer-btm{max-width:1160px;margin:0 auto;padding:1.5rem 2rem 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+    .footer-copy{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;color:rgba(255,255,255,.18)}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px){
+      .footer-grid{grid-template-columns:1fr 1fr}
+      .metrics-row{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:600px){
+      .footer-grid{grid-template-columns:1fr;gap:2rem}
+      .metrics-row{grid-template-columns:1fr 1fr}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="data:image/jpeg;base64,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" alt="GAA Custom Electronics logo" />
+      <div class="nav-logo-words">
+        <strong>GAA Custom Electronics</strong>
+        <span>Mass Spec Research Electronics</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#products">Products</a></li>
+      <li><a href="index.html#how-it-works">Software</a></li>
+      <li><a href="index.html#applications">Applications</a></li>
+      <li><a href="index.html#testimonials">Testimonials</a></li>
+      <li><a href="index.html#capabilities">Capabilities</a></li>
+      <li><a href="index.html#facility">Facility</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#support">Downloads</a></li>
+      <li><a href="tools.html" class="nav-active">Tools</a></li>
+      <li><a href="index.html#contact" class="nav-cta">Request Quote</a></li>
+    </ul>
+    <button class="hamburger" id="nav-hamburger" aria-label="Open menu" onclick="toggleDrawer()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── MOBILE NAV DRAWER ── -->
+<div class="nav-drawer" id="nav-drawer">
+  <a href="index.html#products"     onclick="closeDrawer()">Products</a>
+  <a href="index.html#how-it-works" onclick="closeDrawer()">Software</a>
+  <a href="index.html#applications" onclick="closeDrawer()">Applications</a>
+  <a href="index.html#testimonials" onclick="closeDrawer()">Testimonials</a>
+  <a href="index.html#capabilities" onclick="closeDrawer()">Capabilities</a>
+  <a href="index.html#facility"     onclick="closeDrawer()">Facility</a>
+  <a href="index.html#about"        onclick="closeDrawer()">About</a>
+  <a href="index.html#support"      onclick="closeDrawer()">Downloads</a>
+  <a href="tools.html"              onclick="closeDrawer()" style="color:var(--red);font-weight:500">Tools</a>
+  <a href="index.html#contact" class="nav-cta" onclick="closeDrawer()">Request Quote</a>
+</div>
+
+<!-- ── PAGE HERO ── -->
+<section class="page-hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="page-hero-inner container">
+    <div class="page-hero-kicker">
+      <div class="page-hero-kicker-line"></div>
+      <span>Free Resources — Mass Spectrometry Community</span>
+    </div>
+    <h1>Engineering Tools<br/>for <em>Mass Spec</em> Research</h1>
+    <p class="page-hero-sub">Interactive calculators and reference tools built for researchers and engineers working with quadrupole mass filters, RF ion guides, and ion mobility systems. All calculations run locally in your browser — no signup required.</p>
+  </div>
+</section>
+
+<!-- ── WAVE ── -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 48" preserveAspectRatio="none" height="48" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0 L1440 0 L1440 20 Q1080 48 720 28 Q360 8 0 36 Z" fill="#0E0E10"/>
+  </svg>
+</div>
+
+<!-- ── MARQUEE ── -->
+<div class="marquee">
+  <div class="marquee-inner">
+    <span class="mq-item">Quadrupole Calculator <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Mathieu Stability Diagram <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">RF Resonant Circuit <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Ion Kinetic Energy <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">K₀ / CCS Converter <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Ion Funnel Calculator <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Resolving Power <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">FET Rise Time <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Quadrupole Calculator <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Mathieu Stability Diagram <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">RF Resonant Circuit <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Ion Kinetic Energy <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">K₀ / CCS Converter <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Ion Funnel Calculator <span class="mq-sep">&middot;</span></span>
+  </div>
+</div>
+
+
+<!-- ── QUICK-JUMP NAV ── -->
+<nav class="jump-nav" id="jump-nav" aria-label="Jump to section">
+  <div class="jump-nav-inner">
+    <a class="jump-btn active" href="#quad-calc"  onclick="jumpTo('quad-calc')">&#x2460; Quadrupole RF/DC</a>
+    <span class="jump-sep">&rsaquo;</span>
+    <a class="jump-btn" href="#rf-circuit"  onclick="jumpTo('rf-circuit')">&#x2461; RF Resonant Circuit</a>
+    <span class="jump-sep">&rsaquo;</span>
+    <a class="jump-btn" href="#ion-ke"      onclick="jumpTo('ion-ke')">&#x2462; Ion Kinetic Energy</a>
+    <span class="jump-sep">&rsaquo;</span>
+    <a class="jump-btn" href="#cap-power"   onclick="jumpTo('cap-power')">&#x2463; Capacitive Load Power</a>
+    <span class="jump-sep">&rsaquo;</span>
+    <a class="jump-btn" href="#useful-links" onclick="jumpTo('useful-links')">&#x1F517; Useful Links</a>
+    <span class="jump-sep">&rsaquo;</span>
+    <a class="jump-btn" href="#coming-soon" onclick="jumpTo('coming-soon')">&#x1F6A7; Coming Soon</a>
+  </div>
+</nav>
+
+<!-- ── TOOLS SECTION ── -->
+<section class="tools-section">
+  <div class="container">
+
+    <div class="tools-intro">
+      <div class="lbl">Calculators &amp; Reference Tools</div>
+      <h2>Quadrupole &amp; RF <em>Calculators</em></h2>
+      <p>Practical design tools for the mass spectrometry community. Compute RF and DC operating voltages, visualize Mathieu stability regions, and plan mass scan parameters for quadrupole mass filters driven by GAA RF systems.</p>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- TOOL 1: QUADRUPOLE RF/DC CALCULATOR                     -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="tool-card" id="quad-calc" style="scroll-margin-top:120px">
+      <div class="tool-card-header">
+        <div class="tool-card-meta">
+          <div class="tool-tag">RF &amp; Quadrupole</div>
+          <div class="tool-title">Quadrupole Mass Filter — RF / DC Calculator</div>
+          <div class="tool-desc">Calculate RF amplitude (V₀), DC voltage (U), and Mathieu parameters for a quadrupole mass filter. The stability diagram is computed via RK4 numerical integration of the Mathieu equation — the same physics used in commercial instruments.</div>
+        </div>
+        <div class="tool-badge-row" style="align-self:flex-start;margin-top:.5rem">
+          <span class="tool-badge">RK4 Integration</span>
+          <span class="tool-badge">Mathieu Equation</span>
+          <span class="tool-badge">First Stability Region</span>
+        </div>
+      </div>
+
+      <div class="tool-body">
+
+        <!-- Inputs -->
+        <div class="calc-grid">
+          <div class="calc-field">
+            <label>Field radius r₀</label>
+            <input type="number" id="r0" value="4.0" min="0.5" max="50" step="0.1" placeholder="mm">
+            <span style="font-size:.72rem;color:var(--mid);margin-top:.2rem">millimetres</span>
+          </div>
+          <div class="calc-field">
+            <label>Drive frequency f</label>
+            <input type="number" id="freq" value="1000000" min="10000" max="10000000" step="10000" placeholder="Hz">
+            <span style="font-size:.72rem;color:var(--mid);margin-top:.2rem">Hz &mdash; e.g. 1000000 for 1 MHz</span>
+          </div>
+          <div class="calc-field">
+            <label>Target m/z</label>
+            <input type="number" id="mz" value="200" min="1" max="10000" step="1" placeholder="Da">
+            <span style="font-size:.72rem;color:var(--mid);margin-top:.2rem">Daltons (unified atomic mass units)</span>
+          </div>
+          <div class="calc-field">
+            <label>Resolution mode</label>
+            <select id="resmode">
+              <option value="0.168">Unit resolution &mdash; a/q = 0.168</option>
+              <option value="0.100">Low resolution &mdash; a/q = 0.100</option>
+              <option value="0.230">High resolution &mdash; a/q = 0.230</option>
+              <option value="0.000">RF only (ion guide) &mdash; a = 0</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Status -->
+        <span id="badge" class="status-badge status-ok"><span class="status-dot"></span>Operating point: stable</span>
+
+        <!-- Output metrics -->
+        <div class="metrics-row">
+          <div class="metric">
+            <div class="metric-lbl">RF amplitude V₀</div>
+            <div class="metric-val" id="orf">—</div>
+            <div class="metric-unit">Volts (0-to-peak)</div>
+          </div>
+          <div class="metric">
+            <div class="metric-lbl">DC voltage U</div>
+            <div class="metric-val" id="odc">—</div>
+            <div class="metric-unit">Volts</div>
+          </div>
+          <div class="metric">
+            <div class="metric-lbl">V₀ peak-to-peak</div>
+            <div class="metric-val" id="opp">—</div>
+            <div class="metric-unit">Volts (p-p)</div>
+          </div>
+        </div>
+        <div class="metrics-row" style="grid-template-columns:repeat(3,1fr)">
+          <div class="metric metric-sm">
+            <div class="metric-lbl">Mathieu q</div>
+            <div class="metric-val" id="oq">—</div>
+          </div>
+          <div class="metric metric-sm">
+            <div class="metric-lbl">Mathieu a</div>
+            <div class="metric-val" id="oa">—</div>
+          </div>
+          <div class="metric metric-sm">
+            <div class="metric-lbl">a/q ratio</div>
+            <div class="metric-val" id="oaq">—</div>
+          </div>
+        </div>
+
+        <hr class="section-rule">
+
+        <!-- Stability diagram -->
+        <div class="diag-label">Mathieu stability diagram &mdash; computed via RK4 integration of the Mathieu equation</div>
+        <div class="diag-tabs">
+          <button class="diag-tab on" id="t1" onclick="setTab(0)">Stability map</button>
+          <button class="diag-tab" id="t2" onclick="setTab(1)">Scan line overlay</button>
+        </div>
+        <div class="prog-wrap" id="progRow">
+          <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+          <div class="prog-lbl" id="progLabel">Computing&hellip;</div>
+        </div>
+        <canvas id="stabC" height="300" style="border:1px solid var(--rule2);border-radius:4px;background:var(--surface)"></canvas>
+
+        <hr class="section-rule">
+
+        <!-- Sweep chart -->
+        <div class="diag-label" style="margin-top:.25rem">m/z sweep &mdash; RF and DC voltages across mass range</div>
+        <div style="display:flex;gap:1rem;align-items:center;margin-bottom:.75rem;flex-wrap:wrap">
+          <div class="calc-field" style="flex-direction:row;align-items:center;gap:.5rem">
+            <label style="white-space:nowrap">Start m/z</label>
+            <input type="number" id="sw0" value="50" min="1" max="5000" step="10" style="width:90px">
+          </div>
+          <div class="calc-field" style="flex-direction:row;align-items:center;gap:.5rem">
+            <label style="white-space:nowrap">Stop m/z</label>
+            <input type="number" id="sw1" value="1000" min="10" max="10000" step="10" style="width:90px">
+          </div>
+        </div>
+        <canvas id="sweepC" height="200" style="border:1px solid var(--rule2);border-radius:4px;background:var(--surface)"></canvas>
+
+        <!-- Note about GAACE hardware -->
+        <div style="margin-top:1.25rem;padding:.9rem 1.1rem;background:var(--red-pale);border:1px solid rgba(204,31,31,.15);border-radius:4px;display:flex;gap:.75rem;align-items:flex-start">
+          <span style="font-size:1rem;flex-shrink:0">⚡</span>
+          <div style="font-size:.84rem;color:var(--ink3);line-height:1.6">
+            <strong style="color:var(--ink)">Driving a quadrupole with GAACE hardware?</strong> The MIPS RF Quad module and standalone RF Generator are designed to operate at the voltages this calculator produces. For custom frequency or voltage ranges, <a href="index.html#contact" style="color:var(--red);text-decoration:underline">contact us</a> — we configure systems to your exact geometry.
+          </div>
+        </div>
+
+      </div><!-- /tool-body -->
+    </div><!-- /tool-card -->
+
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- TOOL 2: RF CIRCUIT CALCULATORS                          -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="tool-card" id="rf-circuit" style="scroll-margin-top:120px">
+      <div class="tool-card-header">
+        <div class="tool-card-meta">
+          <div class="tool-tag">RF Circuit Design</div>
+          <div class="tool-title">RF Resonant Circuit — LC, Coil &amp; Reactance Calculators</div>
+          <div class="tool-desc">Four linked tools for designing the LC tank circuits used in quadrupole RF drivers, ion guides, and RF traps. Solve for any LC parameter, design your coil geometry using Wheeler's formula, look up wire gauge specifications, and calculate the RF currents and voltage stress at resonance. All tools are interconnected — changing the coil design automatically updates the frequency and current calculations.</div>
+        </div>
+        <div class="tool-badge-row" style="align-self:flex-start;margin-top:.5rem">
+          <span class="tool-badge">Wheeler Formula</span>
+          <span class="tool-badge">LC Resonance</span>
+          <span class="tool-badge">AWG Reference</span>
+          <span class="tool-badge">Reactance &amp; Current</span>
+        </div>
+      </div>
+
+      <div class="tool-body">
+
+      <!-- ── Sub-section styles scoped inside tool-body ── -->
+      <style>
+        .rf-block{background:var(--surface);border:1px solid var(--rule2);border-radius:4px;padding:1.1rem 1.25rem;margin-bottom:1.1rem}
+        .rf-block-title{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:.75rem;display:flex;align-items:center;gap:.6rem}
+        .rf-block-title .rf-badge{font-size:.55rem;background:var(--red-pale);color:var(--red);border:1px solid rgba(204,31,31,.15);padding:.15rem .5rem;border-radius:2px}
+        .rf-formula{font-family:var(--mono);font-size:.72rem;color:var(--mid);margin-bottom:.85rem}
+        .rf-fgrid{display:grid;gap:.75rem;margin-bottom:.9rem}
+        .rf-fg2{grid-template-columns:1fr 1fr}
+        .rf-fg3{grid-template-columns:1fr 1fr 1fr}
+        @media(max-width:600px){.rf-fg2,.rf-fg3{grid-template-columns:1fr 1fr}}
+        @media(max-width:400px){.rf-fg2,.rf-fg3{grid-template-columns:1fr}}
+        .rf-field{display:flex;flex-direction:column;gap:.3rem}
+        .rf-field label{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid)}
+        .rf-field input,.rf-field select{font-family:var(--sans);font-size:.9rem;color:var(--ink);background:var(--white);border:1px solid var(--rule);border-radius:3px;padding:.5rem .65rem;transition:border-color .15s;width:100%}
+        .rf-field input:focus,.rf-field select:focus{outline:none;border-color:var(--red)}
+        .rf-field input.rf-computed{background:var(--surface);font-weight:500;border-style:dashed;color:var(--ink)}
+        .rf-field .rf-hint{font-size:.72rem;color:var(--mid);margin-top:.15rem}
+        .rf-mode-row{display:flex;gap:.35rem;margin-bottom:.8rem;flex-wrap:wrap}
+        .rf-mode-btn{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .75rem;border:1px solid var(--rule);border-radius:2px;background:transparent;color:var(--mid);cursor:pointer;transition:all .15s}
+        .rf-mode-btn.on{background:var(--red);border-color:var(--red);color:var(--white)}
+        .rf-out-row{display:grid;gap:.6rem;margin-top:.25rem}
+        .rf-out2{grid-template-columns:1fr 1fr}
+        .rf-out3{grid-template-columns:repeat(3,1fr)}
+        @media(max-width:600px){.rf-out2,.rf-out3{grid-template-columns:1fr 1fr}}
+        .rf-metric{background:var(--white);border:1px solid var(--rule2);border-radius:4px;padding:.75rem 1rem}
+        .rf-metric.hi{border-left:3px solid var(--red)}
+        .rf-metric .rml{font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:.3rem}
+        .rf-metric .rmv{font-family:var(--serif);font-size:1.55rem;font-weight:600;color:var(--ink);line-height:1}
+        .rf-metric.hi .rmv{color:var(--red)}
+        .rf-metric .rmu{font-size:.7rem;color:var(--mid);margin-top:.15rem}
+        .rf-rule{border:none;border-top:1px solid var(--rule);margin:.9rem 0}
+        .rf-info{font-size:.82rem;color:var(--ink3);background:var(--red-pale);border:1px solid rgba(204,31,31,.15);border-radius:3px;padding:.7rem .9rem;line-height:1.65;margin-top:.75rem}
+        .rf-info.ok{background:#EAF3DE;border-color:#97C459;color:#27500A}
+        /* wire table */
+        .wg-wrap{overflow-x:auto;margin-top:.5rem;border:1px solid var(--rule);border-radius:4px}
+        .wg-table{width:100%;border-collapse:collapse;font-size:.8rem}
+        .wg-table thead th{font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);padding:.55rem .7rem;border-bottom:1px solid var(--rule);text-align:left;background:var(--surface);white-space:nowrap}
+        .wg-table tbody td{padding:.45rem .7rem;border-bottom:0.5px solid var(--rule2);color:var(--ink3)}
+        .wg-table tbody tr:hover td{background:var(--surface);cursor:pointer}
+        .wg-table tbody tr.wg-sel td{background:var(--red-pale);color:var(--ink)}
+        .wg-table tbody tr.wg-sel td strong{color:var(--red)}
+        .wg-tpi-ref{font-family:var(--mono);font-size:.75rem;color:var(--red);font-weight:500}
+      </style>
+
+      <!-- ─── 1: LC RESONANCE ─── -->
+      <div class="rf-block">
+        <div class="rf-block-title">1 — LC Resonant Frequency <span class="rf-badge">Solve any unknown</span></div>
+        <div class="rf-formula">f = 1 / (2π√LC) &nbsp;·&nbsp; select which parameter to calculate</div>
+        <div class="rf-mode-row">
+          <button class="rf-mode-btn on" id="lc-m-f" onclick="lcSetMode('f')">Calculate f (MHz)</button>
+          <button class="rf-mode-btn"    id="lc-m-L" onclick="lcSetMode('L')">Calculate L (µH)</button>
+          <button class="rf-mode-btn"    id="lc-m-C" onclick="lcSetMode('C')">Calculate C (pF)</button>
+        </div>
+        <div class="rf-fgrid rf-fg3">
+          <div class="rf-field">
+            <label>Frequency f</label>
+            <input type="number" id="lc-f" value="1.0" min="0.001" step="0.1">
+            <div class="rf-hint">MHz</div>
+          </div>
+          <div class="rf-field">
+            <label>Inductance L</label>
+            <input type="number" id="lc-L" value="2.5" min="0.001" step="0.1">
+            <div class="rf-hint">µH</div>
+          </div>
+          <div class="rf-field">
+            <label>Capacitance C</label>
+            <input type="number" id="lc-C" value="" min="0.001" step="1">
+            <div class="rf-hint">pF</div>
+          </div>
+        </div>
+        <div class="rf-out-row rf-out3">
+          <div class="rf-metric hi">
+            <div class="rml" id="lc-res-lbl">Resonant frequency</div>
+            <div class="rmv" id="lc-res-val">—</div>
+            <div class="rmu" id="lc-res-unit">MHz</div>
+          </div>
+          <div class="rf-metric">
+            <div class="rml">Angular frequency ω</div>
+            <div class="rmv" id="lc-omega">—</div>
+            <div class="rmu">Mrad/s</div>
+          </div>
+          <div class="rf-metric">
+            <div class="rml">Period T</div>
+            <div class="rmv" id="lc-period">—</div>
+            <div class="rmu">µs</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── 2: COIL INDUCTANCE ─── -->
+      <div class="rf-block">
+        <div class="rf-block-title">2 — Air-Core Coil Inductance <span class="rf-badge">Wheeler's Formula</span></div>
+        <div class="rf-formula">L(µH) = r²·N² / (9r + 10ℓ) &nbsp; [r and ℓ in inches] — single-layer air-core coil</div>
+        <div class="rf-fgrid rf-fg3">
+          <div class="rf-field">
+            <label>Coil diameter</label>
+            <input type="number" id="co-d" value="25" min="0.1" step="0.5">
+            <div class="rf-hint">mm (outside diameter)</div>
+          </div>
+          <div class="rf-field">
+            <label>Winding length</label>
+            <input type="number" id="co-l" value="30" min="0.1" step="0.5">
+            <div class="rf-hint">mm</div>
+          </div>
+          <div class="rf-field">
+            <label>Number of turns N</label>
+            <input type="number" id="co-n" value="20" min="1" step="1">
+            <div class="rf-hint">total turns</div>
+          </div>
+        </div>
+        <div class="rf-out-row rf-out3">
+          <div class="rf-metric hi">
+            <div class="rml">Inductance L</div>
+            <div class="rmv" id="co-L">—</div>
+            <div class="rmu">µH</div>
+          </div>
+          <div class="rf-metric">
+            <div class="rml">Required TPI</div>
+            <div class="rmv" id="co-tpi">—</div>
+            <div class="rmu">turns / inch (close-wound)</div>
+          </div>
+          <div class="rf-metric">
+            <div class="rml">Pitch per turn</div>
+            <div class="rmv" id="co-pitch">—</div>
+            <div class="rmu">mm / turn</div>
+          </div>
+        </div>
+        <div class="rf-info" id="co-wire-hint" style="margin-top:.75rem"></div>
+      </div>
+
+      <!-- ─── 3: REACTANCE ─── -->
+      <div class="rf-block">
+        <div class="rf-block-title">3 — Reactance &amp; RF Currents at Resonance <span class="rf-badge">X = ωL = 1/ωC</span></div>
+        <div class="rf-formula">At resonance X<sub>L</sub> = X<sub>C</sub>. Circulating current I = V / X<sub>L</sub>. Capacitor stress V<sub>C</sub> = I · X<sub>C</sub>.</div>
+        <div class="rf-fgrid rf-fg3">
+          <div class="rf-field">
+            <label>Frequency f</label>
+            <input type="number" id="rx-f" value="1.0" min="0.001" step="0.1">
+            <div class="rf-hint">MHz</div>
+          </div>
+          <div class="rf-field">
+            <label>Inductance L</label>
+            <input type="number" id="rx-L" value="2.5" min="0.001" step="0.1">
+            <div class="rf-hint">µH</div>
+          </div>
+          <div class="rf-field">
+            <label>RF voltage across load</label>
+            <input type="number" id="rx-V" value="500" min="1" step="10">
+            <div class="rf-hint">V (0-to-peak)</div>
+          </div>
+        </div>
+        <div class="rf-fgrid rf-fg2">
+          <div class="rf-field">
+            <label>Circuit Q factor</label>
+            <input type="number" id="rx-Q" value="50" min="1" max="2000" step="1">
+            <div class="rf-hint">typical 20–200 for mass spec RF</div>
+          </div>
+          <div class="rf-field">
+            <label>Coil DC resistance R<sub>dc</sub></label>
+            <input type="number" id="rx-R" value="0.5" min="0.001" step="0.05">
+            <div class="rf-hint">Ω — measure with DMM</div>
+          </div>
+        </div>
+        <div class="rf-out-row rf-out3">
+          <div class="rf-metric hi">
+            <div class="rml">Reactance X<sub>L</sub> = X<sub>C</sub></div>
+            <div class="rmv" id="rx-X">—</div>
+            <div class="rmu">Ω</div>
+          </div>
+          <div class="rf-metric hi">
+            <div class="rml">Circulating current I</div>
+            <div class="rmv" id="rx-I">—</div>
+            <div class="rmu">A (0-to-peak)</div>
+          </div>
+          <div class="rf-metric">
+            <div class="rml">Resistive power loss P</div>
+            <div class="rmv" id="rx-P">—</div>
+            <div class="rmu">W</div>
+          </div>
+        </div>
+        <div class="rf-out-row rf-out3" style="margin-top:.6rem">
+          <div class="rf-metric">
+            <div class="rml">Capacitor voltage V<sub>C</sub></div>
+            <div class="rmv" id="rx-Vc">—</div>
+            <div class="rmu">V (0-p) — check rating!</div>
+          </div>
+          <div class="rf-metric">
+            <div class="rml">Resonant capacitance</div>
+            <div class="rmv" id="rx-Cr">—</div>
+            <div class="rmu">pF</div>
+          </div>
+          <div class="rf-metric">
+            <div class="rml">Driver voltage needed</div>
+            <div class="rmv" id="rx-Vd">—</div>
+            <div class="rmu">V (0-p) into tank</div>
+          </div>
+        </div>
+        <div class="rf-info ok" id="rx-warn" style="margin-top:.75rem"></div>
+      </div>
+
+      <!-- ─── 4: WIRE GAUGE TABLE ─── -->
+      <div class="rf-block">
+        <div class="rf-block-title">4 — Wire Gauge Reference Table <span class="rf-badge">AWG · TPI · resistance</span></div>
+        <div style="font-size:.82rem;color:var(--mid);margin-bottom:.6rem;line-height:1.6">
+          Turns per inch assumes close-wound (no gap). For spaced winding, actual TPI will be lower.
+          Coil calculator required TPI: <span class="wg-tpi-ref" id="tbl-tpi-ref">—</span> — best-fit gauge highlighted below.
+        </div>
+        <div class="wg-wrap">
+          <table class="wg-table">
+            <thead>
+              <tr>
+                <th>AWG</th>
+                <th>Bare dia. (mm)</th>
+                <th>Insul. dia. (mm)</th>
+                <th>TPI close-wound</th>
+                <th>Resist. (Ω/m)</th>
+                <th>Max I (A)</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody id="wg-body"></tbody>
+          </table>
+        </div>
+        <div style="font-size:.75rem;color:var(--mid);margin-top:.6rem;line-height:1.55">* Max current ratings are conservative guidelines for chassis wiring. At RF frequencies skin effect increases effective resistance — use heavier gauge or silver-plated wire for high-Q coils.</div>
+      </div>
+
+      <!-- GAACE hardware note -->
+      <div style="margin-top:.25rem;padding:.9rem 1.1rem;background:var(--red-pale);border:1px solid rgba(204,31,31,.15);border-radius:4px;display:flex;gap:.75rem;align-items:flex-start">
+        <span style="font-size:1rem;flex-shrink:0">⚡</span>
+        <div style="font-size:.84rem;color:var(--ink3);line-height:1.6">
+          <strong style="color:var(--ink)">Using GAACE RF hardware?</strong> The RF Generator and RF Mega heads are designed to drive resonant loads in the range these calculators produce. For help matching a coil to your specific quadrupole geometry or load capacitance, <a href="index.html#contact" style="color:var(--red);text-decoration:underline">contact us</a>.
+        </div>
+      </div>
+
+      </div><!-- /tool-body -->
+    </div><!-- /tool-card -->
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- TOOL 3: ION KINETIC ENERGY CALCULATOR                   -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="tool-card" id="ion-ke" style="scroll-margin-top:120px">
+      <div class="tool-card-header">
+        <div class="tool-card-meta">
+          <div class="tool-tag">Ion Optics</div>
+          <div class="tool-title">Ion Kinetic Energy Calculator</div>
+          <div class="tool-desc">Calculate ion velocity, accelerating voltage, or kinetic energy from mass and charge state. Also computes center-of-mass collision energy for CID experiments — the energy that actually goes into bond breaking when an ion hits a neutral gas molecule.</div>
+        </div>
+        <div class="tool-badge-row" style="align-self:flex-start;margin-top:.5rem">
+          <span class="tool-badge">KE = z·e·V = ½mv²</span>
+          <span class="tool-badge">CID collision energy</span>
+          <span class="tool-badge">Solve any unknown</span>
+        </div>
+      </div>
+
+      <div class="tool-body">
+      <style>
+        .ke-mode-row{display:flex;gap:.35rem;margin-bottom:.85rem;flex-wrap:wrap}
+        .ke-mode-btn{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .75rem;border:1px solid var(--rule);border-radius:2px;background:transparent;color:var(--mid);cursor:pointer;transition:all .15s}
+        .ke-mode-btn.on{background:var(--red);border-color:var(--red);color:var(--white)}
+        .ke-fgrid{display:grid;gap:.75rem;margin-bottom:.9rem}
+        .ke-fg2{grid-template-columns:1fr 1fr}
+        .ke-fg3{grid-template-columns:1fr 1fr 1fr}
+        @media(max-width:600px){.ke-fg2,.ke-fg3{grid-template-columns:1fr 1fr}}
+        @media(max-width:380px){.ke-fg2,.ke-fg3{grid-template-columns:1fr}}
+        .ke-field{display:flex;flex-direction:column;gap:.3rem}
+        .ke-field label{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid)}
+        .ke-field input,.ke-field select{font-family:var(--sans);font-size:.9rem;color:var(--ink);background:var(--white);border:1px solid var(--rule);border-radius:3px;padding:.5rem .65rem;transition:border-color .15s;width:100%}
+        .ke-field input:focus{outline:none;border-color:var(--red)}
+        .ke-field input.ke-computed{background:var(--surface);font-weight:500;border-style:dashed}
+        .ke-field .ke-hint{font-size:.72rem;color:var(--mid);margin-top:.15rem}
+        .ke-out-row{display:grid;gap:.6rem}
+        .ke-out3{grid-template-columns:repeat(3,1fr)}
+        .ke-out4{grid-template-columns:repeat(4,1fr)}
+        @media(max-width:640px){.ke-out3,.ke-out4{grid-template-columns:1fr 1fr}}
+        .ke-metric{background:var(--surface);border:1px solid var(--rule2);border-radius:4px;padding:.75rem 1rem}
+        .ke-metric.hi{border-left:3px solid var(--red);background:var(--white)}
+        .ke-metric .kml{font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:.3rem}
+        .ke-metric .kmv{font-family:var(--serif);font-size:1.5rem;font-weight:600;color:var(--ink);line-height:1}
+        .ke-metric.hi .kmv{color:var(--red)}
+        .ke-metric .kmu{font-size:.7rem;color:var(--mid);margin-top:.2rem}
+        .ke-rule{border:none;border-top:1px solid var(--rule);margin:.9rem 0}
+        .ke-section-lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:.7rem}
+        .ke-info{font-size:.82rem;color:var(--ink3);background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--red);border-radius:3px;padding:.7rem .9rem;line-height:1.65;margin-top:.5rem}
+      </style>
+
+        <!-- Mode selector -->
+        <div class="ke-section-lbl">Select what to calculate</div>
+        <div class="ke-mode-row">
+          <button class="ke-mode-btn on" id="ke-m-v" onclick="keSetMode('v')">Calculate velocity</button>
+          <button class="ke-mode-btn"    id="ke-m-V" onclick="keSetMode('V')">Calculate voltage</button>
+          <button class="ke-mode-btn"    id="ke-m-m" onclick="keSetMode('m')">Calculate mass</button>
+        </div>
+
+        <!-- Inputs -->
+        <div class="ke-fgrid ke-fg3">
+          <div class="ke-field">
+            <label>Ion mass m</label>
+            <input type="number" id="ke-m" value="1000" min="1" step="1">
+            <div class="ke-hint">Daltons (Da / u)</div>
+          </div>
+          <div class="ke-field">
+            <label>Charge state z</label>
+            <input type="number" id="ke-z" value="1" min="1" max="50" step="1">
+            <div class="ke-hint">integer (1, 2, 3 …)</div>
+          </div>
+          <div class="ke-field">
+            <label>Accelerating voltage V</label>
+            <input type="number" id="ke-V" value="50" min="0.001" step="1">
+            <div class="ke-hint">Volts</div>
+          </div>
+        </div>
+        <div class="ke-fgrid ke-fg2">
+          <div class="ke-field">
+            <label>Ion velocity v</label>
+            <input type="number" id="ke-v" value="" min="1" step="100">
+            <div class="ke-hint">m/s</div>
+          </div>
+          <div class="ke-field" style="justify-content:flex-end">
+            <label style="opacity:0">pad</label>
+            <div style="font-size:.8rem;color:var(--mid);line-height:1.6;padding:.5rem .65rem;background:var(--surface);border:1px solid var(--rule2);border-radius:3px">
+              KE = z·e·V = ½·m·v²<br>
+              v = √(2·z·e·V / m)
+            </div>
+          </div>
+        </div>
+
+        <!-- Primary outputs -->
+        <div class="ke-out-row ke-out4" style="margin-bottom:.75rem">
+          <div class="ke-metric hi">
+            <div class="kml" id="ke-res-lbl">Velocity</div>
+            <div class="kmv" id="ke-res-val">—</div>
+            <div class="kmu" id="ke-res-unit">m/s</div>
+          </div>
+          <div class="ke-metric">
+            <div class="kml">Kinetic energy</div>
+            <div class="kmv" id="ke-KE">—</div>
+            <div class="kmu">eV</div>
+          </div>
+          <div class="ke-metric">
+            <div class="kml">Velocity (mm/µs)</div>
+            <div class="kmv" id="ke-vmm">—</div>
+            <div class="kmu">mm/µs — useful for TOF</div>
+          </div>
+          <div class="ke-metric">
+            <div class="kml">v/c (relativistic check)</div>
+            <div class="kmv" id="ke-vc">—</div>
+            <div class="kmu">fraction of speed of light</div>
+          </div>
+        </div>
+
+        <hr class="ke-rule">
+
+        <!-- CID / collision energy panel -->
+        <div class="ke-section-lbl">Center-of-mass collision energy (CID)</div>
+        <div style="font-size:.82rem;color:var(--mid);margin-bottom:.75rem;line-height:1.6">
+          E<sub>CM</sub> = E<sub>lab</sub> × M<sub>gas</sub> / (M<sub>gas</sub> + M<sub>ion</sub>) — the fraction of lab-frame energy available for bond breaking.
+        </div>
+        <div class="ke-fgrid ke-fg2">
+          <div class="ke-field">
+            <label>Collision gas</label>
+            <select id="ke-gas" onchange="keCalc()">
+              <option value="4">Helium (He) — 4 Da</option>
+              <option value="28" selected>Nitrogen (N₂) — 28 Da</option>
+              <option value="40">Argon (Ar) — 40 Da</option>
+              <option value="20">Neon (Ne) — 20 Da</option>
+              <option value="131">Xenon (Xe) — 131 Da</option>
+              <option value="0">Custom gas mass (Da) ↓</option>
+            </select>
+          </div>
+          <div class="ke-field">
+            <label>Custom gas mass (if selected above)</label>
+            <input type="number" id="ke-gasM" value="28" min="1" step="1">
+            <div class="ke-hint">Da — overrides dropdown if "Custom" selected</div>
+          </div>
+        </div>
+        <div class="ke-out-row ke-out3">
+          <div class="ke-metric hi">
+            <div class="kml">E<sub>CM</sub> collision energy</div>
+            <div class="kmv" id="ke-Ecm">—</div>
+            <div class="kmu">eV</div>
+          </div>
+          <div class="ke-metric">
+            <div class="kml">E<sub>lab</sub> (ion KE)</div>
+            <div class="kmv" id="ke-Elab">—</div>
+            <div class="kmu">eV</div>
+          </div>
+          <div class="ke-metric">
+            <div class="kml">E<sub>CM</sub> / E<sub>lab</sub> ratio</div>
+            <div class="kmv" id="ke-ratio">—</div>
+            <div class="kmu">efficiency of energy transfer</div>
+          </div>
+        </div>
+        <div class="ke-info" id="ke-info" style="margin-top:.75rem"></div>
+
+      </div><!-- /tool-body -->
+    </div><!-- /tool-card -->
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- TOOL 4: CAPACITIVE LOAD POWER CALCULATOR                -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="tool-card" id="cap-power" style="scroll-margin-top:120px">
+      <div class="tool-card-header">
+        <div class="tool-card-meta">
+          <div class="tool-tag">Switched Ion Optics</div>
+          <div class="tool-title">Capacitive Load Power Calculator</div>
+          <div class="tool-desc">Every time a switched voltage is applied to a capacitive load — an electrode, ion gate, or detector — charge must flow to change the voltage. At high switching rates this constitutes a continuous power draw even though no DC current flows through the load. This calculator quantifies load power, peak current, energy per cycle, and driver thermal stress for square wave, sinusoidal, and trapezoidal waveforms. Essential for selecting FET switches, sizing power supplies, and understanding why high-frequency switching of large electrode arrays demands surprisingly large power budgets.</div>
+        </div>
+        <div class="tool-badge-row" style="align-self:flex-start;margin-top:.5rem">
+          <span class="tool-badge">P = C·ΔV²·f</span>
+          <span class="tool-badge">Square / Sine / Trap</span>
+          <span class="tool-badge">FET switch sizing</span>
+          <span class="tool-badge">Multi-channel arrays</span>
+        </div>
+      </div>
+      <div class="tool-body">
+      <style>
+        .cp-desc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-bottom:.85rem}
+        @media(max-width:640px){.cp-desc-grid{grid-template-columns:1fr}}
+        .cp-desc-card{background:var(--surface);border:1px solid var(--rule2);border-radius:4px;padding:.75rem .9rem}
+        .cp-desc-card-title{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:.4rem}
+        .cp-desc-card-body{font-size:.8rem;color:var(--mid);line-height:1.6}
+        .cp-desc-card-body strong{color:var(--ink3)}
+        .cp-apps{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.5rem;margin-bottom:.85rem}
+        .cp-app{background:var(--surface);border:1px solid var(--rule2);border-radius:4px;padding:.5rem .75rem;font-size:.78rem;color:var(--mid);line-height:1.5}
+        .cp-app strong{display:block;font-family:var(--mono);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:.15rem}
+        .cp-formula{font-family:var(--mono);font-size:.7rem;background:var(--surface);border:1px solid var(--rule2);border-radius:3px;padding:.5rem .85rem;color:var(--mid);margin-bottom:.85rem;line-height:1.8}
+        .cp-wave-row{display:flex;gap:.35rem;margin-bottom:.85rem;flex-wrap:wrap}
+        .cp-wbtn{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .75rem;border:1px solid var(--rule);border-radius:2px;background:transparent;color:var(--mid);cursor:pointer;transition:all .15s}
+        .cp-wbtn.on{background:var(--red);border-color:var(--red);color:var(--white)}
+        .cp-fbox{font-family:var(--mono);font-size:.68rem;color:var(--mid);background:var(--surface);border:1px solid var(--rule2);border-radius:3px;padding:.5rem .85rem;margin-bottom:.85rem;line-height:1.75}
+        .cp-grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+        @media(max-width:600px){.cp-grid2{grid-template-columns:1fr}}
+        .cp-field{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.75rem}
+        .cp-field label{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid)}
+        .cp-field input{font-family:var(--sans);font-size:.9rem;color:var(--ink);background:var(--white);border:1px solid var(--rule);border-radius:3px;padding:.5rem .65rem;width:100%;transition:border-color .15s}
+        .cp-field input:focus{outline:none;border-color:var(--red)}
+        .cp-field .cp-hint{font-size:.72rem;color:var(--mid);margin-top:.15rem}
+        .cp-out-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.6rem;margin-bottom:.75rem}
+        .cp-metric{background:var(--surface);border:1px solid var(--rule2);border-radius:4px;padding:.75rem 1rem}
+        .cp-metric.hi{background:var(--white);border-left:3px solid var(--red);border-radius:0}
+        .cp-metric .cml{font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:.3rem}
+        .cp-metric .cmv{font-family:var(--serif);font-size:1.5rem;font-weight:600;color:var(--ink);line-height:1}
+        .cp-metric.hi .cmv{color:var(--red)}
+        .cp-metric .cmu{font-size:.7rem;color:var(--mid);margin-top:.2rem}
+        .cp-warn{font-size:.82rem;line-height:1.6;padding:.65rem .9rem;border-radius:3px;margin-bottom:.85rem;border:1px solid var(--rule)}
+        .cp-warn.ok{background:#EAF3DE;border-color:#97C459;color:#27500A}
+        .cp-warn.bad{background:var(--red-pale);border-color:rgba(204,31,31,.3);color:var(--red-dk)}
+        .cp-canvas-lbl{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:.5rem}
+        .cp-canvas{display:block;width:100%;border:1px solid var(--rule2);border-radius:4px;background:var(--surface)}
+      </style>
+
+        <!-- Description cards -->
+        <div class="cp-desc-grid">
+          <div class="cp-desc-card">
+            <div class="cp-desc-card-title">Square wave</div>
+            <div class="cp-desc-card-body">Voltage switches abruptly between two levels. Each transition moves Q&nbsp;=&nbsp;C·ΔV in a short rise time, producing a large current spike. Power scales linearly with frequency. <strong>Ion gates, Bradbury-Nielsen gates, deflectors, trap switching.</strong></div>
+          </div>
+          <div class="cp-desc-card">
+            <div class="cp-desc-card-title">Sinusoidal</div>
+            <div class="cp-desc-card-body">Current leads voltage by 90° — the load is purely reactive. Power delivered continuously rather than in spikes. <strong>FAIMS asymmetric waveforms, RF ion guide drive monitoring, AC-coupled electrode systems.</strong></div>
+          </div>
+          <div class="cp-desc-card">
+            <div class="cp-desc-card-title">Trapezoidal</div>
+            <div class="cp-desc-card-body">Square wave with finite, controllable rise/fall times and adjustable duty cycle. More realistic for real driver outputs. Peak current set by ΔV/t<sub>rise</sub>. <strong>TWAVE electrodes, SLIM switching arrays, shaped pulse ejection.</strong></div>
+          </div>
+        </div>
+
+        <div class="cp-apps">
+          <div class="cp-app"><strong>Ion gate / deflector</strong>10–100 pF, 100–500 V, 1–100 kHz. Peak currents of 0.1–5 A are common.</div>
+          <div class="cp-app"><strong>TWAVE electrode array</strong>Many electrodes in parallel multiply total C. Use channel count to see full supply burden.</div>
+          <div class="cp-app"><strong>SLIM device</strong>Hundreds of electrodes × tens of pF. Total load can reach nF at MHz rates.</div>
+          <div class="cp-app"><strong>FAIMS waveform</strong>Asymmetric high-voltage sine at 1–5 MHz. Sinusoidal mode gives the correct estimate.</div>
+          <div class="cp-app"><strong>FET switch selection</strong>I<sub>pk</sub> sets minimum FET I<sub>D</sub> rating. R<sub>on</sub>×I<sub>pk</sub>² determines device heating.</div>
+          <div class="cp-app"><strong>Supply sizing</strong>Total supply current (all channels, with efficiency) sets minimum supply current rating.</div>
+        </div>
+
+        <!-- Waveform selector -->
+        <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:.6rem">Waveform type</div>
+        <div class="cp-wave-row">
+          <button class="cp-wbtn on" id="cp-w-sq"   onclick="cpSetWave('sq')">Square wave</button>
+          <button class="cp-wbtn"    id="cp-w-sin"  onclick="cpSetWave('sin')">Sinusoidal</button>
+          <button class="cp-wbtn"    id="cp-w-trap" onclick="cpSetWave('trap')">Trapezoidal</button>
+        </div>
+        <div id="cp-fbox-sq"   class="cp-fbox">P = C &middot; &Delta;V&sup2; &middot; f &nbsp;&nbsp;|&nbsp;&nbsp; I<sub>pk</sub> = C &middot; &Delta;V / t<sub>rise</sub> &nbsp;&nbsp;|&nbsp;&nbsp; E<sub>cycle</sub> = C &middot; &Delta;V&sup2;</div>
+        <div id="cp-fbox-sin"  class="cp-fbox" style="display:none">P = &frac12; &middot; C &middot; V<sub>pk</sub>&sup2; &middot; &omega; = &pi;&sup2; &middot; C &middot; V<sub>pk</sub>&sup2; &middot; f &nbsp;&nbsp;|&nbsp;&nbsp; I<sub>pk</sub> = C &middot; V<sub>pk</sub> &middot; &omega;</div>
+        <div id="cp-fbox-trap" class="cp-fbox" style="display:none">P = C &middot; &Delta;V&sup2; &middot; f &nbsp;&nbsp;|&nbsp;&nbsp; I<sub>pk</sub> = C &middot; &Delta;V / t<sub>rise</sub> &nbsp;&nbsp;|&nbsp;&nbsp; duty cycle sets high-time fraction</div>
+
+        <!-- Inputs -->
+        <div class="cp-grid2">
+          <div>
+            <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:.6rem">Load parameters</div>
+            <div class="cp-field"><label>Capacitance C</label><input type="number" id="cp-cap" value="100" min="0.001" step="10"><div class="cp-hint">pF — measure with LCR meter or estimate from geometry</div></div>
+            <div class="cp-field"><label>Voltage swing &Delta;V</label><input type="number" id="cp-dv" value="100" min="0.001" step="10"><div class="cp-hint">V — full swing (square/trap) or 0-to-peak amplitude (sine)</div></div>
+            <div class="cp-field"><label>Frequency f</label><input type="number" id="cp-freq" value="100000" min="1" step="1000"><div class="cp-hint">Hz — switching rate or drive frequency</div></div>
+            <div class="cp-field" id="cp-row-tr"><label>Rise / fall time t<sub>r</sub></label><input type="number" id="cp-tr" value="10" min="0.001" step="1"><div class="cp-hint">ns</div></div>
+            <div class="cp-field" id="cp-row-duty" style="display:none"><label>Duty cycle</label><input type="number" id="cp-duty" value="50" min="1" max="99" step="1"><div class="cp-hint">% — fraction of period at high level</div></div>
+          </div>
+          <div>
+            <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:.6rem">Driver parameters</div>
+            <div class="cp-field"><label>Driver on-resistance R<sub>on</sub></label><input type="number" id="cp-ron" value="5" min="0" step="0.5"><div class="cp-hint">&Omega; — FET R<sub>DS(on)</sub> or output impedance</div></div>
+            <div class="cp-field"><label>Supply voltage V<sub>supply</sub></label><input type="number" id="cp-vsup" value="100" min="1" step="10"><div class="cp-hint">V — DC rail voltage</div></div>
+            <div class="cp-field"><label>Driver efficiency &eta;</label><input type="number" id="cp-eta" value="85" min="1" max="100" step="1"><div class="cp-hint">% — typical FET driver 80&ndash;95%</div></div>
+            <div class="cp-field"><label>Number of channels</label><input type="number" id="cp-nch" value="1" min="1" step="1"><div class="cp-hint">multiply for electrode arrays — TWAVE, SLIM, ion funnels</div></div>
+          </div>
+        </div>
+
+        <!-- Outputs -->
+        <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:.6rem">Results — per channel &amp; total</div>
+        <div class="cp-out-row">
+          <div class="cp-metric hi"><div class="cml">Load power P</div><div class="cmv" id="cp-P">—</div><div class="cmu">W per channel</div></div>
+          <div class="cp-metric hi"><div class="cml">Total load power</div><div class="cmv" id="cp-Ptot">—</div><div class="cmu">W (all channels)</div></div>
+          <div class="cp-metric hi"><div class="cml">Supply current</div><div class="cmv" id="cp-Isup">—</div><div class="cmu">A from supply</div></div>
+          <div class="cp-metric"><div class="cml">Peak current I<sub>pk</sub></div><div class="cmv" id="cp-Ipk">—</div><div class="cmu">A into cap during rise</div></div>
+          <div class="cp-metric"><div class="cml">Energy per cycle</div><div class="cmv" id="cp-E">—</div><div class="cmu">nJ</div></div>
+          <div class="cp-metric"><div class="cml">Driver dissipation</div><div class="cmv" id="cp-Pdrv">—</div><div class="cmu">W in R<sub>on</sub></div></div>
+          <div class="cp-metric"><div class="cml">Charge per cycle Q</div><div class="cmv" id="cp-Q">—</div><div class="cmu">nC</div></div>
+          <div class="cp-metric"><div class="cml">Avg charge current</div><div class="cmv" id="cp-Iavg">—</div><div class="cmu">A average</div></div>
+        </div>
+        <div class="cp-warn ok" id="cp-warn">Calculating&hellip;</div>
+
+        <hr class="section-rule">
+
+        <!-- Waveform preview canvas -->
+        <div class="cp-canvas-lbl">Waveform preview &mdash; voltage and current vs time (one cycle)</div>
+        <canvas id="cp-waveC" class="cp-canvas" height="180" role="img" aria-label="Waveform voltage and current preview">Waveform preview.</canvas>
+
+        <hr class="section-rule">
+
+        <!-- Sweep chart -->
+        <div class="cp-canvas-lbl" style="margin-top:.25rem">Power vs frequency &mdash; log scale &middot; red dot = current operating point</div>
+        <canvas id="cp-sweepC" class="cp-canvas" height="200" role="img" aria-label="Power versus frequency on log scale">Power vs frequency.</canvas>
+
+        <!-- GAACE hardware note -->
+        <div style="margin-top:1.25rem;padding:.9rem 1.1rem;background:var(--red-pale);border:1px solid rgba(204,31,31,.15);border-radius:4px;display:flex;gap:.75rem;align-items:flex-start">
+          <span style="font-size:1rem;flex-shrink:0">&#9889;</span>
+          <div style="font-size:.84rem;color:var(--ink3);line-height:1.6">
+            <strong style="color:var(--ink)">Switching ion optics with GAACE hardware?</strong> The FET switch, TWAVE driver, and FAIMS electronics in the MIPS platform are designed to drive the capacitive loads this calculator describes. For help matching a driver to your electrode geometry and switching requirements, <a href="index.html#contact" style="color:var(--red);text-decoration:underline">contact us</a>.
+          </div>
+        </div>
+
+      </div><!-- /tool-body -->
+    </div><!-- /tool-card -->
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- COMING SOON TOOLS                                        -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- USEFUL LINKS SECTION                                     -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div id="useful-links" style="margin-bottom:3rem;scroll-margin-top:120px">
+      <div class="lbl" style="margin-top:1rem">Reference Resources</div>
+      <h2 style="font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:600;color:var(--ink);margin-bottom:.5rem">Useful Links &amp; <em style="color:var(--red);font-style:italic;font-weight:300">Resources</em></h2>
+      <p style="font-size:.9rem;color:var(--mid);line-height:1.7;margin-bottom:1.75rem;max-width:640px">Curated links for the mass spectrometry research community — data references, open-source software, simulation tools, and key literature resources.</p>
+
+      <style>
+        .links-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin-bottom:1.5rem}
+        .link-card{background:var(--white);padding:1.25rem 1.5rem;transition:background .15s;display:flex;flex-direction:column;gap:.4rem}
+        .link-card:hover{background:var(--surface)}
+        .link-cat{font-family:var(--mono);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.1rem}
+        .link-title{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--ink)}
+        .link-title a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule);transition:border-color .15s}
+        .link-title a:hover{border-bottom-color:var(--red)}
+        .link-desc{font-size:.8rem;color:var(--mid);line-height:1.6}
+        .link-url{font-family:var(--mono);font-size:.62rem;color:var(--mid);margin-top:.15rem;opacity:.6}
+        .link-section-title{font-family:var(--mono);font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mid);margin:1.75rem 0 .75rem;padding-bottom:.4rem;border-bottom:1px solid var(--rule)}
+      </style>
+
+      <div class="link-section-title">&#9875; Data &amp; Databases</div>
+      <div class="links-grid">
+        <div class="link-card">
+          <div class="link-cat">Chemistry Reference</div>
+          <div class="link-title"><a href="https://webbook.nist.gov/chemistry/" target="_blank" rel="noopener">NIST Chemistry WebBook</a></div>
+          <div class="link-desc">The definitive reference for exact masses, isotope patterns, molecular formulas, and thermochemical data. Essential for mass calibration and peak identification.</div>
+          <div class="link-url">webbook.nist.gov/chemistry</div>
+        </div>
+        <div class="link-card">
+          <div class="link-cat">Proteomics</div>
+          <div class="link-title"><a href="https://prospector.ucsf.edu/" target="_blank" rel="noopener">UCSF Protein Prospector</a></div>
+          <div class="link-desc">Web-based tools for protein and peptide mass calculations, fragment ion prediction, and database searching. Widely used for bottom-up proteomics workflows.</div>
+          <div class="link-url">prospector.ucsf.edu</div>
+        </div>
+        <div class="link-card">
+          <div class="link-cat">Ion Mobility / CCS</div>
+          <div class="link-title"><a href="https://collisiondb.ca/" target="_blank" rel="noopener">CCSbase / CollisionDB</a></div>
+          <div class="link-desc">Community database of experimental collision cross section (CCS) values for small molecules and peptides across multiple instrument platforms and buffer gases.</div>
+          <div class="link-url">collisiondb.ca</div>
+        </div>
+        <div class="link-card">
+          <div class="link-cat">Lipids</div>
+          <div class="link-title"><a href="https://www.lipidmaps.org/" target="_blank" rel="noopener">LIPID MAPS</a></div>
+          <div class="link-desc">Comprehensive lipid structure database with exact masses, MS/MS fragmentation data, and pathway tools. The reference standard for lipidomics research.</div>
+          <div class="link-url">lipidmaps.org</div>
+        </div>
+        <div class="link-card">
+          <div class="link-cat">Literature Search</div>
+          <div class="link-title"><a href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank" rel="noopener">PubMed</a></div>
+          <div class="link-desc">Free full-text archive and search engine for biomedical and life sciences literature maintained by the NIH National Library of Medicine. The primary resource for finding mass spectrometry methods papers, instrumentation articles, and application studies.</div>
+          <div class="link-url">pubmed.ncbi.nlm.nih.gov</div>
+        </div>
+      </div>
+
+      <div class="link-section-title">&#128187; Open-Source Software</div>
+      <div class="links-grid">
+        <div class="link-card">
+          <div class="link-cat">Data Processing</div>
+          <div class="link-title"><a href="http://www.mmass.org/" target="_blank" rel="noopener">mMass</a></div>
+          <div class="link-desc">Free, open-source mass spectrum interpreter for Windows and macOS. Excellent for manual spectrum annotation, isotope pattern matching, and sequence analysis.</div>
+          <div class="link-url">mmass.org</div>
+        </div>
+        <div class="link-card">
+          <div class="link-cat">Ion Mobility / CCS</div>
+          <div class="link-title"><a href="https://github.com/bhattlab/CIUSuite2" target="_blank" rel="noopener">CIUSuite 2</a></div>
+          <div class="link-desc">Open-source software for collision-induced unfolding (CIU) data analysis. Fingerprinting, classification, and comparison of protein CIU datasets from IM-MS instruments.</div>
+          <div class="link-url">github.com/bhattlab/CIUSuite2</div>
+        </div>
+        <div class="link-card">
+          <div class="link-cat">CCS Calculation</div>
+          <div class="link-title"><a href="https://github.com/HailiangLi/IMoS2" target="_blank" rel="noopener">IMoS / MOBCAL</a></div>
+          <div class="link-desc">Computational tools for calculating theoretical CCS values from molecular structures using trajectory (TM), projection approximation (PA), and EHSS methods.</div>
+          <div class="link-url">github.com — IMoS2 / MOBCAL</div>
+        </div>
+        <div class="link-card">
+          <div class="link-cat">Instrument Control</div>
+          <div class="link-title"><a href="https://github.com/GordonAnderson" target="_blank" rel="noopener">GAA GitHub Repository</a></div>
+          <div class="link-desc">Open-source firmware, Arduino libraries, and control software for MIPS and associated GAA Custom Electronics hardware. Actively maintained with community contributions welcome.</div>
+          <div class="link-url">github.com/GordonAnderson</div>
+        </div>
+        <div class="link-card">
+          <div class="link-cat">Multi-Tool Suite</div>
+          <div class="link-title"><a href="https://pnnl-comp-mass-spec.github.io/" target="_blank" rel="noopener">PNNL Computational Mass Spectrometry</a></div>
+          <div class="link-desc">A suite of open-source tools developed at Pacific Northwest National Laboratory covering proteomics, metabolomics, data processing, and instrument control. Includes MASIC, DeconTools, Protein Digestion Simulator, and many others widely used in the mass spec community.</div>
+          <div class="link-url">pnnl-comp-mass-spec.github.io</div>
+        </div>
+      </div>
+
+      <div class="link-section-title">&#128300; Simulation Tools</div>
+      <div class="links-grid">
+        <div class="link-card">
+          <div class="link-cat">Ion Optics Simulation</div>
+          <div class="link-title"><a href="https://simion.com/" target="_blank" rel="noopener">SIMION</a></div>
+          <div class="link-desc">The industry-standard ion trajectory simulation software. Models electrostatic and magnetic fields, ion optics, and mass analyzer geometries. Used by instrument designers worldwide.</div>
+          <div class="link-url">simion.com</div>
+        </div>
+        <div class="link-card">
+          <div class="link-cat">RF Ion Trap Simulation</div>
+          <div class="link-title"><a href="https://www.ionsimulation.com/" target="_blank" rel="noopener">ITSIM / Ion Simulation</a></div>
+          <div class="link-desc">Simulation environment specifically designed for ion trap mass spectrometers. Models ion motion in RF fields, space charge effects, and resonance ejection.</div>
+          <div class="link-url">ionsimulation.com</div>
+        </div>
+        <div class="link-card">
+          <div class="link-cat">Molecular Dynamics</div>
+          <div class="link-title"><a href="https://www.gromacs.org/" target="_blank" rel="noopener">GROMACS</a></div>
+          <div class="link-desc">High-performance molecular dynamics package widely used for native MS and ion mobility structure prediction. Free and open source with excellent GPU support.</div>
+          <div class="link-url">gromacs.org</div>
+        </div>
+        <div class="link-card">
+          <div class="link-cat">Electronics Simulation</div>
+          <div class="link-title"><a href="https://www.analog.com/en/design-center/design-tools-and-calculators/ltspice-simulator.html" target="_blank" rel="noopener">LTspice</a></div>
+          <div class="link-desc">Free SPICE-based circuit simulator from Analog Devices. Invaluable for designing RF driver circuits, FET switch networks, and power supply topologies for mass spec electronics.</div>
+          <div class="link-url">analog.com — LTspice</div>
+        </div>
+      </div>
+
+      <div class="link-section-title">&#128214; Key Journals &amp; Literature</div>
+      <div class="links-grid">
+        <div class="link-card">
+          <div class="link-cat">Primary Journal</div>
+          <div class="link-title"><a href="https://pubs.acs.org/journal/jafcau" target="_blank" rel="noopener">Journal of the American Society for Mass Spectrometry (JASMS)</a></div>
+          <div class="link-desc">The leading mass spectrometry journal covering instrumentation, methodology, and applications. Published by the American Society for Mass Spectrometry.</div>
+          <div class="link-url">pubs.acs.org/journal/jasms</div>
+        </div>
+        <div class="link-card">
+          <div class="link-cat">Broad Analytical</div>
+          <div class="link-title"><a href="https://pubs.acs.org/journal/ancham" target="_blank" rel="noopener">Analytical Chemistry (ACS)</a></div>
+          <div class="link-desc">High-impact journal covering the full range of analytical methods including mass spectrometry, ion mobility, and related detector technologies. Biweekly publication.</div>
+          <div class="link-url">pubs.acs.org/journal/ancham</div>
+        </div>
+        <div class="link-card">
+          <div class="link-cat">Rapid Communication</div>
+          <div class="link-title"><a href="https://analyticalsciencejournals.onlinelibrary.wiley.com/journal/10991522" target="_blank" rel="noopener">Rapid Communications in Mass Spectrometry</a></div>
+          <div class="link-desc">Fast-track publication for new MS techniques, instrumentation innovations, and novel applications. Good source for emerging ion mobility and native MS developments.</div>
+          <div class="link-url">Wiley — Rapid Commun. Mass Spectrom.</div>
+        </div>
+        <div class="link-card">
+          <div class="link-cat">Community</div>
+          <div class="link-title"><a href="https://www.asms.org/" target="_blank" rel="noopener">American Society for Mass Spectrometry (ASMS)</a></div>
+          <div class="link-desc">Professional society hosting the annual ASMS conference — the largest gathering of mass spectrometrists worldwide. Resources include short courses, job postings, and the MS education portal.</div>
+          <div class="link-url">asms.org</div>
+        </div>
+      </div>
+
+    </div><!-- /useful-links -->
+
+    <div id="coming-soon" style="margin-top:1rem;scroll-margin-top:120px">
+      <div class="lbl" style="margin-top:3rem">Coming Soon</div>
+      <h2 style="font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:600;color:var(--ink);margin-bottom:.5rem">More Tools <em style="color:var(--red);font-style:italic;font-weight:300">In Development</em></h2>
+      <p style="font-size:.9rem;color:var(--mid);line-height:1.7;margin-bottom:1.5rem;max-width:600px">Additional calculators are being developed for the mass spectrometry community. Check back regularly or <a href="index.html#contact" style="color:var(--red)">contact us</a> to request a specific tool.</p>
+
+      <div class="coming-grid">
+        <div class="coming-card">
+          <div class="coming-icon">📐</div>
+          <div class="coming-name">K₀ / CCS Converter</div>
+          <div class="coming-desc">Convert between drift time, reduced mobility K₀, and collision cross section (Å²) for ion mobility measurements. Supports He, N₂, and Ar buffer gases.</div>
+          <div class="coming-pill">Ion Mobility</div>
+        </div>
+        <div class="coming-card">
+          <div class="coming-icon">🔁</div>
+          <div class="coming-name">Ion Trap Parameter Calculator</div>
+          <div class="coming-desc">Calculate trapping RF amplitude, secular frequency, and pseudopotential well depth for a Paul trap from r₀, z₀, and drive frequency.</div>
+          <div class="coming-pill">Ion Traps</div>
+        </div>
+        <div class="coming-card">
+          <div class="coming-icon">⚡</div>
+          <div class="coming-name">FET Pulser Rise Time Calculator</div>
+          <div class="coming-desc">Estimate rise and fall times from load capacitance and drive resistance. Directly applicable to GAACE FET switch and pulser products (10–15 ns typical).</div>
+          <div class="coming-pill">Electronics</div>
+        </div>
+        <div class="coming-card">
+          <div class="coming-icon">🔍</div>
+          <div class="coming-name">Resolving Power Calculator</div>
+          <div class="coming-desc">Calculate mass resolving power R = m/Δm and peak width from measured spectra, for both quadrupole and time-of-flight analyzers.</div>
+          <div class="coming-pill">Mass Analysis</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── COMMUNITY CTA SECTION ── -->
+<section style="background:var(--d-bg);padding:5rem 0;position:relative;overflow:hidden">
+  <!-- background grid -->
+  <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(204,31,31,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(204,31,31,.04) 1px,transparent 1px);background-size:52px 52px;pointer-events:none"></div>
+  <!-- glow -->
+  <div style="position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(204,31,31,.08) 0%,transparent 65%);top:-100px;left:-80px;pointer-events:none"></div>
+
+  <div class="container" style="position:relative;z-index:2">
+
+    <!-- heading -->
+    <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:1.25rem">
+      <div style="width:28px;height:1px;background:var(--red)"></div>
+      <span style="font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--red)">Community</span>
+    </div>
+    <h2 style="font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:600;line-height:1.1;color:var(--white);margin-bottom:1rem">Help Us Build a Better<br><em style="font-style:italic;color:var(--red);font-weight:300">Toolbox</em></h2>
+    <p style="font-size:1rem;font-weight:300;color:var(--d-silver);line-height:1.75;max-width:580px;margin-bottom:3rem">These tools are built for the mass spectrometry community. If there's a calculation you do repeatedly, a reference you keep looking up, or a link that belongs here — we want to hear about it.</p>
+
+    <!-- two-column cards -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:860px">
+
+      <!-- Request a tool -->
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:2rem;display:flex;flex-direction:column;gap:1rem;transition:border-color .2s" onmouseover="this.style.borderColor='rgba(204,31,31,.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
+        <div style="width:40px;height:40px;background:rgba(204,31,31,.12);border:1px solid rgba(204,31,31,.25);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:1.2rem">&#x1F9EE;</div>
+        <div>
+          <div style="font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--white);margin-bottom:.4rem">Request a Calculator</div>
+          <div style="font-size:.88rem;color:var(--d-silver);line-height:1.7">Have a calculation you do by hand or in a spreadsheet every day? Tell us what it is and we'll build it into the page. Ion trap secular frequencies, resolving power, time-of-flight flight times, pressure conversion — all fair game.</div>
+        </div>
+        <a href="index.html#contact" style="display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--red);text-decoration:none;margin-top:auto;transition:gap .15s" onmouseover="this.style.gap='.75rem'" onmouseout="this.style.gap='.5rem'">
+          Request a tool &nbsp;&#x2192;
+        </a>
+      </div>
+
+      <!-- Suggest a link -->
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:2rem;display:flex;flex-direction:column;gap:1rem;transition:border-color .2s" onmouseover="this.style.borderColor='rgba(204,31,31,.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
+        <div style="width:40px;height:40px;background:rgba(204,31,31,.12);border:1px solid rgba(204,31,31,.25);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:1.2rem">&#x1F517;</div>
+        <div>
+          <div style="font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--white);margin-bottom:.4rem">Suggest a Link</div>
+          <div style="font-size:.88rem;color:var(--d-silver);line-height:1.7">Know a database, software tool, or resource that belongs in the links section? Send us the URL and a brief description and we'll review it for inclusion. We're especially interested in open-source tools and community databases.</div>
+        </div>
+        <a href="index.html#contact" style="display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--red);text-decoration:none;margin-top:auto;transition:gap .15s" onmouseover="this.style.gap='.75rem'" onmouseout="this.style.gap='.5rem'">
+          Suggest a link &nbsp;&#x2192;
+        </a>
+      </div>
+
+    </div>
+
+    <!-- direct contact strip -->
+    <div style="margin-top:2rem;padding:1.25rem 1.5rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:4px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;max-width:860px">
+      <div>
+        <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.3rem">Reach us directly</div>
+        <div style="font-size:.95rem;color:var(--d-silver)">Questions, collaborations, or custom tool requests — we read every message.</div>
+      </div>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+        <a href="mailto:gaa@gaa-ce.com" style="font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--white);background:var(--red);padding:.5rem 1.1rem;border-radius:3px;text-decoration:none;white-space:nowrap;transition:background .15s" onmouseover="this.style.background='#A01515'" onmouseout="this.style.background='var(--red)'">
+          &#x2709; gaa@gaa-ce.com
+        </a>
+        <a href="index.html#contact" style="font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);padding:.5rem 1.1rem;border-radius:3px;text-decoration:none;white-space:nowrap;transition:all .15s" onmouseover="this.style.color='white';this.style.borderColor='rgba(255,255,255,.3)'" onmouseout="this.style.color='rgba(255,255,255,.6)';this.style.borderColor='rgba(255,255,255,.12)'">
+          Contact form &#x2192;
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <img src="data:image/jpeg;base64,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" alt="GAA Custom Electronics logo" />
+        <div class="footer-logo-text">GAA Custom Electronics</div>
+      </div>
+      <p>Supporting mass spectrometry research through custom electronics monitoring and control systems. Kennewick, WA — Est. 2014.</p>
+    </div>
+    <div>
+      <div class="fcol-title">Products</div>
+      <ul class="fcol-links">
+        <li><a href="index.html#products">MIPS System</a></li>
+        <li><a href="index.html#products">RF Generator</a></li>
+        <li><a href="index.html#products">RF Mega</a></li>
+        <li><a href="index.html#products">MFT Twave</a></li>
+        <li><a href="index.html#products">SLIM Reverser</a></li>
+        <li><a href="index.html#products">Electrometer</a></li>
+        <li><a href="index.html#products">FET Switch</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fcol-title">Company</div>
+      <ul class="fcol-links">
+        <li><a href="index.html#about">About Us</a></li>
+        <li><a href="index.html#capabilities">Capabilities</a></li>
+        <li><a href="index.html#facility">Our Facility</a></li>
+        <li><a href="index.html#how-it-works">Software</a></li>
+        <li><a href="index.html#applications">Applications</a></li>
+        <li><a href="index.html#support">Downloads</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fcol-title">Resources</div>
+      <ul class="fcol-links">
+        <li><a href="tools.html">Tools &amp; Calculators</a></li>
+        <li><a href="index.html#support">Operations Manuals</a></li>
+        <li><a href="https://github.com/GordonAnderson" target="_blank">GitHub Repository</a></li>
+        <li><a href="index.html#support">Rate Sheet</a></li>
+        <li><a href="index.html#support">Warranty Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-btm">
+    <div class="footer-copy">&copy; 2025 GAA Custom Electronics, LLC &middot; Kennewick, WA &middot; All Rights Reserved</div>
+    <div class="footer-copy">GAAcustom.com &middot; gaa@gaa-ce.com &middot; 509.628.6851</div>
+  </div>
+</footer>
+
+<!-- ── NAV SCROLL BEHAVIOUR ── -->
+<script>
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  });
+  function toggleDrawer() {
+    const d = document.getElementById('nav-drawer');
+    const b = document.getElementById('nav-hamburger');
+    const open = d.classList.toggle('open');
+    b.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+  function closeDrawer() {
+    document.getElementById('nav-drawer').classList.remove('open');
+    document.getElementById('nav-hamburger').setAttribute('aria-label','Open menu');
+  }
+  document.addEventListener('click', function(e) {
+    const drawer = document.getElementById('nav-drawer');
+    const btn    = document.getElementById('nav-hamburger');
+    if (drawer.classList.contains('open') && !drawer.contains(e.target) && !btn.contains(e.target)) {
+      closeDrawer();
+    }
+  });
+</script>
+
+<!-- ══════════════════════════════════════════════════════════════
+     QUADRUPOLE CALCULATOR JAVASCRIPT
+     RK4 integration of Mathieu equation — pixel-by-pixel stability
+═══════════════════════════════════════════════════════════════ -->
+<script>
+const CHARGE=1.60218e-19, AMU=1.66054e-27;
+let showScan=false, lastA=0.1185, lastQ=0.706, lastAQ=0.168;
+let stabImage=null, stabComputed=false, computing=false;
+
+function setTab(n){
+  showScan=n===1;
+  document.getElementById('t1').className='diag-tab'+(showScan?'':' on');
+  document.getElementById('t2').className='diag-tab'+(showScan?' on':'');
+  overlayStab();
+}
+
+/* RK4 Mathieu stability check ----------------------------------------- */
+const STEPS=80, dxi=Math.PI/STEPS;
+function checkStability(a,q){
+  let x1=1,p1=0,x2=0,p2=1;
+  function dp(xi,x){ return -(a-2*q*Math.cos(2*xi))*x; }
+  for(let i=0;i<STEPS;i++){
+    const xi=i*dxi;
+    const kx1=p1,              kp1=dp(xi,x1);
+    const kx2=p1+(dxi/2)*kp1, kp2=dp(xi+dxi/2,x1+(dxi/2)*kx1);
+    const kx3=p1+(dxi/2)*kp2, kp3=dp(xi+dxi/2,x1+(dxi/2)*kx2);
+    const kx4=p1+dxi*kp3,     kp4=dp(xi+dxi,  x1+dxi*kx3);
+    x1+=(dxi/6)*(kx1+2*kx2+2*kx3+kx4);
+    p1+=(dxi/6)*(kp1+2*kp2+2*kp3+kp4);
+    const lx1=p2,              lp1=dp(xi,x2);
+    const lx2=p2+(dxi/2)*lp1, lp2=dp(xi+dxi/2,x2+(dxi/2)*lx1);
+    const lx3=p2+(dxi/2)*lp2, lp3=dp(xi+dxi/2,x2+(dxi/2)*lx2);
+    const lx4=p2+dxi*lp3,     lp4=dp(xi+dxi,  x2+dxi*lx3);
+    x2+=(dxi/6)*(lx1+2*lx2+2*lx3+lx4);
+    p2+=(dxi/6)*(lp1+2*lp2+2*lp3+lp4);
+  }
+  return Math.abs(x1+p2)<=2.0;
+}
+
+/* Compute pixel map ---------------------------------------------------- */
+const DW=400, DH=280;
+const qMIN=0,qMAX=1.0,aMIN=0,aMAX=0.30;
+
+function computeStabilityMap(cb){
+  if(computing) return;
+  computing=true; stabComputed=false;
+  const off=document.createElement('canvas');
+  off.width=DW; off.height=DH;
+  const octx=off.getContext('2d');
+  const img=octx.createImageData(DW,DH);
+  const d=img.data;
+  /* Site colour scheme: both-stable = red-tinted; x-only = light blue; y-only = light red */
+  let row=0;
+  function chunk(){
+    const end=Math.min(row+8,DH);
+    for(let py=row;py<end;py++){
+      const yInv=DH-1-py;
+      const a=aMIN+(yInv/DH)*(aMAX-aMIN);
+      for(let px=0;px<DW;px++){
+        const q=qMIN+(px/DW)*(qMAX-qMIN);
+        const sX=checkStability(a,q);
+        const sY=checkStability(-a,q);
+        let r,g,b;
+        if(sX&&sY)    {r=204;g=31;b=31;}   /* both stable — site red */
+        else if(sX)   {r=253;g=224;b=224;}  /* x only — pale red */
+        else if(sY)   {r=210;g=228;b=248;}  /* y only — pale blue */
+        else          {r=247;g=247;b=250;}  /* unstable — site surface */
+        const idx=(py*DW+px)*4;
+        d[idx]=r;d[idx+1]=g;d[idx+2]=b;d[idx+3]=255;
+      }
+    }
+    row=end;
+    const pct=Math.round(row/DH*100);
+    document.getElementById('progFill').style.width=pct+'%';
+    document.getElementById('progLabel').textContent='Computing\u2026 '+pct+'%';
+    if(row<DH){ requestAnimationFrame(chunk); }
+    else{
+      octx.putImageData(img,0,0);
+      stabImage=off; stabComputed=true; computing=false;
+      document.getElementById('progRow').style.display='none';
+      overlayStab(); cb&&cb();
+    }
+  }
+  document.getElementById('progRow').style.display='flex';
+  requestAnimationFrame(chunk);
+}
+
+/* Draw stability canvas ------------------------------------------------ */
+function overlayStab(){
+  const canvas=document.getElementById('stabC');
+  canvas.width=canvas.offsetWidth||720;
+  canvas.height=300;
+  const W=canvas.width,H=canvas.height;
+  const pad={l:54,r:18,t:16,b:44};
+  const pW=W-pad.l-pad.r, pH=H-pad.t-pad.b;
+  const ctx=canvas.getContext('2d');
+  const textC='#4A4A52';
+  const gridC='rgba(0,0,0,0.05)';
+
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#F7F7FA'; ctx.fillRect(pad.l,pad.t,pW,pH);
+
+  if(stabImage) ctx.drawImage(stabImage,pad.l,pad.t,pW,pH);
+
+  /* grid */
+  ctx.strokeStyle=gridC; ctx.lineWidth=0.5;
+  for(let i=0;i<=10;i++){const x=pad.l+i*pW/10;ctx.beginPath();ctx.moveTo(x,pad.t);ctx.lineTo(x,pad.t+pH);ctx.stroke();}
+  for(let i=0;i<=6;i++){const y=pad.t+i*pH/6;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+pW,y);ctx.stroke();}
+
+  /* axis border */
+  ctx.strokeStyle='rgba(0,0,0,0.2)'; ctx.lineWidth=1;
+  ctx.strokeRect(pad.l,pad.t,pW,pH);
+
+  const toX=q=>pad.l+(q-qMIN)/(qMAX-qMIN)*pW;
+  const toY=a=>pad.t+(1-(a-aMIN)/(aMAX-aMIN))*pH;
+
+  /* tick labels */
+  ctx.fillStyle=textC; ctx.font='500 11px "DM Sans",sans-serif'; ctx.textAlign='center';
+  for(let i=0;i<=10;i++){const q=qMIN+i*(qMAX-qMIN)/10;ctx.fillText(q.toFixed(1),toX(q),pad.t+pH+16);}
+  ctx.textAlign='right';
+  for(let i=0;i<=6;i++){const a=aMIN+i*(aMAX-aMIN)/6;ctx.fillText(a.toFixed(2),pad.l-6,toY(a)+4);}
+
+  /* axis labels */
+  ctx.fillStyle=textC; ctx.font='500 12px "DM Sans",sans-serif'; ctx.textAlign='center';
+  ctx.fillText('q  (Mathieu parameter)',pad.l+pW/2,H-6);
+  ctx.save();ctx.translate(14,pad.t+pH/2);ctx.rotate(-Math.PI/2);ctx.fillText('a  (Mathieu parameter)',0,0);ctx.restore();
+
+  /* scan line */
+  if(showScan){
+    ctx.beginPath();ctx.moveTo(toX(0),toY(0));ctx.lineTo(toX(qMAX),toY(lastAQ*qMAX));
+    ctx.strokeStyle='#1A1A1C';ctx.lineWidth=1.5;ctx.setLineDash([7,4]);ctx.stroke();ctx.setLineDash([]);
+  }
+
+  /* operating point */
+  const stable=checkStability(lastA,lastQ)&&checkStability(-lastA,lastQ);
+  ctx.beginPath();ctx.arc(toX(lastQ),toY(lastA),8,0,Math.PI*2);
+  ctx.fillStyle=stable?'#1A8040':'#CC1F1F';ctx.fill();
+  ctx.strokeStyle='rgba(255,255,255,0.9)';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='#1A1A1C';ctx.font='500 11px "DM Sans",sans-serif';ctx.textAlign='left';
+  ctx.fillText('q='+lastQ.toFixed(3)+',  a='+lastA.toFixed(4),toX(lastQ)+13,toY(lastA)-5);
+
+  /* legend */
+  const lx=pad.l+8,ly=pad.t+16;
+  const lItems=[
+    ['#CC1F1F','Both stable — mass filter passband'],
+    ['#F9E0E0','X-stable only'],
+    ['#D2E4F8','Y-stable only'],
+  ];
+  let lox=lx;
+  lItems.forEach(([c,t])=>{
+    ctx.fillStyle=c;ctx.strokeStyle='rgba(0,0,0,0.15)';ctx.lineWidth=0.5;
+    ctx.fillRect(lox,ly-10,13,10);ctx.strokeRect(lox,ly-10,13,10);
+    ctx.fillStyle=textC;ctx.font='11px "DM Sans",sans-serif';ctx.textAlign='left';
+    ctx.fillText(t,lox+17,ly);
+    lox+=ctx.measureText(t).width+34;
+  });
+  if(showScan){
+    ctx.strokeStyle='#1A1A1C';ctx.lineWidth=1.5;ctx.setLineDash([7,4]);
+    ctx.beginPath();ctx.moveTo(lox,ly-5);ctx.lineTo(lox+22,ly-5);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=textC;ctx.fillText('Scan line (a/q='+lastAQ.toFixed(3)+')',lox+26,ly);
+  }
+  ctx.beginPath();ctx.arc(lox+(showScan?ctx.measureText('Scan line (a/q='+lastAQ.toFixed(3)+')').width+46:6),ly-5,5,0,Math.PI*2);
+  ctx.fillStyle=stable?'#1A8040':'#CC1F1F';ctx.fill();
+}
+
+/* Sweep chart ---------------------------------------------------------- */
+function drawSweep(){
+  const canvas=document.getElementById('sweepC');
+  canvas.width=canvas.offsetWidth||720; canvas.height=200;
+  const r0=parseFloat(document.getElementById('r0').value)*1e-3;
+  const freq=parseFloat(document.getElementById('freq').value);
+  const sw0=parseFloat(document.getElementById('sw0').value);
+  const sw1=parseFloat(document.getElementById('sw1').value);
+  const omega=2*Math.PI*freq, qTip=0.706;
+  const W=canvas.width,H=canvas.height;
+  const pad={l:66,r:18,t:16,b:44};
+  const pW=W-pad.l-pad.r,pH=H-pad.t-pad.b;
+  const ctx=canvas.getContext('2d');
+  const textC='#4A4A52';
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#F7F7FA';ctx.fillRect(pad.l,pad.t,pW,pH);
+
+  const rfArr=[],dcArr=[],mzArr=[];
+  for(let i=0;i<=80;i++){
+    const mz=sw0+(sw1-sw0)*(i/80),mass=mz*AMU;
+    rfArr.push((qTip*mass*omega*omega*r0*r0)/(4*CHARGE));
+    dcArr.push((lastAQ*qTip*mass*omega*omega*r0*r0)/(8*CHARGE));
+    mzArr.push(mz);
+  }
+  const rfMax=Math.max(...rfArr)*1.08;
+  const toX=mz=>pad.l+(mz-sw0)/(sw1-sw0)*pW;
+  const toY=v =>pad.t+(1-v/rfMax)*pH;
+
+  ctx.strokeStyle='rgba(0,0,0,0.05)';ctx.lineWidth=0.5;
+  for(let i=0;i<=10;i++){const x=pad.l+i*pW/10;ctx.beginPath();ctx.moveTo(x,pad.t);ctx.lineTo(x,pad.t+pH);ctx.stroke();}
+  for(let i=0;i<=5;i++){const y=pad.t+i*pH/5;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+pW,y);ctx.stroke();}
+  ctx.strokeStyle='rgba(0,0,0,0.2)';ctx.lineWidth=1;ctx.strokeRect(pad.l,pad.t,pW,pH);
+
+  ctx.fillStyle=textC;ctx.font='500 11px "DM Sans",sans-serif';ctx.textAlign='center';
+  for(let i=0;i<=10;i++){const mz=sw0+i*(sw1-sw0)/10;ctx.fillText(Math.round(mz),toX(mz),pad.t+pH+16);}
+  ctx.textAlign='right';
+  for(let i=0;i<=5;i++){
+    const v=rfMax*i/5;
+    ctx.fillText(v>=1000?(v/1000).toFixed(1)+'k':Math.round(v),pad.l-5,toY(v)+4);
+  }
+  ctx.fillStyle=textC;ctx.font='500 12px "DM Sans",sans-serif';ctx.textAlign='center';
+  ctx.fillText('m/z  (Da)',pad.l+pW/2,H-6);
+  ctx.save();ctx.translate(14,pad.t+pH/2);ctx.rotate(-Math.PI/2);ctx.fillText('Voltage  (V)',0,0);ctx.restore();
+
+  ctx.strokeStyle='#CC1F1F';ctx.lineWidth=2;
+  ctx.beginPath();rfArr.forEach((v,i)=>{i===0?ctx.moveTo(toX(mzArr[i]),toY(v)):ctx.lineTo(toX(mzArr[i]),toY(v));});ctx.stroke();
+  ctx.strokeStyle='#1A1A1C';ctx.lineWidth=1.5;ctx.setLineDash([7,4]);
+  ctx.beginPath();dcArr.forEach((v,i)=>{i===0?ctx.moveTo(toX(mzArr[i]),toY(v)):ctx.lineTo(toX(mzArr[i]),toY(v));});ctx.stroke();ctx.setLineDash([]);
+
+  const lx=pad.l+8,ly=pad.t+16;
+  ctx.strokeStyle='#CC1F1F';ctx.lineWidth=2;ctx.setLineDash([]);
+  ctx.beginPath();ctx.moveTo(lx,ly-5);ctx.lineTo(lx+22,ly-5);ctx.stroke();
+  ctx.fillStyle=textC;ctx.font='11px "DM Sans",sans-serif';ctx.textAlign='left';ctx.fillText('RF V₀ (0-p)',lx+26,ly);
+  ctx.strokeStyle='#1A1A1C';ctx.lineWidth=1.5;ctx.setLineDash([7,4]);
+  ctx.beginPath();ctx.moveTo(lx+118,ly-5);ctx.lineTo(lx+140,ly-5);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillText('DC U',lx+144,ly);
+}
+
+/* Main calc ------------------------------------------------------------ */
+function calc(){
+  const r0=parseFloat(document.getElementById('r0').value)*1e-3;
+  const freq=parseFloat(document.getElementById('freq').value);
+  const mz=parseFloat(document.getElementById('mz').value);
+  const aqR=parseFloat(document.getElementById('resmode').value);
+  const omega=2*Math.PI*freq,mass=mz*AMU,qOp=0.706;
+  const V0=(qOp*mass*omega*omega*r0*r0)/(4*CHARGE);
+  const aOp=aqR*qOp;
+  const U=(aOp*mass*omega*omega*r0*r0)/(8*CHARGE);
+
+  document.getElementById('orf').textContent=V0.toFixed(1);
+  document.getElementById('odc').textContent=U.toFixed(1);
+  document.getElementById('opp').textContent=(2*V0).toFixed(1);
+  document.getElementById('oq').textContent=qOp.toFixed(4);
+  document.getElementById('oa').textContent=aOp.toFixed(4);
+  document.getElementById('oaq').textContent=aqR.toFixed(3);
+
+  lastA=aOp; lastQ=qOp; lastAQ=aqR;
+  const stable=checkStability(lastA,lastQ)&&checkStability(-lastA,lastQ);
+  const badge=document.getElementById('badge');
+  badge.textContent=''; /* clear */
+  const dot=document.createElement('span');dot.className='status-dot';badge.appendChild(dot);
+  badge.appendChild(document.createTextNode(' Operating point: '+(stable?'stable':'unstable')));
+  badge.className='status-badge '+(stable?'status-ok':'status-bad');
+
+  overlayStab(); drawSweep();
+}
+
+['r0','freq','mz','resmode','sw0','sw1'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',calc);
+});
+window.addEventListener('resize',()=>{ overlayStab(); drawSweep(); });
+
+/* Boot: compute map once, then run calc */
+setTimeout(()=>{ computeStabilityMap(()=>{ calc(); }); }, 100);
+</script>
+
+<!-- ══════════════════════════════════════════════════════════════
+     RF CIRCUIT CALCULATORS JAVASCRIPT
+     LC resonance · Wheeler coil · reactance & currents · AWG table
+═══════════════════════════════════════════════════════════════ -->
+<script>
+const AWG_DATA = [
+  [10, 2.588, 2.73,  9.8,  0.00328, 30,  'Heavy coils, high current'],
+  [12, 2.053, 2.19, 11.5,  0.00521, 20,  'Power leads, large RF coils'],
+  [14, 1.628, 1.77, 14.2,  0.00827, 15,  'General purpose'],
+  [16, 1.291, 1.42, 17.7,  0.01313, 10,  'Common coil wire'],
+  [18, 1.024, 1.15, 21.9,  0.02087,  7,  'Small–medium coils'],
+  [20, 0.812, 0.94, 26.7,  0.03318,  5,  'Fine RF coils, most common'],
+  [22, 0.644, 0.77, 32.6,  0.05271,  3,  'High-TPI coils'],
+  [24, 0.511, 0.62, 40.6,  0.08374,  2,  'Very fine winding'],
+  [26, 0.405, 0.51, 49.6,  0.1329,   1,  'Tight winding, low current'],
+  [28, 0.321, 0.41, 61.4,  0.2120,  0.5, 'Very fine wire'],
+  [30, 0.255, 0.33, 76.5,  0.3368,  0.3, 'Magnet wire, tight coils'],
+  [32, 0.202, 0.28, 89.7,  0.5354,  0.2, 'Fine magnet wire'],
+];
+
+function buildWireTable() {
+  const tbody = document.getElementById('wg-body');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  AWG_DATA.forEach(([awg, d, di, tpi, rpm, imax, note]) => {
+    const tr = document.createElement('tr');
+    tr.id = 'awg-row-' + awg;
+    tr.innerHTML =
+      '<td><strong>AWG ' + awg + '</strong></td>' +
+      '<td>' + d.toFixed(3) + '</td>' +
+      '<td>' + di.toFixed(2) + '</td>' +
+      '<td>' + tpi.toFixed(1) + '</td>' +
+      '<td>' + rpm.toFixed(5) + '</td>' +
+      '<td>' + imax + '</td>' +
+      '<td style="font-size:.75rem;color:var(--mid)">' + note + '</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function highlightBestAwg(tpi_needed) {
+  document.querySelectorAll('#wg-body tr').forEach(r => r.classList.remove('wg-sel'));
+  if (!tpi_needed || isNaN(tpi_needed)) return;
+  const match = AWG_DATA.slice().reverse().find(([,,,tpi]) => tpi >= tpi_needed);
+  if (match) {
+    const row = document.getElementById('awg-row-' + match[0]);
+    if (row) row.classList.add('wg-sel');
+  }
+}
+
+let lcMode = 'f';
+
+function lcSetMode(m) {
+  lcMode = m;
+  ['f','L','C'].forEach(k => {
+    const btn = document.getElementById('lc-m-' + k);
+    const inp = document.getElementById('lc-' + k);
+    if (!btn || !inp) return;
+    btn.className = 'rf-mode-btn' + (k === m ? ' on' : '');
+    inp.className = k === m ? 'rf-computed' : '';
+    inp.readOnly  = k === m;
+    if (k === m) inp.value = '';
+  });
+  lcCalc();
+}
+
+function lcCalc() {
+  const fEl = document.getElementById('lc-f');
+  const lEl = document.getElementById('lc-L');
+  const cEl = document.getElementById('lc-C');
+  if (!fEl) return;
+  const fMHz = parseFloat(fEl.value);
+  const LuH  = parseFloat(lEl.value);
+  const CpF  = parseFloat(cEl.value);
+  let f;
+
+  if (lcMode === 'f') {
+    if (isNaN(LuH)||isNaN(CpF)||LuH<=0||CpF<=0) { lcClear(); return; }
+    f = 1/(2*Math.PI*Math.sqrt(LuH*1e-6*CpF*1e-12));
+    fEl.value = (f/1e6).toFixed(4);
+    document.getElementById('lc-res-lbl').textContent  = 'Resonant frequency';
+    document.getElementById('lc-res-unit').textContent = 'MHz';
+    document.getElementById('lc-res-val').textContent  = (f/1e6).toFixed(4);
+  } else if (lcMode === 'L') {
+    if (isNaN(fMHz)||isNaN(CpF)||fMHz<=0||CpF<=0) { lcClear(); return; }
+    f = fMHz*1e6;
+    const L = 1/(Math.pow(2*Math.PI*f,2)*CpF*1e-12);
+    lEl.value = (L*1e6).toFixed(4);
+    document.getElementById('lc-res-lbl').textContent  = 'Inductance L';
+    document.getElementById('lc-res-unit').textContent = 'µH';
+    document.getElementById('lc-res-val').textContent  = (L*1e6).toFixed(4);
+  } else {
+    if (isNaN(fMHz)||isNaN(LuH)||fMHz<=0||LuH<=0) { lcClear(); return; }
+    f = fMHz*1e6;
+    const C = 1/(Math.pow(2*Math.PI*f,2)*LuH*1e-6);
+    cEl.value = (C*1e12).toFixed(2);
+    document.getElementById('lc-res-lbl').textContent  = 'Capacitance C';
+    document.getElementById('lc-res-unit').textContent = 'pF';
+    document.getElementById('lc-res-val').textContent  = (C*1e12).toFixed(2);
+  }
+  const omega = 2*Math.PI*f;
+  document.getElementById('lc-omega').textContent  = (omega/1e6).toFixed(3);
+  document.getElementById('lc-period').textContent = (1/f*1e6).toFixed(4);
+  const curL = parseFloat(document.getElementById('lc-L').value);
+  document.getElementById('rx-f').value = (f/1e6).toFixed(4);
+  if (curL > 0) document.getElementById('rx-L').value = curL.toFixed(4);
+  rxCalc();
+}
+
+function lcClear() {
+  ['lc-res-val','lc-omega','lc-period'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent='—'; });
+}
+
+function coCalc() {
+  const d_mm = parseFloat(document.getElementById('co-d').value);
+  const l_mm = parseFloat(document.getElementById('co-l').value);
+  const N    = parseFloat(document.getElementById('co-n').value);
+  if (isNaN(d_mm)||isNaN(l_mm)||isNaN(N)||d_mm<=0||l_mm<=0||N<1) {
+    ['co-L','co-tpi','co-pitch'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent='—'; });
+    return;
+  }
+  const r_in  = (d_mm/2)/25.4;
+  const l_in  = l_mm/25.4;
+  const L     = (r_in*r_in*N*N)/(9*r_in+10*l_in);
+  const tpi   = N/l_in;
+  const pitch = l_mm/N;
+
+  document.getElementById('co-L').textContent     = L.toFixed(3);
+  document.getElementById('co-tpi').textContent   = tpi.toFixed(1);
+  document.getElementById('co-pitch').textContent = pitch.toFixed(2);
+  const tpiRef = document.getElementById('tbl-tpi-ref');
+  if (tpiRef) tpiRef.textContent = tpi.toFixed(1) + ' TPI';
+  highlightBestAwg(tpi);
+
+  const match = AWG_DATA.slice().reverse().find(([,,,t]) => t >= tpi);
+  const hint  = document.getElementById('co-wire-hint');
+  if (hint) {
+    hint.className = 'rf-info';
+    if (match) {
+      hint.innerHTML = '<strong>Suggested wire: AWG ' + match[0] + '</strong> — ' +
+        match[3].toFixed(1) + ' TPI close-wound, ' + match[1].toFixed(3) + ' mm bare / ' +
+        match[2].toFixed(2) + ' mm insulated. ' +
+        'This is the coarsest gauge that physically fits at ' + tpi.toFixed(1) +
+        ' TPI. For a higher-Q coil, choose a heavier gauge and space the turns.';
+    } else {
+      hint.innerHTML = '<strong>Note:</strong> ' + tpi.toFixed(1) +
+        ' TPI requires wire finer than AWG 32. Consider a longer coil form or fewer turns.';
+    }
+  }
+
+  document.getElementById('lc-L').value = L.toFixed(4);
+  document.getElementById('rx-L').value = L.toFixed(4);
+  if (lcMode !== 'L') lcCalc(); else rxCalc();
+}
+
+function rxCalc() {
+  const f = parseFloat(document.getElementById('rx-f').value)*1e6;
+  const L = parseFloat(document.getElementById('rx-L').value)*1e-6;
+  const V = parseFloat(document.getElementById('rx-V').value);
+  const Q = parseFloat(document.getElementById('rx-Q').value);
+  const R = parseFloat(document.getElementById('rx-R').value);
+
+  if (isNaN(f)||isNaN(L)||isNaN(V)||f<=0||L<=0||V<=0) {
+    ['rx-X','rx-I','rx-P','rx-Vc','rx-Cr','rx-Vd'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent='—'; });
+    return;
+  }
+  const omega = 2*Math.PI*f;
+  const XL    = omega*L;
+  const I     = V/XL;
+  const C_res = 1/(omega*omega*L);
+  const Vc    = I/(omega*C_res);
+  const Pdc   = 0.5*I*I*(isNaN(R)||R<=0?0:R);
+  const Vd    = (isNaN(Q)||Q<=0) ? V : V/Q;
+
+  document.getElementById('rx-X').textContent  = XL.toFixed(1);
+  document.getElementById('rx-I').textContent  = I.toFixed(3);
+  document.getElementById('rx-P').textContent  = Pdc.toFixed(2);
+  document.getElementById('rx-Vc').textContent = Vc.toFixed(0);
+  document.getElementById('rx-Cr').textContent = (C_res*1e12).toFixed(1);
+  document.getElementById('rx-Vd').textContent = Vd.toFixed(2);
+
+  const warn   = document.getElementById('rx-warn');
+  if (!warn) return;
+  const issues = [];
+  if (Vc  > 1000) issues.push('⚠ Capacitor voltage ' + Vc.toFixed(0) + ' V — verify capacitor voltage rating.');
+  if (I   > 10)   issues.push('⚠ Circulating current ' + I.toFixed(2) + ' A — check wire gauge and connector ratings.');
+  if (Pdc > 10)   issues.push('⚠ ' + Pdc.toFixed(1) + ' W dissipation in coil resistance — consider heavier or silver-plated wire.');
+  warn.innerHTML = issues.length ? issues.join('<br>') : '✓ Operating parameters look reasonable for these inputs.';
+  warn.className = 'rf-info ' + (issues.length ? '' : 'ok');
+}
+
+['lc-f','lc-L','lc-C'].forEach(id => { const el=document.getElementById(id); if(el) el.addEventListener('input',lcCalc); });
+['co-d','co-l','co-n'].forEach(id => { const el=document.getElementById(id); if(el) el.addEventListener('input',coCalc); });
+['rx-f','rx-L','rx-V','rx-Q','rx-R'].forEach(id => { const el=document.getElementById(id); if(el) el.addEventListener('input',rxCalc); });
+
+buildWireTable();
+lcSetMode('f');
+coCalc();
+</script>
+
+<!-- ══════════════════════════════════════════════════════════════
+     ION KINETIC ENERGY CALCULATOR JAVASCRIPT
+═══════════════════════════════════════════════════════════════ -->
+<script>
+const E_CHARGE = 1.60218e-19;
+const AMU_KG   = 1.66054e-27;
+const C_LIGHT  = 2.99792e8;
+let keMode = 'v';
+
+function keSetMode(m) {
+  keMode = m;
+  ['v','V','m'].forEach(k => {
+    const btn = document.getElementById('ke-m-' + k);
+    if (btn) btn.className = 'ke-mode-btn' + (k === m ? ' on' : '');
+  });
+  const fieldMap = { v:'ke-v', V:'ke-V', m:'ke-m' };
+  Object.entries(fieldMap).forEach(([k, id]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.readOnly = (k === m);
+    el.className = (k === m) ? 'ke-computed' : '';
+    if (k === m) el.value = '';
+  });
+  keCalc();
+}
+
+function keCalc() {
+  const mEl  = document.getElementById('ke-m');
+  const zEl  = document.getElementById('ke-z');
+  const VEl  = document.getElementById('ke-V');
+  const vEl  = document.getElementById('ke-v');
+  if (!mEl) return;
+
+  const mDa_in = parseFloat(mEl.value);
+  const z      = parseFloat(zEl.value);
+  const Vval   = parseFloat(VEl.value);
+  const vval   = parseFloat(vEl.value);
+
+  let vel, voltage, mDa, Elab_eV;
+
+  if (keMode === 'v') {
+    if (isNaN(mDa_in)||isNaN(z)||isNaN(Vval)||mDa_in<=0||z<1||Vval<=0) { keClear(); return; }
+    mDa    = mDa_in;
+    voltage= Vval;
+    Elab_eV= z * Vval;
+    vel    = Math.sqrt(2 * z * E_CHARGE * Vval / (mDa * AMU_KG));
+    vEl.value = vel.toFixed(1);
+    document.getElementById('ke-res-lbl').textContent  = 'Ion velocity';
+    document.getElementById('ke-res-unit').textContent = 'm/s';
+    document.getElementById('ke-res-val').textContent  = vel.toFixed(1);
+
+  } else if (keMode === 'V') {
+    if (isNaN(mDa_in)||isNaN(z)||isNaN(vval)||mDa_in<=0||z<1||vval<=0) { keClear(); return; }
+    mDa    = mDa_in;
+    vel    = vval;
+    voltage= (0.5 * mDa * AMU_KG * vval * vval) / (z * E_CHARGE);
+    Elab_eV= z * voltage;
+    VEl.value = voltage.toFixed(4);
+    document.getElementById('ke-res-lbl').textContent  = 'Accelerating voltage';
+    document.getElementById('ke-res-unit').textContent = 'V';
+    document.getElementById('ke-res-val').textContent  = voltage.toFixed(4);
+
+  } else {
+    if (isNaN(z)||isNaN(Vval)||isNaN(vval)||z<1||Vval<=0||vval<=0) { keClear(); return; }
+    voltage = Vval;
+    vel     = vval;
+    Elab_eV = z * Vval;
+    const massKg = (2 * z * E_CHARGE * Vval) / (vval * vval);
+    mDa = massKg / AMU_KG;
+    mEl.value = mDa.toFixed(2);
+    document.getElementById('ke-res-lbl').textContent  = 'Ion mass';
+    document.getElementById('ke-res-unit').textContent = 'Da';
+    document.getElementById('ke-res-val').textContent  = mDa.toFixed(2);
+  }
+
+  document.getElementById('ke-KE').textContent  = Elab_eV.toFixed(3);
+  document.getElementById('ke-vmm').textContent = (vel * 1e-3).toFixed(4);
+  document.getElementById('ke-vc').textContent  = (vel / C_LIGHT).toExponential(3);
+
+  /* CID */
+  const gasSel  = parseFloat(document.getElementById('ke-gas').value);
+  const gasCust = parseFloat(document.getElementById('ke-gasM').value);
+  const gasMass = (gasSel === 0 || isNaN(gasSel)) ? gasCust : gasSel;
+
+  if (!isNaN(gasMass) && gasMass > 0 && !isNaN(mDa) && mDa > 0) {
+    const Ecm   = Elab_eV * gasMass / (gasMass + mDa);
+    const ratio = gasMass / (gasMass + mDa);
+    document.getElementById('ke-Ecm').textContent   = Ecm.toFixed(3);
+    document.getElementById('ke-Elab').textContent  = Elab_eV.toFixed(3);
+    document.getElementById('ke-ratio').textContent = ratio.toFixed(4);
+
+    const info = document.getElementById('ke-info');
+    if (info) {
+      let msg = '';
+      const gasName = {4:'He', 20:'Ne', 28:'N\u2082', 40:'Ar', 131:'Xe'}[gasMass] || (gasMass + ' Da');
+      if (ratio < 0.02) {
+        msg = '\u26a0 Very low E<sub>CM</sub>/E<sub>lab</sub> ratio (' + (ratio*100).toFixed(1) + '%) \u2014 consider a heavier collision gas (Ar or Xe) or higher voltage for efficient CID of this large ion.';
+      } else if (Ecm < 1) {
+        msg = '\u2139 E<sub>CM</sub> = ' + Ecm.toFixed(3) + ' eV \u2014 sub-eV collision energy. This is in the soft-landing / ion mobility regime rather than CID fragmentation range.';
+      } else if (Ecm > 200) {
+        msg = '\u26a0 E<sub>CM</sub> = ' + Ecm.toFixed(1) + ' eV \u2014 high-energy CID. Verify this is within the fragmentation threshold for your analyte.';
+      } else {
+        msg = '\u2713 E<sub>CM</sub> = ' + Ecm.toFixed(3) + ' eV in ' + gasName + '. Only ' + (ratio*100).toFixed(1) + '% of the lab-frame energy is available for bond breaking \u2014 the rest is carried away as center-of-mass motion.';
+      }
+      info.innerHTML = msg;
+      info.style.display = '';
+    }
+  }
+}
+
+function keClear() {
+  ['ke-res-val','ke-KE','ke-vmm','ke-vc','ke-Ecm','ke-Elab','ke-ratio']
+    .forEach(id => { const el=document.getElementById(id); if(el) el.textContent='\u2014'; });
+  const info = document.getElementById('ke-info');
+  if (info) info.style.display = 'none';
+}
+
+['ke-m','ke-z','ke-V','ke-v'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', keCalc);
+});
+const kegEl = document.getElementById('ke-gas');
+if (kegEl) kegEl.addEventListener('change', keCalc);
+const kegmEl = document.getElementById('ke-gasM');
+if (kegmEl) kegmEl.addEventListener('input', keCalc);
+
+keSetMode('v');
+</script>
+
+<!-- ══════════════════════════════════════════════════════════════
+     CAPACITIVE LOAD POWER CALCULATOR JAVASCRIPT
+     P = C·ΔV²·f  |  square wave, sinusoidal, trapezoidal
+═══════════════════════════════════════════════════════════════ -->
+<script>
+var cpWave = 'sq';
+
+function cpSetWave(m) {
+  cpWave = m;
+  ['sq','sin','trap'].forEach(function(k) {
+    document.getElementById('cp-w-'+k).className = 'cp-wbtn'+(k===m?' on':'');
+    document.getElementById('cp-fbox-'+k).style.display = k===m?'':'none';
+  });
+  document.getElementById('cp-row-tr').style.display   = m==='sin'?'none':'';
+  document.getElementById('cp-row-duty').style.display = m==='trap'?'':'none';
+  cpCalc();
+}
+
+function cpFmtW(v) {
+  var a=Math.abs(v);
+  if(a>=1)    return v.toFixed(3);
+  if(a>=1e-3) return (v*1e3).toFixed(2)+'m';
+  return (v*1e6).toFixed(2)+'\u00b5';
+}
+function cpFmtA(v) {
+  var a=Math.abs(v);
+  if(a>=1)    return v.toFixed(4);
+  if(a>=1e-3) return (v*1e3).toFixed(2)+'m';
+  return (v*1e6).toFixed(1)+'\u00b5';
+}
+
+function cpCalc() {
+  var C    = parseFloat(document.getElementById('cp-cap').value)  * 1e-12;
+  var dV   = parseFloat(document.getElementById('cp-dv').value);
+  var f    = parseFloat(document.getElementById('cp-freq').value);
+  var tr   = parseFloat(document.getElementById('cp-tr').value)   * 1e-9;
+  var duty = parseFloat(document.getElementById('cp-duty').value) / 100;
+  var Ron  = parseFloat(document.getElementById('cp-ron').value);
+  var Vsup = parseFloat(document.getElementById('cp-vsup').value);
+  var eta  = parseFloat(document.getElementById('cp-eta').value)  / 100;
+  var Nch  = parseInt(document.getElementById('cp-nch').value);
+  if([C,dV,f,Ron,Vsup,eta,Nch].some(function(v){return isNaN(v)||v<=0;})) return;
+
+  var omega = 2*Math.PI*f;
+  var P, Ipk, E, Iavg;
+  if(cpWave==='sq') {
+    P=C*dV*dV*f; E=C*dV*dV;
+    var tr_e=Math.max(tr,1/(10*f));
+    Ipk=C*dV/tr_e; Iavg=C*dV*f;
+  } else if(cpWave==='sin') {
+    P=0.5*C*dV*dV*omega; E=0.5*C*dV*dV;
+    Ipk=C*dV*omega; Iavg=(2/Math.PI)*Ipk;
+  } else {
+    P=C*dV*dV*f; E=C*dV*dV;
+    Ipk=(tr>0)?C*dV/tr:0; Iavg=C*dV*f;
+  }
+  var Ptot=P*Nch, Psup=Ptot/eta, Isup=Psup/Vsup, Pdrv=Psup-Ptot, Q=C*dV;
+
+  document.getElementById('cp-P').textContent    = cpFmtW(P);
+  document.getElementById('cp-Ptot').textContent = cpFmtW(Ptot);
+  document.getElementById('cp-Isup').textContent = cpFmtA(Isup);
+  document.getElementById('cp-Ipk').textContent  = cpFmtA(Ipk);
+  document.getElementById('cp-E').textContent    = (E*1e9).toFixed(3);
+  document.getElementById('cp-Pdrv').textContent = cpFmtW(Pdrv);
+  document.getElementById('cp-Q').textContent    = (Q*1e9).toFixed(3);
+  document.getElementById('cp-Iavg').textContent = cpFmtA(Iavg);
+
+  var warn=document.getElementById('cp-warn'), issues=[];
+  if(Ipk>1)    issues.push('Peak current '+cpFmtA(Ipk)+' A \u2014 verify FET I<sub>D</sub> rating and PCB trace width.');
+  if(Pdrv>0.5) issues.push('Driver dissipation '+cpFmtW(Pdrv)+' W \u2014 heatsinking or higher-efficiency driver may be needed.');
+  if(cpWave==='sq'&&tr>0&&tr>0.1/f)
+    issues.push('Rise time '+(tr*1e9).toFixed(0)+' ns is &gt;10% of period \u2014 voltage may not reach target before next transition.');
+  if(Isup>0.5) issues.push('Supply current '+cpFmtA(Isup)+' A \u2014 check supply rating for '+Nch+' channel'+(Nch>1?'s':'')+'.');
+  warn.innerHTML = issues.length?issues.join('<br>'):'&#10003; Parameters look reasonable. No obvious design concerns.';
+  warn.className = 'cp-warn '+(issues.length?'bad':'ok');
+
+  cpDrawWave(C,dV,f,tr,duty);
+  cpDrawSweep(C,dV,f);
+}
+
+function cpDrawWave(C,dV,f,tr,duty) {
+  var canvas=document.getElementById('cp-waveC');
+  canvas.width=canvas.offsetWidth||900; canvas.height=180;
+  var W=canvas.width,H=canvas.height,pad={l:54,r:12,t:14,b:38};
+  var pW=W-pad.l-pad.r,pH=H-pad.t-pad.b;
+  var ctx=canvas.getContext('2d');
+  var dk=window.matchMedia('(prefers-color-scheme:dark)').matches;
+  var tc=dk?'#aaa':'#4A4A52',gc=dk?'rgba(255,255,255,.06)':'rgba(0,0,0,.05)';
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle=dk?'rgba(0,0,0,.15)':'#F7F7FA';ctx.fillRect(pad.l,pad.t,pW,pH);
+  var N=400,T=1/f,Vt=[],It=[];
+  for(var i=0;i<=N;i++){
+    var t=(i/N)*T,v,curr;
+    if(cpWave==='sq'){
+      var half=T/2,tr_e=Math.max(tr,T/1000);
+      if(t<tr_e){v=dV*t/tr_e;curr=C*dV/tr_e;}
+      else if(t<half-tr_e){v=dV;curr=0;}
+      else if(t<half+tr_e){v=dV*(1-(t-half+tr_e)/(2*tr_e));curr=-C*dV/tr_e;}
+      else if(t<T-tr_e){v=0;curr=0;}
+      else{v=dV*(t-(T-tr_e))/tr_e;curr=C*dV/tr_e;}
+    } else if(cpWave==='sin'){
+      v=dV*(1-Math.cos(2*Math.PI*f*t))/2;
+      curr=C*dV*Math.PI*f*Math.sin(2*Math.PI*f*t);
+    } else {
+      var hi=duty*T,tr_e=Math.max(tr,T/1000);
+      if(t<tr_e){v=dV*t/tr_e;curr=C*dV/tr_e;}
+      else if(t<hi-tr_e){v=dV;curr=0;}
+      else if(t<hi+tr_e){v=dV*(1-(t-hi+tr_e)/(2*tr_e));curr=-C*dV/tr_e;}
+      else{v=0;curr=0;}
+    }
+    Vt.push(v);It.push(curr);
+  }
+  var Vmax=Math.max.apply(null,Vt)*1.05||1;
+  var Imax=Math.max.apply(null,It.map(Math.abs))*1.1||1e-12;
+  var toX=function(i){return pad.l+i/N*pW;};
+  var toYv=function(v){return pad.t+pH*(1-v/Vmax);};
+  var toYi=function(ii){return pad.t+pH*(0.5-ii/(2*Imax));};
+  ctx.strokeStyle=gc;ctx.lineWidth=0.5;
+  for(var j=0;j<=4;j++){var y=pad.t+j*pH/4;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+pW,y);ctx.stroke();}
+  ctx.strokeStyle=dk?'rgba(255,255,255,.1)':'rgba(0,0,0,.08)';ctx.lineWidth=0.8;
+  ctx.beginPath();ctx.moveTo(pad.l,pad.t+pH*0.5);ctx.lineTo(pad.l+pW,pad.t+pH*0.5);ctx.stroke();
+  ctx.strokeStyle=dk?'#5ab4ff':'#185fa5';ctx.lineWidth=2;ctx.setLineDash([]);
+  ctx.beginPath();for(var k=0;k<=N;k++){k===0?ctx.moveTo(toX(k),toYv(Vt[k])):ctx.lineTo(toX(k),toYv(Vt[k]));}ctx.stroke();
+  ctx.strokeStyle=dk?'#ffb840':'#ba7517';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
+  ctx.beginPath();for(var k=0;k<=N;k++){k===0?ctx.moveTo(toX(k),toYi(It[k])):ctx.lineTo(toX(k),toYi(It[k]));}ctx.stroke();ctx.setLineDash([]);
+  ctx.strokeStyle=dk?'rgba(255,255,255,.2)':'rgba(0,0,0,.2)';ctx.lineWidth=1;ctx.strokeRect(pad.l,pad.t,pW,pH);
+  ctx.fillStyle=tc;ctx.font='11px "DM Sans",sans-serif';ctx.textAlign='right';
+  ctx.fillText(dV.toFixed(0)+'V',pad.l-4,toYv(dV)+4);ctx.fillText('0V',pad.l-4,toYv(0)+4);
+  ctx.textAlign='center';ctx.fillText('0',pad.l,pad.t+pH+14);ctx.fillText('T',pad.l+pW,pad.t+pH+14);
+  var lx=pad.l+8,ly=pad.t+13;
+  ctx.strokeStyle=dk?'#5ab4ff':'#185fa5';ctx.lineWidth=2;ctx.setLineDash([]);
+  ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(lx+18,ly);ctx.stroke();
+  ctx.fillStyle=tc;ctx.font='11px "DM Sans",sans-serif';ctx.textAlign='left';ctx.fillText('Voltage',lx+22,ly+4);
+  ctx.strokeStyle=dk?'#ffb840':'#ba7517';ctx.setLineDash([4,3]);
+  ctx.beginPath();ctx.moveTo(lx+82,ly);ctx.lineTo(lx+100,ly);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillText('Current',lx+104,ly+4);
+}
+
+function cpDrawSweep(C,dV,f) {
+  var canvas=document.getElementById('cp-sweepC');
+  canvas.width=canvas.offsetWidth||900;canvas.height=200;
+  var W=canvas.width,H=canvas.height,pad={l:70,r:14,t:14,b:38};
+  var pW=W-pad.l-pad.r,pH=H-pad.t-pad.b;
+  var ctx=canvas.getContext('2d');
+  var dk=window.matchMedia('(prefers-color-scheme:dark)').matches;
+  var tc=dk?'#aaa':'#4A4A52',gc=dk?'rgba(255,255,255,.06)':'rgba(0,0,0,.05)';
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle=dk?'rgba(0,0,0,.15)':'#F7F7FA';ctx.fillRect(pad.l,pad.t,pW,pH);
+  var N=80,fMin=1,fMax=f*100,powers=[];
+  for(var i=0;i<=N;i++){
+    var fi=fMin*Math.pow(fMax/fMin,i/N);
+    powers.push(cpWave==='sin'?0.5*C*dV*dV*2*Math.PI*fi:C*dV*dV*fi);
+  }
+  var Pmax=Math.max.apply(null,powers)*1.08||1;
+  var toX=function(i){return pad.l+i/N*pW;};
+  var toY=function(p){return pad.t+pH*(1-p/Pmax);};
+  ctx.strokeStyle=gc;ctx.lineWidth=0.5;
+  for(var j=0;j<=5;j++){var y=pad.t+j*pH/5;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+pW,y);ctx.stroke();}
+  ctx.strokeStyle=dk?'#5ab4ff':'#185fa5';ctx.lineWidth=2;
+  ctx.beginPath();for(var i=0;i<=N;i++){i===0?ctx.moveTo(toX(i),toY(powers[i])):ctx.lineTo(toX(i),toY(powers[i]));}ctx.stroke();
+  var curX=pad.l+Math.log(f/fMin)/Math.log(fMax/fMin)*pW;
+  var curP=cpWave==='sin'?0.5*C*dV*dV*2*Math.PI*f:C*dV*dV*f;
+  ctx.beginPath();ctx.arc(curX,toY(curP),5,0,Math.PI*2);
+  ctx.fillStyle=dk?'#ff7070':'#CC1F1F';ctx.fill();
+  ctx.strokeStyle=dk?'rgba(255,255,255,.2)':'rgba(0,0,0,.2)';ctx.lineWidth=1;ctx.strokeRect(pad.l,pad.t,pW,pH);
+  ctx.fillStyle=tc;ctx.font='11px "DM Sans",sans-serif';ctx.textAlign='right';
+  for(var j=0;j<=5;j++){var p=Pmax*j/5;ctx.fillText(cpFmtW(p)+'W',pad.l-4,toY(p)+4);}
+  ctx.textAlign='center';
+  ['1Hz','10Hz','100Hz','1kHz','10kHz','100kHz','1MHz','10MHz','100MHz'].forEach(function(lbl){
+    var num=parseFloat(lbl);
+    var mult=lbl.indexOf('MHz')>-1?1e6:lbl.indexOf('kHz')>-1?1e3:1;
+    var fv=num*mult;
+    if(fv>=fMin&&fv<=fMax){var x=pad.l+Math.log(fv/fMin)/Math.log(fMax/fMin)*pW;ctx.fillText(lbl,x,pad.t+pH+15);}
+  });
+  ctx.fillText('Frequency (log scale)',pad.l+pW/2,H-4);
+  ctx.save();ctx.translate(13,pad.t+pH/2);ctx.rotate(-Math.PI/2);ctx.fillText('Power (W)',0,0);ctx.restore();
+  var pLabel=cpFmtW(curP)+'W @ '+(f>=1e6?(f/1e6).toFixed(2)+'MHz':f>=1e3?(f/1e3).toFixed(1)+'kHz':f.toFixed(0)+'Hz');
+  ctx.fillStyle=dk?'#ff7070':'#CC1F1F';ctx.textAlign='left';ctx.font='500 11px "DM Sans",sans-serif';
+  ctx.fillText(pLabel,curX+8,toY(curP)-6);
+}
+
+['cp-cap','cp-dv','cp-freq','cp-tr','cp-duty','cp-ron','cp-vsup','cp-eta','cp-nch'].forEach(function(id){
+  var el=document.getElementById(id);if(el)el.addEventListener('input',cpCalc);
+});
+window.addEventListener('resize',function(){if(document.getElementById('cp-waveC'))cpCalc();});
+cpCalc();
+</script>
+
+<!-- ── JUMP NAV ACTIVE STATE ── -->
+<script>
+function jumpTo(id) {
+  setTimeout(function() {
+    var el = document.getElementById(id);
+    if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  }, 50);
+  setJumpActive(id);
+}
+function setJumpActive(id) {
+  document.querySelectorAll('.jump-btn').forEach(function(b) {
+    b.classList.remove('active');
+    if (b.getAttribute('href') === '#' + id) b.classList.add('active');
+  });
+}
+// Highlight jump nav based on scroll position
+(function() {
+  var sections = ['quad-calc','rf-circuit','ion-ke','cap-power','useful-links','coming-soon'];
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        var scrollY = window.scrollY + 140;
+        var active = sections[0];
+        sections.forEach(function(id) {
+          var el = document.getElementById(id);
+          if (el && el.offsetTop <= scrollY) active = id;
+        });
+        setJumpActive(active);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -74,25 +74,33 @@
       background:rgba(255,255,255,.97);
       border-bottom:1px solid var(--rule);
     }
-    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 2rem;max-width:1160px;margin:0 auto}
-    .nav-logo{display:flex;align-items:center;gap:.75rem}
-    .nav-logo img{width:38px;height:38px;border-radius:50%;object-fit:cover}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 1.5rem;max-width:1400px;margin:0 auto;gap:1rem}
+    .nav-logo{display:flex;align-items:center;gap:.6rem;flex-shrink:0;text-decoration:none}
+    .nav-logo img{width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0}
     .nav-logo-words{display:flex;flex-direction:column;line-height:1.15}
-    .nav-logo-words strong{font-family:var(--serif);font-weight:600;font-size:1rem;color:var(--white);letter-spacing:.01em;transition:color .3s}
-    .nav-logo-words span{font-family:var(--mono);font-size:.55rem;letter-spacing:.12em;color:rgba(255,255,255,.4);text-transform:uppercase;transition:color .3s}
+    .nav-logo-words strong{font-family:var(--serif);font-weight:600;font-size:.92rem;color:var(--white);letter-spacing:.01em;transition:color .3s;white-space:nowrap}
+    .nav-logo-words span{display:none}
     nav.scrolled .nav-logo-words strong{color:var(--ink)}
-    nav.scrolled .nav-logo-words span{color:var(--mid)}
-    .nav-links{display:flex;align-items:center;gap:2rem;list-style:none}
-    .nav-links a{font-size:.87rem;font-weight:500;color:rgba(255,255,255,.65);transition:color .2s}
+    .nav-links{display:flex;align-items:center;gap:0;list-style:none;flex-wrap:nowrap}
+    .nav-links a{font-size:.78rem;font-weight:500;color:rgba(255,255,255,.65);transition:color .2s;padding:.25rem .55rem;white-space:nowrap;border-radius:3px}
     .nav-links a:hover{color:var(--white)}
     nav.scrolled .nav-links a{color:var(--ink3)}
     nav.scrolled .nav-links a:hover{color:var(--red)}
-    .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:.45rem 1.2rem;border-radius:3px;font-size:.84rem!important;white-space:nowrap}
+    .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:.35rem 1rem!important;border-radius:3px;font-size:.78rem!important;white-space:nowrap}
     .nav-cta:hover{background:var(--red-dk)!important;color:var(--white)!important}
     nav.scrolled .nav-cta{color:var(--white)!important}
-    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px}
+    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;flex-shrink:0}
     .hamburger span{display:block;width:22px;height:1.5px;background:rgba(255,255,255,.7);margin:5px 0;transition:.3s}
     nav.scrolled .hamburger span{background:var(--ink3)}
+    @media(max-width:1100px){
+      .nav-links a{padding:.25rem .4rem;font-size:.74rem}
+    }
+    .nav-drawer{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(14,14,16,.98);border-bottom:1px solid rgba(255,255,255,.08);padding:1rem 1.5rem;z-index:199;flex-direction:column;gap:.25rem}
+    .nav-drawer.open{display:flex}
+    .nav-drawer a{font-size:.88rem;font-weight:500;color:rgba(255,255,255,.7);padding:.6rem 0;border-bottom:0.5px solid rgba(255,255,255,.06);display:block;text-decoration:none}
+    .nav-drawer a:last-child{border-bottom:none}
+    .nav-drawer a:hover{color:var(--white)}
+    .nav-drawer .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:.6rem 1rem!important;border-radius:3px;margin-top:.5rem;text-align:center;border-bottom:none}
 
     /* ── HERO — dark ── */
     #hero{
@@ -351,6 +359,8 @@
       .arch-cards{grid-template-columns:1fr}
       .sec-hd{flex-direction:column;align-items:flex-start;gap:1rem}
       .footer-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:860px){
       .nav-links{display:none}
       .hamburger{display:block}
     }
@@ -486,11 +496,26 @@
       <li><a href="#facility">Facility</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#support">Downloads</a></li>
+      <li><a href="tools.html">Tools</a></li>
       <li><a href="#contact" class="nav-cta">Request Quote</a></li>
     </ul>
-    <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <button class="hamburger" id="nav-hamburger" aria-label="Open menu" onclick="toggleDrawer()"><span></span><span></span><span></span></button>
   </div>
 </nav>
+
+<!-- ── MOBILE NAV DRAWER ── -->
+<div class="nav-drawer" id="nav-drawer">
+  <a href="#products"     onclick="closeDrawer()">Products</a>
+  <a href="#how-it-works" onclick="closeDrawer()">Software</a>
+  <a href="#applications" onclick="closeDrawer()">Applications</a>
+  <a href="#testimonials" onclick="closeDrawer()">Testimonials</a>
+  <a href="#capabilities" onclick="closeDrawer()">Capabilities</a>
+  <a href="#facility"     onclick="closeDrawer()">Facility</a>
+  <a href="#about"        onclick="closeDrawer()">About</a>
+  <a href="#support"      onclick="closeDrawer()">Downloads</a>
+  <a href="tools.html"    onclick="closeDrawer()" style="color:var(--red);font-weight:500">Tools</a>
+  <a href="#contact" class="nav-cta" onclick="closeDrawer()">Request Quote</a>
+</div>
 
 <!-- ── HERO (dark) ── -->
 <section id="hero">
@@ -2004,6 +2029,23 @@
   const nav = document.getElementById('main-nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 80);
+  });
+
+  /* Mobile nav drawer */
+  function toggleDrawer() {
+    const d = document.getElementById('nav-drawer');
+    const b = document.getElementById('nav-hamburger');
+    const open = d.classList.toggle('open');
+    b.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+  function closeDrawer() {
+    document.getElementById('nav-drawer').classList.remove('open');
+    document.getElementById('nav-hamburger').setAttribute('aria-label','Open menu');
+  }
+  document.addEventListener('click', function(e) {
+    const drawer = document.getElementById('nav-drawer');
+    const btn    = document.getElementById('nav-hamburger');
+    if (drawer && drawer.classList.contains('open') && !drawer.contains(e.target) && !btn.contains(e.target)) closeDrawer();
   });
 
   /* Scroll-triggered fade-ins */

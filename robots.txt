@@ -1,0 +1,9 @@
+# robots.txt — GAA Custom Electronics, LLC
+# https://gaacustom.com
+
+# Allow all search engine crawlers full access
+User-agent: *
+Allow: /
+
+# Point crawlers directly to the sitemap
+Sitemap: https://gaacustom.com/sitemap.xml

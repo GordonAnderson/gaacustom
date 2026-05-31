@@ -902,6 +902,21 @@
 
     </div>
     <!-- ── END MIPS MODULE OPTIONS ── -->
+
+    <!-- Standalone intro -->
+    <div style="max-width:820px;margin:3rem auto 2.5rem;padding:0 1rem;">
+      <p style="font-size:1rem;line-height:1.75;color:var(--ink3);">
+        Standalone instruments that include a USB host interface are fully supported by the
+        <strong style="color:var(--ink);">MIPS host application</strong> — the same software used to control the MIPS
+        modular system. Any such instrument can be operated on its own or combined with
+        a MIPS controller and other USB-equipped standalone products in any configuration, all unified under a single
+        control panel. Note that some standalone instruments do not include a host interface and are configured
+        via hardware controls only. Operations manuals for all standalone instruments are available in the
+        <a href="#support" style="color:var(--red);text-decoration:underline;text-underline-offset:3px;">Standalone Instruments Manuals</a>
+        section of the Downloads area below.
+      </p>
+    </div>
+
     <!-- Standalone grid -->
     <div class="prod-grid">
 
@@ -1005,6 +1020,58 @@
           <span class="spec">SPDT</span><span class="spec">MIPS Compatible</span>
         </div>
         <div class="prod-price"><span data-price="fet_switch">$295</span></div>
+      </div>
+
+      <!-- ── DIGITAL QUAD ELECTRONICS ── -->
+      <div class="prod-card fade">
+        <div class="prod-photo">
+          <img src="images/astraea.jpg"
+            alt="Astraea Digital Quadrupole Waveform Generator — precision PWM waveform generator for digital quad mass spectrometry"
+            style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div class="prod-badge"><span>Digital Quad</span></div>
+        <div class="prod-name">Astraea</div>
+        <div class="prod-sub">Precession Waveform Generator</div>
+        <p class="prod-desc">Precision waveform generator that produces variable-frequency, variable duty-cycle digital waveforms to control a quadrupole. Low-voltage outputs drive pulse amplifiers coupled to the quad, enabling m/z scanning by varying frequency across 50–500&nbsp;KHz. Supports two independent quad channels, agility sequencing, scanning, real-time data collection, and the MIPS host software interface.</p>
+        <div class="prod-specs">
+          <span class="spec">50–500 KHz</span><span class="spec">Dual Quad Channels</span>
+          <span class="spec">5–95% Duty Cycle</span><span class="spec">USB + MIPS Software</span>
+        </div>
+        <div class="prod-price"><span data-price="astraea">$1,995</span></div>
+      </div>
+
+      <div class="prod-card fade">
+        <div class="prod-photo">
+          <img src="images/astraea.jpg"
+            alt="Astraea with optional internal +/-100V quad driver — integrated pulse amplifier for driving quadrupole rods directly"
+            style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div class="prod-badge"><span>Digital Quad</span></div>
+        <div class="prod-name">Astraea ±100V Driver Option</div>
+        <div class="prod-sub">Internal Pulse Amplifier Add-On</div>
+        <p class="prod-desc">An optional add-on to the Astraea that installs an internal ±100V pulse amplifier module, allowing Astraea to drive a quadrupole directly without external hardware. Independently program the positive and negative voltage on each pole phase to apply resolving DC and offset voltages for tuning. Controlled through the same MIPS host interface. <strong>Price is in addition to the Astraea base unit.</strong></p>
+        <div class="prod-specs">
+          <span class="spec">±100V Output</span><span class="spec">Independent Pole Control</span>
+          <span class="spec">Resolving DC</span><span class="spec">Integrated Enclosure</span>
+        </div>
+        <div class="prod-price"><span data-price="astraea_100v">$1,999</span> <small>add-on option</small></div>
+      </div>
+
+      <div class="prod-card fade">
+        <div class="prod-photo">
+          <img src="images/quad-driver-250v.jpg"
+            alt="Digital Quad Rod Driver +/-250V — standalone high-voltage pulse amplifier for digital quadrupole mass spectrometry"
+            style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div class="prod-badge"><span>Digital Quad</span></div>
+        <div class="prod-name">Quad Rod Driver ±250V</div>
+        <div class="prod-sub">High-Voltage Digital Quad Pulse Amplifier</div>
+        <p class="prod-desc">Standalone high-voltage driver that receives low-voltage signals from Astraea and amplifies them to drive quadrupole rods. Four independent voltage regulators let you set positive and negative levels on each output separately — enabling resolving DC and offset control. Programmable output from 20 to 250V peak, with built-in fault monitoring, power limit protection, and automatic safety shutdown.</p>
+        <div class="prod-specs">
+          <span class="spec">20–250V Peak</span><span class="spec">4 Independent Regulators</span>
+          <span class="spec">Fault Monitoring</span><span class="spec">USB Interface</span>
+        </div>
+        <div class="prod-price"><span data-price="quad_driver_250v">$2,995</span></div>
       </div>
 
     </div>
@@ -1889,6 +1956,9 @@
           <a href="docs/standalone/RF_Generator.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">RF Generator</div><div class="dl-desc">Standalone RF driver for ion funnels and guides — 500 KHz to 5 MHz, USB/Ethernet, auto-tune</div></div><div class="dl-btn">PDF &#8595;</div></a>
           <a href="docs/standalone/RF_Mega.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">RF Mega</div><div class="dl-desc">High-power standalone RF driver — 120 to 200W output, drives up to 5000 pF capacitive loads</div></div><div class="dl-btn">PDF &#8595;</div></a>
           <a href="docs/standalone/SLIM_Reverser.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">SLIM Reverser</div><div class="dl-desc">16-pole analog TWAVE direction control switch — isolated control input, 100 Vp-p maximum</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/standalone/Astraea_Operations_Manual.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Astraea — Operations Manual</div><div class="dl-desc">Precession waveform generator for digital quadrupoles — features, connections, command reference, and specifications</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/standalone/Astraea_User_Guide.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Astraea — User Guide</div><div class="dl-desc">Step-by-step guide to connecting Astraea to the MIPS host application, configuring quad parameters, scanning, and plotting</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/standalone/Quad_Rod_Driver_250V.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Digital Quad Rod Driver ±250V — Operations Manual</div><div class="dl-desc">High-voltage pulse amplifier for digital quadrupoles — front/rear panel, command reference, specs, and safety information</div></div><div class="dl-btn">PDF &#8595;</div></a>
         </div>
       </div>
 
@@ -2173,7 +2243,10 @@
     "interlock":        "$295",
     "heater":           "$795",
     "consulting_rate":  "$140",
-    "consulting_sub":   "per hour"
+    "consulting_sub":   "per hour",
+    "astraea":          "$1,995",
+    "astraea_100v":     "$1,999",
+    "quad_driver_250v": "$2,995"
   };
 
   function applyPrices(prices) {

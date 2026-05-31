@@ -1,7 +1,7 @@
 {
-  "_comment": "GAA Custom Electronics price list \u2014 edit values here, do not change key names",
+  "_comment": "GAA Custom Electronics price list — edit values here, do not change key names",
   "_updated": "2026",
-  "mips_range": "$3,500 \u2013 $14,000",
+  "mips_range": "$3,500 – $14,000",
   "mips_range_sub": "configured to order",
   "rf_generator": "$2,495",
   "rf_generator_sub": "starting",
@@ -37,5 +37,8 @@
   "interlock": "$295",
   "heater": "$795",
   "consulting_rate": "$140",
-  "consulting_sub": "per hour"
+  "consulting_sub": "per hour",
+  "astraea": "$1,995",
+  "astraea_100v": "$1,999",
+  "quad_driver_250v": "$2,995"
 }

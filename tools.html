@@ -394,6 +394,8 @@
     <span class="jump-sep">&rsaquo;</span>
     <a class="jump-btn" href="#mfp-calc"    onclick="jumpTo('mfp-calc')">&#x2466; Mean Free Path</a>
     <span class="jump-sep">&rsaquo;</span>
+    <a class="jump-btn" href="#ion-mobility" onclick="jumpTo('ion-mobility')">&#x2467; K&#x2080; / CCS Converter</a>
+    <span class="jump-sep">&rsaquo;</span>
     <a class="jump-btn" href="#useful-links" onclick="jumpTo('useful-links')">&#x1F517; Useful Links</a>
     <span class="jump-sep">&rsaquo;</span>
     <a class="jump-btn" href="#coming-soon" onclick="jumpTo('coming-soon')">&#x1F6A7; Coming Soon</a>
@@ -1428,6 +1430,194 @@
 
 
     <!-- ════════════════════════════════════════════════════════ -->
+    <!-- TOOL: K₀ / CCS ION MOBILITY CONVERTER                  -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="tool-card" id="ion-mobility" style="scroll-margin-top:120px">
+      <div class="tool-card-header">
+        <div class="tool-card-meta">
+          <div class="tool-tag">Ion Mobility</div>
+          <div class="tool-title">K&#x2080; / CCS Ion Mobility Converter</div>
+          <div class="tool-desc">Convert between drift time, reduced mobility (K&#x2080;), and collision cross section (CCS, &Omega;) for drift tube ion mobility spectrometry. Supports He, N&#x2082;, Ar, and CO&#x2082; buffer gases. Uses the Mason-Schamp equation &mdash; the standard relationship used in IMS, SLIM, and travelling-wave mobility experiments.</div>
+        </div>
+        <div class="tool-badge-row" style="align-self:flex-start;margin-top:.5rem">
+          <span class="tool-badge">Mason-Schamp</span>
+          <span class="tool-badge">Drift Tube IMS</span>
+          <span class="tool-badge">He &middot; N&#x2082; &middot; Ar &middot; CO&#x2082;</span>
+          <span class="tool-badge">K&#x2080; &harr; CCS</span>
+        </div>
+      </div>
+
+      <div class="tool-body">
+
+        <style>
+          .im-block{background:var(--surface);border:1px solid var(--rule2);border-radius:4px;padding:1.1rem 1.25rem;margin-bottom:1.1rem}
+          .im-block-title{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:.75rem;display:flex;align-items:center;gap:.6rem}
+          .im-badge{font-size:.55rem;background:var(--red-pale);color:var(--red);border:1px solid rgba(204,31,31,.15);padding:.15rem .5rem;border-radius:2px}
+          .im-formula{font-family:var(--mono);font-size:.72rem;color:var(--mid);margin-bottom:.85rem;line-height:1.6}
+          .im-grid{display:grid;gap:.75rem;margin-bottom:.9rem}
+          .im-g2{grid-template-columns:1fr 1fr}
+          .im-g3{grid-template-columns:1fr 1fr 1fr}
+          .im-g4{grid-template-columns:1fr 1fr 1fr 1fr}
+          @media(max-width:680px){.im-g3,.im-g4{grid-template-columns:1fr 1fr}}
+          @media(max-width:420px){.im-g2,.im-g3,.im-g4{grid-template-columns:1fr}}
+          .im-field{display:flex;flex-direction:column;gap:.3rem}
+          .im-field label{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid)}
+          .im-field input,.im-field select{font-family:var(--sans);font-size:.9rem;color:var(--ink);background:var(--white);border:1px solid var(--rule);border-radius:3px;padding:.5rem .65rem;transition:border-color .15s;width:100%}
+          .im-field input:focus,.im-field select:focus{outline:none;border-color:var(--red)}
+          .im-field .im-hint{font-size:.72rem;color:var(--mid);margin-top:.15rem}
+          .im-mode-row{display:flex;gap:.35rem;margin-bottom:.8rem;flex-wrap:wrap}
+          .im-mode-btn{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .75rem;border:1px solid var(--rule);border-radius:2px;background:transparent;color:var(--mid);cursor:pointer;transition:all .15s}
+          .im-mode-btn.on{background:var(--red);border-color:var(--red);color:var(--white)}
+          .im-out-row{display:grid;gap:.6rem;margin-top:.25rem}
+          .im-out2{grid-template-columns:1fr 1fr}
+          .im-out3{grid-template-columns:repeat(3,1fr)}
+          .im-out4{grid-template-columns:repeat(4,1fr)}
+          @media(max-width:680px){.im-out3,.im-out4{grid-template-columns:1fr 1fr}}
+          .im-metric{background:var(--white);border:1px solid var(--rule2);border-radius:4px;padding:.75rem 1rem}
+          .im-metric.hi{border-left:3px solid var(--red)}
+          .im-metric .iml{font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:.3rem}
+          .im-metric .imv{font-family:var(--serif);font-size:1.45rem;font-weight:600;color:var(--ink);line-height:1}
+          .im-metric.hi .imv{color:var(--red)}
+          .im-metric .imu{font-size:.7rem;color:var(--mid);margin-top:.15rem}
+          .im-rule{border:none;border-top:1px solid var(--rule);margin:.9rem 0}
+          .im-info{font-size:.82rem;color:var(--ink3);background:var(--surface);border:1px solid var(--rule2);border-radius:3px;padding:.7rem .9rem;line-height:1.65;margin-top:.75rem}
+          .im-info.warn{background:var(--red-pale);border-color:rgba(204,31,31,.15)}
+          .im-info.ok{background:#EAF3DE;border-color:#97C459;color:#27500A}
+          .im-gas-pills{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.9rem}
+          .im-gas-pill{font-family:var(--mono);font-size:.58rem;letter-spacing:.08em;padding:.22rem .65rem;border:1px solid var(--rule);border-radius:2px;cursor:pointer;transition:all .15s;background:transparent;color:var(--mid)}
+          .im-gas-pill.on{background:var(--ink2);border-color:var(--ink2);color:var(--white)}
+          .im-table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:.5rem}
+          .im-table thead th{font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);padding:.5rem .7rem;border-bottom:1px solid var(--rule);text-align:left;background:var(--surface)}
+          .im-table tbody td{padding:.45rem .7rem;border-bottom:0.5px solid var(--rule2);color:var(--ink3)}
+          .im-table tbody tr:last-child td{border-bottom:none}
+          .im-table tbody tr.im-cur td{background:var(--red-pale);color:var(--ink);font-weight:500}
+        </style>
+
+        <!-- ─── MODE SELECTOR ─── -->
+        <div class="im-block">
+          <div class="im-block-title">Conversion mode <span class="im-badge">Select what you want to calculate</span></div>
+          <div class="im-mode-row">
+            <button class="im-mode-btn on" id="im-m-ccs" onclick="imSetMode('ccs')">Drift time &rarr; K&#x2080; &amp; CCS</button>
+            <button class="im-mode-btn"    id="im-m-td"  onclick="imSetMode('td')">CCS &rarr; Drift time &amp; K&#x2080;</button>
+            <button class="im-mode-btn"    id="im-m-k0"  onclick="imSetMode('k0')">K&#x2080; &rarr; CCS &amp; Drift time</button>
+          </div>
+
+          <div style="font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:.5rem">Buffer gas</div>
+          <div class="im-gas-pills">
+            <button class="im-gas-pill on" id="im-gas-N2"  onclick="imSetGas('N2')">N&#x2082; (nitrogen)</button>
+            <button class="im-gas-pill"    id="im-gas-He"  onclick="imSetGas('He')">He (helium)</button>
+            <button class="im-gas-pill"    id="im-gas-Ar"  onclick="imSetGas('Ar')">Ar (argon)</button>
+            <button class="im-gas-pill"    id="im-gas-CO2" onclick="imSetGas('CO2')">CO&#x2082;</button>
+          </div>
+
+          <div class="im-out-row im-out4" style="margin-bottom:.9rem">
+            <div class="im-metric">
+              <div class="iml">Gas molar mass</div>
+              <div class="imv" id="im-Mg">28.01</div>
+              <div class="imu">g mol&#x207B;&#xB9;</div>
+            </div>
+            <div class="im-metric">
+              <div class="iml">Kinetic diameter</div>
+              <div class="imv" id="im-dg">3.64</div>
+              <div class="imu">&#x212B;</div>
+            </div>
+            <div class="im-metric">
+              <div class="iml">Typical K&#x2080; range</div>
+              <div class="imv" id="im-kref">~2.0–2.5</div>
+              <div class="imu">cm&#xB2; V&#x207B;&#xB9; s&#x207B;&#xB9;</div>
+            </div>
+            <div class="im-metric">
+              <div class="iml">Loschmidt N&#x2080;</div>
+              <div class="imv">2.687</div>
+              <div class="imu">&times;10&#xB9;&#x2079; cm&#x207B;&#xB3; (STP)</div>
+            </div>
+          </div>
+
+          <!-- Mode inputs -->
+          <div id="im-inputs-ccs" class="im-grid im-g4">
+            <div class="im-field"><label>Drift time t<sub>d</sub></label><input type="number" id="im-td-in" value="5.00" min="0.001" step="0.01"><div class="im-hint">ms</div></div>
+            <div class="im-field"><label>Drift length L</label><input type="number" id="im-L-in" value="0.785" min="0.001" step="0.001"><div class="im-hint">m</div></div>
+            <div class="im-field"><label>Electric field E</label><input type="number" id="im-E-in" value="500" min="1" step="10"><div class="im-hint">V m&#x207B;&#xB9;</div></div>
+            <div class="im-field"><label>m/z (ion mass)</label><input type="number" id="im-mz-in" value="622" min="1" step="1"><div class="im-hint">Da</div></div>
+          </div>
+          <div id="im-inputs-td" class="im-grid im-g4" style="display:none">
+            <div class="im-field"><label>CCS &Omega;</label><input type="number" id="im-ccs-in2" value="250" min="1" step="1"><div class="im-hint">&#x212B;&#xB2;</div></div>
+            <div class="im-field"><label>Drift length L</label><input type="number" id="im-L-in2" value="0.785" min="0.001" step="0.001"><div class="im-hint">m</div></div>
+            <div class="im-field"><label>Electric field E</label><input type="number" id="im-E-in2" value="500" min="1" step="10"><div class="im-hint">V m&#x207B;&#xB9;</div></div>
+            <div class="im-field"><label>m/z (ion mass)</label><input type="number" id="im-mz-in2" value="622" min="1" step="1"><div class="im-hint">Da</div></div>
+          </div>
+          <div id="im-inputs-k0" class="im-grid im-g4" style="display:none">
+            <div class="im-field"><label>Reduced mobility K&#x2080;</label><input type="number" id="im-k0-in" value="1.50" min="0.01" step="0.01"><div class="im-hint">cm&#xB2; V&#x207B;&#xB9; s&#x207B;&#xB9;</div></div>
+            <div class="im-field"><label>Drift length L</label><input type="number" id="im-L-in3" value="0.785" min="0.001" step="0.001"><div class="im-hint">m</div></div>
+            <div class="im-field"><label>Electric field E</label><input type="number" id="im-E-in3" value="500" min="1" step="10"><div class="im-hint">V m&#x207B;&#xB9;</div></div>
+            <div class="im-field"><label>m/z (ion mass)</label><input type="number" id="im-mz-in3" value="622" min="1" step="1"><div class="im-hint">Da</div></div>
+          </div>
+
+          <div class="im-grid im-g2" style="margin-top:.25rem">
+            <div class="im-field"><label>Temperature T</label><input type="number" id="im-T" value="300" min="77" max="1000" step="1"><div class="im-hint">K (300 = 27 &deg;C)</div></div>
+            <div class="im-field"><label>Pressure P</label><input type="number" id="im-P" value="2.55" min="0.001" max="760" step="0.01"><div class="im-hint">Torr</div></div>
+          </div>
+
+          <hr class="im-rule">
+          <div class="im-out-row im-out3">
+            <div class="im-metric hi"><div class="iml" id="im-r1-lbl">CCS &Omega;</div><div class="imv" id="im-r1-val">—</div><div class="imu">&#x212B;&#xB2;</div></div>
+            <div class="im-metric hi"><div class="iml" id="im-r2-lbl">Reduced mobility K&#x2080;</div><div class="imv" id="im-r2-val">—</div><div class="imu">cm&#xB2; V&#x207B;&#xB9; s&#x207B;&#xB9;</div></div>
+            <div class="im-metric hi"><div class="iml" id="im-r3-lbl">Drift time t<sub>d</sub></div><div class="imv" id="im-r3-val">—</div><div class="imu">ms</div></div>
+          </div>
+          <div class="im-out-row im-out4" style="margin-top:.6rem">
+            <div class="im-metric"><div class="iml">Actual mobility K</div><div class="imv" id="im-K-out">—</div><div class="imu">cm&#xB2; V&#x207B;&#xB9; s&#x207B;&#xB9;</div></div>
+            <div class="im-metric"><div class="iml">Drift voltage V<sub>drift</sub></div><div class="imv" id="im-Vd-out">—</div><div class="imu">V (E &times; L)</div></div>
+            <div class="im-metric"><div class="iml">Reduced field E/N</div><div class="imv" id="im-EN-out">—</div><div class="imu">Td (townsend)</div></div>
+            <div class="im-metric"><div class="iml">K &rarr; K&#x2080; factor</div><div class="imv" id="im-corr-out">—</div><div class="imu">P&middot;T&#x2080; / (P&#x2080;&middot;T)</div></div>
+          </div>
+          <div class="im-info" id="im-note" style="margin-top:.75rem"></div>
+        </div>
+
+        <!-- ─── CROSS-GAS TABLE ─── -->
+        <div class="im-block">
+          <div class="im-block-title">CCS comparison across buffer gases <span class="im-badge">Same ion, all four gases</span></div>
+          <p style="font-size:.82rem;color:var(--mid);line-height:1.65;margin-bottom:.85rem">Given the K&#x2080; computed above, this table shows the equivalent CCS in each buffer gas at your T and P. CCS values are gas-specific and are <em>not</em> directly interchangeable &mdash; a CCS measured in He is not the same physical quantity as CCS in N&#x2082;.</p>
+          <div style="overflow-x:auto;border:1px solid var(--rule);border-radius:4px">
+            <table class="im-table">
+              <thead><tr><th>Gas</th><th>Molar mass (g/mol)</th><th>Reduced mass &mu; (Da)</th><th>CCS &Omega; (&#x212B;&#xB2;)</th><th>K&#x2080; (cm&#xB2; V&#x207B;&#xB9; s&#x207B;&#xB9;)</th><th>Drift time (ms)</th></tr></thead>
+              <tbody id="im-gas-tbody"><tr><td colspan="6" style="text-align:center;color:var(--mid);padding:1rem">Enter values above to populate table</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ─── PHYSICS REFERENCE ─── -->
+        <div class="im-block">
+          <div class="im-block-title">Physics reference <span class="im-badge">Mason-Schamp equation</span></div>
+          <div class="im-formula">
+            K&#x2080; = (3/16) &times; (ze / N&#x2080;) &times; (2&pi; / &mu;k<sub>B</sub>T)&#xB9;&#x2F2; &times; (1 / &Omega;) &nbsp;&mdash;&nbsp; Mason-Schamp<br>
+            K = K&#x2080; &times; (P&#x2080;/P) &times; (T/T&#x2080;) &nbsp;&mdash;&nbsp; actual mobility at operating conditions<br>
+            t<sub>d</sub> = L / (K &times; E) &nbsp;&mdash;&nbsp; drift time from mobility and field<br>
+            Low-field limit valid when E/N &lt; ~5 Td &nbsp;&middot;&nbsp; T&#x2080; = 273.15 K &nbsp;&middot;&nbsp; P&#x2080; = 760 Torr
+          </div>
+          <div class="im-grid im-g2">
+            <div>
+              <div style="font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:.5rem">Constants</div>
+              <div style="font-size:.82rem;color:var(--ink3);line-height:2">e = 1.602&times;10&#x207B;&#xB9;&#x2079; C &nbsp;&middot;&nbsp; k<sub>B</sub> = 1.381&times;10&#x207B;&#xB2;&#xB3; J K&#x207B;&#xB9;<br>N&#x2080; = 2.687&times;10&#xB9;&#x2079; cm&#x207B;&#xB3; (Loschmidt, STP)<br>u = 1.661&times;10&#x207B;&#xB2;&#x2077; kg/Da &nbsp;&middot;&nbsp; z = 1 (singly charged)</div>
+            </div>
+            <div>
+              <div style="font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:.5rem">Limitations</div>
+              <div style="font-size:.82rem;color:var(--ink3);line-height:2">Valid in low-field limit (E/N &lt; ~5 Td)<br>Assumes singly charged ions (z = 1)<br>Not directly applicable to TWIMS (needs calibration)<br>CCS values are gas-specific: He &ne; N&#x2082; CCS</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:1.25rem;padding:.9rem 1.1rem;background:var(--red-pale);border:1px solid rgba(204,31,31,.15);border-radius:4px;display:flex;gap:.75rem;align-items:flex-start">
+          <span style="font-size:1rem;flex-shrink:0">&#x26A1;</span>
+          <div style="font-size:.84rem;color:var(--ink3);line-height:1.6">
+            <strong style="color:var(--ink)">Building a drift tube IMS or SLIM system with GAACE hardware?</strong>
+            The MIPS platform provides the DC bias, RF drive, and TWAVE control needed for drift tube and SLIM ion mobility experiments. The MFT and SLIM Reverser modules are specifically designed for serpentine SLIM paths. <a href="index.html#contact" style="color:var(--red);text-decoration:underline">Contact us</a> to discuss your IMS configuration.
+          </div>
+        </div>
+
+      </div><!-- /tool-body -->
+    </div><!-- /tool-card #ion-mobility -->
+
+    <!-- ════════════════════════════════════════════════════════ -->
     <div id="useful-links" style="margin-bottom:3rem;scroll-margin-top:120px">
       <div class="lbl" style="margin-top:1rem">Reference Resources</div>
       <h2 style="font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:600;color:var(--ink);margin-bottom:.5rem">Useful Links &amp; <em style="color:var(--red);font-style:italic;font-weight:300">Resources</em></h2>
@@ -1596,12 +1786,6 @@
       <p style="font-size:.9rem;color:var(--mid);line-height:1.7;margin-bottom:1.5rem;max-width:600px">Additional calculators are being developed for the mass spectrometry community. Check back regularly or <a href="index.html#contact" style="color:var(--red)">contact us</a> to request a specific tool.</p>
 
       <div class="coming-grid">
-        <div class="coming-card">
-          <div class="coming-icon">📐</div>
-          <div class="coming-name">K₀ / CCS Converter</div>
-          <div class="coming-desc">Convert between drift time, reduced mobility K₀, and collision cross section (Å²) for ion mobility measurements. Supports He, N₂, and Ar buffer gases.</div>
-          <div class="coming-pill">Ion Mobility</div>
-        </div>
         <div class="coming-card">
           <div class="coming-icon">🔁</div>
           <div class="coming-name">Ion Trap Parameter Calculator</div>
@@ -3078,7 +3262,7 @@ mfpCalc();
 
 // Highlight jump nav based on scroll position
 (function() {
-  var sections = ['quad-calc','rf-circuit','ion-ke','cap-power','vac-pressure','vac-flow','mfp-calc','useful-links','coming-soon'];
+  var sections = ['quad-calc','rf-circuit','ion-ke','cap-power','vac-pressure','vac-flow','mfp-calc','ion-mobility','useful-links','coming-soon'];
   var ticking = false;
   window.addEventListener('scroll', function() {
     if (!ticking) {
@@ -3216,6 +3400,186 @@ function promptBookmark() {
   alert('Press ' + (isMac ? '⌘ Cmd + D' : 'Ctrl + D') + ' to bookmark this page for quick access.');
   dismissBookmark();
 }
+</script>
+
+<!-- ── K₀ / CCS ION MOBILITY CALCULATOR ── -->
+<script>
+(function(){
+  var e_C  = 1.602176634e-19;
+  var kB   = 1.380649e-23;
+  var u_kg = 1.66053906660e-27;
+  var N0   = 2.6867774e19;    // cm⁻³ Loschmidt (STP)
+  var T0   = 273.15;
+  var P0   = 760;
+
+  var GASES = {
+    N2:  { label:'N\u2082',  Mg:28.014, kref:'~2.0\u20132.5', kd:'3.64' },
+    He:  { label:'He',      Mg:4.0026,  kref:'~20\u201325',   kd:'2.60' },
+    Ar:  { label:'Ar',      Mg:39.948,  kref:'~1.5\u20132.0', kd:'3.40' },
+    CO2: { label:'CO\u2082', Mg:44.009, kref:'~0.8\u20131.2', kd:'3.30' },
+  };
+  var gasOrder = ['He','N2','Ar','CO2'];
+  var curGas  = 'N2';
+  var curMode = 'ccs';
+
+  function el(id){ return document.getElementById(id); }
+  function sig4(v){ if(!isFinite(v)||isNaN(v)) return '\u2014'; return parseFloat(v.toPrecision(4)).toString(); }
+  function fmt2(v){ if(!isFinite(v)||isNaN(v)) return '\u2014'; return v.toFixed(2); }
+
+  function reducedMass_Da(mion, Mg){ return (mion * Mg) / (mion + Mg); }
+
+  function ccsToK0(ccs_A2, mion_Da, gas, T_K) {
+    var mu_kg = reducedMass_Da(mion_Da, GASES[gas].Mg) * u_kg;
+    var ccs_m2 = ccs_A2 * 1e-20;
+    var N0_m3  = N0 * 1e6;
+    var K_SI   = (3/16) * (e_C / N0_m3) * Math.sqrt(2*Math.PI / (mu_kg * kB * T_K)) / ccs_m2;
+    return K_SI * 1e4;  // m²/Vs → cm²/Vs
+  }
+
+  function k0ToK(K0, P, T){ return K0 * (P0/P) * (T/T0); }
+
+  function Ktd(K, L_m, E_Vm){
+    var vd = K * (E_Vm/100);  // cm/s
+    return (L_m*100 / vd) * 1e3;  // ms
+  }
+
+  function calcEN(E_Vm, P, T){
+    var N = N0 * (P/P0) * (T0/T);   // cm⁻³
+    return (E_Vm/100 / N) * 1e17;   // Td
+  }
+
+  window.imSetMode = function(m){
+    curMode = m;
+    ['ccs','td','k0'].forEach(function(x){
+      el('im-m-'+x).classList.toggle('on', x===m);
+      var d = el('im-inputs-'+x);
+      if(d) d.style.display = (x===m) ? '' : 'none';
+    });
+    imCalc();
+  };
+
+  window.imSetGas = function(g){
+    curGas = g;
+    gasOrder.forEach(function(x){ el('im-gas-'+x).classList.toggle('on', x===g); });
+    var G = GASES[g];
+    el('im-Mg').textContent   = G.Mg.toFixed(3);
+    el('im-dg').textContent   = G.kd;
+    el('im-kref').textContent = G.kref;
+    imCalc();
+  };
+
+  function imCalc(){
+    var T = parseFloat(el('im-T').value);
+    var P = parseFloat(el('im-P').value);
+    var K0, K, td, ccs, mion, L, E;
+
+    if(curMode === 'ccs'){
+      td   = parseFloat(el('im-td-in').value);
+      L    = parseFloat(el('im-L-in').value);
+      E    = parseFloat(el('im-E-in').value);
+      mion = parseFloat(el('im-mz-in').value);
+      if([td,L,E,mion,T,P].some(isNaN)||td<=0||L<=0||E<=0||mion<=0||T<=0||P<=0){ clearIM(); return; }
+      var vd_cms = (L*100) / (td*1e-3);
+      K  = vd_cms / (E/100);
+      K0 = K / ((P0/P)*(T/T0));
+      var mu_kg2 = reducedMass_Da(mion, GASES[curGas].Mg) * u_kg;
+      var K0_SI  = K0 * 1e-4;
+      var N0_m3  = N0 * 1e6;
+      ccs = ((3/16) * (e_C/N0_m3) * Math.sqrt(2*Math.PI/(mu_kg2*kB*T)) / K0_SI) * 1e20;
+      setOut('im-r1-lbl','CCS \u03a9'); setOut('im-r1-val',sig4(ccs));
+      setOut('im-r2-lbl','Reduced mobility K\u2080'); setOut('im-r2-val',fmt2(K0));
+      setOut('im-r3-lbl','Drift time t\u1d48 (input)'); setOut('im-r3-val',fmt2(td));
+    } else if(curMode === 'td'){
+      ccs  = parseFloat(el('im-ccs-in2').value);
+      L    = parseFloat(el('im-L-in2').value);
+      E    = parseFloat(el('im-E-in2').value);
+      mion = parseFloat(el('im-mz-in2').value);
+      if([ccs,L,E,mion,T,P].some(isNaN)||ccs<=0||L<=0||E<=0||mion<=0||T<=0||P<=0){ clearIM(); return; }
+      K0 = ccsToK0(ccs, mion, curGas, T);
+      K  = k0ToK(K0, P, T);
+      td = Ktd(K, L, E);
+      setOut('im-r1-lbl','CCS \u03a9 (input)'); setOut('im-r1-val',fmt2(ccs));
+      setOut('im-r2-lbl','Reduced mobility K\u2080'); setOut('im-r2-val',fmt2(K0));
+      setOut('im-r3-lbl','Drift time t\u1d48'); setOut('im-r3-val',fmt2(td));
+    } else {
+      K0   = parseFloat(el('im-k0-in').value);
+      L    = parseFloat(el('im-L-in3').value);
+      E    = parseFloat(el('im-E-in3').value);
+      mion = parseFloat(el('im-mz-in3').value);
+      if([K0,L,E,mion,T,P].some(isNaN)||K0<=0||L<=0||E<=0||mion<=0||T<=0||P<=0){ clearIM(); return; }
+      K  = k0ToK(K0, P, T);
+      td = Ktd(K, L, E);
+      var mu_kg3 = reducedMass_Da(mion, GASES[curGas].Mg) * u_kg;
+      var K0_SI3 = K0 * 1e-4;
+      var N0_m33 = N0 * 1e6;
+      ccs = ((3/16) * (e_C/N0_m33) * Math.sqrt(2*Math.PI/(mu_kg3*kB*T)) / K0_SI3) * 1e20;
+      setOut('im-r1-lbl','CCS \u03a9'); setOut('im-r1-val',sig4(ccs));
+      setOut('im-r2-lbl','Reduced mobility K\u2080 (input)'); setOut('im-r2-val',fmt2(K0));
+      setOut('im-r3-lbl','Drift time t\u1d48'); setOut('im-r3-val',fmt2(td));
+    }
+
+    el('im-K-out').textContent    = fmt2(K);
+    el('im-Vd-out').textContent   = sig4(E*L);
+    el('im-EN-out').textContent   = fmt2(calcEN(E,P,T));
+    el('im-corr-out').textContent = fmt2((P0/P)*(T/T0));
+
+    var EN = calcEN(E,P,T);
+    var note = el('im-note');
+    if(EN > 5){
+      note.className = 'im-info warn';
+      note.innerHTML = '<strong>\u26a0 High-field warning.</strong> E/N = '+fmt2(EN)+' Td exceeds the low-field limit (~5 Td). The Mason-Schamp equation assumes no net heating of ions by the field. At high E/N, field heating elevates effective ion temperature and K\u2080 becomes field-dependent. CCS values will be systematically underestimated. Consider reducing E or increasing P.';
+    } else {
+      note.className = 'im-info ok';
+      note.innerHTML = '<strong>Low-field conditions confirmed.</strong> E/N = '+fmt2(EN)+' Td \u2014 well within the Mason-Schamp validity range (&lt;5 Td). Results are reliable for drift tube IMS analysis.';
+    }
+
+    updateGasTable(K0, mion, L, E, T, P);
+  }
+
+  function setOut(id, val){ var e2=el(id); if(e2) e2.textContent=val; }
+
+  function clearIM(){
+    ['im-r1-val','im-r2-val','im-r3-val','im-K-out','im-Vd-out','im-EN-out','im-corr-out'].forEach(function(id){
+      var e2=el(id); if(e2) e2.textContent='\u2014';
+    });
+    var tb=el('im-gas-tbody');
+    if(tb) tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--mid);padding:1rem">Enter values above to populate table</td></tr>';
+    var note=el('im-note'); if(note){ note.className='im-info'; note.innerHTML=''; }
+  }
+
+  function updateGasTable(K0, mion, L, E, T, P){
+    var tb = el('im-gas-tbody'); if(!tb) return;
+    var rows = '';
+    gasOrder.forEach(function(g){
+      var mu_kg = reducedMass_Da(mion, GASES[g].Mg) * u_kg;
+      var K0_SI = K0 * 1e-4;
+      var N0_m3 = N0 * 1e6;
+      var ccs_g = ((3/16) * (e_C/N0_m3) * Math.sqrt(2*Math.PI/(mu_kg*kB*T)) / K0_SI) * 1e20;
+      var Kg    = k0ToK(K0, P, T);
+      var td_g  = Ktd(Kg, L, E);
+      var cur   = (g === curGas);
+      rows += '<tr'+(cur?' class="im-cur"':'')+'>'+
+        '<td>'+(cur?'<strong>':'')+GASES[g].label+(cur?'</strong>':'')+' <span style="font-family:var(--mono);font-size:.7em;color:var(--mid)">'+GASES[g].Mg.toFixed(2)+' g/mol</span></td>'+
+        '<td style="font-family:var(--mono)">'+GASES[g].Mg.toFixed(3)+'</td>'+
+        '<td style="font-family:var(--mono)">'+fmt2(reducedMass_Da(mion,GASES[g].Mg))+'</td>'+
+        '<td style="font-family:var(--mono)'+(cur?';color:var(--red);font-weight:600':'')+'">'+(isNaN(ccs_g)?'\u2014':sig4(ccs_g))+'</td>'+
+        '<td style="font-family:var(--mono)">'+fmt2(K0)+'</td>'+
+        '<td style="font-family:var(--mono)">'+fmt2(td_g)+'</td>'+
+        '</tr>';
+    });
+    tb.innerHTML = rows;
+  }
+
+  ['im-td-in','im-L-in','im-E-in','im-mz-in',
+   'im-ccs-in2','im-L-in2','im-E-in2','im-mz-in2',
+   'im-k0-in','im-L-in3','im-E-in3','im-mz-in3',
+   'im-T','im-P'].forEach(function(id){
+    var e2=document.getElementById(id);
+    if(e2) e2.addEventListener('input', imCalc);
+  });
+
+  imCalc();
+})();
 </script>
 
 </body>

@@ -1512,6 +1512,24 @@
           <div class="link-desc">A suite of open-source tools developed at Pacific Northwest National Laboratory covering proteomics, metabolomics, data processing, and instrument control. Includes MASIC, DeconTools, Protein Digestion Simulator, and many others widely used in the mass spec community.</div>
           <div class="link-url">pnnl-comp-mass-spec.github.io</div>
         </div>
+        <div class="link-card">
+          <div class="link-cat">Targeted Proteomics</div>
+          <div class="link-title"><a href="https://skyline.ms/" target="_blank" rel="noopener">Skyline (MacCoss Lab)</a></div>
+          <div class="link-desc">Freely available, open-source Windows application for building and analyzing targeted mass spectrometry experiments. Widely used for SRM/MRM method development, spectral library building, and quantitative proteomics workflows. Developed and maintained by the MacCoss Lab at the University of Washington.</div>
+          <div class="link-url">skyline.ms</div>
+        </div>
+        <div class="link-card">
+          <div class="link-cat">Data Conversion</div>
+          <div class="link-title"><a href="https://proteowizard.sourceforge.io/" target="_blank" rel="noopener">ProteoWizard</a></div>
+          <div class="link-desc">Open-source libraries and tools for mass spectrometry data conversion and analysis. The msConvert tool supports conversion between virtually all vendor formats (Thermo RAW, Waters MassLynx, Agilent, Bruker, etc.) to open formats such as mzML and mzXML. An essential utility in any mass spec lab.</div>
+          <div class="link-url">proteowizard.sourceforge.io</div>
+        </div>
+        <div class="link-card">
+          <div class="link-cat">Data Analysis Framework</div>
+          <div class="link-title"><a href="https://github.com/openms/openms" target="_blank" rel="noopener">OpenMS</a></div>
+          <div class="link-desc">Open-source C++ library and Python bindings for LC-MS data processing, feature detection, quantification, and identification. Provides a large toolkit of algorithms for proteomics and metabolomics workflows, and integrates with KNIME and Galaxy for pipeline-based analysis.</div>
+          <div class="link-url">github.com/openms/openms</div>
+        </div>
       </div>
 
       <div class="link-section-title">&#128300; Simulation Tools</div>
@@ -2009,7 +2027,7 @@ function drawSweep(){
 
 function findPassband(aqR){
   if(aqR<=0) return null;
-  const N=4000;
+  const N=800;
   let qLow=null, qHigh=null;
   let inBand=false;
   for(let i=0;i<=N;i++){
@@ -2039,7 +2057,7 @@ let AQ_LUT = [];   // [{aqR, dq}] sorted ascending aqR, descending dq
 
 function buildAQLookup(){
   AQ_LUT = [];
-  const N=600;
+  const N=80;
   for(let i=0;i<=N;i++){
     const aqR=0.02+i*(0.3354-0.02)/N;
     const pb=findPassband(aqR);
@@ -2279,7 +2297,8 @@ document.getElementById('rfonly-chk').addEventListener('change',function(){
 window.addEventListener('resize',()=>{ overlayStab(); drawSweep(); drawResolutionSweep(); });
 
 /* Boot: compute map once, then run calc */
-setTimeout(()=>{ computeStabilityMap(()=>{ buildAQLookup(); calc(); drawResolutionSweep(); }); }, 100);
+buildAQLookup();
+setTimeout(()=>{ computeStabilityMap(()=>{ calc(); drawResolutionSweep(); }); }, 100);
 </script>
 
 <!-- ══════════════════════════════════════════════════════════════

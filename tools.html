@@ -388,6 +388,12 @@
     <span class="jump-sep">&rsaquo;</span>
     <a class="jump-btn" href="#cap-power"   onclick="jumpTo('cap-power')">&#x2463; Capacitive Load Power</a>
     <span class="jump-sep">&rsaquo;</span>
+    <a class="jump-btn" href="#vac-pressure" onclick="jumpTo('vac-pressure')">&#x2464; Pressure Converter</a>
+    <span class="jump-sep">&rsaquo;</span>
+    <a class="jump-btn" href="#vac-flow"    onclick="jumpTo('vac-flow')">&#x2465; Orifice Flow</a>
+    <span class="jump-sep">&rsaquo;</span>
+    <a class="jump-btn" href="#mfp-calc"    onclick="jumpTo('mfp-calc')">&#x2466; Mean Free Path</a>
+    <span class="jump-sep">&rsaquo;</span>
     <a class="jump-btn" href="#useful-links" onclick="jumpTo('useful-links')">&#x1F517; Useful Links</a>
     <span class="jump-sep">&rsaquo;</span>
     <a class="jump-btn" href="#coming-soon" onclick="jumpTo('coming-soon')">&#x1F6A7; Coming Soon</a>
@@ -441,13 +447,15 @@
             <span style="font-size:.72rem;color:var(--mid);margin-top:.2rem">Daltons (unified atomic mass units)</span>
           </div>
           <div class="calc-field">
-            <label>Resolution mode</label>
-            <select id="resmode">
-              <option value="0.168">Unit resolution &mdash; a/q = 0.168</option>
-              <option value="0.100">Low resolution &mdash; a/q = 0.100</option>
-              <option value="0.230">High resolution &mdash; a/q = 0.230</option>
-              <option value="0.000">RF only (ion guide) &mdash; a = 0</option>
-            </select>
+            <label>Target resolution &Delta;M</label>
+            <input type="number" id="dm-input" value="1.0" min="0.01" max="10000" step="0.1" placeholder="Da">
+            <span style="font-size:.72rem;color:var(--mid);margin-top:.2rem">Daltons &mdash; peak passband width (e.g. 1.0 = unit resolution)</span>
+          </div>
+          <div class="calc-field" style="justify-content:flex-end">
+            <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;margin-top:auto;padding-bottom:.15rem">
+              <input type="checkbox" id="rfonly-chk" style="width:auto;accent-color:var(--red)">
+              <span style="font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid)">RF only (ion guide &mdash; no DC)</span>
+            </label>
           </div>
         </div>
 
@@ -487,6 +495,35 @@
           </div>
         </div>
 
+        <!-- Passband / resolution row -->
+        <div class="metrics-row" style="grid-template-columns:1fr 1fr">
+          <div class="metric">
+            <div class="metric-lbl">Passband width &Delta;M</div>
+            <div class="metric-val" id="o-passband">—</div>
+            <div class="metric-unit">Daltons (Mathieu diagram)</div>
+          </div>
+          <div class="metric">
+            <div class="metric-lbl">Estimated resolution R = M/&Delta;M</div>
+            <div class="metric-val" id="o-resolution">—</div>
+            <div class="metric-unit">at target m/z</div>
+          </div>
+        </div>
+        <div id="passband-note" style="font-size:.8rem;color:var(--ink3);background:var(--surface);border:1px solid var(--rule2);border-radius:3px;padding:.65rem .9rem;line-height:1.65;margin-bottom:.6rem"></div>
+
+        <!-- Permanent physics caveat -->
+        <div style="font-size:.8rem;color:var(--ink3);background:var(--red-pale);border:1px solid rgba(204,31,31,.15);border-radius:3px;padding:.65rem .9rem;line-height:1.7;margin-bottom:1rem">
+          <strong style="color:var(--ink)">&#9888;&nbsp;Mathieu limit vs. real instrument performance.</strong>
+          This calculator shows the <em>theoretical minimum</em> passband set by the Mathieu stability diagram &mdash; the best resolution any ideal quadrupole could achieve at a given a/q.
+          In practice, the achievable &Delta;M is always larger (worse) due to:
+          <ul style="margin:.45rem 0 0 1.1rem;padding:0;display:flex;flex-direction:column;gap:.25rem">
+            <li><strong>Quad length / RF cycles &mdash;</strong> resolution scales with the number of RF cycles an ion experiences in the field. Short quads or low frequencies reduce this count and limit resolution.</li>
+            <li><strong>Ion axial energy &mdash;</strong> faster ions spend less time in the field and see fewer RF cycles. Lower ion energy improves resolution but reduces transmission and may increase space-charge effects.</li>
+            <li><strong>Fringing fields &mdash;</strong> entrance and exit field distortions broaden peaks, particularly at low m/z where the passband is wide.</li>
+            <li><strong>Rod geometry &mdash;</strong> mechanical tolerances and rod roundness affect the purity of the quadrupole field and set a practical resolution floor.</li>
+          </ul>
+          <span style="display:block;margin-top:.5rem">The Mathieu passband is a useful <em>lower bound</em> and correctly predicts how resolution scales with a/q and m/z &mdash; but your instrument's practical minimum &Delta;M must be determined empirically by tuning with a calibration standard such as Agilent Tune Mix.</span>
+        </div>
+
         <hr class="section-rule">
 
         <!-- Stability diagram -->
@@ -516,6 +553,15 @@
           </div>
         </div>
         <canvas id="sweepC" height="200" style="border:1px solid var(--rule2);border-radius:4px;background:var(--surface)"></canvas>
+
+        <hr class="section-rule">
+
+        <!-- a/q and DC vs m/z plot -->
+        <div class="diag-label" style="margin-top:.25rem">Required a/q &amp; DC voltage vs. m/z &mdash; for fixed target &Delta;M</div>
+        <p style="font-size:.8rem;color:var(--mid);line-height:1.65;margin-bottom:.75rem;max-width:680px">
+          For a fixed &Delta;M target, the required a/q <em>decreases</em> as m/z increases &mdash; meaning the scan line slope must change during a scan to maintain constant peak width in Da. A fixed-slope scan line through the origin gives constant <em>R&nbsp;=&nbsp;M/&Delta;M</em> but varying &Delta;M in Da. To hold &Delta;M constant across the mass range an <strong>AMU offset</strong> (non-zero intercept) is required &mdash; which is why real instruments need gain/offset calibration.
+        </p>
+        <canvas id="resSweepC" height="220" style="border:1px solid var(--rule2);border-radius:4px;background:var(--surface)"></canvas>
 
         <!-- Note about GAACE hardware -->
         <div style="margin-top:1.25rem;padding:.9rem 1.1rem;background:var(--red-pale);border:1px solid rgba(204,31,31,.15);border-radius:4px;display:flex;gap:.75rem;align-items:flex-start">
@@ -1098,6 +1144,290 @@
     <!-- ════════════════════════════════════════════════════════ -->
     <!-- USEFUL LINKS SECTION                                     -->
     <!-- ════════════════════════════════════════════════════════ -->
+    <!-- TOOL 5: VACUUM PRESSURE CONVERTER                        -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="tool-card" id="vac-pressure" style="scroll-margin-top:120px">
+      <div class="tool-card-header">
+        <div class="tool-card-meta">
+          <div class="tool-tag">Vacuum Science</div>
+          <div class="tool-title">Vacuum Pressure Unit Converter</div>
+          <div class="tool-desc">Convert between all common vacuum pressure units used in mass spectrometry and vacuum technology: Pascal, millibar, Torr, mTorr, atm, psi, and more. Enter a value in any field and all others update instantly.</div>
+        </div>
+        <div class="tool-badge-row" style="align-self:flex-start;margin-top:.5rem">
+          <span class="tool-badge">Torr · mTorr</span>
+          <span class="tool-badge">Pascal · mbar</span>
+          <span class="tool-badge">atm · psi</span>
+          <span class="tool-badge">μbar · μHg</span>
+        </div>
+      </div>
+      <div class="tool-body">
+
+        <style>
+          .pc-grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+          @media(max-width:600px){.pc-grid{grid-template-columns:1fr}}
+          .pc-field{display:flex;flex-direction:column;gap:.28rem}
+          .pc-field label{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid)}
+          .pc-field input{font-family:var(--sans);font-size:.92rem;color:var(--ink);background:var(--white);border:1px solid var(--rule);border-radius:3px;padding:.5rem .75rem;transition:border-color .2s;width:100%}
+          .pc-field input:focus{outline:none;border-color:var(--red)}
+          .pc-field .pc-unit{font-size:.7rem;color:var(--mid);margin-top:.15rem}
+          .pc-note{font-size:.8rem;color:var(--mid);margin-top:1rem;line-height:1.6;padding:.7rem .9rem;background:var(--surface);border-radius:3px;border:1px solid var(--rule2)}
+        </style>
+
+        <div class="pc-grid" id="pc-fields">
+          <!-- Fields injected by JS -->
+        </div>
+        <div class="pc-note">
+          <strong style="color:var(--ink)">Common mass spec ranges:</strong>
+          Foreline / rough vacuum 1–10 Torr &nbsp;·&nbsp;
+          Ion source 10⁻³–10⁻⁵ Torr &nbsp;·&nbsp;
+          Analyser region &lt;10⁻⁵ Torr &nbsp;·&nbsp;
+          Ion trap / ORBITRAP &lt;10⁻⁸ Torr
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- TOOL 6: VACUUM ORIFICE FLOW & GAS LOAD CALCULATOR       -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="tool-card" id="vac-flow" style="scroll-margin-top:120px">
+      <div class="tool-card-header">
+        <div class="tool-card-meta">
+          <div class="tool-tag">Vacuum Science</div>
+          <div class="tool-title">Vacuum Orifice Flow &amp; Gas Load Calculator</div>
+          <div class="tool-desc">Calculate molecular-flow conductance, throughput (gas load), and required pumping speed for a circular orifice or short tube between two vacuum regions. Essential for sizing differential pumping stages and predicting pressure in each stage of a mass spectrometer.</div>
+        </div>
+        <div class="tool-badge-row" style="align-self:flex-start;margin-top:.5rem">
+          <span class="tool-badge">Molecular Flow</span>
+          <span class="tool-badge">Conductance</span>
+          <span class="tool-badge">Throughput</span>
+          <span class="tool-badge">Pump Speed</span>
+        </div>
+      </div>
+      <div class="tool-body">
+
+        <style>
+          .vf-formula{font-family:var(--mono);font-size:.72rem;color:var(--mid);margin-bottom:1rem;line-height:1.7}
+          .vf-section-lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--rule);padding-bottom:.4rem;margin:.9rem 0 .75rem}
+        </style>
+
+        <div class="vf-formula">
+          Orifice conductance (molecular flow): C = 3.638 · A · √(T/M) &nbsp;[L/s] &nbsp;·&nbsp; Throughput: Q = C · ΔP &nbsp;·&nbsp; Required pumping speed: S = Q / P₂
+        </div>
+
+        <!-- Inputs -->
+        <div class="calc-grid">
+          <div class="calc-field">
+            <label>Orifice diameter</label>
+            <input type="number" id="vf-d" value="1.0" min="0.01" max="500" step="0.1" placeholder="mm">
+            <span style="font-size:.72rem;color:var(--mid);margin-top:.2rem">millimetres</span>
+          </div>
+          <div class="calc-field">
+            <label>Gas</label>
+            <select id="vf-gas" onchange="vfCalc()">
+              <option value="28.97" selected>Air (avg) — 28.97 g/mol</option>
+              <option value="2.016">H₂ — 2.016 g/mol</option>
+              <option value="4.003">He — 4.003 g/mol</option>
+              <option value="14.01">N — 14.01 g/mol</option>
+              <option value="28.014">N₂ — 28.014 g/mol</option>
+              <option value="32.00">O₂ — 32.00 g/mol</option>
+              <option value="39.948">Ar — 39.948 g/mol</option>
+              <option value="44.01">CO₂ — 44.01 g/mol</option>
+              <option value="18.015">H₂O — 18.015 g/mol</option>
+              <option value="131.29">Xe — 131.29 g/mol</option>
+            </select>
+          </div>
+          <div class="calc-field">
+            <label>Upstream pressure P₁</label>
+            <input type="number" id="vf-p1" value="1.0" min="0" step="any" placeholder="Torr">
+            <span style="font-size:.72rem;color:var(--mid);margin-top:.2rem">Torr</span>
+          </div>
+          <div class="calc-field">
+            <label>Downstream pressure P₂</label>
+            <input type="number" id="vf-p2" value="0.001" min="0" step="any" placeholder="Torr">
+            <span style="font-size:.72rem;color:var(--mid);margin-top:.2rem">Torr (must be &lt; P₁ by ≥ 2×)</span>
+          </div>
+          <div class="calc-field">
+            <label>Temperature</label>
+            <input type="number" id="vf-T" value="293" min="10" max="2000" step="1" placeholder="K">
+            <span style="font-size:.72rem;color:var(--mid);margin-top:.2rem">Kelvin (293 K = 20 °C)</span>
+          </div>
+        </div>
+
+        <!-- Flow regime badge -->
+        <span id="vf-regime-badge" class="status-badge status-ok"><span class="status-dot"></span>Flow regime: molecular</span>
+
+        <!-- Outputs -->
+        <div class="vf-section-lbl">Results</div>
+        <div class="metrics-row" style="grid-template-columns:repeat(3,1fr)">
+          <div class="metric">
+            <div class="metric-lbl">Orifice area</div>
+            <div class="metric-val" id="vf-area">—</div>
+            <div class="metric-unit">mm²</div>
+          </div>
+          <div class="metric">
+            <div class="metric-lbl">Conductance C</div>
+            <div class="metric-val" id="vf-C">—</div>
+            <div class="metric-unit">L/s</div>
+          </div>
+          <div class="metric">
+            <div class="metric-lbl">ΔP</div>
+            <div class="metric-val" id="vf-dp">—</div>
+            <div class="metric-unit">Torr</div>
+          </div>
+        </div>
+        <div class="metrics-row" style="grid-template-columns:repeat(3,1fr)">
+          <div class="metric">
+            <div class="metric-lbl">Throughput Q</div>
+            <div class="metric-val" id="vf-Q">—</div>
+            <div class="metric-unit">Torr·L/s</div>
+          </div>
+          <div class="metric">
+            <div class="metric-lbl">Required pump speed</div>
+            <div class="metric-val" id="vf-S">—</div>
+            <div class="metric-unit">L/s (at P₂)</div>
+          </div>
+          <div class="metric">
+            <div class="metric-lbl">Mean free path @ P₁</div>
+            <div class="metric-val" id="vf-mfp">—</div>
+            <div class="metric-unit">mm</div>
+          </div>
+        </div>
+
+        <!-- Knudsen number note -->
+        <div id="vf-kn-note" style="font-size:.82rem;color:var(--ink3);background:var(--red-pale);border:1px solid rgba(204,31,31,.15);border-radius:3px;padding:.7rem .9rem;line-height:1.65;margin-top:.75rem"></div>
+
+        <div style="margin-top:1.25rem;padding:.9rem 1.1rem;background:var(--red-pale);border:1px solid rgba(204,31,31,.15);border-radius:4px;display:flex;gap:.75rem;align-items:flex-start">
+          <span style="font-size:1rem;flex-shrink:0">⚡</span>
+          <div style="font-size:.84rem;color:var(--ink3);line-height:1.6">
+            <strong style="color:var(--ink)">Designing differential pumping stages?</strong> GAACE builds custom MIPS-based control systems for multi-stage instruments. <a href="index.html#contact" style="color:var(--red);text-decoration:underline">Contact us</a> to discuss your vacuum architecture.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- TOOL 7: MEAN FREE PATH CALCULATOR                        -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="tool-card" id="mfp-calc" style="scroll-margin-top:120px">
+      <div class="tool-card-header">
+        <div class="tool-card-meta">
+          <div class="tool-tag">Vacuum Science</div>
+          <div class="tool-title">Mean Free Path &amp; Collision Frequency Calculator</div>
+          <div class="tool-desc">Calculate the mean free path λ, molecular collision frequency, and molecular number density for a gas at a given pressure and temperature. Includes Knudsen number estimation for a characteristic length — tells you which flow regime your system operates in.</div>
+        </div>
+        <div class="tool-badge-row" style="align-self:flex-start;margin-top:.5rem">
+          <span class="tool-badge">Mean Free Path</span>
+          <span class="tool-badge">Knudsen Number</span>
+          <span class="tool-badge">Collision Freq.</span>
+          <span class="tool-badge">Number Density</span>
+        </div>
+      </div>
+      <div class="tool-body">
+
+        <div class="vf-formula">
+          λ = k<sub>B</sub>T / (√2 · π · d² · P) &nbsp;·&nbsp; Z = √2 · π · d² · n · v̄ &nbsp;·&nbsp; Kn = λ / L
+        </div>
+
+        <!-- Inputs -->
+        <div class="calc-grid">
+          <div class="calc-field">
+            <label>Pressure</label>
+            <input type="number" id="mfp-P" value="1e-4" min="0" step="any" placeholder="Torr">
+            <span style="font-size:.72rem;color:var(--mid);margin-top:.2rem">Torr</span>
+          </div>
+          <div class="calc-field">
+            <label>Temperature</label>
+            <input type="number" id="mfp-T" value="293" min="10" max="5000" step="1" placeholder="K">
+            <span style="font-size:.72rem;color:var(--mid);margin-top:.2rem">Kelvin</span>
+          </div>
+          <div class="calc-field">
+            <label>Gas</label>
+            <select id="mfp-gas" onchange="mfpCalc()">
+              <option value="28.97,3.66" selected>Air — d = 3.66 Å</option>
+              <option value="2.016,2.72">H₂ — d = 2.72 Å</option>
+              <option value="4.003,2.58">He — d = 2.58 Å</option>
+              <option value="28.014,3.64">N₂ — d = 3.64 Å</option>
+              <option value="32.00,3.46">O₂ — d = 3.46 Å</option>
+              <option value="39.948,3.40">Ar — d = 3.40 Å</option>
+              <option value="44.01,3.30">CO₂ — d = 3.30 Å</option>
+              <option value="18.015,2.72">H₂O — d = 2.72 Å</option>
+              <option value="131.29,4.10">Xe — d = 4.10 Å</option>
+            </select>
+          </div>
+          <div class="calc-field">
+            <label>Characteristic length L</label>
+            <input type="number" id="mfp-L" value="10" min="0.001" step="any" placeholder="mm">
+            <span style="font-size:.72rem;color:var(--mid);margin-top:.2rem">mm — tube ID, gap, or cell size</span>
+          </div>
+        </div>
+
+        <!-- Outputs -->
+        <div class="metrics-row" style="grid-template-columns:repeat(3,1fr)">
+          <div class="metric">
+            <div class="metric-lbl">Mean free path λ</div>
+            <div class="metric-val" id="mfp-lam">—</div>
+            <div class="metric-unit" id="mfp-lam-u">—</div>
+          </div>
+          <div class="metric">
+            <div class="metric-lbl">Number density n</div>
+            <div class="metric-val" id="mfp-n">—</div>
+            <div class="metric-unit">molecules/cm³</div>
+          </div>
+          <div class="metric">
+            <div class="metric-lbl">Mean speed v̄</div>
+            <div class="metric-val" id="mfp-v">—</div>
+            <div class="metric-unit">m/s</div>
+          </div>
+        </div>
+        <div class="metrics-row" style="grid-template-columns:repeat(3,1fr)">
+          <div class="metric">
+            <div class="metric-lbl">Collision freq. Z</div>
+            <div class="metric-val" id="mfp-Z">—</div>
+            <div class="metric-unit">collisions/s</div>
+          </div>
+          <div class="metric">
+            <div class="metric-lbl">Knudsen number Kn</div>
+            <div class="metric-val" id="mfp-Kn">—</div>
+            <div class="metric-unit">λ / L</div>
+          </div>
+          <div class="metric">
+            <div class="metric-lbl">Flow regime</div>
+            <div class="metric-val" style="font-size:1rem" id="mfp-regime">—</div>
+            <div class="metric-unit" id="mfp-regime-u">—</div>
+          </div>
+        </div>
+
+        <!-- Regime explanation -->
+        <div id="mfp-regime-note" style="font-size:.82rem;color:var(--ink3);background:var(--surface);border:1px solid var(--rule2);border-radius:3px;padding:.7rem .9rem;line-height:1.65;margin-top:.75rem"></div>
+
+        <!-- Pressure table -->
+        <div style="margin-top:1.5rem">
+          <div class="vf-section-lbl">Mean free path vs. pressure — <span id="mfp-tbl-gas">Air</span> at <span id="mfp-tbl-T">293</span> K</div>
+          <div style="overflow-x:auto;border:1px solid var(--rule);border-radius:4px">
+            <table style="width:100%;border-collapse:collapse;font-size:.82rem">
+              <thead>
+                <tr style="background:var(--surface)">
+                  <th style="font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);padding:.5rem .8rem;border-bottom:1px solid var(--rule);text-align:left">Pressure (Torr)</th>
+                  <th style="font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);padding:.5rem .8rem;border-bottom:1px solid var(--rule);text-align:left">Pressure (Pa)</th>
+                  <th style="font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);padding:.5rem .8rem;border-bottom:1px solid var(--rule);text-align:left">Mean free path</th>
+                  <th style="font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);padding:.5rem .8rem;border-bottom:1px solid var(--rule);text-align:left">Regime (L=10 mm)</th>
+                </tr>
+              </thead>
+              <tbody id="mfp-tbl-body">
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ════════════════════════════════════════════════════════ -->
     <div id="useful-links" style="margin-bottom:3rem;scroll-margin-top:120px">
       <div class="lbl" style="margin-top:1rem">Reference Resources</div>
       <h2 style="font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:600;color:var(--ink);margin-bottom:.5rem">Useful Links &amp; <em style="color:var(--red);font-style:italic;font-weight:300">Resources</em></h2>
@@ -1677,42 +2007,279 @@ function drawSweep(){
   ctx.fillText('DC U',lx+144,ly);
 }
 
-/* Main calc ------------------------------------------------------------ */
-function calc(){
-  const r0=parseFloat(document.getElementById('r0').value)*1e-3;
-  const freq=parseFloat(document.getElementById('freq').value);
-  const mz=parseFloat(document.getElementById('mz').value);
-  const aqR=parseFloat(document.getElementById('resmode').value);
-  const omega=2*Math.PI*freq,mass=mz*AMU,qOp=0.706;
-  const V0=(qOp*mass*omega*omega*r0*r0)/(4*CHARGE);
-  const aOp=aqR*qOp;
-  const U=(aOp*mass*omega*omega*r0*r0)/(8*CHARGE);
-
-  document.getElementById('orf').textContent=V0.toFixed(1);
-  document.getElementById('odc').textContent=U.toFixed(1);
-  document.getElementById('opp').textContent=(2*V0).toFixed(1);
-  document.getElementById('oq').textContent=qOp.toFixed(4);
-  document.getElementById('oa').textContent=aOp.toFixed(4);
-  document.getElementById('oaq').textContent=aqR.toFixed(3);
-
-  lastA=aOp; lastQ=qOp; lastAQ=aqR;
-  const stable=checkStability(lastA,lastQ)&&checkStability(-lastA,lastQ);
-  const badge=document.getElementById('badge');
-  badge.textContent=''; /* clear */
-  const dot=document.createElement('span');dot.className='status-dot';badge.appendChild(dot);
-  badge.appendChild(document.createTextNode(' Operating point: '+(stable?'stable':'unstable')));
-  badge.className='status-badge '+(stable?'status-ok':'status-bad');
-
-  overlayStab(); drawSweep();
+function findPassband(aqR){
+  if(aqR<=0) return null;
+  const N=4000;
+  let qLow=null, qHigh=null;
+  let inBand=false;
+  for(let i=0;i<=N;i++){
+    const q=i/N;
+    const a=aqR*q;
+    if(q<0.02||a<0.005){ continue; }
+    if(a>0.30) break;
+    const stab=checkStability(a,q)&&checkStability(-a,q);
+    if(stab && !inBand){
+      qLow=q;
+      inBand=true;
+    }
+    if(!stab && inBand){
+      qHigh=q;
+      inBand=false;
+      break;
+    }
+  }
+  if(inBand && qHigh===null) qHigh=0.30/aqR;
+  if(qLow===null||qHigh===null) return null;
+  const dq=qHigh-qLow;
+  return {qLow, qHigh, dq};
 }
 
-['r0','freq','mz','resmode','sw0','sw1'].forEach(id=>{
-  document.getElementById(id).addEventListener('input',calc);
+/* ── Lookup table: precomputed aqR→dq map (built once after stability map) ── */
+let AQ_LUT = [];   // [{aqR, dq}] sorted ascending aqR, descending dq
+
+function buildAQLookup(){
+  AQ_LUT = [];
+  const N=600;
+  for(let i=0;i<=N;i++){
+    const aqR=0.02+i*(0.3354-0.02)/N;
+    const pb=findPassband(aqR);
+    if(pb && pb.dq>0) AQ_LUT.push({aqR, dq:pb.dq});
+  }
+  // Sort ascending aqR (dq will be descending — wider at low aqR)
+  AQ_LUT.sort((a,b)=>a.aqR-b.aqR);
+}
+
+/* Fast interpolation: find aqR for a given dqTarget using the LUT ------- */
+function findAQfromDM(dM, mz){
+  const qOp=0.706;
+  const dqTarget=qOp*dM/mz;
+
+  if(!AQ_LUT.length) return {aqR:0.168, clamped:null}; // fallback before LUT ready
+
+  const maxDq=AQ_LUT[0].dq;          // widest passband (lowest aqR)
+  const minDq=AQ_LUT[AQ_LUT.length-1].dq; // narrowest (highest aqR)
+
+  if(dqTarget >= maxDq) return {aqR:AQ_LUT[0].aqR, clamped:'wide'};
+  if(dqTarget <= minDq) return {aqR:AQ_LUT[AQ_LUT.length-1].aqR, clamped:'narrow'};
+
+  // Binary search in LUT for the two entries bracketing dqTarget
+  // LUT dq is descending, so we find where dq crosses dqTarget
+  let lo=0, hi=AQ_LUT.length-1;
+  while(hi-lo>1){
+    const mid=(lo+hi)>>1;
+    if(AQ_LUT[mid].dq > dqTarget) lo=mid;
+    else hi=mid;
+  }
+  // Interpolate between lo and hi
+  const a=AQ_LUT[lo], b=AQ_LUT[hi];
+  const t=(dqTarget-a.dq)/(b.dq-a.dq);   // note: both differences negative
+  const aqR=a.aqR+t*(b.aqR-a.aqR);
+  return {aqR, clamped:null};
+}
+
+/* Resolution sweep chart (fast — uses LUT interpolation) --------------- */
+function drawResolutionSweep(){
+  const canvas=document.getElementById('resSweepC');
+  if(!canvas||!AQ_LUT.length) return;
+  canvas.width=canvas.offsetWidth||720; canvas.height=220;
+  const W=canvas.width, H=canvas.height;
+  const pad={l:66,r:72,t:24,b:44};
+  const pW=W-pad.l-pad.r, pH=H-pad.t-pad.b;
+  const ctx=canvas.getContext('2d');
+  const textC='#4A4A52';
+
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#F7F7FA'; ctx.fillRect(pad.l,pad.t,pW,pH);
+
+  const sw0=parseFloat(document.getElementById('sw0').value)||50;
+  const sw1=parseFloat(document.getElementById('sw1').value)||1000;
+  const dmIn=parseFloat(document.getElementById('dm-input').value)||1.0;
+  const rfOnly=document.getElementById('rfonly-chk').checked;
+  const r0=parseFloat(document.getElementById('r0').value)*1e-3;
+  const freq=parseFloat(document.getElementById('freq').value);
+  const omega=2*Math.PI*freq;
+  const qOp=0.706;
+  const NPTS=200;
+
+  if(rfOnly||isNaN(dmIn)||dmIn<=0){
+    ctx.fillStyle=textC; ctx.font='500 12px "DM Sans",sans-serif';
+    ctx.textAlign='center';
+    ctx.fillText('RF only mode — no a/q to plot',pad.l+pW/2,pad.t+pH/2+6);
+    return;
+  }
+
+  // Build data
+  const mzArr=[], aqArr=[], dcArr=[];
+  for(let i=0;i<=NPTS;i++){
+    const mz=sw0+(sw1-sw0)*(i/NPTS);
+    const res=findAQfromDM(dmIn,mz);
+    const aqR=res.aqR;
+    const aOp=aqR*qOp;
+    const U=(aOp*mz*AMU*omega*omega*r0*r0)/(8*CHARGE);
+    mzArr.push(mz); aqArr.push(aqR); dcArr.push(U);
+  }
+
+  const aqMax=Math.max(...aqArr)*1.12;
+  const aqMin=Math.max(0,Math.min(...aqArr)*0.88);
+  const dcMax=Math.max(...dcArr)*1.08;
+  const dcMin=0;
+
+  // Grid lines
+  ctx.strokeStyle='rgba(0,0,0,0.05)'; ctx.lineWidth=0.5;
+  for(let i=0;i<=8;i++){const x=pad.l+i*pW/8;ctx.beginPath();ctx.moveTo(x,pad.t);ctx.lineTo(x,pad.t+pH);ctx.stroke();}
+  for(let i=0;i<=4;i++){const y=pad.t+i*pH/4;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+pW,y);ctx.stroke();}
+  ctx.strokeStyle='rgba(0,0,0,0.2)'; ctx.lineWidth=1;
+  ctx.strokeRect(pad.l,pad.t,pW,pH);
+
+  const toX  =mz=>pad.l+(mz-sw0)/(sw1-sw0)*pW;
+  const toYaq=aq=>pad.t+(1-(aq-aqMin)/(aqMax-aqMin))*pH;
+  const toYdc=dc=>pad.t+(1-(dc-dcMin)/(dcMax-dcMin))*pH;
+
+  // Left axis — a/q
+  ctx.fillStyle='#CC1F1F'; ctx.font='500 11px "DM Sans",sans-serif'; ctx.textAlign='right';
+  for(let i=0;i<=4;i++){
+    const v=aqMin+i*(aqMax-aqMin)/4;
+    ctx.fillText(v.toFixed(3),pad.l-5,toYaq(v)+4);
+  }
+  ctx.save(); ctx.translate(13,pad.t+pH/2); ctx.rotate(-Math.PI/2);
+  ctx.textAlign='center'; ctx.fillText('a/q (scan line slope)',0,0); ctx.restore();
+
+  // Right axis — DC voltage
+  ctx.fillStyle='#1A1A1C'; ctx.textAlign='left';
+  for(let i=0;i<=4;i++){
+    const v=dcMin+i*(dcMax-dcMin)/4;
+    ctx.fillText(v>=1000?(v/1000).toFixed(1)+'k':Math.round(v),pad.l+pW+5,toYdc(v)+4);
+  }
+  ctx.save(); ctx.translate(W-10,pad.t+pH/2); ctx.rotate(Math.PI/2);
+  ctx.fillStyle='#1A1A1C'; ctx.textAlign='center'; ctx.fillText('DC voltage U (V)',0,0); ctx.restore();
+
+  // Bottom axis
+  ctx.fillStyle=textC; ctx.font='500 11px "DM Sans",sans-serif'; ctx.textAlign='center';
+  for(let i=0;i<=8;i++){ctx.fillText(Math.round(sw0+i*(sw1-sw0)/8),toX(sw0+i*(sw1-sw0)/8),pad.t+pH+16);}
+  ctx.fillText('m/z  (Da)',pad.l+pW/2,H-4);
+
+  // DC curve (black dashed)
+  ctx.strokeStyle='#1A1A1C'; ctx.lineWidth=1.5; ctx.setLineDash([6,4]);
+  ctx.beginPath();
+  dcArr.forEach((v,i)=>i===0?ctx.moveTo(toX(mzArr[i]),toYdc(v)):ctx.lineTo(toX(mzArr[i]),toYdc(v)));
+  ctx.stroke(); ctx.setLineDash([]);
+
+  // a/q curve (red solid)
+  ctx.strokeStyle='#CC1F1F'; ctx.lineWidth=2;
+  ctx.beginPath();
+  aqArr.forEach((v,i)=>i===0?ctx.moveTo(toX(mzArr[i]),toYaq(v)):ctx.lineTo(toX(mzArr[i]),toYaq(v)));
+  ctx.stroke();
+
+  // Current m/z marker
+  const curMz=parseFloat(document.getElementById('mz').value);
+  if(curMz>=sw0&&curMz<=sw1){
+    const cx=toX(curMz);
+    ctx.strokeStyle='rgba(26,26,28,0.25)'; ctx.lineWidth=1; ctx.setLineDash([3,3]);
+    ctx.beginPath(); ctx.moveTo(cx,pad.t); ctx.lineTo(cx,pad.t+pH); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle=textC; ctx.font='500 10px "DM Sans",sans-serif'; ctx.textAlign='center';
+    ctx.fillText('m/z '+Math.round(curMz),cx,pad.t+11);
+  }
+
+  // Legend
+  const lx=pad.l+10, ly=pad.t+pH-8;
+  ctx.strokeStyle='#CC1F1F'; ctx.lineWidth=2; ctx.setLineDash([]);
+  ctx.beginPath(); ctx.moveTo(lx,ly); ctx.lineTo(lx+18,ly); ctx.stroke();
+  ctx.fillStyle=textC; ctx.font='11px "DM Sans",sans-serif'; ctx.textAlign='left';
+  ctx.fillText('Required a/q (left)',lx+22,ly+4);
+  ctx.strokeStyle='#1A1A1C'; ctx.lineWidth=1.5; ctx.setLineDash([6,4]);
+  ctx.beginPath(); ctx.moveTo(lx+150,ly); ctx.lineTo(lx+168,ly); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillText('DC voltage U (right)',lx+172,ly+4);
+}
+
+/* Main calc ------------------------------------------------------------ */
+function calc(){
+  const r0   = parseFloat(document.getElementById('r0').value)*1e-3;
+  const freq = parseFloat(document.getElementById('freq').value);
+  const mz   = parseFloat(document.getElementById('mz').value);
+  const rfOnly = document.getElementById('rfonly-chk').checked;
+  const dmIn = parseFloat(document.getElementById('dm-input').value);
+  const qOp  = 0.706;
+  const omega = 2*Math.PI*freq, mass = mz*AMU;
+
+  const V0 = (qOp*mass*omega*omega*r0*r0)/(4*CHARGE);
+
+  let aqR=0, aOp=0, U=0, clamped=null;
+
+  if(rfOnly || isNaN(dmIn) || dmIn<=0){
+    aqR=0; aOp=0; U=0;
+  } else {
+    const result = findAQfromDM(dmIn, mz);
+    aqR    = result.aqR;
+    clamped= result.clamped;
+    aOp    = aqR * qOp;
+    U      = (aOp*mass*omega*omega*r0*r0)/(8*CHARGE);
+  }
+
+  document.getElementById('orf').textContent = V0.toFixed(1);
+  document.getElementById('odc').textContent = U.toFixed(1);
+  document.getElementById('opp').textContent = (2*V0).toFixed(1);
+  document.getElementById('oq').textContent  = qOp.toFixed(4);
+  document.getElementById('oa').textContent  = aOp.toFixed(4);
+  document.getElementById('oaq').textContent = aqR.toFixed(4);
+
+  /* Passband note */
+  const pbEl   = document.getElementById('o-passband');
+  const resEl  = document.getElementById('o-resolution');
+  const pbNote = document.getElementById('passband-note');
+
+  if(rfOnly || aqR===0){
+    if(pbEl)  pbEl.textContent  = 'RF only';
+    if(resEl) resEl.textContent = '—';
+    if(pbNote) pbNote.innerHTML =
+      'No DC voltage applied — quadrupole passes all m/z above the low-mass cutoff (ion guide mode). No mass selection.';
+  } else {
+    const pb = findPassband(aqR);
+    if(pb && pb.dq>0){
+      const dM    = mz * pb.dq / qOp;
+      const R     = mz / dM;
+      const mLow  = mz*(qOp/pb.qHigh);
+      const mHigh = mz*(qOp/pb.qLow);
+      if(pbEl)  pbEl.textContent  = dM.toFixed(2);
+      if(resEl) resEl.textContent = R.toFixed(1);
+      let clampNote = '';
+      if(clamped==='narrow') clampNote = ' <strong>Requested ΔM is smaller than the theoretical minimum near the apex — clamped to maximum achievable resolution.</strong>';
+      if(clamped==='wide')   clampNote = ' <strong>Requested ΔM exceeds the full stability passband — clamped to widest setting.</strong>';
+      if(pbNote) pbNote.innerHTML =
+        'a/q = '+aqR.toFixed(4)+
+        ' → scan line intercepts stability boundary at '+
+        'qₐ = '+pb.qLow.toFixed(4)+
+        ' and qₕ = '+pb.qHigh.toFixed(4)+
+        ', passing m/z '+mLow.toFixed(2)+
+        '–'+mHigh.toFixed(2)+
+        ' (ΔM = '+dM.toFixed(2)+' Da, R = '+R.toFixed(1)+').'+
+        clampNote+
+        ' <em>Theoretical Mathieu passband — actual peak width also depends on quad length, ion energy, and fringing fields.</em>';
+    }
+  }
+
+  lastA=aOp; lastQ=qOp; lastAQ=aqR;
+  const stable = rfOnly ? true : (checkStability(lastA,lastQ)&&checkStability(-lastA,lastQ));
+  const badge=document.getElementById('badge');
+  badge.textContent='';
+  const dot=document.createElement('span'); dot.className='status-dot'; badge.appendChild(dot);
+  badge.appendChild(document.createTextNode(rfOnly ? ' RF only — ion guide mode' : ' Operating point: '+(stable?'stable':'unstable')));
+  badge.className='status-badge '+(stable?'status-ok':'status-bad');
+
+  overlayStab(); drawSweep(); drawResolutionSweep();
+}
+
+['r0','freq','mz','dm-input','sw0','sw1'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el) el.addEventListener('input',calc);
 });
-window.addEventListener('resize',()=>{ overlayStab(); drawSweep(); });
+document.getElementById('rfonly-chk').addEventListener('change',function(){
+  document.getElementById('dm-input').disabled=this.checked;
+  calc();
+});
+window.addEventListener('resize',()=>{ overlayStab(); drawSweep(); drawResolutionSweep(); });
 
 /* Boot: compute map once, then run calc */
-setTimeout(()=>{ computeStabilityMap(()=>{ calc(); }); }, 100);
+setTimeout(()=>{ computeStabilityMap(()=>{ buildAQLookup(); calc(); drawResolutionSweep(); }); }, 100);
 </script>
 
 <!-- ══════════════════════════════════════════════════════════════
@@ -2246,9 +2813,253 @@ function setJumpActive(id) {
     if (b.getAttribute('href') === '#' + id) b.classList.add('active');
   });
 }
+/* ══════════════════════════════════════════════════════════════
+   VACUUM PRESSURE CONVERTER
+══════════════════════════════════════════════════════════════ */
+// [key, label, factor_to_Pa, unit_display]
+var PC_UNITS = [
+  ['pa',   'Pascal (Pa)',         1,           'Pa'  ],
+  ['hpa',  'Hectopascal (hPa)',   1e2,         'hPa' ],
+  ['kpa',  'Kilopascal (kPa)',    1e3,         'kPa' ],
+  ['mpa',  'Megapascal (MPa)',    1e6,         'MPa' ],
+  ['mbar', 'Millibar (mbar)',     100,         'mbar'],
+  ['bar',  'Bar (bar)',           1e5,         'bar' ],
+  ['torr', 'Torr (Torr)',         133.322,     'Torr'],
+  ['mtorr','Millitorr (mTorr)',   0.133322,    'mTorr'],
+  ['utorr','Microtorr (μTorr)',   1.33322e-4,  'μTorr'],
+  ['atm',  'Atmosphere (atm)',    101325,      'atm' ],
+  ['psi',  'PSI (psi)',           6894.76,     'psi' ],
+  ['ubar', 'Microbar (μbar)',     0.1,         'μbar'],
+  ['mmhg', 'mmHg (mmHg)',        133.322,     'mmHg'],
+];
+
+function pcConvert(srcKey) {
+  var srcUnit = PC_UNITS.filter(function(u){ return u[0]===srcKey; })[0];
+  if (!srcUnit) return;
+  var val = parseFloat(document.getElementById('pc-' + srcKey).value);
+  if (isNaN(val)) {
+    PC_UNITS.forEach(function(u){ if(u[0]!==srcKey) document.getElementById('pc-'+u[0]).value=''; });
+    return;
+  }
+  var pa = val * srcUnit[2];
+  PC_UNITS.forEach(function(u){
+    if (u[0] === srcKey) return;
+    var out = pa / u[2];
+    var el  = document.getElementById('pc-' + u[0]);
+    if (!el) return;
+    if (out === 0) { el.value = '0'; return; }
+    var abs = Math.abs(out);
+    el.value = (abs < 0.001 || abs >= 1e6) ? out.toExponential(4) : parseFloat(out.toPrecision(6));
+  });
+}
+
+(function(){
+  var container = document.getElementById('pc-fields');
+  if (!container) return;
+  PC_UNITS.forEach(function(u){
+    var div = document.createElement('div');
+    div.className = 'pc-field';
+    div.innerHTML = '<label>' + u[1] + '</label>' +
+      '<input type="number" id="pc-' + u[0] + '" step="any" placeholder="' + u[3] + '">' +
+      '<span class="pc-unit">' + u[3] + '</span>';
+    container.appendChild(div);
+  });
+  // Attach listeners after all fields exist
+  PC_UNITS.forEach(function(u){
+    document.getElementById('pc-' + u[0]).addEventListener('input', function(){ pcConvert(u[0]); });
+  });
+  // Set default: 1e-4 Torr
+  document.getElementById('pc-torr').value = '1e-4';
+  pcConvert('torr');
+})();
+
+
+/* ══════════════════════════════════════════════════════════════
+   ORIFICE FLOW CALCULATOR
+══════════════════════════════════════════════════════════════ */
+function vfFmt(v){
+  if(v===0) return '0';
+  var a=Math.abs(v);
+  if(a<0.001||a>=1e6) return v.toExponential(3);
+  return parseFloat(v.toPrecision(4)).toString();
+}
+
+function vfCalc(){
+  var d_mm  = parseFloat(document.getElementById('vf-d').value);
+  var p1    = parseFloat(document.getElementById('vf-p1').value);
+  var p2    = parseFloat(document.getElementById('vf-p2').value);
+  var T     = parseFloat(document.getElementById('vf-T').value);
+  var gasEl = document.getElementById('vf-gas');
+  var M     = parseFloat(gasEl.value); // g/mol
+
+  var badge = document.getElementById('vf-regime-badge');
+
+  function setOut(id,v){ var el=document.getElementById(id); if(el) el.textContent=isNaN(v)?'—':vfFmt(v); }
+
+  if(isNaN(d_mm)||isNaN(p1)||isNaN(p2)||isNaN(T)||d_mm<=0||T<=0||p1<=0||p2<0){
+    ['vf-area','vf-C','vf-dp','vf-Q','vf-S','vf-mfp'].forEach(function(id){setOut(id,NaN);});
+    return;
+  }
+
+  var r_m  = (d_mm*1e-3)/2;
+  var A_m2 = Math.PI*r_m*r_m;
+  var A_mm2= Math.PI*(d_mm/2)*(d_mm/2);
+
+  // Molecular-flow conductance: C = 3.638 * A[cm²] * sqrt(T/M)  L/s
+  var A_cm2 = A_m2 * 1e4;
+  var C     = 3.638 * A_cm2 * Math.sqrt(T / M);  // L/s
+
+  // Pressures in Torr·L/s units: 1 Torr = 133.322 Pa
+  var dP    = Math.max(0, p1 - p2);
+  var Q     = C * dP;          // Torr·L/s  (throughput)
+  var S     = p2 > 0 ? Q / p2 : Infinity;  // L/s required pump speed
+
+  // Mean free path at P1 (air-like using kinetic diameter 3.66 Å)
+  var kB   = 1.380649e-23;
+  var d_gas= 3.66e-10; // default air; approximate for label
+  var P1_Pa= p1 * 133.322;
+  var lam_m= kB*T / (Math.sqrt(2)*Math.PI*d_gas*d_gas*P1_Pa);
+  var lam_mm= lam_m*1e3;
+
+  // Knudsen number
+  var Kn = lam_mm / d_mm;
+  var regime, regClass;
+  if(Kn > 10)       { regime='Molecular flow (Kn > 10)';    regClass='status-ok'; }
+  else if(Kn > 0.1) { regime='Transitional flow (0.1 < Kn < 10)'; regClass='status-bad'; }
+  else               { regime='Viscous flow (Kn < 0.1)';    regClass='status-bad'; }
+
+  badge.className='status-badge '+regClass;
+  badge.innerHTML='<span class="status-dot"></span> Flow regime: '+regime+' (Kn = '+vfFmt(Kn)+')';
+
+  var note=document.getElementById('vf-kn-note');
+  if(note){
+    if(Kn>10){
+      note.style.background='#EAF3DE'; note.style.borderColor='#97C459'; note.style.color='#27500A';
+      note.innerHTML='<strong>Molecular flow confirmed.</strong> Mean free path ≫ orifice diameter — conductance formula is valid. Each molecule travels independently with negligible intermolecular collisions.';
+    } else if(Kn>0.1){
+      note.style.background=''; note.style.borderColor='rgba(204,31,31,.15)'; note.style.color='var(--ink3)';
+      note.innerHTML='<strong>Transitional flow regime.</strong> Kn between 0.1 and 10 — the simple molecular-flow conductance formula is approximate. Consider using the Knudsen correction or a full DSMC simulation for accurate results.';
+    } else {
+      note.style.background=''; note.style.borderColor='rgba(204,31,31,.15)'; note.style.color='var(--ink3)';
+      note.innerHTML='<strong>Viscous (continuum) flow.</strong> Mean free path ≪ orifice diameter — use the viscous-flow Poiseuille formula instead of the molecular-flow conductance equation. Differential pumping is likely not yet effective at this pressure.';
+    }
+  }
+
+  setOut('vf-area', A_mm2);
+  setOut('vf-C',    C);
+  setOut('vf-dp',   dP);
+  setOut('vf-Q',    Q);
+  setOut('vf-S',    isFinite(S)?S:NaN);
+  setOut('vf-mfp',  lam_mm);
+}
+
+['vf-d','vf-p1','vf-p2','vf-T'].forEach(function(id){
+  var el=document.getElementById(id);
+  if(el) el.addEventListener('input',vfCalc);
+});
+vfCalc();
+
+
+/* ══════════════════════════════════════════════════════════════
+   MEAN FREE PATH CALCULATOR
+══════════════════════════════════════════════════════════════ */
+var MFP_PRESSURES = [760, 100, 10, 1, 0.1, 1e-2, 1e-3, 1e-4, 1e-5, 1e-6, 1e-7, 1e-8, 1e-9];
+
+function mfpFmt(v,unit){
+  if(v===0||isNaN(v)) return '—';
+  var a=Math.abs(v);
+  if(a<0.001||a>=1e5) return v.toExponential(3)+' '+unit;
+  return parseFloat(v.toPrecision(4))+' '+unit;
+}
+
+function mfpFormatLam(m){
+  // return [value_string, unit]
+  if(m>=1)       return [parseFloat(m.toPrecision(4)).toString(), 'm'];
+  if(m>=1e-2)    return [parseFloat((m*100).toPrecision(4)).toString(), 'cm'];
+  if(m>=1e-3)    return [parseFloat((m*1000).toPrecision(4)).toString(), 'mm'];
+  if(m>=1e-6)    return [parseFloat((m*1e6).toPrecision(4)).toString(), 'μm'];
+  return              [m.toExponential(3), 'm'];
+}
+
+function mfpRegime(Kn){
+  if(Kn>10)       return ['Molecular','Kn > 10: mean free path ≫ L. Molecules travel without mutual collisions. Ion optics and vacuum gauges operate in this regime.'];
+  if(Kn>0.1)      return ['Transitional','0.1 < Kn < 10: intermediate regime. Gas cannot be treated as a continuum or as fully molecular. Relevant in foreline tubing and intermediate pumping stages.'];
+  return               ['Viscous','Kn < 0.1: continuum flow. Standard fluid dynamics applies. Vacuum seals and rough-pump connections operate here.'];
+}
+
+function mfpCalc(){
+  var P_torr = parseFloat(document.getElementById('mfp-P').value);
+  var T      = parseFloat(document.getElementById('mfp-T').value);
+  var L_mm   = parseFloat(document.getElementById('mfp-L').value);
+  var gasVal = document.getElementById('mfp-gas').value.split(',');
+  var M      = parseFloat(gasVal[0]);   // g/mol
+  var d_ang  = parseFloat(gasVal[1]);   // Angstrom
+
+  var kB = 1.380649e-23, NA = 6.02214076e23, R = 8.314;
+  var d_m  = d_ang * 1e-10;
+  var P_Pa = P_torr * 133.322;
+  var L_m  = L_mm * 1e-3;
+
+  var n    = P_Pa / (kB * T);             // molecules/m³
+  var lam  = kB*T / (Math.sqrt(2)*Math.PI*d_m*d_m*P_Pa);  // m
+  var vbar = Math.sqrt(8*R*T/(Math.PI*(M*1e-3)));           // m/s
+  var Z    = Math.sqrt(2)*Math.PI*d_m*d_m*n*vbar;           // collisions/s per molecule
+  var Kn   = lam / L_m;
+  var reg  = mfpRegime(Kn);
+
+  // Display
+  var lamFmt = mfpFormatLam(lam);
+  document.getElementById('mfp-lam').textContent   = lamFmt[0];
+  document.getElementById('mfp-lam-u').textContent = lamFmt[1];
+
+  var n_cm3 = n*1e-6;
+  document.getElementById('mfp-n').textContent = n_cm3<1e-3 ? n_cm3.toExponential(3) : parseFloat(n_cm3.toPrecision(4)).toString();
+  document.getElementById('mfp-v').textContent = Math.round(vbar);
+
+  document.getElementById('mfp-Z').textContent = Z>1e4 ? Z.toExponential(3) : parseFloat(Z.toPrecision(4)).toString();
+  document.getElementById('mfp-Kn').textContent = Kn<0.001||Kn>9999 ? Kn.toExponential(3) : parseFloat(Kn.toPrecision(4)).toString();
+  document.getElementById('mfp-regime').textContent = reg[0];
+  document.getElementById('mfp-regime-u').textContent = Kn>10?'✓ Molecular':Kn>0.1?'⚠ Transitional':'⚠ Viscous';
+  document.getElementById('mfp-regime-note').textContent = reg[1];
+
+  // Update table labels
+  var gasText = document.getElementById('mfp-gas').options[document.getElementById('mfp-gas').selectedIndex].text.split('—')[0].trim();
+  var tblGasEl = document.getElementById('mfp-tbl-gas'); if(tblGasEl) tblGasEl.textContent = gasText;
+  var tblTEl   = document.getElementById('mfp-tbl-T');   if(tblTEl)   tblTEl.textContent   = T + ' K';
+
+  // Rebuild table
+  var tbody = document.getElementById('mfp-tbl-body');
+  if(!tbody) return;
+  tbody.innerHTML = '';
+  MFP_PRESSURES.forEach(function(p_t){
+    var p_pa = p_t * 133.322;
+    var lam_r = kB*T / (Math.sqrt(2)*Math.PI*d_m*d_m*p_pa);
+    var Kn_r  = lam_r / 0.01; // L=10 mm
+    var reg_r = mfpRegime(Kn_r)[0];
+    var lf    = mfpFormatLam(lam_r);
+    var tr    = document.createElement('tr');
+    var isActive = Math.abs(Math.log10(p_t)-Math.log10(P_torr))<0.51;
+    if(isActive) tr.style.background='var(--red-pale)';
+    tr.innerHTML =
+      '<td style="padding:.4rem .8rem;border-bottom:.5px solid var(--rule2);color:var(--ink3)">' + p_t.toExponential(0) + '</td>'+
+      '<td style="padding:.4rem .8rem;border-bottom:.5px solid var(--rule2);color:var(--ink3)">' + p_pa.toExponential(2) + '</td>'+
+      '<td style="padding:.4rem .8rem;border-bottom:.5px solid var(--rule2);color:var(--ink3)">' + lf[0]+' '+lf[1] + '</td>'+
+      '<td style="padding:.4rem .8rem;border-bottom:.5px solid var(--rule2);color:var(--ink3)">' + reg_r + '</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+['mfp-P','mfp-T','mfp-L'].forEach(function(id){
+  var el=document.getElementById(id);
+  if(el) el.addEventListener('input',mfpCalc);
+});
+document.getElementById('mfp-gas').addEventListener('change',mfpCalc);
+mfpCalc();
+
+
 // Highlight jump nav based on scroll position
 (function() {
-  var sections = ['quad-calc','rf-circuit','ion-ke','cap-power','useful-links','coming-soon'];
+  var sections = ['quad-calc','rf-circuit','ion-ke','cap-power','vac-pressure','vac-flow','mfp-calc','useful-links','coming-soon'];
   var ticking = false;
   window.addEventListener('scroll', function() {
     if (!ticking) {

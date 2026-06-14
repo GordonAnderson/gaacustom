@@ -38,6 +38,7 @@
   "heater": "$795",
   "consulting_rate": "$140",
   "consulting_sub": "per hour",
+  "dms_module": "$1,195",
   "astraea": "$1,995",
   "astraea_100v": "$1,999",
   "quad_driver_250v": "$2,995"

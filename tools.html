@@ -359,14 +359,17 @@
 <!-- ── MARQUEE ── -->
 <div class="marquee">
   <div class="marquee-inner">
+    <span class="mq-item">Resolving Power <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Coax Cable Reference <span class="mq-sep">&middot;</span></span>
     <span class="mq-item">Quadrupole Calculator <span class="mq-sep">&middot;</span></span>
     <span class="mq-item">Mathieu Stability Diagram <span class="mq-sep">&middot;</span></span>
     <span class="mq-item">RF Resonant Circuit <span class="mq-sep">&middot;</span></span>
     <span class="mq-item">Ion Kinetic Energy <span class="mq-sep">&middot;</span></span>
     <span class="mq-item">K₀ / CCS Converter <span class="mq-sep">&middot;</span></span>
     <span class="mq-item">Ion Funnel Calculator <span class="mq-sep">&middot;</span></span>
-    <span class="mq-item">Resolving Power <span class="mq-sep">&middot;</span></span>
     <span class="mq-item">FET Rise Time <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Resolving Power <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Coax Cable Reference <span class="mq-sep">&middot;</span></span>
     <span class="mq-item">Quadrupole Calculator <span class="mq-sep">&middot;</span></span>
     <span class="mq-item">Mathieu Stability Diagram <span class="mq-sep">&middot;</span></span>
     <span class="mq-item">RF Resonant Circuit <span class="mq-sep">&middot;</span></span>
@@ -396,6 +399,8 @@
     <span class="jump-sep">&rsaquo;</span>
     <a class="jump-btn" href="#ion-mobility" onclick="jumpTo('ion-mobility')">&#x2467; K&#x2080; / CCS Converter</a>
     <span class="jump-sep">&rsaquo;</span>
+    <a class="jump-btn" href="#resolving-power" onclick="jumpTo('resolving-power')">&#x2468; Resolving Power</a>
+    <a class="jump-btn" href="#coax-ref" onclick="jumpTo('coax-ref')">&#x2469; Coax Reference</a>
     <a class="jump-btn" href="#useful-links" onclick="jumpTo('useful-links')">&#x1F517; Useful Links</a>
     <span class="jump-sep">&rsaquo;</span>
     <a class="jump-btn" href="#coming-soon" onclick="jumpTo('coming-soon')">&#x1F6A7; Coming Soon</a>
@@ -1618,6 +1623,563 @@
     </div><!-- /tool-card #ion-mobility -->
 
     <!-- ════════════════════════════════════════════════════════ -->
+    <!-- TOOL: RESOLVING POWER CALCULATOR                        -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="tool-card" id="resolving-power" style="scroll-margin-top:120px">
+      <div class="tool-card-header">
+        <div class="tool-card-meta">
+          <div class="tool-tag">Mass Analysis</div>
+          <div class="tool-title">Resolving Power Calculator — Quadrupole &amp; TOF</div>
+          <div class="tool-desc">Calculate mass resolving power R&nbsp;=&nbsp;m/Δm for quadrupole mass filters and time-of-flight analyzers. The quadrupole mode derives RF cycle count from rod geometry, frequency, and ion kinetic energy, then compares measured R against both a practical empirical benchmark and the Dawson theoretical limit. The TOF mode builds a full time-domain noise budget — detector bandwidth, timing jitter, ion energy spread, extraction pulse width, and collision broadening from residual gas — added in quadrature to give achievable R. Includes reflectron mode, optimum accelerating voltage finder, and bottleneck identification.</div>
+        </div>
+        <div class="tool-badge-row" style="align-self:flex-start;margin-top:.5rem">
+          <span class="tool-badge">Quadrupole</span>
+          <span class="tool-badge">Time-of-Flight</span>
+          <span class="tool-badge">Dawson Limit</span>
+          <span class="tool-badge">Noise Budget</span>
+          <span class="tool-badge">Reflectron</span>
+        </div>
+      </div>
+      <div class="tool-body">
+
+        <style>
+          .rp-tabs-t{display:flex;border-bottom:1px solid var(--rule);margin-bottom:2rem}
+          .rp-tab-t{font-family:var(--mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1.25rem;cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;color:var(--mid);transition:color .15s,border-color .15s}
+          .rp-tab-t.on{color:var(--red);border-bottom-color:var(--red)}
+          .rp-tab-t:hover:not(.on){color:var(--ink)}
+          .rp-panel-t{display:none}.rp-panel-t.on{display:block}
+          .rp-grid-t{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+          .rp-card-t{background:var(--white);border:1px solid var(--rule);border-radius:6px;padding:1.25rem}
+          .rp-ct{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);margin-bottom:.85rem;padding-bottom:.5rem;border-bottom:1px solid var(--rule2)}
+          .rp-f{margin-bottom:.8rem}
+          .rp-lbl{font-size:13px;color:var(--mid);display:block;margin-bottom:.3rem}
+          .rp-ir{display:flex;align-items:center;gap:.5rem}
+          .rp-ir input,.rp-ir select{flex:1;min-width:0;font-family:var(--sans);font-size:.88rem;background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:.45rem .65rem;color:var(--ink);transition:border-color .2s}
+          .rp-ir input:focus,.rp-ir select:focus{outline:none;border-color:rgba(204,31,31,.4)}
+          .rp-un{font-family:var(--mono);font-size:.62rem;color:var(--mid);background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:.32rem .5rem;white-space:nowrap;flex-shrink:0}
+          .rp-dv{font-family:var(--mono);font-size:.62rem;color:var(--red);background:var(--red-pale);border:1px solid rgba(204,31,31,.2);border-radius:3px;padding:.32rem .6rem;white-space:nowrap;flex-shrink:0}
+          .rp-res{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;margin-bottom:1.25rem}
+          .rp-m{background:var(--surface);border:1px solid var(--rule2);border-radius:4px;padding:.8rem .9rem}
+          .rp-ml{font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:.25rem}
+          .rp-mv{font-size:1.4rem;font-weight:600;color:var(--ink);line-height:1.1}
+          .rp-mv.hi{color:var(--red)}
+          .rp-ms{font-size:11px;color:var(--mid);margin-top:.15rem}
+          .rp-blk{border:1px solid var(--rule);border-left:3px solid var(--red);background:var(--surface);padding:.9rem 1.1rem;margin-bottom:1.1rem;border-radius:0}
+          .rp-bt{font-family:var(--mono);font-size:.57rem;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.55rem}
+          .rp-br{display:flex;gap:1.5rem;flex-wrap:wrap}
+          .rp-bi .val{font-size:1.05rem;font-weight:600;color:var(--ink)}
+          .rp-bi .lbl{font-size:11px;color:var(--mid);margin-top:.1rem}
+          .rp-gw{margin-bottom:1.1rem}
+          .rp-gl{display:flex;justify-content:space-between;font-size:12px;color:var(--mid);margin-bottom:.3rem}
+          .rp-gt{height:7px;background:var(--rule);border-radius:4px;overflow:hidden}
+          .rp-gf{height:100%;border-radius:4px;transition:width .35s,background .35s}
+          .rp-nt{font-size:.78rem;color:var(--mid);line-height:1.65;border-top:1px solid var(--rule);padding-top:.9rem;margin-top:.5rem}
+          .rp-wn{font-size:.78rem;color:#854F0B;background:#FAEEDA;border-radius:4px;padding:.55rem .85rem;margin-bottom:.9rem;display:none}
+          .lt-tog{display:flex;border:1px solid var(--rule);border-radius:4px;overflow:hidden;width:fit-content}
+          .lt-btn{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.4rem .85rem;cursor:pointer;border:none;background:none;color:var(--mid);transition:background .15s,color .15s}
+          .lt-btn.on{background:var(--red);color:#fff}
+          .lt-btn:hover:not(.on){background:var(--rule2)}
+          .dn-note,.rf-note,.pw-warn{font-size:.75rem;border-radius:4px;padding:.5rem .8rem;margin-bottom:.9rem;display:none}
+          .dn-note{color:#854F0B;background:#FAEEDA}
+          .rf-note{color:#0F6E56;background:#E1F5EE}
+          .pw-warn{color:#854F0B;background:#FAEEDA}
+          .cb-row{display:flex;align-items:center;gap:.6rem;margin-bottom:.4rem}
+          .cb-nm{font-family:var(--mono);font-size:.6rem;color:var(--mid);width:86px;flex-shrink:0;text-align:right}
+          .cb-tr{flex:1;height:10px;background:var(--rule);border-radius:3px;overflow:hidden}
+          .cb-fi{height:100%;border-radius:3px;transition:width .35s}
+          .cb-vl{font-family:var(--mono);font-size:.62rem;color:var(--mid);width:58px;flex-shrink:0;text-align:right}
+          .cb-vl.dom{color:var(--red);font-weight:600}
+          .opt-blk{border:1px solid var(--rule);border-left:3px solid #1D9E75;background:var(--surface);padding:.9rem 1.1rem;margin-bottom:1.1rem}
+          .opt-bt{font-family:var(--mono);font-size:.57rem;letter-spacing:.12em;text-transform:uppercase;color:#0F6E56;margin-bottom:.55rem}
+          .tof-res{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;margin-bottom:1.25rem}
+          @media(max-width:700px){.rp-grid-t{grid-template-columns:1fr}.rp-res,.tof-res{grid-template-columns:repeat(2,1fr)}}
+        </style>
+
+        <div class="rp-tabs-t">
+          <button class="rp-tab-t on" onclick="rpTabT('quad')">① Quadrupole</button>
+          <button class="rp-tab-t" onclick="rpTabT('tof')">② Time-of-Flight</button>
+        </div>
+
+        <!-- QUAD PANEL -->
+        <div class="rp-panel-t on" id="rpt-quad">
+          <div class="rp-grid-t">
+            <div class="rp-card-t">
+              <div class="rp-ct">Measured peak</div>
+              <div class="rp-f"><label class="rp-lbl">Nominal m/z</label>
+                <div class="rp-ir"><input type="number" id="tq-mz" value="1000" min="1" max="10000" step="1" oninput="rpCalcQ()"><span class="rp-un">Da</span></div></div>
+              <div class="rp-f"><label class="rp-lbl">Peak FWHM (Δm)</label>
+                <div class="rp-ir"><input type="number" id="tq-fwhm" value="0.7" min="0.001" max="100" step="0.01" oninput="rpCalcQ()"><span class="rp-un">Da</span></div></div>
+              <div class="rp-ct" style="margin-top:1rem">Instrument geometry</div>
+              <div class="rp-f"><label class="rp-lbl">Rod length (L)</label>
+                <div class="rp-ir"><input type="number" id="tq-L" value="200" min="10" max="2000" step="10" oninput="rpCalcQ()"><span class="rp-un">mm</span></div></div>
+              <div class="rp-f"><label class="rp-lbl">RF frequency (f)</label>
+                <div class="rp-ir"><input type="number" id="tq-freq" value="1.0" min="0.1" max="10" step="0.1" oninput="rpCalcQ()"><span class="rp-un">MHz</span></div></div>
+              <div class="rp-f"><label class="rp-lbl">Ion kinetic energy (KE)</label>
+                <div class="rp-ir"><input type="number" id="tq-ke" value="5" min="0.1" max="1000" step="0.5" oninput="rpCalcQ()"><span class="rp-un">eV</span></div></div>
+              <div class="rp-f"><label class="rp-lbl">RF cycles N (derived)</label>
+                <div class="rp-ir"><input type="text" id="tq-N" readonly style="background:var(--surface);color:var(--mid)"><span class="rp-dv">derived</span></div></div>
+              <div class="rp-f"><label class="rp-lbl">Ion velocity</label>
+                <div class="rp-ir"><input type="text" id="tq-v" readonly style="background:var(--surface);color:var(--mid)"><span class="rp-un">m/s</span></div></div>
+            </div>
+            <div>
+              <div class="rp-res">
+                <div class="rp-m"><div class="rp-ml">Resolving Power</div><div class="rp-mv hi" id="tq-R">—</div><div class="rp-ms">R = m / Δm</div></div>
+                <div class="rp-m"><div class="rp-ml">Peak FWHM</div><div class="rp-mv" id="tq-fw">—</div><div class="rp-ms">Da (measured)</div></div>
+                <div class="rp-m"><div class="rp-ml">Classification</div><div class="rp-mv" id="tq-cl" style="font-size:.95rem">—</div><div class="rp-ms" id="tq-cs"></div></div>
+              </div>
+              <div id="tq-warn" class="rp-wn">Cycle count out of range — check geometry and energy inputs.</div>
+              <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem;flex-wrap:wrap">
+                <span style="font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid)">Resolution benchmark</span>
+                <div class="lt-tog">
+                  <button class="lt-btn on" id="tq-bp" onclick="rpSetLim('practical')">Practical</button>
+                  <button class="lt-btn" id="tq-bd" onclick="rpSetLim('dawson')">Dawson (theoretical)</button>
+                </div>
+              </div>
+              <div id="tq-dn" class="dn-note">The Dawson limit assumes a perfect quadrupole field, monoenergetic ions, zero space charge, and no fringe fields. Real instruments fall many orders of magnitude short of this ceiling.</div>
+              <div class="rp-blk">
+                <div class="rp-bt" id="tq-lt">Practical resolution limit</div>
+                <div class="rp-br">
+                  <div class="rp-bi"><div class="val" id="tq-tdm">—</div><div class="lbl" id="tq-tdml">Practical min Δm (Da)</div></div>
+                  <div class="rp-bi"><div class="val" id="tq-tr">—</div><div class="lbl" id="tq-trl">Practical max R</div></div>
+                  <div class="rp-bi"><div class="val" id="tq-ef">—</div><div class="lbl">Efficiency vs. benchmark</div></div>
+                </div>
+                <div style="font-size:11px;color:var(--mid);margin-top:.65rem" id="tq-lf">Empirical: R<sub>max</sub> ≈ 75 × N &nbsp;·&nbsp; Well-built research quadrupoles (5,000–10,000 R at ~100 cycles)</div>
+              </div>
+              <div class="rp-gw">
+                <div class="rp-gl"><span id="tq-gl">Efficiency vs. practical limit</span><span id="tq-gp">—</span></div>
+                <div class="rp-gt"><div class="rp-gf" id="tq-gf" style="width:0%"></div></div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--mid);margin-top:.25rem"><span>0%</span><span>50%</span><span>100% (benchmark)</span></div>
+              </div>
+              <div class="rp-blk" style="border-left-color:#378ADD">
+                <div class="rp-bt" style="color:#185FA5">Effect of changing geometry</div>
+                <div class="rp-br">
+                  <div class="rp-bi"><div class="val" id="tq-2L">—</div><div class="lbl">Max R at 2× rod length</div></div>
+                  <div class="rp-bi"><div class="val" id="tq-hKE">—</div><div class="lbl">Max R at ½ KE</div></div>
+                  <div class="rp-bi"><div class="val" id="tq-2f">—</div><div class="lbl">Max R at 2× frequency</div></div>
+                </div>
+              </div>
+              <div class="rp-nt">v = √(2·KE·e / m). N = (L / v) × f.
+                <strong>Practical limit:</strong> R<sub>max</sub> ≈ 75 × N — empirical, calibrated to well-built research quadrupoles achieving 5,000–10,000 R at ~100 cycles. Unit resolution (Δm ≈ 1 Da) corresponds to R ≈ m/z.
+                <strong>Dawson limit:</strong> Δm<sub>min</sub> ≈ 0.1 × m / N² — mathematical ceiling for an ideal quadrupole, unachievable due to field imperfections, fringe fields, and ion energy spread.
+                <br><br><strong>Driving a quadrupole with GAACE hardware?</strong> The MIPS RF Quad module and standalone RF Generator are designed to operate across the voltage and frequency range this calculator produces. <a href="index.html#contact" style="color:var(--red);text-decoration:underline">Contact us</a> to discuss your geometry.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOF PANEL -->
+        <div class="rp-panel-t" id="rpt-tof">
+          <div class="rp-grid-t">
+            <div class="rp-card-t">
+              <div class="rp-ct">Ion &amp; instrument</div>
+              <div class="rp-f"><label class="rp-lbl">Nominal m/z</label>
+                <div class="rp-ir"><input type="number" id="tt-mz" value="1000" min="1" max="100000" step="1" oninput="rpCalcT()"><span class="rp-un">Da</span></div></div>
+              <div class="rp-f"><label class="rp-lbl">Accelerating voltage (V)</label>
+                <div class="rp-ir"><input type="number" id="tt-V" value="5000" min="100" max="50000" step="100" oninput="rpCalcT()"><span class="rp-un">V</span></div></div>
+              <div class="rp-f"><label class="rp-lbl">Flight path length (L)</label>
+                <div class="rp-ir"><input type="number" id="tt-L" value="1.0" min="0.1" max="20" step="0.1" oninput="rpCalcT()"><span class="rp-un">m</span></div></div>
+              <div class="rp-ct" style="margin-top:1rem">Detection system</div>
+              <div class="rp-f"><label class="rp-lbl">Detector / digitizer bandwidth</label>
+                <div class="rp-ir"><input type="number" id="tt-bw" value="500" min="1" max="10000" step="10" oninput="rpCalcT()"><span class="rp-un">MHz</span></div></div>
+              <div class="rp-f"><label class="rp-lbl">Timing jitter (RMS)</label>
+                <div class="rp-ir"><input type="number" id="tt-ji" value="1.0" min="0" max="100" step="0.1" oninput="rpCalcT()"><span class="rp-un">ns</span></div></div>
+              <div class="rp-ct" style="margin-top:1rem">Ion beam (optional)</div>
+              <div class="rp-f"><label class="rp-lbl">Ion energy spread ΔE (FWHM)</label>
+                <div class="rp-ir"><input type="number" id="tt-dE" value="1.0" min="0" max="1000" step="0.1" oninput="rpCalcT()"><span class="rp-un">eV</span></div></div>
+              <div class="rp-f"><label class="rp-lbl">Extraction pulse width</label>
+                <div class="rp-ir"><input type="number" id="tt-pw" value="5" min="0" max="1000" step="0.5" oninput="rpCalcT()"><span class="rp-un">ns</span></div></div>
+              <div class="rp-ct" style="margin-top:1rem">Vacuum</div>
+              <div class="rp-f"><label class="rp-lbl">Background pressure</label>
+                <div class="rp-ir"><input type="number" id="tt-P" value="1e-6" min="1e-10" max="1e-3" step="any" oninput="rpCalcT()"><span class="rp-un">Torr</span></div></div>
+              <div class="rp-f"><label class="rp-lbl">Background gas</label>
+                <div class="rp-ir"><select id="tt-gas" oninput="rpCalcT()">
+                  <option value="28">N₂ (28 Da)</option>
+                  <option value="4">He (4 Da)</option>
+                  <option value="40">Ar (40 Da)</option>
+                  <option value="32">O₂ (32 Da)</option>
+                  <option value="18">H₂O (18 Da)</option>
+                </select></div></div>
+              <div class="rp-ct" style="margin-top:1rem">Configuration</div>
+              <div class="lt-tog" style="margin-bottom:.75rem">
+                <button class="lt-btn on" id="tt-bl" onclick="rpSetRefl('linear')">Linear</button>
+                <button class="lt-btn" id="tt-br" onclick="rpSetRefl('reflectron')">Reflectron</button>
+              </div>
+              <div class="rp-f"><label class="rp-lbl">Flight time (derived)</label>
+                <div class="rp-ir"><input type="text" id="tt-ft" readonly style="background:var(--surface);color:var(--mid)"><span class="rp-dv">derived</span></div></div>
+              <div class="rp-f"><label class="rp-lbl">Mean free path (derived)</label>
+                <div class="rp-ir"><input type="text" id="tt-mfp" readonly style="background:var(--surface);color:var(--mid)"><span class="rp-dv">derived</span></div></div>
+            </div>
+            <div>
+              <div id="tt-rfn" class="rf-note">Reflectron mode: energy spread cancelled (first order). Effective path length doubled.</div>
+              <div id="tt-pwn" class="pw-warn"></div>
+              <div class="tof-res">
+                <div class="rp-m"><div class="rp-ml">Theoretical R</div><div class="rp-mv hi" id="tt-Rt">—</div><div class="rp-ms">BW limit only</div></div>
+                <div class="rp-m"><div class="rp-ml">Achievable R</div><div class="rp-mv" id="tt-Ra">—</div><div class="rp-ms">all contributions</div></div>
+                <div class="rp-m"><div class="rp-ml">Total Δt (FWHM)</div><div class="rp-mv" id="tt-dt">—</div><div class="rp-ms">ns</div></div>
+                <div class="rp-m"><div class="rp-ml">Collision prob.</div><div class="rp-mv" id="tt-cp">—</div><div class="rp-ms">% ions scatter</div></div>
+                <div class="rp-m"><div class="rp-ml">Classification</div><div class="rp-mv" id="tt-cl" style="font-size:.95rem">—</div><div class="rp-ms" id="tt-cs"></div></div>
+                <div class="rp-m"><div class="rp-ml">Bottleneck</div><div class="rp-mv" id="tt-bn" style="font-size:.85rem;color:var(--red)">—</div><div class="rp-ms">dominant limit</div></div>
+              </div>
+              <div class="rp-blk">
+                <div class="rp-bt">Time-domain contributions (quadrature sum)</div>
+                <div class="cb-row"><span class="cb-nm">Bandwidth</span><div class="cb-tr"><div class="cb-fi" id="tt-cbw" style="background:#378ADD;width:0%"></div></div><span class="cb-vl" id="tt-cvbw">—</span></div>
+                <div class="cb-row"><span class="cb-nm">Jitter</span><div class="cb-tr"><div class="cb-fi" id="tt-cji" style="background:#BA7517;width:0%"></div></div><span class="cb-vl" id="tt-cvji">—</span></div>
+                <div class="cb-row"><span class="cb-nm" id="tt-enl">Energy spread</span><div class="cb-tr"><div class="cb-fi" id="tt-cen" style="background:#1D9E75;width:0%"></div></div><span class="cb-vl" id="tt-cven">—</span></div>
+                <div class="cb-row"><span class="cb-nm">Pulse width</span><div class="cb-tr"><div class="cb-fi" id="tt-cpw" style="background:#7F77DD;width:0%"></div></div><span class="cb-vl" id="tt-cvpw">—</span></div>
+                <div class="cb-row"><span class="cb-nm">Collisions</span><div class="cb-tr"><div class="cb-fi" id="tt-cco" style="background:#D85A30;width:0%"></div></div><span class="cb-vl" id="tt-cvco">—</span></div>
+                <div style="display:flex;gap:.85rem;flex-wrap:wrap;margin-top:.75rem">
+                  <span style="display:flex;align-items:center;gap:.3rem;font-size:11px;color:var(--mid)"><span style="width:10px;height:10px;border-radius:2px;background:#378ADD;display:inline-block"></span>BW (0.35/BW)</span>
+                  <span style="display:flex;align-items:center;gap:.3rem;font-size:11px;color:var(--mid)"><span style="width:10px;height:10px;border-radius:2px;background:#BA7517;display:inline-block"></span>Jitter (×2.355)</span>
+                  <span style="display:flex;align-items:center;gap:.3rem;font-size:11px;color:var(--mid)"><span style="width:10px;height:10px;border-radius:2px;background:#1D9E75;display:inline-block"></span>Energy (t·ΔE/2V)</span>
+                  <span style="display:flex;align-items:center;gap:.3rem;font-size:11px;color:var(--mid)"><span style="width:10px;height:10px;border-radius:2px;background:#7F77DD;display:inline-block"></span>Pulse</span>
+                  <span style="display:flex;align-items:center;gap:.3rem;font-size:11px;color:var(--mid)"><span style="width:10px;height:10px;border-radius:2px;background:#D85A30;display:inline-block"></span>Collisions</span>
+                </div>
+              </div>
+              <div class="opt-blk">
+                <div class="opt-bt">Optimum accelerating voltage</div>
+                <div class="rp-br">
+                  <div class="rp-bi"><div class="val" id="tt-oV">—</div><div class="lbl">Optimum voltage (V)</div></div>
+                  <div class="rp-bi"><div class="val" id="tt-oR">—</div><div class="lbl">Max R at optimum V</div></div>
+                  <div class="rp-bi"><div class="val" id="tt-ot">—</div><div class="lbl">Flight time at opt. V</div></div>
+                </div>
+                <div style="font-size:11px;color:var(--mid);margin-top:.6rem">Balances bandwidth/jitter (worse at low V) against collision broadening (worse at low V for slow ions). Found by numerical search 200–30,000 V.</div>
+              </div>
+              <div class="rp-blk" style="border-left-color:#378ADD">
+                <div class="rp-bt" style="color:#185FA5">Path length &amp; voltage scaling</div>
+                <div class="rp-br">
+                  <div class="rp-bi"><div class="val" id="tt-2L">—</div><div class="lbl">R at 2× path length</div></div>
+                  <div class="rp-bi"><div class="val" id="tt-4L">—</div><div class="lbl">R at 4× path length</div></div>
+                  <div class="rp-bi"><div class="val" id="tt-2V">—</div><div class="lbl">R at 2× voltage</div></div>
+                </div>
+              </div>
+              <div class="rp-nt">t = L × √(m/2eV). Δt² = Δt²<sub>BW</sub> + Δt²<sub>jitter</sub> + Δt²<sub>energy</sub> + Δt²<sub>pulse</sub> + Δt²<sub>collision</sub>.
+                Collision broadening: Δt<sub>coll</sub> = 2.355 × t × √(L/λ) × (m<sub>gas</sub>/m<sub>ion</sub>) × √(kT/KE).
+                Mean free path λ = kT/(P·σ), σ = 2×10⁻¹⁹ m². Collision probability = 1 − exp(−L/λ).
+                Reflectron cancels energy spread (first order) and doubles effective path length.
+                Lower accelerating voltage slows ions — longer flight time improves R until collision broadening takes over, creating a resolution optimum at intermediate voltage.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <script>
+        (function(){
+          var ec=1.60218e-19,Dk=1.66054e-27,kB=1.38065e-23,TK=298,SG=2e-19,TR=133.322,PK=75;
+          var aLim='practical',aRef='linear';
+
+          function rpTabT(t){
+            document.querySelectorAll('.rp-tab-t').forEach(function(b,i){b.classList.toggle('on',(i===0&&t==='quad')||(i===1&&t==='tof'));});
+            document.getElementById('rpt-quad').classList.toggle('on',t==='quad');
+            document.getElementById('rpt-tof').classList.toggle('on',t==='tof');
+          }
+          window.rpTabT=rpTabT;
+
+          function rpSetLim(m){
+            aLim=m;
+            document.getElementById('tq-bp').classList.toggle('on',m==='practical');
+            document.getElementById('tq-bd').classList.toggle('on',m==='dawson');
+            document.getElementById('tq-dn').style.display=m==='dawson'?'block':'none';
+            var p=m==='practical';
+            document.getElementById('tq-lt').textContent=p?'Practical resolution limit':'Dawson theoretical limit';
+            document.getElementById('tq-tdml').textContent=p?'Practical min Δm (Da)':'Theoretical min Δm (Da)';
+            document.getElementById('tq-trl').textContent=p?'Practical max R':'Theoretical max R';
+            document.getElementById('tq-gl').textContent=p?'Efficiency vs. practical limit':'Efficiency vs. Dawson limit';
+            document.getElementById('tq-lf').innerHTML=p
+              ?'Empirical: R<sub>max</sub> ≈ 75 × N &nbsp;·&nbsp; Well-built research quadrupoles (5,000–10,000 R at ~100 cycles)'
+              :'Dawson: Δm<sub>min</sub> ≈ 0.1 × m / N² &nbsp;·&nbsp; Mathematical ceiling — unachievable in practice';
+            rpCalcQ();
+          }
+          window.rpSetLim=rpSetLim;
+
+          function rpSetRefl(m){
+            aRef=m;
+            document.getElementById('tt-bl').classList.toggle('on',m==='linear');
+            document.getElementById('tt-br').classList.toggle('on',m==='reflectron');
+            document.getElementById('tt-rfn').style.display=m==='reflectron'?'block':'none';
+            rpCalcT();
+          }
+          window.rpSetRefl=rpSetRefl;
+
+          function clQ(R){if(R<500)return['Unit','Δm ≈ 1 Da'];if(R<2000)return['Medium','R 500–2,000'];if(R<10000)return['High','R 2,000–10,000'];return['Ultra','R > 10,000'];}
+          function clT(R){if(R<1000)return['Low','R < 1,000'];if(R<10000)return['Medium','R < 10,000'];if(R<50000)return['High','R < 50,000'];return['Ultra-high','R ≥ 50,000'];}
+          function gc(p){return p<20?'#E24B4A':p<55?'#BA7517':'#1D9E75';}
+          function fm(n,d){if(isNaN(n)||!isFinite(n)||n<0)return'—';return n.toLocaleString(undefined,{minimumFractionDigits:d||0,maximumFractionDigits:d||0});}
+
+          function cN(mz,ke,Lmm,fMHz){var m=mz*Dk,v=Math.sqrt(2*ke*ec/m);return{N:((Lmm/1e3)/v)*(fMHz*1e6),v:v};}
+          function bench(mz,N,m){if(m==='practical'){var R=PK*N;return{dm:mz/R,R:R};}var dm=0.1*mz/(N*N);return{dm:dm,R:mz/dm};}
+
+          function rpCalcQ(){
+            var mz=parseFloat(document.getElementById('tq-mz').value);
+            var fw=parseFloat(document.getElementById('tq-fwhm').value);
+            var L=parseFloat(document.getElementById('tq-L').value);
+            var f=parseFloat(document.getElementById('tq-freq').value);
+            var ke=parseFloat(document.getElementById('tq-ke').value);
+            if([mz,fw,L,f,ke].some(function(x){return isNaN(x)||x<=0;}))return;
+            var r=cN(mz,ke,L,f),N=r.N,v=r.v,w=document.getElementById('tq-warn');
+            document.getElementById('tq-N').value=(N>=1&&N<1e5)?N.toFixed(1):'—';
+            document.getElementById('tq-v').value=(v>0&&isFinite(v))?Math.round(v).toLocaleString():'—';
+            if(N<2||N>5e4||!isFinite(N)){w.style.display='block';return;}w.style.display='none';
+            var R=mz/fw,cl=clQ(R);
+            document.getElementById('tq-R').textContent=fm(Math.round(R));
+            document.getElementById('tq-fw').textContent=fw.toFixed(3);
+            document.getElementById('tq-cl').textContent=cl[0];document.getElementById('tq-cs').textContent=cl[1];
+            var bn=bench(mz,N,aLim);
+            document.getElementById('tq-tdm').textContent=bn.dm<0.001?bn.dm.toExponential(2)+' Da':bn.dm.toFixed(4)+' Da';
+            document.getElementById('tq-tr').textContent=fm(Math.round(bn.R));
+            var ef=Math.min((R/bn.R)*100,100),pct=Math.max(Math.min(ef,100),0);
+            document.getElementById('tq-ef').textContent=ef.toFixed(1)+'%';
+            var gf=document.getElementById('tq-gf');gf.style.width=pct+'%';gf.style.background=gc(pct);
+            document.getElementById('tq-gp').textContent=pct.toFixed(1)+'%';
+            var N2L=cN(mz,ke,L*2,f),NhK=cN(mz,ke/2,L,f),N2f=cN(mz,ke,L,f*2);
+            document.getElementById('tq-2L').textContent=fm(Math.round(bench(mz,N2L.N,aLim).R));
+            document.getElementById('tq-hKE').textContent=fm(Math.round(bench(mz,NhK.N,aLim).R));
+            document.getElementById('tq-2f').textContent=fm(Math.round(bench(mz,N2f.N,aLim).R));
+          }
+          window.rpCalcQ=rpCalcQ;
+
+          function mfp(P){return kB*TK/(P*TR*SG);}
+
+          function tofC(mz,V,L,bw,ji,dE,pw,P,mg,rf){
+            var Le=rf?L*2:L,mk=mz*Dk,kJ=V*ec,vi=Math.sqrt(2*kJ/mk),ts=Le/vi,tu=ts*1e6;
+            var dtbw=bw>0?(0.35/(bw*1e6))*1e9:0;
+            var dtji=ji*2.355;
+            var dten=rf?0:(dE>0?(ts*dE/(2*V))*1e9:0);
+            var dtpw=pw;
+            var lam=mfp(P),mg2=mg*Dk,rm=mg/mz,dtco=2.355*ts*Math.sqrt(Le/lam)*rm*Math.sqrt(kB*TK/kJ)*1e9;
+            var cp=(1-Math.exp(-Le/lam))*100;
+            var dt=Math.sqrt(dtbw*dtbw+dtji*dtji+dten*dten+dtpw*dtpw+dtco*dtco);
+            var Ra=dt>0?tu*1e3/(2*dt):Infinity,Rt=dtbw>0?tu*1e3/(2*dtbw):Infinity;
+            var cs=[{n:'bw',d:dtbw},{n:'ji',d:dtji},{n:'en',d:dten},{n:'pw',d:dtpw},{n:'co',d:dtco}];
+            var dom=cs.reduce(function(a,b){return b.d>a.d?b:a;});
+            return{tu,dtbw,dtji,dten,dtpw,dtco,dt,Ra,Rt,cp,lam,dom:dom.n};
+          }
+
+          function optV(mz,L,bw,ji,dE,pw,P,mg,rf){
+            var bR=-1,bV=1000,bt=0;
+            [200,300,500,700,1e3,1500,2e3,3e3,5e3,7e3,1e4,15e3,2e4,3e4].forEach(function(V){
+              var r=tofC(mz,V,L,bw,ji,dE,pw,P,mg,rf);
+              if(r.Ra>bR){bR=r.Ra;bV=V;bt=r.tu;}
+            });
+            var lo=bV*0.5,hi=bV*2;
+            for(var i=0;i<40;i++){var dl=lo+(hi-lo)*0.25,dr=lo+(hi-lo)*0.75;
+              if(tofC(mz,dl,L,bw,ji,dE,pw,P,mg,rf).Ra>tofC(mz,dr,L,bw,ji,dE,pw,P,mg,rf).Ra){hi=lo+(hi-lo)*0.75;}else{lo=lo+(hi-lo)*0.25;}}
+            var Vo=(lo+hi)/2,ro=tofC(mz,Vo,L,bw,ji,dE,pw,P,mg,rf);
+            return{V:Vo,R:ro.Ra,t:ro.tu};
+          }
+
+          function rpCalcT(){
+            var mz=parseFloat(document.getElementById('tt-mz').value);
+            var V=parseFloat(document.getElementById('tt-V').value);
+            var L=parseFloat(document.getElementById('tt-L').value);
+            var bw=parseFloat(document.getElementById('tt-bw').value);
+            var ji=parseFloat(document.getElementById('tt-ji').value)||0;
+            var dE=parseFloat(document.getElementById('tt-dE').value)||0;
+            var pw=parseFloat(document.getElementById('tt-pw').value)||0;
+            var P=parseFloat(document.getElementById('tt-P').value);
+            var mg=parseFloat(document.getElementById('tt-gas').value);
+            var rf=aRef==='reflectron';
+            if([mz,V,L,bw,P].some(function(x){return isNaN(x)||x<=0;}))return;
+            var r=tofC(mz,V,L,bw,ji,dE,pw,P,mg,rf);
+            var lam=r.lam;
+            document.getElementById('tt-ft').value=r.tu.toFixed(3)+' μs';
+            document.getElementById('tt-mfp').value=lam>=1?lam.toFixed(1)+' m':(lam*100).toFixed(2)+' cm';
+            document.getElementById('tt-Rt').textContent=fm(Math.round(r.Rt));
+            document.getElementById('tt-Ra').textContent=fm(Math.round(r.Ra));
+            document.getElementById('tt-dt').textContent=r.dt.toFixed(2);
+            document.getElementById('tt-cp').textContent=r.cp.toFixed(2)+'%';
+            var cl=clT(r.Ra);
+            document.getElementById('tt-cl').textContent=cl[0];document.getElementById('tt-cs').textContent=cl[1];
+            var dn={bw:'Bandwidth',ji:'Jitter',en:'Energy spread',pw:'Pulse width',co:'Collisions'};
+            document.getElementById('tt-bn').textContent=dn[r.dom]||'—';
+            document.getElementById('tt-enl').textContent=rf?'Energy (cancelled)':'Energy spread';
+            var pw2=document.getElementById('tt-pwn');
+            if(r.cp>10){pw2.style.display='block';pw2.textContent='Warning: '+r.cp.toFixed(1)+'% of ions scatter — pressure is degrading resolution. Consider improving vacuum.';}
+            else{pw2.style.display='none';}
+            var vs=[r.dtbw,r.dtji,r.dten,r.dtpw,r.dtco],mx=Math.max.apply(null,vs)||1;
+            var ids=['bw','ji','en','pw','co'];
+            ids.forEach(function(id,i){
+              document.getElementById('tt-c'+id).style.width=(vs[i]/mx*100).toFixed(1)+'%';
+              var el=document.getElementById('tt-cv'+id);
+              el.textContent=vs[i].toFixed(2)+' ns';el.className='cb-vl'+(r.dom===id?' dom':'');
+            });
+            var R2L=tofC(mz,V,L*2,bw,ji,dE,pw,P,mg,rf).Ra;
+            var R4L=tofC(mz,V,L*4,bw,ji,dE,pw,P,mg,rf).Ra;
+            var R2V=tofC(mz,V*2,L,bw,ji,dE,pw,P,mg,rf).Ra;
+            document.getElementById('tt-2L').textContent=fm(Math.round(R2L));
+            document.getElementById('tt-4L').textContent=fm(Math.round(R4L));
+            document.getElementById('tt-2V').textContent=fm(Math.round(R2V));
+            var op=optV(mz,L,bw,ji,dE,pw,P,mg,rf);
+            document.getElementById('tt-oV').textContent=fm(Math.round(op.V))+' V';
+            document.getElementById('tt-oR').textContent=fm(Math.round(op.R));
+            document.getElementById('tt-ot').textContent=op.t.toFixed(3)+' μs';
+          }
+          window.rpCalcT=rpCalcT;
+
+          rpCalcQ();rpCalcT();
+        })();
+        </script>
+
+      </div><!-- /tool-body -->
+    </div><!-- /tool-card #resolving-power -->
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- TOOL: COAXIAL CABLE REFERENCE TABLE                     -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="tool-card" id="coax-ref" style="scroll-margin-top:120px">
+      <div class="tool-card-header">
+        <div class="tool-card-meta">
+          <div class="tool-tag">Reference</div>
+          <div class="tool-title">Coaxial Cable Reference — Parameters &amp; Applications</div>
+          <div class="tool-desc">Key electrical parameters for coaxial cables commonly used in mass spectrometry and ion optics research — impedance, velocity factor, capacitance, dielectric type, voltage rating, and attenuation. Includes application notes specific to RF drive lines, electrometer signals, vacuum feedthroughs, high-voltage pulsers, and trigger routing. Filter by impedance or sort any column.</div>
+        </div>
+        <div class="tool-badge-row" style="align-self:flex-start;margin-top:.5rem">
+          <span class="tool-badge">50 Ω</span>
+          <span class="tool-badge">75 Ω</span>
+          <span class="tool-badge">93 Ω</span>
+          <span class="tool-badge">RF &amp; Signal</span>
+          <span class="tool-badge">Vacuum Compatible</span>
+        </div>
+      </div>
+      <div class="tool-body">
+
+        <style>
+          .cx-filters{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-bottom:1.25rem}
+          .cx-filter-lbl{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid)}
+          .cx-ftog{display:flex;gap:0;border:1px solid var(--rule);border-radius:4px;overflow:hidden}
+          .cx-fb{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .75rem;cursor:pointer;border:none;background:none;color:var(--mid);transition:background .15s,color .15s}
+          .cx-fb.on{background:var(--red);color:#fff}
+          .cx-fb:hover:not(.on){background:var(--rule2)}
+          .cx-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:6px}
+          .cx-table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:860px}
+          .cx-table thead tr{background:var(--surface);border-bottom:2px solid var(--rule)}
+          .cx-table th{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);padding:.65rem .9rem;text-align:left;white-space:nowrap;cursor:pointer;user-select:none;transition:color .15s}
+          .cx-table th:hover{color:var(--ink)}
+          .cx-table th.sort-asc::after{content:' ↑';color:var(--red)}
+          .cx-table th.sort-desc::after{content:' ↓';color:var(--red)}
+          .cx-table td{padding:.6rem .9rem;border-bottom:1px solid var(--rule2);color:var(--ink3);vertical-align:top;line-height:1.45}
+          .cx-table tbody tr:last-child td{border-bottom:none}
+          .cx-table tbody tr:hover td{background:var(--surface)}
+          .cx-table td:first-child{font-family:var(--mono);font-size:.78rem;font-weight:500;color:var(--ink);white-space:nowrap}
+          .cx-imp{display:inline-block;font-family:var(--mono);font-size:.62rem;padding:.15rem .45rem;border-radius:3px;white-space:nowrap}
+          .cx-imp.i50{background:rgba(55,138,221,.1);color:#185FA5;border:1px solid rgba(55,138,221,.2)}
+          .cx-imp.i75{background:rgba(29,158,117,.1);color:#0F6E56;border:1px solid rgba(29,158,117,.2)}
+          .cx-imp.i93{background:rgba(186,117,23,.1);color:#854F0B;border:1px solid rgba(186,117,23,.2)}
+          .cx-ptfe{display:inline-block;font-family:var(--mono);font-size:.6rem;padding:.12rem .4rem;border-radius:3px;background:rgba(204,31,31,.08);color:var(--red);border:1px solid rgba(204,31,31,.15)}
+          .cx-app{font-size:.78rem;color:var(--mid);line-height:1.5}
+          .cx-note{font-size:.78rem;color:var(--mid);line-height:1.65;border-top:1px solid var(--rule);padding-top:.9rem;margin-top:1.25rem}
+        </style>
+
+        <div class="cx-filters">
+          <span class="cx-filter-lbl">Filter by impedance</span>
+          <div class="cx-ftog">
+            <button class="cx-fb on" onclick="cxFilter('all')">All</button>
+            <button class="cx-fb" onclick="cxFilter('50')">50 Ω</button>
+            <button class="cx-fb" onclick="cxFilter('75')">75 Ω</button>
+            <button class="cx-fb" onclick="cxFilter('93')">93 Ω</button>
+          </div>
+          <span class="cx-filter-lbl" style="margin-left:.5rem">Click column headers to sort</span>
+        </div>
+
+        <div class="cx-wrap">
+          <table class="cx-table" id="cx-table">
+            <thead>
+              <tr>
+                <th onclick="cxSort(0)">Cable</th>
+                <th onclick="cxSort(1)">Impedance</th>
+                <th onclick="cxSort(2)">Vel. Factor</th>
+                <th onclick="cxSort(3)">Cap. pF/ft</th>
+                <th onclick="cxSort(4)">Cap. pF/m</th>
+                <th onclick="cxSort(5)">Dielectric</th>
+                <th onclick="cxSort(6)">Max V (RMS)</th>
+                <th onclick="cxSort(7)">Atten. dB/100ft @ 10 MHz</th>
+                <th>Research Applications</th>
+              </tr>
+            </thead>
+            <tbody id="cx-body"></tbody>
+          </table>
+        </div>
+
+        <div class="cx-note">
+          <strong style="color:var(--ink)">Capacitance matters in ion optics.</strong> Every picofarad on a high-voltage electrode or electrometer input costs energy to charge and slows signal edges. For electrometer signal cables, minimize length and use low-capacitance types (LMR-200, LMR-400, RG-62). For RF drive lines to ion funnels and quadrupoles, the cable capacitance adds directly to the load seen by the RF generator — use PTFE-dielectric types (RG-316, RG-142) near heated regions or vacuum boundaries.
+          PTFE (Teflon) dielectric cables are preferred for vacuum feedthroughs due to low outgassing. Velocity factor affects electrical length and matters for matched-length trigger or timing lines.
+          Attenuation values are at 10 MHz; attenuation increases approximately as √f — a cable with 1.0 dB/100ft at 10 MHz will show ~3.2 dB/100ft at 100 MHz.
+        </div>
+
+        <script>
+        (function(){
+          var data=[
+            ['RG-58',      50,'66%', 28.5, 93.5,'Solid PE',      '1,900V',1.2,'General purpose DC bias, low-frequency RF, trigger lines.'],
+            ['RG-58 Foam', 50,'78%', 26.0, 85.3,'Foam PE',       '1,000V',0.9,'Lower capacitance alternative for general lab routing.'],
+            ['RG-174',     50,'66%', 30.8,101.1,'Solid PE',      '1,500V',3.3,'Highly flexible, thin cable. Great for tight internal chassis wiring. Watch the high attenuation.'],
+            ['RG-316',     50,'70%', 29.0, 95.1,'PTFE (Teflon)', '1,200V',3.0,'High-temperature, thin, silver-plated shield. Excellent for routing inside vacuum chambers or near heated inlets.'],
+            ['RG-142',     50,'70%', 29.0, 95.1,'PTFE (Teflon)', '1,900V',1.1,'Double-shielded, silver-plated. Outstanding for high-Q RF drive lines where stability and shielding are critical.'],
+            ['RG-8X',      50,'78%', 26.0, 85.3,'Foam PE',       '1,000V',0.9,'Mini-RG-8. Flexible, lower loss than RG-58, great for mid-power RF links.'],
+            ['RG-8 / RG-213',50,'66%',30.8,101.1,'Solid PE',    '5,000V',0.6,'Thick, heavy-duty cable. High voltage handling, very low loss. Used for main RF generator-to-tank outputs.'],
+            ['LMR-200',    50,'83%', 24.5, 80.4,'Foam PE',       '1,000V',0.8,'Double-shielded foil/braid. Very low capacitance per foot; keeps stray capacitance low.'],
+            ['LMR-400',    50,'85%', 23.9, 78.4,'Foam PE',       '2,500V',0.4,'Extremely low loss and low capacitance. Used for long runs or high-power RF distribution.'],
+            ['RG-59',      75,'66%', 21.0, 68.9,'Solid PE',      '2,300V',1.1,'Standard 75 Ω routing. Used in specific impedance-matched detector systems or timing pulses.'],
+            ['RG-179',     75,'70%', 21.0, 68.9,'PTFE (Teflon)', '1,200V',3.0,'Miniature 75 Ω Teflon cable. Ideal for internal high-temperature signal routing or vacuum feedthroughs.'],
+            ['RG-62',      93,'84%', 13.5, 44.3,'Air-Space PE',  '750V',  0.8,'Ultra-low capacitance. Excellent for high-voltage fast pulsers, ion gates, and low-load signal routing.']
+          ];
+
+          var filtered=data.slice(),sortCol=-1,sortDir=1,activeFilter='all';
+
+          function impClass(z){return z===50?'i50':z===75?'i75':'i93';}
+          function isPtfe(d){return d.indexOf('PTFE')>=0||d.indexOf('Teflon')>=0;}
+
+          function render(){
+            var tbody=document.getElementById('cx-body');
+            tbody.innerHTML='';
+            var rows=filtered.slice();
+            if(sortCol>=0){
+              rows.sort(function(a,b){
+                var av=a[sortCol],bv=b[sortCol];
+                if(typeof av==='string'&&typeof bv==='string'){return sortDir*av.localeCompare(bv);}
+                return sortDir*(av-bv);
+              });
+            }
+            rows.forEach(function(r){
+              var tr=document.createElement('tr');
+              tr.setAttribute('data-imp',r[1]);
+              var ptfe=isPtfe(r[5]);
+              tr.innerHTML=
+                '<td>'+r[0]+'</td>'+
+                '<td><span class="cx-imp '+impClass(r[1])+'">'+r[1]+' Ω</span></td>'+
+                '<td>'+r[2]+'</td>'+
+                '<td>'+r[3].toFixed(1)+'</td>'+
+                '<td>'+r[4].toFixed(1)+'</td>'+
+                '<td>'+(ptfe?'<span class="cx-ptfe">'+r[5]+'</span>':r[5])+'</td>'+
+                '<td>'+r[6]+'</td>'+
+                '<td>'+r[7].toFixed(1)+'</td>'+
+                '<td class="cx-app">'+r[8]+'</td>';
+              tbody.appendChild(tr);
+            });
+          }
+
+          function cxFilter(f){
+            activeFilter=f;
+            document.querySelectorAll('.cx-fb').forEach(function(b){b.classList.toggle('on',b.textContent.replace(' Ω','')===f||(f==='all'&&b.textContent==='All'));});
+            filtered=f==='all'?data.slice():data.filter(function(r){return String(r[1])===f;});
+            render();
+          }
+          window.cxFilter=cxFilter;
+
+          function cxSort(col){
+            var ths=document.querySelectorAll('.cx-table th');
+            ths.forEach(function(th,i){th.className=i===col?(sortCol===col&&sortDir===1?'sort-desc':'sort-asc'):'';});
+            if(sortCol===col){sortDir*=-1;}else{sortCol=col;sortDir=1;}
+            render();
+          }
+          window.cxSort=cxSort;
+
+          render();
+        })();
+        </script>
+
+      </div><!-- /tool-body -->
+    </div><!-- /tool-card #coax-ref -->
+
+    <!-- ════════════════════════════════════════════════════════ -->
     <div id="useful-links" style="margin-bottom:3rem;scroll-margin-top:120px">
       <div class="lbl" style="margin-top:1rem">Reference Resources</div>
       <h2 style="font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:600;color:var(--ink);margin-bottom:.5rem">Useful Links &amp; <em style="color:var(--red);font-style:italic;font-weight:300">Resources</em></h2>
@@ -1797,12 +2359,6 @@
           <div class="coming-name">FET Pulser Rise Time Calculator</div>
           <div class="coming-desc">Estimate rise and fall times from load capacitance and drive resistance. Directly applicable to GAACE FET switch and pulser products (10–15 ns typical).</div>
           <div class="coming-pill">Electronics</div>
-        </div>
-        <div class="coming-card">
-          <div class="coming-icon">🔍</div>
-          <div class="coming-name">Resolving Power Calculator</div>
-          <div class="coming-desc">Calculate mass resolving power R = m/Δm and peak width from measured spectra, for both quadrupole and time-of-flight analyzers.</div>
-          <div class="coming-pill">Mass Analysis</div>
         </div>
       </div>
     </div>
@@ -3262,7 +3818,7 @@ mfpCalc();
 
 // Highlight jump nav based on scroll position
 (function() {
-  var sections = ['quad-calc','rf-circuit','ion-ke','cap-power','vac-pressure','vac-flow','mfp-calc','ion-mobility','useful-links','coming-soon'];
+  var sections = ['quad-calc','rf-circuit','ion-ke','cap-power','vac-pressure','vac-flow','mfp-calc','ion-mobility','resolving-power','coax-ref','useful-links','coming-soon'];
   var ticking = false;
   window.addEventListener('scroll', function() {
     if (!ticking) {
@@ -3296,7 +3852,7 @@ mfpCalc();
 <script>
 const TOOLS_URL  = 'https://www.gaacustom.com/tools.html';
 const TOOLS_TITLE = 'Free Mass Spec Calculators — GAA Custom Electronics';
-const TOOLS_DESC  = 'Interactive calculators for mass spectrometry researchers: quadrupole RF/DC, Mathieu stability diagram, RF resonant circuit, ion kinetic energy, capacitive load power, and curated reference links. All run in your browser, no signup needed.';
+const TOOLS_DESC  = 'Interactive calculators for mass spectrometry researchers: quadrupole RF/DC with Mathieu stability diagram, RF resonant circuit, ion kinetic energy, capacitive load power, vacuum pressure and flow, mean free path, K₀/CCS ion mobility converter, resolving power for quadrupole and TOF (with noise budget, reflectron mode, and optimum voltage finder), coaxial cable reference table, and curated reference links. All run in your browser, no signup needed.';
 
 /* ── Set citation date ─────────────────────────────────────── */
 (function() {
@@ -3355,6 +3911,10 @@ function shareEmail(e) {
     '  • RF resonant circuit, coil inductance & wire gauge tools\n' +
     '  • Ion kinetic energy & CID collision energy calculator\n' +
     '  • Capacitive load power calculator for switched ion optics\n' +
+    '  • Vacuum pressure, orifice flow & mean free path calculators\n' +
+    '  • K₀ / CCS ion mobility converter\n' +
+    '  • Resolving power calculator — quadrupole & TOF with full noise budget\n' +
+    '  • Coaxial cable reference table with sortable parameters\n' +
     '  • Curated links to mass spec databases, software & journals\n\n' +
     'All calculations run in the browser — no signup needed.\n\nBest regards'
   );

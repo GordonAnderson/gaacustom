@@ -268,6 +268,11 @@
     .cap-title{font-family:var(--serif);font-size:.97rem;font-weight:600;color:var(--ink);margin-bottom:.35rem}
     .cap-desc{font-size:.8rem;color:var(--mid);line-height:1.55}
 
+    /* ── OFFER GRID (What We Offer) ── */
+    .offer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+    .offer-cell{background:var(--white);padding:1.75rem 1.5rem;transition:background .2s}
+    .offer-cell:hover{background:var(--surface)}
+
     /* ── ABOUT — surface ── */
     #about{padding:6rem 0;background:var(--surface);border-top:1px solid var(--rule)}
     .about-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
@@ -359,6 +364,7 @@
       .arch-cards{grid-template-columns:1fr}
       .sec-hd{flex-direction:column;align-items:flex-start;gap:1rem}
       .footer-grid{grid-template-columns:1fr 1fr}
+      .offer-grid{grid-template-columns:1fr 1fr}
     }
     @media(max-width:860px){
       .nav-links{display:none}
@@ -366,6 +372,7 @@
     }
     @media(max-width:600px){
       .cap-grid{grid-template-columns:1fr}
+      .offer-grid{grid-template-columns:1fr}
       .footer-grid{grid-template-columns:1fr;gap:2rem}
       .form-row{grid-template-columns:1fr}
       .hero-stats{gap:1.25rem}
@@ -488,6 +495,7 @@
       </div>
     </a>
     <ul class="nav-links">
+      <li><a href="#offer">What We Offer</a></li>
       <li><a href="#products">Products</a></li>
       <li><a href="#how-it-works">Software</a></li>
       <li><a href="#applications">Applications</a></li>
@@ -505,6 +513,7 @@
 
 <!-- ── MOBILE NAV DRAWER ── -->
 <div class="nav-drawer" id="nav-drawer">
+  <a href="#offer"        onclick="closeDrawer()">What We Offer</a>
   <a href="#products"     onclick="closeDrawer()">Products</a>
   <a href="#how-it-works" onclick="closeDrawer()">Software</a>
   <a href="#applications" onclick="closeDrawer()">Applications</a>
@@ -594,6 +603,40 @@
     <span class="mq-item">Custom Engineering <span class="mq-sep">&middot;</span></span>
   </div>
 </div>
+
+<!-- ── WHAT WE OFFER ── -->
+<section id="offer" style="padding:6rem 0;background:var(--white);border-top:1px solid var(--rule);">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:3rem;" class="fade">
+      <div class="lbl">What We Offer</div>
+      <h2 class="h2">Four Ways We <em>Support</em><br/>Your Research</h2>
+      <p style="color:var(--mid);max-width:560px;margin:.75rem auto 0;font-size:.97rem;line-height:1.7;">Products, custom engineering, components, and collaboration — pick the one that fits where you're starting from.</p>
+    </div>
+    <div class="offer-grid fade">
+      <div class="offer-cell">
+        <div class="cap-icon">🧩</div>
+        <div class="cap-title">MIPS Ecosystem</div>
+        <div class="cap-desc">Modular MIPS controllers and standalone instruments, unified under one host software interface. Mix and match power, RF, and control modules to fit your experiment.</div>
+      </div>
+      <div class="offer-cell">
+        <div class="cap-icon">🛠️</div>
+        <div class="cap-title">Custom Hardware &amp; Firmware</div>
+        <div class="cap-desc">Need electronics no off-the-shelf product solves? We design it — funding the work ourselves when it can become a product for other researchers, or scoping it as a paid project when it's proprietary to your lab.</div>
+      </div>
+      <div class="offer-cell">
+        <div class="cap-icon">⚛️</div>
+        <div class="cap-title">PCB-Level Ion Optics</div>
+        <div class="cap-desc">Ion funnels, vacuum feedthroughs, and planar quadrupoles as standalone building blocks — for labs building or modifying their own instruments, with or without a MIPS system.</div>
+      </div>
+      <div class="offer-cell">
+        <div class="cap-icon">🤝</div>
+        <div class="cap-title">Research Collaboration</div>
+        <div class="cap-desc">Not sure what you need? Talk to us first, at no cost. We'll help you find the right path, including formal research partnerships when a project calls for it.</div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ── END WHAT WE OFFER ── -->
 
 <!-- ── PRODUCTS (light) ── -->
 <section id="products">

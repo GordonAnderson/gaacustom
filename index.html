@@ -399,7 +399,7 @@
 
   <!-- Additional SEO -->
   <meta name="author"    content="GAA Custom Electronics, LLC" />
-  <meta name="keywords"  content="mass spectrometry electronics, MIPS controller, MIPS modular intelligent power supply, ion funnel electronics, RF generator mass spec, FAIMS electronics, SLIM traveling wave, ion mobility electronics, custom mass spec instruments, electrometer pico-ampere, FET high voltage pulser, ion trap controller, DC bias supply, ESI electronics, research instrument development, custom electronics university lab, national lab electronics, mass spectrometer control system, GAACE, GAA Custom Electronics" />
+  <meta name="keywords"  content="mass spectrometry electronics, MIPS controller, MIPS modular intelligent power supply, ion funnel electronics, RF generator mass spec, FAIMS electronics, SLIM traveling wave, ion mobility electronics, custom mass spec instruments, electrometer pico-ampere, FET high voltage pulser, ion trap controller, DC bias supply, ESI electronics, research instrument development, custom electronics university lab, national lab electronics, mass spectrometer control system, FTICR preamplifier, low-noise differential preamplifier, GAACE, GAA Custom Electronics" />
   <link rel="canonical"  href="https://www.GAAcustom.com" />
   <link rel="sitemap" type="application/xml" href="sitemap.xml" />
   <meta name="robots" content="index, follow" />
@@ -505,6 +505,7 @@
       <li><a href="#about">About</a></li>
       <li><a href="#support">Downloads</a></li>
       <li><a href="tools.html">Tools</a></li>
+      <li><a href="ion-optics.html" style="color:var(--red);font-weight:500">Ion Optics</a></li>
       <li><a href="#contact" class="nav-cta">Request Quote</a></li>
     </ul>
     <button class="hamburger" id="nav-hamburger" aria-label="Open menu" onclick="toggleDrawer()"><span></span><span></span><span></span></button>
@@ -523,6 +524,7 @@
   <a href="#about"        onclick="closeDrawer()">About</a>
   <a href="#support"      onclick="closeDrawer()">Downloads</a>
   <a href="tools.html"    onclick="closeDrawer()" style="color:var(--red);font-weight:500">Tools</a>
+  <a href="ion-optics.html" onclick="closeDrawer()" style="color:var(--red);font-weight:500">Ion Optics</a>
   <a href="#contact" class="nav-cta" onclick="closeDrawer()">Request Quote</a>
 </div>
 
@@ -627,6 +629,7 @@
         <div class="cap-icon">⚛️</div>
         <div class="cap-title">PCB-Level Ion Optics</div>
         <div class="cap-desc">Ion funnels, vacuum feedthroughs, and planar quadrupoles as standalone building blocks — for labs building or modifying their own instruments, with or without a MIPS system.</div>
+        <a href="ion-optics.html" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:.85rem;font-size:.85rem;font-weight:500;color:var(--red);">See Ion Optics Components &rarr;</a>
       </div>
       <div class="offer-cell">
         <div class="cap-icon">🤝</div>
@@ -1134,6 +1137,24 @@
           <span class="spec">Fault Monitoring</span><span class="spec">USB Interface</span>
         </div>
         <div class="prod-price"><span data-price="quad_driver_250v">$2,995</span></div>
+      </div>
+
+      <!-- ── FTICR PRE-AMP SYSTEM ── -->
+      <div class="prod-card fade">
+        <div class="prod-photo">
+          <img src="images/fticr-preamp.jpg"
+            alt="FTICR Pre-Amp System — low-noise differential preamplifier module with +IN, -IN and OUT SMA connectors"
+            style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div class="prod-badge"><span>Detection</span></div>
+        <div class="prod-name">FTICR Pre-Amp System</div>
+        <div class="prod-sub">Low-Noise Differential Preamplifier</div>
+        <p class="prod-desc">Two-module, ultra-low-noise differential preamplifier system purpose-built for Fourier Transform Ion Cyclotron Resonance (FTICR) detection. A high-gain JFET cascode pre-amp mounts directly at the detection cell to minimize lead length and stray pickup, while a separate fixed-gain post-amp — with optional two-channel summing for dual-cell configurations — completes the signal chain at or near the theoretical device noise floor.</p>
+        <div class="prod-specs">
+          <span class="spec">~2,100× System Gain</span><span class="spec">1.8 nV/√Hz Noise</span>
+          <span class="spec">&gt;103 dB CMRR</span><span class="spec">15 kHz – 3.8 MHz BW</span>
+        </div>
+        <div class="prod-price"><span data-price="fticr_preamp">$995</span></div>
       </div>
 
     </div>
@@ -2061,6 +2082,7 @@
           <a href="docs/standalone/Astraea_Operations_Manual.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Astraea — Operations Manual</div><div class="dl-desc">Precession waveform generator for digital quadrupoles — features, connections, command reference, and specifications</div></div><div class="dl-btn">PDF &#8595;</div></a>
           <a href="docs/standalone/Astraea_User_Guide.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Astraea — User Guide</div><div class="dl-desc">Step-by-step guide to connecting Astraea to the MIPS host application, configuring quad parameters, scanning, and plotting</div></div><div class="dl-btn">PDF &#8595;</div></a>
           <a href="docs/standalone/Quad_Rod_Driver_250V.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Digital Quad Rod Driver ±250V — Operations Manual</div><div class="dl-desc">High-voltage pulse amplifier for digital quadrupoles — front/rear panel, command reference, specs, and safety information</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/standalone/FTICR_PreAmp_System.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">FTICR Pre-Amp System — User Manual</div><div class="dl-desc">Low-noise differential preamplifier for FTICR detection — pre-amp + post-amp modules, ~2,100× system gain, 1.8 nV/√Hz input-referred noise</div></div><div class="dl-btn">PDF &#8595;</div></a>
         </div>
       </div>
 
@@ -2364,7 +2386,11 @@
     "consulting_sub":   "per hour",
     "astraea":          "$1,995",
     "astraea_100v":     "$1,999",
-    "quad_driver_250v": "$2,995"
+    "quad_driver_250v": "$2,995",
+    "fticr_preamp":     "$995",
+    "ion_funnel":       "$995",
+    "kf_feedthrough":   "$35",
+    "kf_feedthrough_sub": "each"
   };
 
   function applyPrices(prices) {

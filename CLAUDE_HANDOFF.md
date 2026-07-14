@@ -53,7 +53,7 @@ GAA Custom Electronics develops custom electronics monitoring and control system
 
 ## Technical Architecture
 
-**Single-page site** — `index.html` only. No build tools, no frameworks, no npm. Pure HTML/CSS/JS.
+**Site structure:** `index.html` is the main single-page site. `tools.html` and `ion-optics.html` are separate standalone pages that share its nav/footer/brand styling. No build tools, no frameworks, no npm. Pure HTML/CSS/JS throughout.
 
 **Hosting:** GitHub Pages — free, automatic SSL via Let's Encrypt (auto-renews every 90 days).
 
@@ -63,7 +63,7 @@ GAA Custom Electronics develops custom electronics monitoring and control system
 
 **Search Console:** Verified, sitemap.xml submitted.
 
-**Price management:** All prices stored in `prices.json` in repo root. Loaded by JavaScript on page load with fallback values hardcoded in index.html. To update any price — edit prices.json on GitHub only, never touch index.html for price changes.
+**Price management:** All prices stored in `prices.json` in repo root. Loaded by JavaScript on page load, with fallback values hardcoded separately in **both** `index.html` and `ion-optics.html` (each standalone page carries its own copy of the price-loader script). Edit `prices.json` on GitHub for the change to show up everywhere — but also update both HTML files' fallback objects to match, since the fallback only gets overridden by `prices.json` if that fetch succeeds. See "Prices System" below for the full key list and the bug this already caused once.
 
 **Map:** Leaflet.js with CartoDB Positron tiles (no API key, works locally and on GitHub Pages). 64 deployment locations, 16 countries. Loaded dynamically via script.onload to avoid "L is not defined" error.
 
@@ -73,7 +73,9 @@ GAA Custom Electronics develops custom electronics monitoring and control system
 
 ```
 gaacustom/
-├── index.html                    ← entire website
+├── index.html                    ← main website
+├── ion-optics.html               ← Ion Optics Components page (added July 2026)
+├── tools.html                    ← free calculators for researchers
 ├── prices.json                   ← all product/module prices
 ├── sitemap.xml                   ← Google sitemap
 ├── CNAME                         ← contains: www.GAAcustom.com
@@ -113,31 +115,43 @@ gaacustom/
 │     ├── VacuuumDevSystems.jpg   ✓ Vacuum/instrument dev lab — used in Facility gallery (note: double-u in filename)
 │     ├── Office.jpg              ✓ Main office Suite 105 — used in Facility gallery
 │     ├── picknplace-demo.mp4     ✓ Pick-and-place robot video — toggleable in Facility gallery (added May 2026)
-│     └── cnc-milling.mp4         ✓ 3-axis CNC milling video — toggleable in Facility gallery (added May 2026)
+│     ├── cnc-milling.mp4         ✓ 3-axis CNC milling video — toggleable in Facility gallery (added May 2026)
+│     ├── dms-module.jpg          ✓ DMS Module product photo
+│     ├── astraea.jpg             ✓ Astraea waveform generator (also used for ±100V driver option card)
+│     ├── quad-driver-250v.jpg    ✓ Digital Quad Rod Driver ±250V
+│     ├── ahmed-system.jpg        ✓ Dr. Ahmed Hamid / Auburn IMS platform (Applications section)
+│     ├── fticr-preamp.jpg        ✓ FTICR Pre-Amp System product photo (added July 2026)
+│     ├── ion-funnel.jpg          ✓ RF/DC Ion Funnel product photo (added July 2026)
+│     ├── kf-feedthroughs.jpg     ✓ KF Feedthroughs family photo — D9/BNC/Picoblade (added July 2026)
+│     └── kf-feedthroughs-installed.jpg ✓ KF Feedthroughs installed on chamber flange (added July 2026)
 │
 └── docs/
       ├── mips/                   ○ 16 PDFs pending upload
       ├── software/               ○ 3 PDFs pending upload
-      ├── standalone/             ○ 8 PDFs pending upload
+      ├── standalone/             includes FTICR_PreAmp_System.pdf ✓ (added July 2026) — several others still ○ pending upload
+      ├── ion-optics/             ← NEW (July 2026) — manuals for ion-optics.html
+      │     ├── Ion_Funnel_Manual.pdf         ✓
+      │     └── KF_Vacuum_Feedthroughs.pdf     ✓
       └── resources/              ○ 3 PDFs pending upload
 ```
 
-See README.md in the repo for complete filename list for all pending PDFs.
+See README.md in the repo for complete filename list for all pending PDFs. Note: this list is reconstructed from session memory and may still lag the live repo in places (e.g. exact pending/done status of older `docs/mips/`, `docs/software/`, `docs/standalone/`, `docs/resources/` PDFs) — verify against GitHub directly when it matters.
 
 ---
 
 ## Website Sections (in order)
 
-1. **Nav** — fixed, dark on hero / transitions to white on scroll. Logo + links + "Request Quote" CTA. CTA has `white-space:nowrap` to prevent line-break on narrow viewports. Nav links include: Products, Applications, Testimonials, Capabilities, Facility, About, Downloads, Contact.
+1. **Nav** — fixed, dark on hero / transitions to white on scroll. Logo + links + "Request Quote" CTA. CTA has `white-space:nowrap` to prevent line-break on narrow viewports. Nav links include: What We Offer, Products, Software, Applications, Testimonials, Capabilities, Facility, About, Downloads, Tools (`tools.html`), Ion Optics (`ion-optics.html`, current-page indicator uses a red bottom-border rather than color — dark nav text would be invisible against the dark default nav background), Contact.
 2. **Hero** — dark background, animated grid, red glow. MIPS panel card on right.
 3. **Wave divider** — SVG wave transitioning dark hero to light body.
 4. **Marquee** — red scrolling strip with product names.
-5. **Products** — MIPS featured card (front panel banner + home app screenshot on left; description + rear/internal tab switcher on right). Then 6 standalone product cards with photos.
+4a. **What We Offer** — four-column card grid between hero and Products: MIPS Ecosystem, Custom Hardware & Firmware, PCB-Level Ion Optics (links to `ion-optics.html` via a "See Ion Optics Components →" CTA added July 2026), Research Collaboration (not yet linked — awaiting `research.html`).
+5. **Products** — MIPS featured card (front panel banner + home app screenshot on left; description + rear/internal tab switcher on right). Then standalone product cards with photos, in grid order: RF Generator, RF Mega, MFT, SLIM Reverser, Electrometer, FET TW Switch, DMS Module, Astraea, Astraea ±100V Driver Option, Quad Rod Driver ±250V, FTICR Pre-Amp System (added July 2026, badge "Detection"). New cards get appended at the end of the grid rather than re-sorted alphabetically — this is the established pattern.
 6. **MIPS Modules accordion** — 6 collapsible categories: DC Bias, RF Driver & Heads, Waveform & Pulse, Ion Mobility & FAIMS, Specialty Voltage, Digital & System. Prices loaded from prices.json.
 7. **Software Architecture** — "One Interface. Every Instrument." Light background. Inline SVG diagram showing host app → communication bus → MIPS controllers + standalone instruments → custom GUI panel. Two control panel screenshots shown side by side below diagram.
-8. **Applications** — two examples so far: (1) GAACE soft landing system, (2) Prof. Brian Clowers WSU 8-meter SLIM system. Layout alternates photo left/right.
+8. **Applications** — three examples so far: (1) GAACE soft landing system, (2) Prof. Brian Clowers WSU 8-meter SLIM system, (3) Dr. Ahmed Hamid Auburn IMS research platform (`ahmed-system.jpg`). Layout alternates photo left/right.
 9. **Global Deployments** — Leaflet interactive map. Stats: 200+ systems, 16+ countries, 64+ institutions, 10+ years. 64 pins. CartoDB Positron tiles.
-10. **Testimonials** — dark background section. Currently one testimonial: Dr. Brian Clowers, Professor of Chemistry, WSU. Links to his faculty page.
+10. **Testimonials** — dark background section. Three testimonials: Dr. Brian Clowers (WSU), Prof. Ahmed Hamid (Auburn), Corentin Rossi (Institut des Sciences Moléculaires d'Orsay, Université Paris-Saclay). Rossi's was unsolicited but he has consented to public use — don't use the word "unsolicited" in any public-facing copy since the others were solicited.
 11. **Capabilities** — "From Problem to Solution." 4-step process + 6 capability cards grid. Three cards (In-House Fabrication, Mass Spec Expertise, Mechanical Design) have photo headers using PickNplace.jpg, MassSpecs.jpg, millLath.jpg respectively.
 12. **Facility Gallery** — "1,800 sq ft of Capability." 3 rows of facility photos/videos:
     - Row 1 (2-up large): ElectronicsRD.jpg + VacuuumDevSystems.jpg (static photos)
@@ -147,9 +161,22 @@ See README.md in the repo for complete filename list for all pending PDFs.
       - Toggle logic handled by `toggleVid(id)` JS function defined at the bottom of the facility section
     - Row 3 (2-up): SystemAssembly.jpg + Office.jpg (static photos)
 13. **About** — company story + ElectronicsRD.jpg facility photo above team cards + team cards (Gordon, Christopher, Meri).
-14. **Downloads** — accordion style, 4 categories: MIPS System (16 docs), MIPS Host Software (5 items), Standalone Instruments (8 docs), Technical & Business (3 docs). PDFs not yet uploaded to GitHub but links are wired up with correct filenames.
+14. **Downloads** — accordion style, categories: MIPS System, MIPS Host Software, Standalone Instrument Manuals (now includes FTICR Pre-Amp System — added July 2026), Technical & Business. Several PDFs still not yet uploaded to GitHub but links are wired up with correct filenames.
 15. **Contact** — dark background. Contact details + Google Maps embed (101904 Wiser Pkwy, Kennewick WA) + contact form (mailto: gaa@gaa-ce.com). Address updated to Suites 105 & 106.
 16. **Footer** — darkest background. Links + contact info. Company column includes "Our Facility" link → `#facility`.
+
+---
+
+## Other Pages (not part of the index.html single-page scroll)
+
+**`tools.html`** — free calculators for researchers: Mathieu stability diagram (Quadrupole RF/DC), Resolving Power (Quadrupole + TOF tabs), K₀/CCS Ion Mobility Converter, RF Resonant Circuit, Ion Kinetic Energy, Capacitive Load Power, Vacuum Pressure Converter, Orifice Flow/Differential Pumping, Mean Free Path. Has its own SEO meta/OG tags, a share strip (copy link, LinkedIn, X, email, citation block), and a bookmark-prompt banner. Raw HTML5 Canvas used for all calculator rendering (not Chart.js) to avoid rendering issues. `buildAQLookup()` must stay at 80 LUT entries / 800 `findPassband` scan steps — larger values (600/4000) caused severe page slowdowns.
+
+**`ion-optics.html`** (added July 2026) — Ion Optics Components page, reusing index.html's exact `<head>` (fonts/CSS variables), nav, and footer for brand consistency. Two products live here:
+- **RF/DC Ion Funnel** — $995. Specs: 4.3" standard length (custom lengths to order), 1" entrance aperture, 0.1" exit orifice, 0.04" plate spacing, 0.02" plate thickness, gold plated, ~700 pF capacitance, linear DC gradient. Driven by GAACE RF Generator/RF Mega. Manual: `docs/ion-optics/Ion_Funnel_Manual.pdf` (written from scratch — no manual existed before; content combines specs Gordon provided directly with mounting/connector details recovered from his internal assembly deck, `GAACEfunnel.pptx`).
+- **PCB KF Vacuum Feedthroughs** — $35 each. KF16/KF25/KF40 flange sizes; BNC, D9, Picoblade, pin-style connectors; tested to 10⁻⁶ Torr. Manual: `docs/ion-optics/KF_Vacuum_Feedthroughs.pdf`.
+- Closing "Need Something Custom?" CTA section (dark background) also name-checks planar quadrupoles, ring ion guides, and custom ion transport optics as contact-us-only capabilities (no dedicated product cards yet).
+- Photos for both products were recovered from Gordon's internal PowerPoint decks (`GAACEfunnel.pptx`, `KFfeedthroughs.pptx`) rather than fresh photography — the funnel photos in particular show internal assembly labeling (RF coupling board silkscreen) rather than a styled product shot. Fine for now per Gordon, but worth swapping if cleaner product photography becomes available.
+- **Nav integration:** `index.html` nav (desktop + mobile drawer) has an "Ion Optics" link styled `color:var(--red)` like the Tools link. On `ion-optics.html`'s own copy of the nav, that same link is instead styled as the "current page" indicator (`font-weight:700` + red bottom border, no color override) since the nav's default background is dark and `color:var(--ink)` would be invisible — this bug happened once already, don't reintroduce it. The homepage's "What We Offer" → "PCB-Level Ion Optics" card also links here.
 
 ---
 
@@ -198,10 +225,12 @@ mips_range, rf_generator, rf_mega, mft, slim_reverser,
 fet_switch, electrometer, dc50, dc250, dc750, rfdrv, rfhqh,
 uprfhqh, twaverf, rf_quad_head, twave, arb, psg, faims_system,
 quad_module, esi_b, esi_c, filament, dac, adc, dio_iso, levdet,
-ethernet, wifi, interlock, heater, consulting_rate
+ethernet, wifi, interlock, heater, consulting_rate, dms_module,
+astraea, astraea_100v, quad_driver_250v, fticr_preamp, ion_funnel,
+kf_feedthrough, kf_feedthrough_sub
 ```
 
-To update: edit prices.json on GitHub only. index.html contains fallback values and loads prices.json on page load.
+To update: edit `prices.json` on GitHub. **Both** `index.html` and `ion-optics.html` also carry their own hardcoded JS fallback copy of every price (used if `prices.json` fails to load) — **these two fallback objects must be kept identical.** This bit already caused a live bug once: `kf_feedthrough` was updated to "$35" in `prices.json` and in `index.html`'s fallback, but `ion-optics.html`'s own embedded fallback still said "Contact for pricing" — since that script runs on page load and stamps the fallback value over the DOM *before* `prices.json` finishes fetching, the page kept showing the stale price regardless of what `prices.json` said. Whenever a price changes: update `prices.json`, `index.html`'s fallback block, and `ion-optics.html`'s fallback block, all three, every time. (If more standalone pages get added later — e.g. `research.html` — the same rule will apply to them too.)
 
 ---
 
@@ -215,20 +244,23 @@ To update: edit prices.json on GitHub only. index.html contains fallback values 
 
 **Google Business:** Profile active. Links updated to new domain. Redirect pages handle old /about/, /capabilities/ etc. URLs.
 
-**Content coming:** More customer testimonials, more customer lab photos, application notes.
+**Content coming:** More customer lab photos, additional application notes, Research & Collaboration page content.
 
 ---
 
 ## Outstanding To-Do Items
 
-- [ ] Upload all PDFs to docs/ folders (see README.md for filenames)
-- [ ] More customer testimonials (emails sent to select customers)
-- [ ] Customer lab photos for Applications section
+- [ ] Upload all PDFs to docs/ folders (see README.md for filenames) — includes the two new `docs/ion-optics/` manuals and `docs/standalone/FTICR_PreAmp_System.pdf`
+- [ ] Customer lab photos for Applications section (beyond Ahmed Hamid's Auburn platform)
 - [ ] Module list corrections from Gordon (detailed list promised)
 - [ ] GitHub MIPS software repo URL (to update 4 software download links from generic github.com/GordonAnderson to specific repo)
 - [ ] Team photos (optional — currently showing initials avatars)
 - [ ] More sales location data (invoices 1,036+)
-- [ ] Additional application examples (FAIMS, quadrupole MS, ion funnels)
+- [ ] Additional application examples (FAIMS, quadrupole MS)
+- [ ] **Research & Collaboration page** (`research.html`) — next planned page. Will cover two active R&D projects (low-cost modular vacuum system platform; FPGA-based TDC/TOF DAQ system), contract R&D with rate sheet, a community-input callout, and a partnership/get-involved section. Source documents not yet provided. Build following the same pattern as `ion-optics.html` (reuse index.html's head/nav/footer, own embedded price-loader fallback if it needs pricing, link from the homepage's "Research Collaboration" What We Offer card once live, add a nav link on both `index.html` and the new page itself).
+- [ ] **Low-cost ion gauge** (coming soon, no specs yet) — placement depends on whether it ships with a MIPS/USB host interface (→ main standalone products grid on `index.html`, like Electrometer) or is bare hardware (→ `ion-optics.html`, like the KF feedthroughs). Ask Gordon once specs are available.
+- [ ] Dedicated product treatment (specs, photos, pricing) for planar quadrupoles, ring ion guides, and other custom ion transport optics — currently just named as "contact us" capabilities in the `ion-optics.html` custom-work CTA, not yet full product entries
+- [ ] Consider swapping the Ion Funnel product photos on `ion-optics.html` for cleaner product shots if/when available — the current ones were recovered from an internal assembly-instructions deck and show PCB silkscreen/labeling rather than a styled hero shot
 
 ---
 
@@ -252,7 +284,7 @@ The following documents are maintained separately and used to generate the PDF C
 5. Live in ~60 seconds
 
 **For price changes:**
-Edit prices.json on GitHub only — never need to touch index.html
+Edit `prices.json` on GitHub, **and** update the matching fallback value in both `index.html` and `ion-optics.html` (search each file for `var fallback = {`). Skipping the fallback update is what caused the `kf_feedthrough` price to look "stuck" once already — see Prices System above.
 
 **For new photos:**
 Upload photo here in chat → Claude adds to index.html with correct img tag → upload both index.html and the photo to GitHub in the `images/` folder
@@ -291,3 +323,7 @@ Paste this document + build_capabilities.js into a new Claude chat → describe 
 - **VacuuumDevSystems.jpg** has a double-u typo in the filename — this matches what is referenced in index.html, do not "correct" it or the image will break
 - Address is **Suites 105 & 106** throughout — the facility occupies two attached units
 - Videos in the facility gallery are **not autoplay** — they only play when the visitor clicks "▶ Watch". Do not add autoplay to facility video elements.
+- **Photos from Gordon's iPhone can come out washed out/desaturated on the web** even though they look fine in macOS Preview. Cause: the photo has an embedded wide-gamut color profile (seen so far: "Display P3 Primaries"), and browsers that don't color-manage it read the raw values as if they were plain sRGB — which under-saturates them, since P3 is a wider gamut. This is *not* fixable by boosting contrast/saturation with a blind PIL `ImageEnhance` pass (tried once, didn't help, because it also strips the profile without doing the actual color conversion — same mismatch, just less visible on the surface). The correct fix: read the embedded ICC profile and do an actual colorimetric conversion to sRGB, e.g. with Pillow's `ImageCms.profileToProfile(img, source_profile, srgb_profile)`, then save without an ICC tag (the pixel values are now genuinely sRGB, so no tag is needed). Gordon's own workaround — opening the photo in PowerPoint and re-saving — works for the same underlying reason: PowerPoint flattens the image to plain sRGB during that round-trip. Check `img.info.get('icc_profile')` before assuming a "washed out" photo just needs a contrast tweak.
+- **`ion-optics.html` (and any future standalone page like it) carries its own copy of the price-loader `<script>` block, with its own hardcoded fallback object** — it is not shared with `index.html`. Any time a price changes, update `prices.json` **and** both HTML files' fallback objects, or the standalone page will silently keep showing the old value even after `prices.json` is correct (this already happened once with `kf_feedthrough`). Quick way to check they match: diff the `var fallback = {...}` block between the two files.
+- When building a new standalone page that shares the site's chrome (like `ion-optics.html`), reuse `index.html`'s nav and footer blocks verbatim rather than rewriting them, but rewrite every in-page anchor href (`#products`, `#about`, `#contact`, etc.) to `index.html#products`, `index.html#about`, etc. — a bare `#anchor` href on a different physical page just scrolls nowhere. Also point the nav logo at `index.html` instead of `#`.
+- The site's nav is **dark by default** (it's designed to sit over the dark hero on `index.html`) and only becomes light after `nav.classList.toggle('scrolled', ...)` fires on scroll. A "current page" nav-link indicator on a standalone page must not set `color:var(--ink)` (near-black) — that's invisible against the dark default nav and the dark mobile drawer. Use something color-agnostic instead, like a red bottom border plus bold weight, so it stays visible in both the dark and scrolled states.

@@ -41,5 +41,9 @@
   "dms_module": "$1,195",
   "astraea": "$1,995",
   "astraea_100v": "$1,999",
-  "quad_driver_250v": "$2,995"
+  "quad_driver_250v": "$2,995",
+  "fticr_preamp": "$995",
+  "ion_funnel": "$995",
+  "kf_feedthrough": "$35",
+  "kf_feedthrough_sub": "each"
 }

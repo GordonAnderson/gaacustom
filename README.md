@@ -25,6 +25,7 @@ Use this as a checklist — add files as they become available. Links on the web
 gaacustom/
 │
 ├── index.html                          ← Main website (single-page, do not rename)
+├── ion-optics.html                     ← Ion Optics Components page (ion funnels, KF feedthroughs)
 ├── README.md                           ← This file
 │
 ├── images/                             ← All photos and graphics
@@ -42,6 +43,10 @@ gaacustom/
 │     ├── control-panel-1.jpg           ✓ Done — 2 RF 24 DCbias 1 ESI panel
 │     ├── control-panel-2.jpg           ✓ Done — 2 RF 16 DCbias Astraea panel
 │     ├── soft-landing.jpg              ✓ Done — soft landing research system
+│     ├── fticr-preamp.jpg              ✓ Done — FTICR Pre-Amp System product photo
+│     ├── ion-funnel.jpg                ✓ Done — RF/DC Ion Funnel product photo
+│     ├── kf-feedthroughs.jpg           ✓ Done — KF Feedthroughs family photo (D9/BNC/Picoblade)
+│     ├── kf-feedthroughs-installed.jpg ✓ Done — KF Feedthroughs installed on chamber flange
 │     ├── lab-facility.jpg              ○ Pending — lab/workspace photo
 │     └── team.jpg                      ○ Pending — team photo (optional)
 │
@@ -79,7 +84,12 @@ gaacustom/
       │     ├── MFT.pdf                                 ✓ Done
       │     ├── RF_Generator.pdf                        ✓ Done
       │     ├── RF_Mega.pdf                             ✓ Done
-      │     └── SLIM_Reverser.pdf                       ✓ Done
+      │     ├── SLIM_Reverser.pdf                       ✓ Done
+      │     └── FTICR_PreAmp_System.pdf                 ✓ Done
+      │
+      ├── ion-optics/                   ← Ion Optics Components manuals (for ion-optics.html)
+      │     ├── Ion_Funnel_Manual.pdf                   ✓ Done
+      │     └── KF_Vacuum_Feedthroughs.pdf               ✓ Done
       │
       └── resources/                    ← Business & technical documents
             ├── Rate_Sheet.pdf                          ✓ Done
@@ -130,12 +140,13 @@ gaacustom/
 
 ## Website Sections
 
-The single-page site is organized as follows:
+The main site (`index.html`) is a single page organized as follows:
 
 | Section | Content |
 |---------|---------|
 | Hero | Dark intro with MIPS hero panel |
-| Products | MIPS featured card + module accordion + standalone products |
+| What We Offer | Four pillars: MIPS Ecosystem, Custom Hardware & Firmware, PCB-Level Ion Optics (links to `ion-optics.html`), Research Collaboration |
+| Products | MIPS featured card + module accordion + standalone products (RF Generator, RF Mega, MFT, SLIM Reverser, Electrometer, FET Switch, DMS Module, Astraea + options, FTICR Pre-Amp System) |
 | Software Architecture | One Interface diagram + control panel examples |
 | Applications | Soft landing system + more examples coming |
 | Global Deployments | Interactive Leaflet map — 64+ locations, 16+ countries |
@@ -144,17 +155,23 @@ The single-page site is organized as follows:
 | Downloads | Accordion — MIPS manuals, software, standalone, resources |
 | Contact | Contact form + facility map (Kennewick, WA) |
 
+**Other pages** (linked from the main nav, not part of the single-page scroll):
+- `tools.html` — free calculators for researchers (Mathieu stability, resolving power, K₀/CCS, RF resonant circuit, etc.)
+- `ion-optics.html` — Ion Optics Components: RF/DC Ion Funnel ($995) and PCB KF Vacuum Feedthroughs ($35 each), plus a "Need something custom?" section covering planar quadrupoles, ring ion guides, and other made-to-order ion transport optics. Shares the same nav/footer/brand styling as `index.html` — see `CLAUDE_HANDOFF.md` for the technical gotcha about this page's own embedded price-loader fallback.
+
 ---
 
 ## Content Still Needed
 
-- [ ] Customer testimonials (emailed to select customers)
-- [ ] Customer lab photos showing MIPS in use
-- [ ] Additional application examples (ion mobility, FAIMS, quad MS)
+- [ ] Additional customer lab photos showing MIPS in use (beyond the Ahmed Hamid / Auburn platform already added)
+- [ ] Additional application examples (FAIMS, quad MS)
 - [ ] Lab/facility photo for About section
 - [ ] GitHub MIPS software repository URL (to update software download links)
 - [ ] MIPS module list corrections and additions
 - [ ] More sales locations (invoices 1,036+)
+- [ ] Research & Collaboration page (`research.html`) — source documents not yet provided; will cover the modular vacuum system platform, FPGA TDC/TOF DAQ project, contract R&D rate sheet, and partnership/get-involved section
+- [ ] Low-cost ion gauge (coming soon) — placement TBD: if it ships with a MIPS/USB host interface it belongs in the main standalone products grid on `index.html`; if it's bare hardware like the KF feedthroughs it belongs on `ion-optics.html`
+- [ ] Full product pages for planar quadrupoles, ring ion guides, and other custom ion transport optics — currently only mentioned as "contact us" capabilities on `ion-optics.html`, no dedicated specs/photos/pricing yet
 
 ---
 
@@ -178,7 +195,7 @@ DNS configured with GitHub Pages IP addresses and CNAME → `GordonAnderson.gith
 ## Contact
 
 **GAA Custom Electronics, LLC**  
-101904 Wiser Pkwy, Suite 105  
+101904 Wiser Pkwy, Suites 105 & 106  
 Kennewick, WA 99338  
 
 📞 509.628.6851  

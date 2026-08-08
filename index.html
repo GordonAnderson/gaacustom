@@ -272,6 +272,13 @@
     .offer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
     .offer-cell{background:var(--white);padding:1.75rem 1.5rem;transition:background .2s}
     .offer-cell:hover{background:var(--surface)}
+    .offer-cell-wide{grid-column:1/-1;background:var(--d-bg);display:grid;grid-template-columns:1.35fr 1fr;gap:2.5rem;align-items:center;padding:2.25rem 2rem}
+    .offer-cell-wide:hover{background:var(--d-bg)}
+    .offer-cell-wide .cap-title{color:var(--white);font-size:1.15rem}
+    .offer-cell-wide .cap-desc{color:rgba(255,255,255,.5)}
+    .offer-open-list{display:flex;flex-wrap:wrap;gap:.4rem}
+    .offer-open-list span{font-family:var(--mono);font-size:.62rem;letter-spacing:.05em;color:rgba(255,255,255,.6);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:3px;padding:.28rem .6rem}
+    @media(max-width:700px){.offer-cell-wide{grid-template-columns:1fr;gap:1.5rem}}
 
     /* ── ABOUT — surface ── */
     #about{padding:6rem 0;background:var(--surface);border-top:1px solid var(--rule)}
@@ -506,6 +513,8 @@
       <li><a href="#support">Downloads</a></li>
       <li><a href="tools.html">Tools</a></li>
       <li><a href="ion-optics.html" style="color:var(--red);font-weight:500">Ion Optics</a></li>
+      <li><a href="open-source.html" style="color:var(--red);font-weight:500">Open Source</a></li>
+      <li><a href="research.html" style="color:var(--red);font-weight:500">Research</a></li>
       <li><a href="#contact" class="nav-cta">Request Quote</a></li>
     </ul>
     <button class="hamburger" id="nav-hamburger" aria-label="Open menu" onclick="toggleDrawer()"><span></span><span></span><span></span></button>
@@ -525,6 +534,8 @@
   <a href="#support"      onclick="closeDrawer()">Downloads</a>
   <a href="tools.html"    onclick="closeDrawer()" style="color:var(--red);font-weight:500">Tools</a>
   <a href="ion-optics.html" onclick="closeDrawer()" style="color:var(--red);font-weight:500">Ion Optics</a>
+  <a href="open-source.html" onclick="closeDrawer()" style="color:var(--red);font-weight:500">Open Source</a>
+  <a href="research.html" onclick="closeDrawer()" style="color:var(--red);font-weight:500">Research</a>
   <a href="#contact" class="nav-cta" onclick="closeDrawer()">Request Quote</a>
 </div>
 
@@ -588,7 +599,7 @@
     <span class="mq-item">RF Mega <span class="mq-sep">&middot;</span></span>
     <span class="mq-item">Electrometer <span class="mq-sep">&middot;</span></span>
     <span class="mq-item">FET Switch <span class="mq-sep">&middot;</span></span>
-    <span class="mq-item">SLIM Reverser <span class="mq-sep">&middot;</span></span>
+    <span class="mq-item">Twave Reverser <span class="mq-sep">&middot;</span></span>
     <span class="mq-item">Multi-Function Twave <span class="mq-sep">&middot;</span></span>
     <span class="mq-item">MIPS Quad <span class="mq-sep">&middot;</span></span>
     <span class="mq-item">FAIMS System <span class="mq-sep">&middot;</span></span>
@@ -611,8 +622,8 @@
   <div class="container">
     <div style="text-align:center;margin-bottom:3rem;" class="fade">
       <div class="lbl">What We Offer</div>
-      <h2 class="h2">Four Ways We <em>Support</em><br/>Your Research</h2>
-      <p style="color:var(--mid);max-width:560px;margin:.75rem auto 0;font-size:.97rem;line-height:1.7;">Products, custom engineering, components, and collaboration — pick the one that fits where you're starting from.</p>
+      <h2 class="h2">Five Ways We <em>Support</em><br/>Your Research</h2>
+      <p style="color:var(--mid);max-width:560px;margin:.75rem auto 0;font-size:.97rem;line-height:1.7;">Products, custom engineering, components, and collaboration — pick the one that fits where you're starting from. All of it built on published, open designs.</p>
     </div>
     <div class="offer-grid fade">
       <div class="offer-cell">
@@ -634,7 +645,30 @@
       <div class="offer-cell">
         <div class="cap-icon">🤝</div>
         <div class="cap-title">Research Collaboration</div>
-        <div class="cap-desc">Not sure what you need? Talk to us first, at no cost. We'll help you find the right path, including formal research partnerships when a project calls for it.</div>
+        <div class="cap-desc">Not sure what you need? Talk to us first, at no cost. We'll help you find the right path, including formal research partnerships and SBIR/STTR co-proposing when a project calls for it.</div>
+        <a href="research.html" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:.85rem;font-size:.85rem;font-weight:500;color:var(--red);">See Our Research Programs &rarr;</a>
+      </div>
+
+      <!-- ── FIFTH PILLAR — OPEN BY DESIGN ── -->
+      <div class="offer-cell offer-cell-wide">
+        <div>
+          <div class="cap-icon">📖</div>
+          <div class="cap-title">Open by Design</div>
+          <div class="cap-desc" style="margin-top:.35rem;">Our firmware and host software have been public on GitHub since the start, and we're now extending that to hardware — schematics, board files, parts lists, and Gerbers, beginning with discrete components and working toward full systems. Need a schematic to troubleshoot a board, or design files to base a variant on? Ask us. We share technical data with the researchers using our hardware, and we don't ask for an NDA.</div>
+          <a href="open-source.html" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;font-size:.88rem;font-weight:500;color:var(--red);">Our Open Source Practice &rarr;</a>
+        </div>
+        <div class="offer-open-list">
+          <span>Schematics</span>
+          <span>PCB layouts</span>
+          <span>Gerbers</span>
+          <span>Bills of material</span>
+          <span>Firmware source</span>
+          <span>Host app source</span>
+          <span>Fabrication notes</span>
+          <span>CERN-OHL-W</span>
+          <span>MIT</span>
+          <span>GPL-3.0</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1020,18 +1054,18 @@
       <div class="prod-card fade">
         <div class="prod-photo">
           <img src="images/slim-reverser.jpg"
-            alt="SLIM Reverser TWAVE direction control switch PCB with power supply and cables"
+            alt="Twave Reverser TWAVE direction control switch, enclosed unit with power supply and cables"
             style="width:100%;height:100%;object-fit:cover;display:block;" />
         </div>
         <div class="prod-badge"><span>Accessory</span></div>
-        <div class="prod-name">SLIM Reverser</div>
+        <div class="prod-name">Twave Reverser</div>
         <div class="prod-sub">TWAVE Direction Control Switch</div>
-        <p class="prod-desc">16-pole analog bi-directional switch for reversing traveling wave direction in SLIM devices. Preserves signal shape and amplitude with isolated control input.</p>
+        <p class="prod-desc">16-pole analog bi-directional switch for reversing traveling wave direction in any Twave ion manipulation device. Preserves signal shape and amplitude with isolated control input.</p>
         <div class="prod-specs">
           <span class="spec">16-Pole Analog</span><span class="spec">100 Vp-p Max</span>
           <span class="spec">Isolated Control</span><span class="spec">12VDC Powered</span>
         </div>
-        <div class="prod-price"><span data-price="slim_reverser">$395</span></div>
+        <div class="prod-price"><span data-price="twave_reverser">$395</span></div>
       </div>
 
       <div class="prod-card fade">
@@ -1468,7 +1502,7 @@
       <!-- Description left, photo right for visual variety -->
       <div>
         <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem;">SLIM Ion Mobility</div>
-        <h3 style="font-family:var(--serif);font-size:1.7rem;font-weight:600;color:var(--ink);line-height:1.1;margin-bottom:1rem;">8-Meter SLIM System<br/><a href="https://chem.wsu.edu/people/staff/wsu-profile/brian.clowers/" target="_blank" style="color:var(--red);text-decoration:none;border-bottom:1px solid rgba(204,31,31,.3);">Prof. Brian Clowers</a> · Washington State University</h3>
+        <h3 style="font-family:var(--serif);font-size:1.7rem;font-weight:600;color:var(--ink);line-height:1.1;margin-bottom:1rem;">8-Meter SLIM<sup><a href="#slim-note" style="color:var(--red);text-decoration:none;font-weight:600;font-size:.7em;vertical-align:super;">*</a></sup> System<br/><a href="https://chem.wsu.edu/people/staff/wsu-profile/brian.clowers/" target="_blank" style="color:var(--red);text-decoration:none;border-bottom:1px solid rgba(204,31,31,.3);">Prof. Brian Clowers</a> · Washington State University</h3>
         <p style="font-size:.95rem;color:var(--ink3);line-height:1.75;margin-bottom:1.25rem;">
           Prof. Brian Clowers' lab at Washington State University runs a customized 8-meter Structures for Lossless Ion Manipulations (SLIM) system driven entirely by GAACE electronics. A single custom MIPS control panel on the host computer simultaneously controls 3 MIPS systems, an RF generator, and multiple TW Reversers — all from one unified interface.
         </p>
@@ -1554,6 +1588,52 @@
       </div>
     </div>
 
+
+    <!-- MOBILion SLIM-QTOF commercial spotlight -->
+    <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:3.5rem;align-items:center;margin-bottom:4rem;" class="fade">
+
+      <!-- Photo -->
+      <div style="border-radius:6px;overflow:hidden;border:1px solid var(--rule);box-shadow:0 4px 24px rgba(0,0,0,.08);">
+        <img src="images/mobilion-slim-qtof.jpg"
+          alt="SLIM-QTOF research prototype at MOBILion Systems built using two MIPS supplies and an RF Mega"
+          style="width:100%;display:block;" />
+        <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.09em;color:var(--mid);padding:.7rem .85rem;border-top:1px solid var(--rule);background:var(--white);line-height:1.6;">SLIM-QTOF R&amp;D prototype — MOBILion Systems, Inc. Photograph courtesy of MOBILion Systems.</div>
+      </div>
+
+      <!-- Description -->
+      <div>
+        <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem;">Commercial Instrument Development</div>
+        <h3 style="font-family:var(--serif);font-size:1.7rem;font-weight:600;color:var(--ink);line-height:1.15;margin-bottom:1rem;">SLIM<sup><a href="#slim-note" style="color:var(--red);text-decoration:none;font-weight:600;font-size:.55em;vertical-align:super;">*</a></sup>-QTOF Platform Enabling PAMAF&trade; Proteomics<br/><a href="https://www.mobilionsystems.com" target="_blank" rel="noopener" style="color:var(--red);text-decoration:none;border-bottom:1px solid rgba(204,31,31,.3);">MOBILion Systems, Inc.</a></h3>
+        <p style="font-size:.95rem;color:var(--ink3);line-height:1.75;margin-bottom:1.25rem;">
+          <a href="https://www.mobilionsystems.com" target="_blank" rel="noopener" style="color:var(--red);text-decoration:none;border-bottom:1px solid rgba(204,31,31,.3);">MOBILion Systems, Inc.</a> developed an R&amp;D prototype Structures for Lossless Ion Manipulation – Quadrupole Time-of-Flight (SLIM-QTOF) system leveraging MIPS electronics. This high-resolution ion mobility – mass spectrometry (HRIM-MS) platform incorporates two MIPS power supplies to provide various DC potentials and a Mega RF that provides sufficient power to drive a dual stack SLIM device from a single supply.
+        </p>
+        <p style="font-size:.95rem;color:var(--ink3);line-height:1.75;margin-bottom:1.5rem;">
+          This system was used to prototype the <a href="https://www.mobilionsystems.com/news/mobilion-systems-to-present-transformative-advances-in-proteomics-sensitivity-and-throughput-at-hupo-2025" target="_blank" rel="noopener" style="color:var(--red);text-decoration:none;border-bottom:1px solid rgba(204,31,31,.3);">Parallel Accumulation Mobility Aligned Fragmentation (PAMAF&trade;)</a> acquisition mode for proteomics analysis, and is an excellent example of how MIPS electronics can be used for projects requiring modification of existing instrumentation.
+        </p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:1.5rem;">
+          <div style="background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:.75rem;">
+            <div style="font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:.25rem;">Controllers</div>
+            <div style="font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);">2× MIPS Supplies</div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:.75rem;">
+            <div style="font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:.25rem;">RF Drive</div>
+            <div style="font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);">RF Mega</div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:.75rem;">
+            <div style="font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:.25rem;">Platform</div>
+            <div style="font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);">HRIM-MS</div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:.75rem;">
+            <div style="font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:.25rem;">Company</div>
+            <div style="font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);">MOBILion Systems</div>
+          </div>
+        </div>
+
+        <div style="padding-top:1rem;border-top:1px solid var(--rule2);font-size:.83rem;color:var(--mid);line-height:1.7;">Write-up and photograph provided by <span style="color:var(--ink2);font-weight:500;">MOBILion Systems, Inc.</span> and published with permission.</div>
+      </div>
+    </div>
+
     <!-- More applications coming callout -->
     <div style="background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:1.75rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;" class="fade">
       <div>
@@ -1561,6 +1641,16 @@
         <div style="font-size:.88rem;color:var(--mid);">FAIMS · Quadrupole mass filters · Ion funnels · Custom OEM integrations · and more</div>
       </div>
       <a href="#contact" class="btn-p" style="white-space:nowrap;flex-shrink:0;">Tell Us About Your Experiment</a>
+    </div>
+
+
+    <!-- SLIM licensing footnote -->
+    <div id="slim-note" style="border-top:1px solid var(--rule);margin-top:3rem;padding-top:1.5rem;">
+      <div style="font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mid);margin-bottom:.75rem;">Notes</div>
+      <div style="display:flex;gap:.6rem;font-size:.8rem;line-height:1.75;color:var(--mid);max-width:900px;">
+        <span style="color:var(--red);font-weight:600;flex-shrink:0;">*</span>
+        <span>MOBILion Systems is the exclusive licensee of the core <a href="https://www.mobilionsystems.com/how-we-do-it/technology-slim" target="_blank" rel="noopener" style="color:var(--red);text-decoration:none;border-bottom:1px solid rgba(204,31,31,.28);">SLIM technology</a> developed by PNNL. Individuals or organizations interested in obtaining a sublicense for research or commercial purposes should contact MOBILion at <a href="mailto:info@mobilionsystems.com" style="color:var(--red);text-decoration:none;border-bottom:1px solid rgba(204,31,31,.28);">info@mobilionsystems.com</a>. MOBIE, MOBILion, and PAMAF are trademarks of MOBILion Systems, Inc.</span>
+      </div>
     </div>
 
   </div>
@@ -2078,7 +2168,7 @@
           <a href="docs/standalone/MFT.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Multi-Function Twave (MFT)</div><div class="dl-desc">Standalone traveling wave driver — 2x 8-channel outputs, SLIM, CRIMP, and accumulation support</div></div><div class="dl-btn">PDF &#8595;</div></a>
           <a href="docs/standalone/RF_Generator.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">RF Generator</div><div class="dl-desc">Standalone RF driver for ion funnels and guides — 500 KHz to 5 MHz, USB/Ethernet, auto-tune</div></div><div class="dl-btn">PDF &#8595;</div></a>
           <a href="docs/standalone/RF_Mega.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">RF Mega</div><div class="dl-desc">High-power standalone RF driver — 120 to 200W output, drives up to 5000 pF capacitive loads</div></div><div class="dl-btn">PDF &#8595;</div></a>
-          <a href="docs/standalone/SLIM_Reverser.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">SLIM Reverser</div><div class="dl-desc">16-pole analog TWAVE direction control switch — isolated control input, 100 Vp-p maximum</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <a href="docs/standalone/TWAVE_Reverser.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Twave Reverser</div><div class="dl-desc">16-pole analog TWAVE direction control switch — isolated control input, 100 Vp-p maximum</div></div><div class="dl-btn">PDF &#8595;</div></a>
           <a href="docs/standalone/Astraea_Operations_Manual.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Astraea — Operations Manual</div><div class="dl-desc">Precession waveform generator for digital quadrupoles — features, connections, command reference, and specifications</div></div><div class="dl-btn">PDF &#8595;</div></a>
           <a href="docs/standalone/Astraea_User_Guide.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Astraea — User Guide</div><div class="dl-desc">Step-by-step guide to connecting Astraea to the MIPS host application, configuring quad parameters, scanning, and plotting</div></div><div class="dl-btn">PDF &#8595;</div></a>
           <a href="docs/standalone/Quad_Rod_Driver_250V.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Digital Quad Rod Driver ±250V — Operations Manual</div><div class="dl-desc">High-voltage pulse amplifier for digital quadrupoles — front/rear panel, command reference, specs, and safety information</div></div><div class="dl-btn">PDF &#8595;</div></a>
@@ -2215,7 +2305,7 @@
             <option value="">— Select —</option>
             <option>MIPS System (quote)</option>
             <option>RF Generator / RF Mega</option>
-            <option>MFT / SLIM Reverser</option>
+            <option>MFT / Twave Reverser</option>
             <option>Electrometer / FET Switch</option>
             <option>Custom Engineering Project</option>
             <option>Technical Support</option>
@@ -2247,7 +2337,7 @@
         <li><a href="#products">RF Generator</a></li>
         <li><a href="#products">RF Mega</a></li>
         <li><a href="#products">MFT Twave</a></li>
-        <li><a href="#products">SLIM Reverser</a></li>
+        <li><a href="#products">Twave Reverser</a></li>
         <li><a href="#products">Electrometer</a></li>
         <li><a href="#products">FET Switch</a></li>
       </ul>
@@ -2260,6 +2350,7 @@
         <li><a href="#facility">Our Facility</a></li>
         <li><a href="#how-it-works">Software</a></li>
         <li><a href="#applications">Applications</a></li>
+        <li><a href="research.html">Research</a></li>
         <li><a href="#support">Downloads</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -2268,6 +2359,7 @@
       <div class="fcol-title">Resources</div>
       <ul class="fcol-links">
         <li><a href="#support">Operations Manuals</a></li>
+        <li><a href="open-source.html">Open Source</a></li>
         <li><a href="https://github.com/GordonAnderson" target="_blank">GitHub Repository</a></li>
         <li><a href="#support">Rate Sheet</a></li>
         <li><a href="#support">Warranty Policy</a></li>
@@ -2354,7 +2446,7 @@
     "rf_mega":          "$1,995",
     "rf_mega_sub":      "+ options",
     "mft":              "$995",
-    "slim_reverser":    "$395",
+    "twave_reverser":    "$395",
     "fet_switch":       "$295",
     "electrometer":     "Contact for pricing",
     "dc50":             "$795",

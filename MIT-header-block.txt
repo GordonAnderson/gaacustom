@@ -1,0 +1,63 @@
+MIT LICENSE HEADER — for in-house GAACE source files
+=====================================================
+
+Add this block to the top of each source and header file in the in-house
+libraries (DIhandler, SerialBuffer, WireServer), and any other GAACE-authored
+files that currently have no license header.
+
+
+C / C++ / Arduino (.cpp, .h, .ino) — block comment
+--------------------------------------------------
+
+/*
+ * <FileName> — part of <LibraryName>
+ * Copyright (c) 2026 GAA Custom Electronics, LLC
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+
+Minimal SPDX-only variant (if you prefer a short header + a LICENSE file)
+-------------------------------------------------------------------------
+
+If each library folder has its own MIT LICENSE file, the per-file header can be
+just:
+
+/*
+ * <FileName> — part of <LibraryName>
+ * Copyright (c) 2026 GAA Custom Electronics, LLC
+ * SPDX-License-Identifier: MIT
+ */
+
+This is the cleaner approach for many files — put the full MIT text once in a
+LICENSE file in the library folder, and use the short SPDX header everywhere.
+
+
+Per-library LICENSE file
+------------------------
+
+Drop a file named `LICENSE` in each in-house library folder containing the full
+MIT text with this copyright line:
+
+    Copyright (c) 2026 GAA Custom Electronics, LLC
+
+(The MIT text is in the licensing kit at firmware-repo/LICENSE — copy it and
+fill the copyright line, or use GitHub's MIT template.)

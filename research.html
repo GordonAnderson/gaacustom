@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TBTBP7GLEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-TBTBP7GLEK');
+  </script>
+  <!-- End Google Analytics -->
+
+  <title>Research &amp; Development — GAA Custom Electronics | Mass Spectrometry Instrument Development</title>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="favicons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicons/favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="favicons/favicon-192x192.png" />
+
+  <meta name="description" content="Active research programs at GAA Custom Electronics: a low-cost modular vacuum platform, FPGA-based TDC and TOF data acquisition, a low-cost USB/WiFi vacuum gauge, and PCB ion optics. Contract R&amp;D, research partnerships, and SBIR/STTR co-proposing." />
+  <link rel="canonical" href="https://www.gaacustom.com/research.html" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --red:      #CC1F1F;
+      --red-dk:   #A01515;
+      --red-pale: #FDF0F0;
+      --ink:      #1A1A1C;
+      --ink2:     #2E2E32;
+      --ink3:     #4A4A52;
+      --mid:      #7A7A84;
+      --rule:     #E4E4EA;
+      --rule2:    #EFEFF4;
+      --surface:  #F7F7FA;
+      --white:    #FFFFFF;
+      --d-bg:     #0E0E10;
+      --d-bg2:    #1A1A1D;
+      --d-bg3:    #252528;
+      --d-rule:   #2E2E33;
+      --d-mid:    #5A5A62;
+      --d-silver: #B8B8C0;
+      --mono:    'DM Mono', monospace;
+      --serif:   'Fraunces', serif;
+      --sans:    'DM Sans', sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--sans);background:var(--white);color:var(--ink);overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:1160px;margin:0 auto;padding:0 2rem}
+    .lbl{font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:.75rem}
+    .h2{font-family:var(--serif);font-size:clamp(2rem,5vw,3rem);font-weight:600;line-height:1.1;color:var(--ink)}
+    .h2 em{font-style:italic;color:var(--red);font-weight:300}
+    .h2-lt{color:var(--white)}
+    .h2-lt em{color:var(--red)}
+
+    /* ── NAV ── */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(14,14,16,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--d-rule);transition:background .3s,border-color .3s}
+    nav.scrolled{background:rgba(255,255,255,.97);border-bottom:1px solid var(--rule)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 1.5rem;max-width:1400px;margin:0 auto;gap:1rem}
+    .nav-logo{display:flex;align-items:center;gap:.6rem;flex-shrink:0;text-decoration:none}
+    .nav-logo img{width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0}
+    .nav-logo-words{display:flex;flex-direction:column;line-height:1.15}
+    .nav-logo-words strong{font-family:var(--serif);font-weight:600;font-size:.92rem;color:var(--white);letter-spacing:.01em;transition:color .3s;white-space:nowrap}
+    .nav-logo-words span{display:none}
+    nav.scrolled .nav-logo-words strong{color:var(--ink)}
+    .nav-links{display:flex;align-items:center;gap:0;list-style:none;flex-wrap:nowrap}
+    .nav-links a{font-size:.78rem;font-weight:500;color:rgba(255,255,255,.65);transition:color .2s;padding:.25rem .55rem;white-space:nowrap;border-radius:3px}
+    .nav-links a:hover{color:var(--white)}
+    nav.scrolled .nav-links a{color:var(--ink3)}
+    nav.scrolled .nav-links a:hover{color:var(--red)}
+    /* current-page indicator — red underline, works on dark AND light nav */
+    .nav-current{border-bottom:2px solid var(--red);border-radius:0;font-weight:700!important;color:var(--white)!important}
+    nav.scrolled .nav-current{color:var(--ink)!important}
+    .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:.35rem 1rem!important;border-radius:3px;font-size:.78rem!important;white-space:nowrap}
+    .nav-cta:hover{background:var(--red-dk)!important;color:var(--white)!important}
+    nav.scrolled .nav-cta{color:var(--white)!important}
+    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;flex-shrink:0}
+    .hamburger span{display:block;width:22px;height:1.5px;background:rgba(255,255,255,.7);margin:5px 0;transition:.3s}
+    nav.scrolled .hamburger span{background:var(--ink3)}
+    @media(max-width:1100px){.nav-links a{padding:.25rem .4rem;font-size:.74rem}}
+    .nav-drawer{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(14,14,16,.98);border-bottom:1px solid rgba(255,255,255,.08);padding:1rem 1.5rem;z-index:199;flex-direction:column;gap:.25rem}
+    .nav-drawer.open{display:flex}
+    .nav-drawer a{font-size:.88rem;font-weight:500;color:rgba(255,255,255,.7);padding:.6rem 0;border-bottom:0.5px solid rgba(255,255,255,.06);display:block;text-decoration:none}
+    .nav-drawer a:last-child{border-bottom:none}
+    .nav-drawer a:hover{color:var(--white)}
+    .nav-drawer .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:.6rem 1rem!important;border-radius:3px;margin-top:.5rem;text-align:center;border-bottom:none}
+
+    /* ── PAGE HERO ── */
+    #rhero{background:var(--d-bg);padding:10rem 0 6rem;position:relative;overflow:hidden}
+    .rhero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(204,31,31,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(204,31,31,.05) 1px,transparent 1px);background-size:52px 52px}
+    .rhero-glow{position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(204,31,31,.12) 0%,transparent 68%);top:-200px;right:-160px;pointer-events:none}
+    .rhero-in{position:relative;z-index:2;max-width:800px}
+    .rhero-in h1{font-family:var(--serif);font-size:clamp(2.4rem,6vw,4rem);font-weight:600;color:var(--white);line-height:1.05;margin-bottom:1.25rem}
+    .rhero-in h1 em{font-style:italic;color:var(--red);font-weight:300}
+    .rhero-in p{font-size:1.05rem;color:rgba(255,255,255,.5);line-height:1.75;max-width:660px}
+    .rhero-stats{display:flex;gap:3rem;margin-top:3rem;flex-wrap:wrap}
+    .rstat-n{font-family:var(--serif);font-size:1.9rem;font-weight:600;color:var(--white)}
+    .rstat-l{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:.3rem}
+
+    /* ── SECTIONS ── */
+    section{padding:6rem 0}
+    .sec-white{background:var(--white);border-top:1px solid var(--rule)}
+    .sec-surface{background:var(--surface);border-top:1px solid var(--rule)}
+    .sec-dark{background:var(--d-bg);border-top:1px solid var(--d-rule)}
+    .sec-hd{text-align:center;margin-bottom:3.5rem}
+    .sec-hd p{color:var(--mid);max-width:600px;margin:1rem auto 0;font-size:.97rem;line-height:1.7}
+    .sec-hd-lt p{color:rgba(255,255,255,.45)}
+
+    .prose p{color:var(--ink3);font-size:.97rem;line-height:1.8;margin-bottom:1.15rem}
+    .prose-lt p{color:rgba(255,255,255,.55)}
+
+    /* generic card grid */
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+    .cell{background:var(--white);padding:1.75rem 1.5rem;transition:background .2s}
+    .cell:hover{background:var(--surface)}
+    .cell-icon{font-size:1.2rem;margin-bottom:.6rem}
+    .cell-title{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:.4rem}
+    .cell-desc{font-size:.83rem;color:var(--mid);line-height:1.6}
+
+    /* dark cards */
+    .dgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+    .dcard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:1.75rem 1.5rem;transition:border-color .2s}
+    .dcard:hover{border-color:rgba(204,31,31,.4)}
+    .dcard-t{font-family:var(--serif);font-size:1.02rem;font-weight:600;color:var(--white);margin-bottom:.5rem}
+    .dcard-d{font-size:.84rem;color:rgba(255,255,255,.45);line-height:1.65}
+    .dcard-tag{font-family:var(--mono);font-size:.57rem;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem}
+
+    /* repo rows */
+    .repo{display:flex;align-items:flex-start;gap:1rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:5px;padding:1.1rem 1.25rem;transition:border-color .2s,background .2s}
+    .repo:hover{border-color:rgba(204,31,31,.4);background:rgba(255,255,255,.055)}
+    .repo-ic{font-family:var(--mono);font-size:.85rem;color:var(--red);flex-shrink:0;margin-top:.1rem}
+    .repo-n{font-family:var(--mono);font-size:.82rem;color:var(--white);margin-bottom:.25rem}
+    .repo-d{font-size:.8rem;color:rgba(255,255,255,.4);line-height:1.55}
+    .repo-list{display:flex;flex-direction:column;gap:.75rem}
+
+    /* checklist */
+    .checks{display:flex;flex-direction:column;gap:.55rem;margin-top:1.5rem}
+    .chk{display:flex;align-items:flex-start;gap:.65rem;font-size:.88rem;color:var(--ink3);padding:.55rem 0;border-bottom:1px solid var(--rule2)}
+    .chk::before{content:'✓';color:var(--red);flex-shrink:0;font-size:.8rem;margin-top:.15rem}
+    .chk-lt{color:rgba(255,255,255,.6);border-bottom-color:rgba(255,255,255,.07)}
+
+    /* research program blocks */
+    .prog{display:grid;grid-template-columns:auto 1fr;gap:1.75rem;padding:2.25rem 0;border-bottom:1px solid var(--rule)}
+    .prog:last-child{border-bottom:none}
+    .prog-n{font-family:var(--mono);font-size:.68rem;color:var(--red);background:var(--red-pale);border:1px solid rgba(204,31,31,.15);width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:3px;flex-shrink:0}
+    .prog h3{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--ink);margin-bottom:.2rem}
+    .prog-status{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-bottom:.9rem}
+    .prog p{font-size:.92rem;color:var(--ink3);line-height:1.75;margin-bottom:.9rem}
+    .spec{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.9rem}
+    .spec span{font-family:var(--mono);font-size:.63rem;letter-spacing:.05em;color:var(--ink3);background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:.25rem .55rem}
+    .prog-media{display:grid;grid-template-columns:1fr 300px;gap:2rem;align-items:start}
+    .prog-media img{width:100%;border:1px solid var(--rule);border-radius:6px;background:var(--surface)}
+    .prog-media .prog-cap{font-family:var(--mono);font-size:.58rem;letter-spacing:.08em;color:var(--mid);margin-top:.55rem;line-height:1.5}
+    @media(max-width:720px){.prog-media{grid-template-columns:1fr;gap:1.25rem}.prog-media .prog-imgwrap{order:-1}}
+
+    /* rate table */
+    .rate-table{width:100%;border-collapse:collapse;margin-top:1.5rem}
+    .rate-table tr{border-bottom:1px solid var(--rule2)}
+    .rate-table td{padding:.8rem .5rem;font-size:.9rem;color:var(--ink3)}
+    .rate-table td:first-child{color:var(--ink);font-weight:500}
+    .rate-table td:last-child{text-align:right;font-family:var(--mono);font-size:.82rem;color:var(--red)}
+
+    /* roadmap */
+    .road{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2.5rem}
+    .road-c{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:1.6rem 1.4rem}
+    .road-c.now{border-color:rgba(204,31,31,.45)}
+    .road-yr{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.7rem}
+    .road-t{font-family:var(--serif);font-size:1.02rem;font-weight:600;color:var(--white);margin-bottom:.5rem}
+    .road-d{font-size:.83rem;color:rgba(255,255,255,.45);line-height:1.65}
+    @media(max-width:900px){.road{grid-template-columns:1fr}}
+    .callout{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--red);border-radius:4px;padding:1.5rem 1.75rem;margin-top:2rem}
+    .callout h4{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:.4rem}
+    .callout p{font-size:.87rem;color:var(--mid);line-height:1.65}
+
+    .btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--red);color:var(--white);font-size:.88rem;font-weight:500;padding:.75rem 1.6rem;border-radius:3px;transition:background .2s}
+    .btn:hover{background:var(--red-dk)}
+    .btn-ghost{display:inline-flex;align-items:center;gap:.5rem;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.85);font-size:.88rem;font-weight:500;padding:.75rem 1.6rem;border-radius:3px;transition:border-color .2s,color .2s}
+    .btn-ghost:hover{border-color:var(--red);color:var(--white)}
+
+    /* ── FOOTER ── */
+    footer{background:#0A0A0C;border-top:1px solid rgba(255,255,255,.06);padding:3rem 0 2rem}
+    .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:3rem;max-width:1160px;margin:0 auto;padding:0 2rem 2.5rem;border-bottom:1px solid rgba(255,255,255,.05)}
+    .footer-brand p{font-size:.82rem;color:rgba(255,255,255,.28);line-height:1.65;margin-top:.75rem;max-width:220px}
+    .footer-logo{display:flex;align-items:center;gap:.75rem}
+    .footer-logo img{width:30px;height:30px;border-radius:50%;object-fit:cover;opacity:.85}
+    .footer-logo-text{font-family:var(--serif);font-size:.95rem;font-weight:600;color:rgba(255,255,255,.6)}
+    .fcol-title{font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:1rem}
+    .fcol-links{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+    .fcol-links a{font-size:.84rem;color:rgba(255,255,255,.38);transition:color .2s}
+    .fcol-links a:hover{color:rgba(255,255,255,.75)}
+    .footer-btm{max-width:1160px;margin:0 auto;padding:1.5rem 2rem 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+    .footer-copy{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;color:rgba(255,255,255,.18)}
+
+    .fade{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+    .fade.in{opacity:1;transform:translateY(0)}
+
+    @media(max-width:900px){
+      .dgrid{grid-template-columns:1fr}
+      .grid3{grid-template-columns:1fr 1fr}
+      .footer-grid{grid-template-columns:1fr 1fr}
+      #rhero{padding:8rem 0 4.5rem}
+    }
+    @media(max-width:860px){
+      .nav-links{display:none}
+      .hamburger{display:block}
+    }
+    @media(max-width:600px){
+      .grid2,.grid3{grid-template-columns:1fr}
+      .footer-grid{grid-template-columns:1fr;gap:2rem}
+      .prog{grid-template-columns:1fr;gap:1rem}
+      .rhero-stats{gap:1.75rem}
+      section{padding:4rem 0}
+    }
+  </style>
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://www.gaacustom.com/research.html" />
+  <meta property="og:title"       content="Research &amp; Development — GAA Custom Electronics" />
+  <meta property="og:description" content="Active research programs at GAA Custom Electronics: a low-cost modular vacuum platform, FPGA-based TDC and TOF data acquisition, a low-cost USB/WiFi vacuum gauge, and PCB ion optics. Contract R&amp;D, research partnerships, and SBIR/STTR co-proposing." />
+  <meta property="og:image"       content="https://www.gaacustom.com/images/og-preview.jpg" />
+  <meta property="og:site_name"   content="GAA Custom Electronics" />
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCADgAOADACIAAREBAhEB/9sAQwAIBgYHBgUIBwcHCQkICgwUDQwLCwwZEhMPFB0aHx4dGhwcICQuJyAiLCMcHCg3KSwwMTQ0NB8nOT04MjwuMzQy/9sAQwEJCQkMCwwYDQ0YMiEcITIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIy/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMAAAERAhEAPwD3+iiigAooooAKKKKACiqOp6xYaPam4v7mOCMdCx5J9AOpP0rzfXfixI+6HRbbYOnnzjn8F/x/KonUjD4mdWGwVfFO1KN/y+89TkljhjZ5HVEUZLMcAVzl/wCP/DlhkNqKTOP4YAZM/iOP1rxDUda1PV5N9/ezT852s3yj6KOBVCuWWM/lR9Hh+GG9a8/kv8/+Aet3PxfsVz9l0y4k9PMcJ/LNZcvxev2J8rS4F9N0hbH6CvOKKxeKqM9SHD2BirNN/NnoP/C29X/58bP/AMe/xqaP4vX6keZplu3rtkIz/OvOKKX1mp3L/sHAfyfi/wDM9btvi/ZNj7VpdxH6+W4f+eK6Kw+IHhu/wBqCQuf4ZwUx+J4/WvAqKuOLmt9TlrcNYWfwNx/H8z6himinjWSKRXRhkMpyDT6+adO1nUtJk32F7NAc5IRvlP1HQ/jXfaF8WJo9sOtW3mjp58AwfxXp+WPpXRDFQlvoeHi+HsVRXNT95eW/3HrFFUNL1nT9atRcWFyk0ffaeVPoR1B+tX66U7nhSi4vlkrMKKKKBBRRRQAUUUUAFFFFABRRRQAUUU13WNGd2CqoySTgAUAOJAGTXAeLPiTbaXvs9J2XN4OGkzmOM/1Pt/8AqrnfG3xCk1FpNN0iQpacrJOpwZfYei/z+nXzyuStieX3Ybn0+VZC61quJ0j0XV+pb1HU73Vrprm+uZJ5T3Y9PYDoB9KqUUVwNtu7PsqdKFKKhBWQUUUVJYUUUUAFFFFABRRRQAUUUUAWtP1K80u6W5sbiSCZf4kPX2I7j2Nes+E/iVbajss9YKW10eFl6Ryf/En9P5V45RW1OtKm9NjzsfldDGR99Wl3W59RggjIORS1414K+IMulGPTtWdpLLhY5jy0XsfVf5V7HHIksayRsGRhlWByCK9KnUjUV0fA47AVcHU5Ki06PuOooorQ4gooooAKKKKACiiigBCcDNePfEHxu2oTS6PpsmLNDtmlU/60+g/2R+v069D8SvFjaZaDSbKTbdXC5lZTzGn+J/ln2rxyuTE1uX3I7n0+Q5V7V/Waq91bLu+4UUUV5x9qFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABXoHw+8bNpk8ek6jJmykOIpGP8AqmPb/dP6V5/RWlOo4SujlxmEp4uk6VRf8DzPqMEEZFLXnfw08WNqFsdHvZM3MC5hZurp6fUfy+hr0SvVhNTjzI/NsXhZ4Ws6U91+IUUUVZzBRRRQAVQ1nVIdG0m51C4P7uFN2O7HsB7k4FX68l+LGuGS7t9Ghf5Ih5swB6sfug/QZP4ioqT5IuR14HCvFV40l1/Lqefahf3GqahPe3T7ppnLMf6D2HSq1FFeO227s/TqdONOChFWSCiivVvA3gCxm0uPU9Xg8+S4XdFCx+VFPQn1JHNXTpuo7IwxmMpYSl7Srt+Z5TRXqfjvwDZW2mSarpEPkmAbpYV5Vl7kehHX6V5ZRUpypuzJwOPpY2n7Sl+IUUUVmdgUV3Pw/wDBcWvvJf6gGNlE21Ywcea3fJ9BxXbeIPhzo99prjTrZLS7QExuhOCfRh6H17VvDDznHmR5OKzrC4at7Gd79bdDxCinSRvFI0cilXQlWU9QR2ptYnrJpq6Ciit/wj4bfxNrItSzR28Y3zSL1C+g9zTScnZEVakaUHUm7JGBRXvU/wAPPDk1gbZLBY224WVGO8H1z3/GvFtc0ibQtYuNPnOWibhsY3KeQfyrSpQlTV2edgc3w+Nm4U7pruZ1FFFYnqBRRRQBYsb2fTr6G8tXKTQsGRvf/CvovQtWh1vRrbUIcbZUyVz91u4/A5r5sr0f4Ua4YNQn0eVv3c482EHs46j8Rz/wGurC1OWXK+p8/wAQ4FVsP7aK96P5df8AM9dooor0j4MKKKKAI55UggklkYKiKWYnsBXzXq2oSarq11fykl55C/PYdh+AwK9u+ImoGw8G3m1sPPiFf+BHn9M14LXFjJ7RPruGMP8AHXfovzf6BRRRXAfXFrTbNtQ1S1s1zmeVY+O2TjNfS8UawwpGihUVQAB2FeG/DSw+2eMYJCMpbRtKfrjaP1b9K91r0MHH3XI+L4nr3qwpLor/AH/8MRXMCXNrLBKu6ORCrA9wRivme8tnsr64tX+/DI0bfUHFfTteDfEaw+w+MroqMJcKsy/iMH9QaeLjeCfYz4Zr8mIlTf2l+RylFFXdIsjqWs2dkAT50yocehPP6Zrz9z7eUlFNs958Gaf/AGb4S06ArtcxCRx33N8x/nW9TUUKiqBgAYxTq9mMeWKR+VYiq61WVR9W2eA+P9PGn+Mr1VXCTETL/wACHP8A49muZr0/4vafiXTtRUdQ0Ln9V/8AZq8wrzMRHlqM/Qsmre2wUH20+7QK9i+Eun+RoVzfMuGuZsA+qrx/MtXjtfRfhSw/szwvp9qVwywgsP8AaPJ/Umrwkbzv2OTiOv7PCci+0/y1NmvJfi7p4jv7DUFX/Wo0Tn3ByP5n8q9arjviZp/23wfNKBl7V1lH0zg/oT+VdtaPNTaPksqrexxlOXnb79DwyiiivIP0wKKKKACrWm30umalbXsJxJBIHHvg9Px6VVopp2FKKknF7M+n7WeO6tYp4m3RyIHU+oIyKlrkvhxqBv8AwdaqzZe3LQn6A8f+OkV1tezCXNFM/LMVRdCtKk+jCiiiqOc8y+MF2VtNMsx0kkeU/wDAQAP/AEI15RXq3xM0XV9Y1Wz+w2Ms8UUJyyYwCT0/QVw//CF+I/8AoEXH5D/GvNxKk6mx97kNSjTwUbySbb6+Zg0Vvf8ACF+I/wDoEXH5D/Gj/hC/Ef8A0CLj8h/jXPyS7Hs/WaP86+9HdfCGw22eoagw5kdYlPsoyf8A0IflXb+JtV/sTwvqep5Aa2tnkTPdsfKPzxVXwbpEmieF7OznTbcAF5R6MxJx+GcfhXI/HLVfsPgRbJWw9/cpGR/sL85/UL+derRjy00j86zauq+MnNPS9l8tDvdD1JdY0HT9STGLq3SbA7FlBI/A8V598XrD5NO1BR0LQufryv8AJqt/BPVf7Q+H0VszZksZ3gOeu0neP/QsfhW98QbD7f4NvQBl4QJl9tpyf0zTqx5oNEZbW9ji6c/P89DwOu0+F9h9r8WrcFcpaxNJn3Pyj+Z/KuLr134R2HlaVe3zLgzyiNT7KP8AFj+VebQjzVEj7zN6/scFOS6q336Ho9c14J8Tp4q0q8u1YHyL+eAEd0DZT/xxlqz4x1X+xPBur6iG2vDbP5Z/2yML/wCPEV5L+z9quy+1jSGb/WRpcxj/AHTtb/0Jfyr1j81PSviPYC+8G3TAZe3KzL7YPP6E14PX05fWqXthcWsgyk0bI30IxXzPPC9vcSwSDDxuUYe4ODXBjI6qR9jwvWvCpS7O/wB//DFzQrA6nrtjZbdwlmVWH+znn9M19JqMKB6CvFPhZYfavFTXRXK2sJYH0ZvlH6Fq9rzWmDjaLZycT1uavCkui/P/AIY5uw8Tpd/EDVvDoI/0O0hlUd9xJL/o8Vbep2aahpl1ZyfcmiaM/iMV87+DvFRm+OLamX/c6ldSwfVHyIx+YT8q+kjyK6z5rZ3R8uyRtFI0bjDoSrD0IptdB430/wDs3xhqEQGEeTzV+jfN/MkfhXP14048smj9UwtVVqEKi6pBRVux0u/1NyljZz3BHXy0LAfU9q0/+EL8R/8AQIuPyH+NJRb2Rcq1ODtKSXzMGit7/hC/Ef8A0CLj8h/jR/whfiP/AKBFx+Q/xo5JdifrNH+dfejt/g/dkwanZnorJKv4gg/+givT68u+GmiavpGtXRvrCWCGSDh3AxuDDA/U16jXp4a/s0mfA56ofXZSg7p2/IKKKK3PHCjA9K8b+MnizxH4Z1zTl0jU5LW3ntiWRUUgsGOTyD2IrzX/AIWp43/6D83/AH6j/wDiaBn1dgelGB6V8o/8LU8b/wDQfm/79R//ABNH/C1PG/8A0H5v+/Uf/wATQB9VyyxwRPLLIscaAszucBQO5PavmL4s+M4fFviSOOwcvp1gpjiftIxPzOPY4AH0z3rnNZ8ZeI/EEPk6pq9zcQ5B8ottQn1KjANYdAHsX7P+qeVrWq6UzfLPAs6g+qHBx+D/AKV7xcwJc2ssEgykiFWHqCMV8ofDTVf7H+IWj3BbEck32d/TEg2c/QkH8K+tKAPmG7tns72e1k+/DI0bfUHFe/8Agqw/s7whp0BGHMXmMD6t8x/nXl/i3Qy/xJ+xIuEvpY3GPRuGP5hjXtqKERVAwAMACuPD0+WpLyPqM6xvtcFRX82r+SPL/jvqv2PwXBp6th765UMPVE+Y/wDj2yvI/hZqn9lfEbSZC2I55DbOPXeNo/8AHiv5V0nx51X7X4vtNOVspZWwLD0dzk/+OhK8vtriS0uoriFtssTh0PoQciuw+XPtqvAPH1h/Z/jK+VRhJmEy++4ZP65r3XTb6PU9LtL+L/VXMKTJ9GUEfzrzP4vaftn07UVH3g0Ln6cr/Nq58TG9M9nIK3s8bFfzJr9f0NP4S2HkaHd3zLhrmbaD6qo/xLV0XjrVf7F8DaxfBtrpbMkZ9Hf5F/VhU3hCw/szwpp1sV2sIQzD0ZvmP6k1wPx71X7L4VsNMVsPeXO9h6pGMn/x5l/KtKMeWCRyZpW9tjKk/P8ALQ8AsruSwv7e8hOJYJVlQ+jKcj+VfaNldx39hb3kJzFPEsqH1Vhkfzr4nr6n+Eeq/wBq/DnTtzZktN1q/ttPyj/vkrWhws5z4u6f5eoWGoKOJY2iY+6nI/8AQj+Vcz4L8Nf8JLrXkylltIV3zMvcZ4X2z/Q16f8AE3T/ALZ4QlmAy9rIso+mcH9CT+FUvhPp/wBn8PT3jL811McH1VeB+u6uKpS5q6vsz6zBZjKjlEpR+KLsvn/kdvZ2Nrp9slvaQRwwoOERQAKsYHpXO+Otek8NeC9T1SBlW4ij2wlhnDsQqnHfBOfwr5zPxV8bk5/t+bn/AKZR/wDxNdiSWx8pKUpvmk7s+rsD0owPSvlH/hanjf8A6D83/fqP/wCJo/4Wp43/AOg/N/36j/8AiaYj6uxRXjHwc8XeI/EviG/j1fVJLq2gtNwRkUAOXXB4A7Bvzr2egQUUUUAeL/tB2LPp+iagB8sUssDH3YBh/wCgNXhFfU3xd0ptV+HOoeWu6S0K3Sj2U/Mf++S1fLNA0FFFFAwooooAdHI8UqSRsVdCGVh2I6V9n6LqKavoVhqSY23Vuk2B23KDivi6vpv4K6r/AGj8PYLdmzJYzPbnPXGd4/RsfhQJnS6hoIu/F+l6ttGLWKUOfUnAX+bVv0VjeLNV/sTwlqupBtrwWztGf9vGF/8AHiKSSTbLnVlOMYvZaL77nyv411X+2/Gmr6gG3JLcuIz6ovyr/wCOgVg0UUyT6i+Duq/2n8ObJGbdJZu9s/4HK/8AjrLW94t0Ia/pMdrtBZbiJ/w3AN/46Wryn9n7Vdt3rGkM330S5jH0O1v/AEJPyr3Wk1dWZVOo6c1OO61EUbVAHQCvnH466r9s8bxWCtlLG2VWHo7/ADH9ClfR9fHHizVf7b8W6rqQbck9y7If9jOF/wDHQKZG7uY9e3/s+6r/AMhjR2b+5dRr/wCOuf8A0CvEK7n4Q6r/AGX8RtPDNtjuw1q/vuGVH/fQWgD6b1OyXUdLurJ/uzxNGfxGKq+GtNOk+HbGxZdrxRAOP9o8t+pNatFKyvctVJKDp9G7/wBfeeQ/H7VfI8PaZpSthrq4MrAf3UGMfm4/Kvn6vSvjhqn27x8bRWylhbpFjtub5yfyYD8K81pkIKKKKBnun7Pliy22uagw+V3igQ+4DM3/AKEte11wXwd0ptM+HNkzrtkvHe6YezHCn/vlVNd7QSwooooAiubeK7tZraZQ0UyGN1PdSMEflXxprmlTaHrl7pdwCJLWZoySOoB4P4jB/GvtCvBPjz4aNvqdp4jgj/dXKi3uCB0kUfKT9V4/4DQNHjdFFFAwooooAK9j/Z/1bytY1XSXbi4hWdAfVDg4+ocflXjla/hfX5/C/iSy1i3Xc1u+WTON6EYZfxBNAH2RXl/x11X7F4Ih09Ww99cqpHqifMf/AB4JXR2XxM8H3mmLe/25awKVy0M7hZVPoV6k/TNeBfEzxsPGniJZbYOunWqmO2Vxgtk/M5HbOB+AFAjiqKKKBnZfCvVv7I+IulSM22O4c2z++8YH/j238q+ra+IopXhlSWNisiMGVh1BHQ19O+Efiv4f1vRon1PUbbT9QRQJ4rhxGrMByyk8EH069vqCZ0HjjVf7E8E6xfhtrx2zLGfR2+Vf1Ir5Ar1z4v8AxGsvEEUWhaLN51nG/mXFwo+WRh91V9QOST3OPSvI6AQVYsLyTT9Qtr2E4lt5VlQ/7SkEfyqvRQM+2bO6ivrK3u4G3RTxrKh9VYZH6GpWYKpZiAoGST2rxn4VfE/S4dCh0HXbtLSa0G23uJThHj7KT2I6c9sVf+JXxT0i28P3Ol6FfRXt9doYjLA25IUPDHcOCSMgY+v1CTwzxJqh1vxLqepkki5uXkXPZSTtH4DArLoooKCrmk6bPrGr2em2wzNdTLEvtk4z9B1qnXr/AMCPDTXetXPiGeM+TZqYYGI4MrD5iPop/wDHxQB7zZ2kVhY29nAu2GCNYox6KowP0FT0UUEhRRRQAVleJNCt/Evh690m5wEuIyqtjOxuqsPocGtWigD4r1TTbrR9UudOvYzHc28hjkU+o7j2PUH0NVK+hPjP4EbV7EeI9Nh3XtqmLlFHMsQ/i9yv8voK+e6BhRRRQMKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigCzp9hc6rqNvYWcRlubhxHGg7k19feFvD9v4X8N2ekW+CIE+d/wC+55ZvxOfwxXnPwX8Btplp/wAJLqUO27uUxaIw5jjPV/Yt29vrXr1AmFFFFAgooooAKKKKACvnX4sfDV9Cupde0iHOlzNmaJB/x7Ofb+4T+R49K+iqZLFHPC8UqLJG6lXRxkMD1BHcUAfEdFerfEr4TTaE02saDG02l8vLbjl7f1I9U/Ud/WvKaCgooooAKKKKACiiigAooooAKKKKACiiigAooooAK9S+FHw2k8Q3ceuatCRpMLZijcf8fLD/ANkB6+vT1o+G/wAJ5/ETRavraPBpOQ0cXR7n/BPfqe3rX0TDDFbQRwQRrHFGoREQYCgcAAelAmSAYGB0ooooEFFFFABRRRQAUUUUAFFFFAB1ryTx58GbXVvN1Lw2sdpenLPan5YpT/s/3D+n06163RQB8WanpV/o189lqVpLa3KdY5VwfqPUe44qnX2Vr3hvSPEtibTVrKO5j/hLDDIfVWHIP0rxrxP8B7uDfceG7wXKdfstyQsg9g/Q/jj60DueNUVoaroWq6HP5Oqafc2j5wPNjIDfQ9D+FZ9AwooooAKKKKACiiigAoq/pWiaprlx5Gl6fc3cncQxlgv1PQfjXqfhj4D311suPEd4LOM8m2tyHkPsW+6v4bqAPJ9O0y+1e9Sz061lurl/uxxLuP19h717v4D+C9tpnl6j4mWO6vBhkswd0UZ/2v759un1r0jQPDOj+GLL7LpFjHbofvsOXc+rMeTWtQK4gAUAAAAcACloooEFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAEVzbW95A0FzBHPC4w0cqBlb6g1xeq/CLwbqu5v7MNnIf47SQx4/4Dyv6V3NFAHi97+z5Ztk2PiCeL0We3En6gr/KsSb4Aa8pbyNX01x/Dv3rn64U4r6DooC585/8KD8Vf8/+jf8Af6X/AON1Yh+AGvsV87VtNQfxbN7Y+mVGa+hKKB3PFrL9ny1Ug33iCaQd1gtwn6kn+VdfpXwh8G6XtY6a15IP47uQvn/gIwv6V3VFAiG2tbeyt1t7WCKCFPuxxIFUfQDipqKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD/2Q==" alt="GAA Custom Electronics logo" />
+      <div class="nav-logo-words">
+        <strong>GAA Custom Electronics</strong>
+        <span>Mass Spec Research Electronics</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#offer">What We Offer</a></li>
+      <li><a href="index.html#products">Products</a></li>
+      <li><a href="index.html#how-it-works">Software</a></li>
+      <li><a href="index.html#applications">Applications</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#support">Downloads</a></li>
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="ion-optics.html" style="color:var(--red);font-weight:500">Ion Optics</a></li>
+      <li><a href="open-source.html" style="color:var(--red);font-weight:500">Open Source</a></li>
+      <li><a href="research.html" class="nav-current">Research</a></li>
+      <li><a href="index.html#contact" class="nav-cta">Request Quote</a></li>
+    </ul>
+    <button class="hamburger" id="nav-hamburger" aria-label="Open menu" onclick="toggleDrawer()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ── MOBILE NAV DRAWER ── -->
+<div class="nav-drawer" id="nav-drawer">
+  <a href="index.html#offer"        onclick="closeDrawer()">What We Offer</a>
+  <a href="index.html#products"     onclick="closeDrawer()">Products</a>
+  <a href="index.html#how-it-works" onclick="closeDrawer()">Software</a>
+  <a href="index.html#applications" onclick="closeDrawer()">Applications</a>
+  <a href="index.html#capabilities" onclick="closeDrawer()">Capabilities</a>
+  <a href="index.html#about"        onclick="closeDrawer()">About</a>
+  <a href="index.html#support"      onclick="closeDrawer()">Downloads</a>
+  <a href="tools.html"        onclick="closeDrawer()" style="color:var(--red);font-weight:500">Tools</a>
+  <a href="ion-optics.html"   onclick="closeDrawer()" style="color:var(--red);font-weight:500">Ion Optics</a>
+  <a href="open-source.html"  onclick="closeDrawer()" style="color:var(--red);font-weight:500">Open Source</a>
+  <a href="research.html"     onclick="closeDrawer()" style="color:var(--red);font-weight:700">Research</a>
+  <a href="index.html#contact" class="nav-cta" onclick="closeDrawer()">Request Quote</a>
+</div>
+
+<!-- ── PAGE HERO ── -->
+<section id="rhero">
+  <div class="rhero-grid"></div>
+  <div class="rhero-glow"></div>
+  <div class="container">
+    <div class="rhero-in">
+      <div class="lbl">Research &amp; Development</div>
+      <h1>What we're <em>building next.</em></h1>
+      <p>Alongside the products we ship, we run our own development programs — instrument platforms, data acquisition systems, and ion optics aimed at problems we keep hearing about from the labs we work with. Most of it is internally funded, which means we can share it early. If one of these overlaps your work, we'd rather hear from you now than after it's finished.</p>
+      <div class="rhero-stats">
+        <div>
+          <div class="rstat-n">4</div>
+          <div class="rstat-l">Active Programs</div>
+        </div>
+        <div>
+          <div class="rstat-n">2014</div>
+          <div class="rstat-l">Established</div>
+        </div>
+        <div>
+          <div class="rstat-n">16+</div>
+          <div class="rstat-l">Countries Served</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ACTIVE RESEARCH PROGRAMS ── -->
+<section class="sec-white">
+  <div class="container">
+    <div class="sec-hd fade">
+      <div class="lbl">In Development</div>
+      <h2 class="h2">Active Research <em>Programs</em></h2>
+      <p>Four programs currently underway. Each began with a researcher describing a problem no available product solved.</p>
+    </div>
+
+    <div class="fade">
+      <div class="prog">
+        <div class="prog-n">01</div>
+        <div>
+          <h3>Universal Modular Vacuum Chamber</h3>
+          <div class="prog-status">Status — Prototype operational</div>
+          <div class="prog-media">
+            <div>
+              <p>A vacuum system built from extruded aluminum tube instead of machined stainless. Chamber segments are joined by universal interface plates, and a section is simply a length of tube cut to size — need a longer stage, cut a longer piece. The interface plates carry standard KF fittings, so the chamber drops into an existing vacuum setup without custom flanges.</p>
+              <p>The extrusion is the key idea. Its inner wall carries machined grooves that accept printed circuit boards directly, so PCB-based ion optics slide into the chamber and locate themselves — no electrode stack to machine, no alignment fixture. Changing the ion optics means ordering a new board, and the chamber it mounts in never changes.</p>
+              <p>That flexibility covers a full instrument front end: an ESI inlet, on-axis or orthogonal; a dual ion funnel; a PCB quad transfer stage; and on into an analytical quadrupole or a digital quad. Each is a board in a groove, in a chamber a lab can build without a machine shop budget.</p>
+              <div class="spec">
+                <span>Extruded aluminum tube</span>
+                <span>Cut-to-length segments</span>
+                <span>Universal interface plates</span>
+                <span>Standard KF interfaces</span>
+                <span>Internal grooves for PCB optics</span>
+                <span>ESI: on-axis or orthogonal</span>
+                <span>Dual ion funnel</span>
+                <span>PCB quad transfer</span>
+                <span>Analytical or digital quad</span>
+              </div>
+            </div>
+            <div class="prog-imgwrap">
+              <img src="images/vacuum-chamber.jpg" alt="Sectioned view of the universal modular vacuum chamber showing extruded aluminum segments joined by interface plates with KF elbow fittings" />
+              <div class="prog-cap">Modular chamber — design render. Two pumping stages joined by universal interface plates, with KF elbows at each stage.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog">
+        <div class="prog-n">02</div>
+        <div>
+          <h3>FPGA Time-to-Digital Converter &amp; TOF Data Acquisition</h3>
+          <div class="prog-status">Status — Active development</div>
+          <p>An FPGA-based data acquisition system for time-of-flight and ion mobility experiments, using carry-chain delay lines for sub-nanosecond time resolution without the cost of a commercial TDC card. Time-over-threshold measurement recovers pulse height information alongside arrival time, and IMS scan timestamping ties drift-time and flight-time domains together for nested IMS-TOF acquisition.</p>
+          <p>Firmware, host interface, and board design will be published on the same terms as everything else we build.</p>
+          <div class="spec">
+            <span>Carry-chain TDC</span>
+            <span>Time-over-threshold</span>
+            <span>Pulse height recovery</span>
+            <span>IMS scan timestamping</span>
+            <span>Nested IMS-TOF</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog">
+        <div class="prog-n">03</div>
+        <div>
+          <h3>USB / WiFi Vacuum Gauge</h3>
+          <div class="prog-status">Status — In development &middot; target under $150</div>
+          <div class="prog-media">
+            <div>
+              <p>A compact, low-cost vacuum gauge that reads pressure and reports it straight to your control software — no separate controller, no rack space. The housing has a KF-16 clamp built in, so it slides directly onto a feedthrough and seals without adapters. It powers from USB, and talks to MIPS over either USB or WiFi.</p>
+              <p>The WiFi interface is the interesting part: MIPS discovers gauges on the network automatically and connects to as many as you deploy, so instrumenting a multi-stage vacuum system is a matter of adding gauges, not wiring a controller for each one. Optional programmable pressure-limit contact closures and an analog pressure output cover interlocks and legacy equipment.</p>
+              <p>It's the first of a planned family of USB/WiFi vacuum-control modules. Next in line are valve controllers that close the loop — regulating chamber pressure automatically, including maintaining a controlled differential between two chambers.</p>
+              <div class="spec">
+                <span>Built-in KF-16 clamp</span>
+                <span>USB powered</span>
+                <span>USB or WiFi to MIPS</span>
+                <span>Auto-discovery, multi-gauge</span>
+                <span>Programmable limit contacts</span>
+                <span>Analog pressure output</span>
+                <span>Target &lt; $150</span>
+              </div>
+            </div>
+            <div class="prog-imgwrap">
+              <img src="images/vacuum-gauge.jpg" alt="GAACE USB/WiFi vacuum gauge with built-in KF-16 clamp and front display" />
+              <div class="prog-cap">USB / WiFi vacuum gauge — design render. KF-16 clamp integrated into the housing.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog">
+        <div class="prog-n">04</div>
+        <div>
+          <h3>Planar Quadrupoles &amp; Ring Ion Guides</h3>
+          <div class="prog-status">Status — Shipping, expanding</div>
+          <p>PCB-based ion transport structures for elevated-pressure regions where conventional rod sets are impractical or prohibitively expensive. Planar quadrupole geometries and printed ring guides give you multipole ion transport on a board that costs what a PCB costs. Expanded documentation and application notes are in progress.</p>
+          <div class="spec">
+            <span>Planar quadrupole</span>
+            <span>Ring ion guide</span>
+            <span>Elevated pressure</span>
+            <span>RF driven</span>
+          </div>
+          <a href="ion-optics.html" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:.5rem;font-size:.88rem;font-weight:500;color:var(--red);">See Ion Optics Components &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── OPEN SOURCE CROSS-LINK ── -->
+<section class="sec-dark" style="padding:3.5rem 0;">
+  <div class="container">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;max-width:900px;margin:0 auto;" class="fade">
+      <div style="flex:1;min-width:280px;">
+        <div class="lbl">Published Openly</div>
+        <div style="font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--white);margin-bottom:.5rem;">These programs are being published as they mature</div>
+        <div style="font-size:.88rem;color:rgba(255,255,255,.45);line-height:1.7;">Firmware, host software, and hardware designs go up on GitHub on the same terms as everything else we build. No gated reference designs, no NDA.</div>
+      </div>
+      <a href="open-source.html" class="btn-ghost" style="flex-shrink:0;">Our Open Source Practice &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── COLLABORATION ── -->
+<section class="sec-surface">
+  <div class="container">
+    <div class="sec-hd fade">
+      <div class="lbl">Working Together</div>
+      <h2 class="h2">Four Ways to <em>Collaborate</em></h2>
+      <p>From a thirty-minute phone call to a multi-year funded partnership.</p>
+    </div>
+
+    <div class="grid2 fade">
+      <div class="cell">
+        <div class="cell-icon">💬</div>
+        <div class="cell-title">Free Design Consultation</div>
+        <div class="cell-desc">The first thirty minutes cost nothing, and short questions answered by email or phone are always free. Tell us what you're trying to measure and we'll tell you honestly whether we can help — including when the answer is that you don't need us.</div>
+      </div>
+      <div class="cell">
+        <div class="cell-icon">🔧</div>
+        <div class="cell-title">Contract Development</div>
+        <div class="cell-desc">Custom hardware and firmware built to your specification. When the result is something other researchers could use, we often fund the development ourselves and simply sell you the product. When it's proprietary to your lab, we scope it as a paid project.</div>
+      </div>
+      <div class="cell">
+        <div class="cell-icon">🎓</div>
+        <div class="cell-title">Research Partnerships</div>
+        <div class="cell-desc">Named collaboration on instrument development projects. We've contributed electronics to work that's appeared in the peer-reviewed literature, and we're glad to participate as a technical partner rather than just a vendor.</div>
+      </div>
+      <div class="cell">
+        <div class="cell-icon">📄</div>
+        <div class="cell-title">SBIR / STTR Co-Proposing</div>
+        <div class="cell-desc">As a small business with in-house design, fabrication, and assembly capability, GAACE is an eligible partner on SBIR and STTR proposals. If you're building a submission that needs an instrumentation partner, talk to us early — proposal timelines reward it.</div>
+      </div>
+    </div>
+
+    <div class="callout fade">
+      <h4>Tell us what to build next</h4>
+      <p>Our product line exists because researchers asked for things that didn't exist yet. If there's a piece of electronics standing between you and an experiment, describe it to us. Even if we don't build it, the conversation is free — and more than once, a question from one lab has become a product that a dozen others now use.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTRACT R&D / RATES ── -->
+<section class="sec-white">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;" class="fade">
+      <div>
+        <div class="lbl">Contract R&amp;D</div>
+        <h2 class="h2" style="font-size:clamp(1.8rem,4vw,2.4rem);">Rates, Plainly <em>Stated</em></h2>
+        <div class="prose" style="margin-top:1.5rem;">
+          <p>We keep overhead low deliberately — a small family team, in-house fabrication, and no sales organization — so that research budgets go further. Rates are negotiable for specific circumstances, and remote work by phone, email, or video conference saves considerably over on-site engagement.</p>
+          <p>Ongoing projects are invoiced monthly against progress. Single-instance technical support is invoiced after delivery. Terms are net 30.</p>
+        </div>
+        <a href="index.html#support" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:.5rem;font-size:.88rem;font-weight:500;color:var(--red);">Download the full rate sheet &rarr;</a>
+      </div>
+      <div>
+        <div style="font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);padding-bottom:.6rem;border-bottom:1px solid var(--rule);">Consulting Rates — USD</div>
+        <table class="rate-table">
+          <tr><td>First 30 minutes</td><td>Free</td></tr>
+          <tr><td>Short email or phone reply</td><td>Free</td></tr>
+          <tr><td>Hourly<br/><span style="font-size:.78rem;color:var(--mid);font-weight:400;">Billed in half-hour increments, 1 hour minimum</span></td><td>$140</td></tr>
+          <tr><td>Daily<br/><span style="font-size:.78rem;color:var(--mid);font-weight:400;">8 hours, single calendar day</span></td><td>$1,120</td></tr>
+          <tr><td>Weekly<br/><span style="font-size:.78rem;color:var(--mid);font-weight:400;">5 days, single calendar week</span></td><td>$5,600</td></tr>
+        </table>
+        <p style="font-size:.78rem;color:var(--mid);line-height:1.6;margin-top:1rem;">Rates above assume no travel. Travel, lodging, and materials are billed at cost plus 10%; personal vehicle at the current mileage rate. See the rate sheet for full terms.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="sec-dark">
+  <div class="container">
+    <div style="text-align:center;max-width:680px;margin:0 auto;" class="fade">
+      <div class="lbl">Start a Conversation</div>
+      <h2 class="h2 h2-lt">Have a problem <em>worth solving?</em></h2>
+      <p style="color:rgba(255,255,255,.45);font-size:1rem;line-height:1.75;margin:1.25rem 0 2.25rem;">Describe the experiment. We'll tell you what it would take — and whether we're the right people to do it. The first conversation costs nothing.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="index.html#contact" class="btn">Contact Us</a>
+        <a href="open-source.html" class="btn-ghost">Open Source Practice</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <img src="data:image/jpeg;base64,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" alt="GAA Custom Electronics logo" />
+        <div class="footer-logo-text">GAA Custom Electronics</div>
+      </div>
+      <p>Supporting mass spectrometry research through custom electronics monitoring and control systems. Kennewick, WA — Est. 2014.</p>
+    </div>
+    <div>
+      <div class="fcol-title">Products</div>
+      <ul class="fcol-links">
+        <li><a href="index.html#products">MIPS System</a></li>
+        <li><a href="index.html#products">RF Generator</a></li>
+        <li><a href="index.html#products">RF Mega</a></li>
+        <li><a href="index.html#products">MFT Twave</a></li>
+        <li><a href="index.html#products">Electrometer</a></li>
+        <li><a href="ion-optics.html">Ion Optics</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fcol-title">Company</div>
+      <ul class="fcol-links">
+        <li><a href="index.html#about">About Us</a></li>
+        <li><a href="index.html#capabilities">Capabilities</a></li>
+        <li><a href="index.html#facility">Our Facility</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="open-source.html">Open Source</a></li>
+        <li><a href="index.html#support">Downloads</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fcol-title">Resources</div>
+      <ul class="fcol-links">
+        <li><a href="tools.html">MS Calculators</a></li>
+        <li><a href="https://github.com/GordonAnderson" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://scholar.google.com/citations?hl=en&amp;user=u2xMtMgAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener">Publications</a></li>
+        <li><a href="index.html#support">Manuals</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-btm">
+    <div class="footer-copy">© 2026 GAA CUSTOM ELECTRONICS, LLC — ALL RIGHTS RESERVED</div>
+    <div class="footer-copy">KENNEWICK, WASHINGTON, USA</div>
+  </div>
+</footer>
+
+<script>
+  function toggleDrawer(){ document.getElementById('nav-drawer').classList.toggle('open'); }
+  function closeDrawer(){ document.getElementById('nav-drawer').classList.remove('open'); }
+
+  var nav = document.getElementById('main-nav');
+  function onScroll(){
+    if (window.scrollY > 60) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  }
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade').forEach(function(el){ io.observe(el); });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TBTBP7GLEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-TBTBP7GLEK');
+  </script>
+  <!-- End Google Analytics -->
+
+  <title>Open Source Mass Spectrometry Hardware — GAA Custom Electronics</title>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="favicons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicons/favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="favicons/favicon-192x192.png" />
+
+  <meta name="description" content="Open source hardware and firmware for mass spectrometry. GAA Custom Electronics publishes schematics, board files, parts lists, and source on GitHub under CERN-OHL-W, MIT, and GPL-3.0 — and shares design data directly with researchers who need it." />
+  <link rel="canonical" href="https://www.gaacustom.com/open-source.html" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --red:      #CC1F1F;
+      --red-dk:   #A01515;
+      --red-pale: #FDF0F0;
+      --ink:      #1A1A1C;
+      --ink2:     #2E2E32;
+      --ink3:     #4A4A52;
+      --mid:      #7A7A84;
+      --rule:     #E4E4EA;
+      --rule2:    #EFEFF4;
+      --surface:  #F7F7FA;
+      --white:    #FFFFFF;
+      --d-bg:     #0E0E10;
+      --d-bg2:    #1A1A1D;
+      --d-bg3:    #252528;
+      --d-rule:   #2E2E33;
+      --d-mid:    #5A5A62;
+      --d-silver: #B8B8C0;
+      --mono:    'DM Mono', monospace;
+      --serif:   'Fraunces', serif;
+      --sans:    'DM Sans', sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--sans);background:var(--white);color:var(--ink);overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:1160px;margin:0 auto;padding:0 2rem}
+    .lbl{font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:.75rem}
+    .h2{font-family:var(--serif);font-size:clamp(2rem,5vw,3rem);font-weight:600;line-height:1.1;color:var(--ink)}
+    .h2 em{font-style:italic;color:var(--red);font-weight:300}
+    .h2-lt{color:var(--white)}
+    .h2-lt em{color:var(--red)}
+
+    /* ── NAV ── */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(14,14,16,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--d-rule);transition:background .3s,border-color .3s}
+    nav.scrolled{background:rgba(255,255,255,.97);border-bottom:1px solid var(--rule)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 1.5rem;max-width:1400px;margin:0 auto;gap:1rem}
+    .nav-logo{display:flex;align-items:center;gap:.6rem;flex-shrink:0;text-decoration:none}
+    .nav-logo img{width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0}
+    .nav-logo-words{display:flex;flex-direction:column;line-height:1.15}
+    .nav-logo-words strong{font-family:var(--serif);font-weight:600;font-size:.92rem;color:var(--white);letter-spacing:.01em;transition:color .3s;white-space:nowrap}
+    .nav-logo-words span{display:none}
+    nav.scrolled .nav-logo-words strong{color:var(--ink)}
+    .nav-links{display:flex;align-items:center;gap:0;list-style:none;flex-wrap:nowrap}
+    .nav-links a{font-size:.78rem;font-weight:500;color:rgba(255,255,255,.65);transition:color .2s;padding:.25rem .55rem;white-space:nowrap;border-radius:3px}
+    .nav-links a:hover{color:var(--white)}
+    nav.scrolled .nav-links a{color:var(--ink3)}
+    nav.scrolled .nav-links a:hover{color:var(--red)}
+    /* current-page indicator — red underline, works on dark AND light nav */
+    .nav-current{border-bottom:2px solid var(--red);border-radius:0;font-weight:700!important;color:var(--white)!important}
+    nav.scrolled .nav-current{color:var(--ink)!important}
+    .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:.35rem 1rem!important;border-radius:3px;font-size:.78rem!important;white-space:nowrap}
+    .nav-cta:hover{background:var(--red-dk)!important;color:var(--white)!important}
+    nav.scrolled .nav-cta{color:var(--white)!important}
+    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;flex-shrink:0}
+    .hamburger span{display:block;width:22px;height:1.5px;background:rgba(255,255,255,.7);margin:5px 0;transition:.3s}
+    nav.scrolled .hamburger span{background:var(--ink3)}
+    @media(max-width:1100px){.nav-links a{padding:.25rem .4rem;font-size:.74rem}}
+    .nav-drawer{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(14,14,16,.98);border-bottom:1px solid rgba(255,255,255,.08);padding:1rem 1.5rem;z-index:199;flex-direction:column;gap:.25rem}
+    .nav-drawer.open{display:flex}
+    .nav-drawer a{font-size:.88rem;font-weight:500;color:rgba(255,255,255,.7);padding:.6rem 0;border-bottom:0.5px solid rgba(255,255,255,.06);display:block;text-decoration:none}
+    .nav-drawer a:last-child{border-bottom:none}
+    .nav-drawer a:hover{color:var(--white)}
+    .nav-drawer .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:.6rem 1rem!important;border-radius:3px;margin-top:.5rem;text-align:center;border-bottom:none}
+
+    /* ── PAGE HERO ── */
+    #rhero{background:var(--d-bg);padding:10rem 0 6rem;position:relative;overflow:hidden}
+    .rhero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(204,31,31,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(204,31,31,.05) 1px,transparent 1px);background-size:52px 52px}
+    .rhero-glow{position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(204,31,31,.12) 0%,transparent 68%);top:-200px;right:-160px;pointer-events:none}
+    .rhero-in{position:relative;z-index:2;max-width:800px}
+    .rhero-in h1{font-family:var(--serif);font-size:clamp(2.4rem,6vw,4rem);font-weight:600;color:var(--white);line-height:1.05;margin-bottom:1.25rem}
+    .rhero-in h1 em{font-style:italic;color:var(--red);font-weight:300}
+    .rhero-in p{font-size:1.05rem;color:rgba(255,255,255,.5);line-height:1.75;max-width:660px}
+    .rhero-stats{display:flex;gap:3rem;margin-top:3rem;flex-wrap:wrap}
+    .rstat-n{font-family:var(--serif);font-size:1.9rem;font-weight:600;color:var(--white)}
+    .rstat-l{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:.3rem}
+
+    /* ── SECTIONS ── */
+    section{padding:6rem 0}
+    .sec-white{background:var(--white);border-top:1px solid var(--rule)}
+    .sec-surface{background:var(--surface);border-top:1px solid var(--rule)}
+    .sec-dark{background:var(--d-bg);border-top:1px solid var(--d-rule)}
+    .sec-hd{text-align:center;margin-bottom:3.5rem}
+    .sec-hd p{color:var(--mid);max-width:600px;margin:1rem auto 0;font-size:.97rem;line-height:1.7}
+    .sec-hd-lt p{color:rgba(255,255,255,.45)}
+
+    .prose p{color:var(--ink3);font-size:.97rem;line-height:1.8;margin-bottom:1.15rem}
+    .prose-lt p{color:rgba(255,255,255,.55)}
+
+    /* generic card grid */
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+    .cell{background:var(--white);padding:1.75rem 1.5rem;transition:background .2s}
+    .cell:hover{background:var(--surface)}
+    .cell-icon{font-size:1.2rem;margin-bottom:.6rem}
+    .cell-title{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:.4rem}
+    .cell-desc{font-size:.83rem;color:var(--mid);line-height:1.6}
+
+    /* dark cards */
+    .dgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+    .dcard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:1.75rem 1.5rem;transition:border-color .2s}
+    .dcard:hover{border-color:rgba(204,31,31,.4)}
+    .dcard-t{font-family:var(--serif);font-size:1.02rem;font-weight:600;color:var(--white);margin-bottom:.5rem}
+    .dcard-d{font-size:.84rem;color:rgba(255,255,255,.45);line-height:1.65}
+    .dcard-tag{font-family:var(--mono);font-size:.57rem;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem}
+
+    /* repo rows */
+    .repo{display:flex;align-items:flex-start;gap:1rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:5px;padding:1.1rem 1.25rem;transition:border-color .2s,background .2s}
+    .repo:hover{border-color:rgba(204,31,31,.4);background:rgba(255,255,255,.055)}
+    .repo-ic{font-family:var(--mono);font-size:.85rem;color:var(--red);flex-shrink:0;margin-top:.1rem}
+    .repo-n{font-family:var(--mono);font-size:.82rem;color:var(--white);margin-bottom:.25rem}
+    .repo-d{font-size:.8rem;color:rgba(255,255,255,.4);line-height:1.55}
+    .repo-list{display:flex;flex-direction:column;gap:.75rem}
+
+    /* checklist */
+    .checks{display:flex;flex-direction:column;gap:.55rem;margin-top:1.5rem}
+    .chk{display:flex;align-items:flex-start;gap:.65rem;font-size:.88rem;color:var(--ink3);padding:.55rem 0;border-bottom:1px solid var(--rule2)}
+    .chk::before{content:'✓';color:var(--red);flex-shrink:0;font-size:.8rem;margin-top:.15rem}
+    .chk-lt{color:rgba(255,255,255,.6);border-bottom-color:rgba(255,255,255,.07)}
+
+    /* research program blocks */
+    .prog{display:grid;grid-template-columns:auto 1fr;gap:1.75rem;padding:2.25rem 0;border-bottom:1px solid var(--rule)}
+    .prog:last-child{border-bottom:none}
+    .prog-n{font-family:var(--mono);font-size:.68rem;color:var(--red);background:var(--red-pale);border:1px solid rgba(204,31,31,.15);width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:3px;flex-shrink:0}
+    .prog h3{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--ink);margin-bottom:.2rem}
+    .prog-status{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-bottom:.9rem}
+    .prog p{font-size:.92rem;color:var(--ink3);line-height:1.75;margin-bottom:.9rem}
+    .spec{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.9rem}
+    .spec span{font-family:var(--mono);font-size:.63rem;letter-spacing:.05em;color:var(--ink3);background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:.25rem .55rem}
+
+    /* rate table */
+    .rate-table{width:100%;border-collapse:collapse;margin-top:1.5rem}
+    .rate-table tr{border-bottom:1px solid var(--rule2)}
+    .rate-table td{padding:.8rem .5rem;font-size:.9rem;color:var(--ink3)}
+    .rate-table td:first-child{color:var(--ink);font-weight:500}
+    .rate-table td:last-child{text-align:right;font-family:var(--mono);font-size:.82rem;color:var(--red)}
+
+    /* roadmap */
+    .road{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2.5rem}
+    .road-c{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:1.6rem 1.4rem}
+    .road-c.now{border-color:rgba(204,31,31,.45)}
+    .road-yr{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.7rem}
+    .road-t{font-family:var(--serif);font-size:1.02rem;font-weight:600;color:var(--white);margin-bottom:.5rem}
+    .road-d{font-size:.83rem;color:rgba(255,255,255,.45);line-height:1.65}
+    @media(max-width:900px){.road{grid-template-columns:1fr}}
+    /* license table */
+    .lic-table{width:100%;border-collapse:collapse;margin:1.75rem 0 1.25rem}
+    .lic-table th{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);text-align:left;padding:0 .6rem .7rem 0;border-bottom:1px solid var(--rule);font-weight:400}
+    .lic-table td{padding:.85rem .6rem .85rem 0;font-size:.89rem;color:var(--ink3);border-bottom:1px solid var(--rule2);vertical-align:top}
+    .lic-table td:first-child{color:var(--ink);font-weight:500;white-space:nowrap}
+    .lic-table code{font-family:var(--mono);font-size:.76rem;color:var(--red);background:var(--red-pale);border:1px solid rgba(204,31,31,.14);border-radius:3px;padding:.15rem .4rem;white-space:nowrap}
+    @media(max-width:600px){.lic-table td:first-child{white-space:normal}.lic-table th:nth-child(2),.lic-table td:nth-child(2){display:none}}
+    .callout{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--red);border-radius:4px;padding:1.5rem 1.75rem;margin-top:2rem}
+    .callout h4{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:.4rem}
+    .callout p{font-size:.87rem;color:var(--mid);line-height:1.65}
+
+    .btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--red);color:var(--white);font-size:.88rem;font-weight:500;padding:.75rem 1.6rem;border-radius:3px;transition:background .2s}
+    .btn:hover{background:var(--red-dk)}
+    .btn-ghost{display:inline-flex;align-items:center;gap:.5rem;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.85);font-size:.88rem;font-weight:500;padding:.75rem 1.6rem;border-radius:3px;transition:border-color .2s,color .2s}
+    .btn-ghost:hover{border-color:var(--red);color:var(--white)}
+
+    /* ── FOOTER ── */
+    footer{background:#0A0A0C;border-top:1px solid rgba(255,255,255,.06);padding:3rem 0 2rem}
+    .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:3rem;max-width:1160px;margin:0 auto;padding:0 2rem 2.5rem;border-bottom:1px solid rgba(255,255,255,.05)}
+    .footer-brand p{font-size:.82rem;color:rgba(255,255,255,.28);line-height:1.65;margin-top:.75rem;max-width:220px}
+    .footer-logo{display:flex;align-items:center;gap:.75rem}
+    .footer-logo img{width:30px;height:30px;border-radius:50%;object-fit:cover;opacity:.85}
+    .footer-logo-text{font-family:var(--serif);font-size:.95rem;font-weight:600;color:rgba(255,255,255,.6)}
+    .fcol-title{font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:1rem}
+    .fcol-links{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+    .fcol-links a{font-size:.84rem;color:rgba(255,255,255,.38);transition:color .2s}
+    .fcol-links a:hover{color:rgba(255,255,255,.75)}
+    .footer-btm{max-width:1160px;margin:0 auto;padding:1.5rem 2rem 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+    .footer-copy{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;color:rgba(255,255,255,.18)}
+
+    .fade{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+    .fade.in{opacity:1;transform:translateY(0)}
+
+    @media(max-width:900px){
+      .dgrid{grid-template-columns:1fr}
+      .grid3{grid-template-columns:1fr 1fr}
+      .footer-grid{grid-template-columns:1fr 1fr}
+      #rhero{padding:8rem 0 4.5rem}
+    }
+    @media(max-width:860px){
+      .nav-links{display:none}
+      .hamburger{display:block}
+    }
+    @media(max-width:600px){
+      .grid2,.grid3{grid-template-columns:1fr}
+      .footer-grid{grid-template-columns:1fr;gap:2rem}
+      .prog{grid-template-columns:1fr;gap:1rem}
+      .rhero-stats{gap:1.75rem}
+      section{padding:4rem 0}
+    }
+  </style>
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://www.gaacustom.com/open-source.html" />
+  <meta property="og:title"       content="Open Source Mass Spectrometry Hardware — GAA Custom Electronics" />
+  <meta property="og:description" content="Open source hardware and firmware for mass spectrometry. GAA Custom Electronics publishes schematics, board files, parts lists, and source on GitHub under CERN-OHL-W, MIT, and GPL-3.0 — and shares design data directly with researchers who need it." />
+  <meta property="og:image"       content="https://www.gaacustom.com/images/og-preview.jpg" />
+  <meta property="og:site_name"   content="GAA Custom Electronics" />
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="data:image/jpeg;base64,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" alt="GAA Custom Electronics logo" />
+      <div class="nav-logo-words">
+        <strong>GAA Custom Electronics</strong>
+        <span>Mass Spec Research Electronics</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#offer">What We Offer</a></li>
+      <li><a href="index.html#products">Products</a></li>
+      <li><a href="index.html#how-it-works">Software</a></li>
+      <li><a href="index.html#applications">Applications</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#support">Downloads</a></li>
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="ion-optics.html" style="color:var(--red);font-weight:500">Ion Optics</a></li>
+      <li><a href="open-source.html" class="nav-current">Open Source</a></li>
+      <li><a href="research.html" style="color:var(--red);font-weight:500">Research</a></li>
+      <li><a href="index.html#contact" class="nav-cta">Request Quote</a></li>
+    </ul>
+    <button class="hamburger" id="nav-hamburger" aria-label="Open menu" onclick="toggleDrawer()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ── MOBILE NAV DRAWER ── -->
+<div class="nav-drawer" id="nav-drawer">
+  <a href="index.html#offer"        onclick="closeDrawer()">What We Offer</a>
+  <a href="index.html#products"     onclick="closeDrawer()">Products</a>
+  <a href="index.html#how-it-works" onclick="closeDrawer()">Software</a>
+  <a href="index.html#applications" onclick="closeDrawer()">Applications</a>
+  <a href="index.html#capabilities" onclick="closeDrawer()">Capabilities</a>
+  <a href="index.html#about"        onclick="closeDrawer()">About</a>
+  <a href="index.html#support"      onclick="closeDrawer()">Downloads</a>
+  <a href="tools.html"        onclick="closeDrawer()" style="color:var(--red);font-weight:500">Tools</a>
+  <a href="ion-optics.html"   onclick="closeDrawer()" style="color:var(--red);font-weight:500">Ion Optics</a>
+  <a href="open-source.html"  onclick="closeDrawer()" style="color:var(--red);font-weight:700">Open Source</a>
+  <a href="research.html"     onclick="closeDrawer()" style="color:var(--red);font-weight:500">Research</a>
+  <a href="index.html#contact" class="nav-cta" onclick="closeDrawer()">Request Quote</a>
+</div>
+
+<!-- ── PAGE HERO ── -->
+<section id="rhero">
+  <div class="rhero-grid"></div>
+  <div class="rhero-glow"></div>
+  <div class="container">
+    <div class="rhero-in">
+      <div class="lbl">Open Source Mass Spectrometry Hardware</div>
+      <h1>Open source mass<br/>spectrometry <em>hardware.</em></h1>
+      <p>Our firmware and host application source have been public on GitHub since we started. We're now extending that to hardware — building the structure and documentation to publish schematics, board files, parts lists, and Gerbers alongside the code. It's a work in progress. In the meantime, if there's technical data you need — a schematic for a board you're troubleshooting, design files to start a variant of your own — ask us. We share it, and we don't ask for an NDA.</p>
+      <div class="rhero-stats">
+        <div>
+          <div class="rstat-n">2014</div>
+          <div class="rstat-l">Publishing Code Since</div>
+        </div>
+        <div>
+          <div class="rstat-n">No</div>
+          <div class="rstat-l">NDA Required</div>
+        </div>
+        <div>
+          <div class="rstat-n">64+</div>
+          <div class="rstat-l">Institutions Deployed</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHY OPEN ── -->
+<section class="sec-white">
+  <div class="container">
+    <div class="sec-hd fade">
+      <div class="lbl">The Position</div>
+      <h2 class="h2">Why We Publish <em>Everything</em></h2>
+      <p>This isn't idealism. It's what a research instrument actually needs to be useful over a twenty-year lifetime in a lab that never stops changing.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;" class="fade">
+      <div class="prose">
+        <p><strong>Your experiment will outlive our documentation.</strong> Research instruments get repurposed. A source built for ion mobility ends up on a TOF. A pulse sequence written for one experiment becomes the backbone of a grad student's thesis three years later. When that happens, you need to know exactly what the hardware does — not what a datasheet claims it does.</p>
+        <p><strong>Reproducibility requires disclosure.</strong> If your published method depends on a black-box controller, nobody can independently reproduce it. When the electronics are documented down to the schematic, your methods section can be complete.</p>
+        <p><strong>Vendor risk is real.</strong> We are a small company. If GAA Custom Electronics ever ceases operation, our customers should not be left with an unmaintainable instrument. That's the reason the firmware is already public and the hardware is following, and it's why we don't treat design data as something to be protected from the people using it. Ask for what you need and we'll share it — no NDA, no negotiation.</p>
+      </div>
+      <div>
+        <div style="font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);margin-bottom:1rem;padding-bottom:.6rem;border-bottom:1px solid var(--rule);">Design Data We Can Share</div>
+        <div class="checks" style="margin-top:0">
+          <div class="chk">Schematics, in PDF or native CAD format</div>
+          <div class="chk">PCB layout files and the Gerber sets sent to fabrication</div>
+          <div class="chk">Bills of material with vendor part numbers</div>
+          <div class="chk">Fabrication notes and design change history</div>
+          <div class="chk">Earlier board revisions, not just the current one</div>
+          <div class="chk">MIPS controller firmware source (C++, Arduino / ARM)</div>
+          <div class="chk">MIPS host application source (Qt, cross-platform)</div>
+          <div class="chk">Mechanical drawings and 3D print files where applicable</div>
+          <div class="chk">Operations manual and scripting examples</div>
+        </div>
+        <p style="font-size:.82rem;color:var(--mid);line-height:1.65;margin-top:1.25rem;">Firmware and host application source are public on GitHub — no request needed. Hardware design data is being published there progressively. For anything not yet posted, tell us what you're working on and what would help, and we'll get it to you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── THE DIRECTION ── -->
+<section class="sec-dark">
+  <div class="container">
+    <div style="max-width:820px;margin:0 auto;text-align:center;" class="fade">
+      <div class="lbl">Where This Is Headed</div>
+      <h2 class="h2 h2-lt">Extending an open software practice<br/><em>to open hardware.</em></h2>
+      <p style="color:rgba(255,255,255,.5);font-size:1rem;line-height:1.8;margin-top:1.5rem;">Publishing source code is straightforward — a repository, a commit, done. Publishing hardware is a different problem. Design files written for our own bench aren't self-explanatory to a stranger, and a folder of Gerbers isn't the same thing as something someone can actually build. Doing it properly means building the structure and organization to support it: consistent file formats, revision discipline, parts lists that stay current, and assembly notes written for someone who has never seen the board.</p>
+      <p style="color:rgba(255,255,255,.5);font-size:1rem;line-height:1.8;margin-top:1.15rem;">So we're working outward from the simple end. Discrete components first — vacuum feedthroughs, ion optics boards, things that stand alone and are easy to document completely. From there, into progressively more complex assemblies and eventually full systems. The long-range goal is a public design library complete enough that someone skilled in the art could build from it. We're not putting a date on that, because we'd rather publish it properly than publish it fast.</p>
+    </div>
+
+    <div class="road fade" style="max-width:1000px;margin-left:auto;margin-right:auto;">
+      <div class="road-c">
+        <div class="road-yr">Established</div>
+        <div class="road-t">Software, public since the start</div>
+        <div class="road-d">MIPS controller firmware and the Qt host application have been open on GitHub from the beginning. Clone, build, modify, redistribute your changes to your collaborators.</div>
+      </div>
+      <div class="road-c now">
+        <div class="road-yr">Underway</div>
+        <div class="road-t">Discrete hardware, starting simple</div>
+        <div class="road-d">Vacuum feedthroughs and PCB ion optics first — self-contained designs we can document completely. Building the repository structure and documentation practices that more complex releases will depend on.</div>
+      </div>
+      <div class="road-c">
+        <div class="road-yr">Ahead</div>
+        <div class="road-t">Toward full systems</div>
+        <div class="road-d">Progressively more complex assemblies as the groundwork supports them, with the long-range aim of a public design library complete enough to build from. Until then, we share design data directly with anyone who needs it.</div>
+      </div>
+    </div>
+
+    <div style="max-width:820px;margin:2.5rem auto 0;text-align:center;" class="fade">
+      <p style="color:rgba(255,255,255,.38);font-size:.87rem;line-height:1.7;">If there's a design you'd find useful published sooner rather than later, <a href="index.html#contact" style="color:var(--red);">tell us</a>. Prioritizing by what researchers actually want beats guessing — and if you've written documentation for a system you already run, we'd be glad to fold it in.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── THE REPOSITORIES ── -->
+<section class="sec-dark" style="background:var(--d-bg2);">
+  <div class="container">
+    <div class="sec-hd sec-hd-lt fade">
+      <div class="lbl">Public Repositories</div>
+      <h2 class="h2 h2-lt">Available <em>Right Now</em></h2>
+      <p>No account, no NDA, no purchase required. Hardware under CERN-OHL-W-2.0, firmware under MIT, the host application under GPL-3.0. Browse the code before you talk to us — and, increasingly, the hardware too.</p>
+    </div>
+
+    <div class="repo-list fade" style="max-width:820px;margin:0 auto;">
+      <a class="repo" href="https://github.com/GordonAnderson" target="_blank" rel="noopener">
+        <div class="repo-ic">▸</div>
+        <div>
+          <div class="repo-n">github.com/GordonAnderson</div>
+          <div class="repo-d">The main account. Firmware, host software, design data, and utilities for the full GAACE product line.</div>
+        </div>
+      </a>
+      <a class="repo" href="https://github.com/GordonAnderson/MIPS-Resources" target="_blank" rel="noopener">
+        <div class="repo-ic">▸</div>
+        <div>
+          <div class="repo-n">MIPS-Resources</div>
+          <div class="repo-d">Hardware design data for the MIPS ecosystem — schematics, board files, parts lists, and Gerbers, organized per module. Being expanded as we move more of the hardware library into public repositories.</div>
+        </div>
+      </a>
+      <a class="repo" href="https://github.com/GordonAnderson/MIPS_QT6" target="_blank" rel="noopener">
+        <div class="repo-ic">▸</div>
+        <div>
+          <div class="repo-n">MIPS_QT6</div>
+          <div class="repo-d">Source for the MIPS host application — the Qt6 GUI that unifies every connected controller and instrument under one interface. Builds on Windows, macOS, and Linux. Fork it, extend it, ship your own control panels.</div>
+        </div>
+      </a>
+      <a class="repo" href="https://github.com/GordonAnderson/gaacustom" target="_blank" rel="noopener">
+        <div class="repo-ic">▸</div>
+        <div>
+          <div class="repo-n">gaacustom</div>
+          <div class="repo-d">This website. Including the mass spectrometry calculators on our Tools page — the physics is in the source, so you can check our math.</div>
+        </div>
+      </a>
+    </div>
+
+    <div style="max-width:820px;margin:2.5rem auto 0;" class="fade">
+      <div class="dcard">
+        <div class="dcard-tag">Contributing</div>
+        <div class="dcard-t">Bug reports, feature requests, and pull requests welcome</div>
+        <div class="dcard-d">Open an issue on the relevant repository. If you've written a scripting module, a custom control panel, or a firmware extension that other labs would benefit from, send a pull request — we'd rather fold your work into the mainline than have you maintain a private fork forever.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LICENSING / TERMS ── -->
+<section class="sec-surface">
+  <div class="container">
+    <div style="max-width:820px;margin:0 auto;" class="fade">
+      <div class="lbl">Terms</div>
+      <h2 class="h2" style="font-size:clamp(1.7rem,4vw,2.2rem);">Licensing, <em>Precisely</em></h2>
+      <div class="prose" style="margin-top:1.5rem;">
+        <p>We use standard, recognized open source licenses rather than terms of our own invention — because university legal offices reasonably ask for a specific identifier, and "we promise to be reasonable" isn't one.</p>
+      </div>
+
+      <table class="lic-table">
+        <tr>
+          <th>What</th>
+          <th>License</th>
+          <th>SPDX</th>
+        </tr>
+        <tr>
+          <td>Hardware design files<br/><span style="font-size:.78rem;color:var(--mid);font-weight:400;">Schematics, PCB layout, Gerbers, BOM</span></td>
+          <td>CERN Open Hardware Licence v2 — Weakly Reciprocal</td>
+          <td><code>CERN-OHL-W-2.0</code></td>
+        </tr>
+        <tr>
+          <td>Firmware<br/><span style="font-size:.78rem;color:var(--mid);font-weight:400;">Runs on GAACE controllers</span></td>
+          <td>MIT License</td>
+          <td><code>MIT</code></td>
+        </tr>
+        <tr>
+          <td>Host application<br/><span style="font-size:.78rem;color:var(--mid);font-weight:400;">Cross-platform MIPS software</span></td>
+          <td>GNU General Public License v3.0 or later</td>
+          <td><code>GPL-3.0-or-later</code></td>
+        </tr>
+        <tr>
+          <td>Documentation<br/><span style="font-size:.78rem;color:var(--mid);font-weight:400;">Manuals, application notes</span></td>
+          <td>Creative Commons Attribution 4.0</td>
+          <td><code>CC-BY-4.0</code></td>
+        </tr>
+      </table>
+
+      <div class="prose">
+        <p><strong>What this permits.</strong> You may study, modify, manufacture, repair, and distribute these designs — including commercially — without asking us and without cost. No separate agreement with GAACE is required. If a board fails in ten years and we're not around, build another one.</p>
+        <p><strong>What's required in return.</strong> If you distribute a product built on a <em>modified</em> version of one of our designs, you publish your modified design files under the same license. Changes to the surrounding product — the instrument our board sits inside — don't have to be published. That's the "weakly reciprocal" part, and it's deliberate: it means an instrument manufacturer can build our hardware into a commercial product without opening their entire design.</p>
+        <p><strong>Trademarks are not licensed.</strong> "GAA Custom Electronics," "GAACE," "MIPS," and "Astraea" are our marks. You may accurately say your work is based on our design. You may not use our names or logo to identify your product, or in a way that implies we supplied or endorsed it. The engineering is free; the name isn't.</p>
+        <p>And a request that carries no legal weight: if you're manufacturing our designs commercially, we'd appreciate hearing from you first.</p>
+      </div>
+
+      <div class="callout">
+        <h4>Work we do for you stays yours</h4>
+        <p>None of the above applies to custom development funded by a customer. That work belongs to the customer who paid for it, is typically covered by an NDA, and is never published here. Where GAACE funds development itself — which we often do when the result would be useful to other researchers, including upgrades that started as a customer request — the result is ours, and it goes out under the licenses above.</p>
+      </div>
+
+      <div class="prose" style="margin-top:1.75rem;">
+        <p>If your institution needs something these licenses don't cover, or has a procurement requirement we haven't anticipated, contact us. We'd rather have that conversation than have you quietly walk away.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="sec-dark">
+  <div class="container">
+    <div style="text-align:center;max-width:680px;margin:0 auto;" class="fade">
+      <div class="lbl">Take A Look</div>
+      <h2 class="h2 h2-lt">Read the source <em>before</em><br/>you talk to us.</h2>
+      <p style="color:rgba(255,255,255,.45);font-size:1rem;line-height:1.75;margin:1.25rem 0 2.25rem;">Everything published is public and ungated. If what you need isn't up yet, tell us what you're working on — we'd rather have that conversation than have you go without. And if you're building something we should know about, our research programs are always open to collaborators.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="https://github.com/GordonAnderson" target="_blank" rel="noopener" class="btn">Browse the Repositories</a>
+        <a href="research.html" class="btn-ghost">See Our Research Programs</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCADgAOADACIAAREBAhEB/9sAQwAIBgYHBgUIBwcHCQkICgwUDQwLCwwZEhMPFB0aHx4dGhwcICQuJyAiLCMcHCg3KSwwMTQ0NB8nOT04MjwuMzQy/9sAQwEJCQkMCwwYDQ0YMiEcITIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIy/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMAAAERAhEAPwD3+iiigAooooAKKKKACiqOp6xYaPam4v7mOCMdCx5J9AOpP0rzfXfixI+6HRbbYOnnzjn8F/x/KonUjD4mdWGwVfFO1KN/y+89TkljhjZ5HVEUZLMcAVzl/wCP/DlhkNqKTOP4YAZM/iOP1rxDUda1PV5N9/ezT852s3yj6KOBVCuWWM/lR9Hh+GG9a8/kv8/+Aet3PxfsVz9l0y4k9PMcJ/LNZcvxev2J8rS4F9N0hbH6CvOKKxeKqM9SHD2BirNN/NnoP/C29X/58bP/AMe/xqaP4vX6keZplu3rtkIz/OvOKKX1mp3L/sHAfyfi/wDM9btvi/ZNj7VpdxH6+W4f+eK6Kw+IHhu/wBqCQuf4ZwUx+J4/WvAqKuOLmt9TlrcNYWfwNx/H8z6himinjWSKRXRhkMpyDT6+adO1nUtJk32F7NAc5IRvlP1HQ/jXfaF8WJo9sOtW3mjp58AwfxXp+WPpXRDFQlvoeHi+HsVRXNT95eW/3HrFFUNL1nT9atRcWFyk0ffaeVPoR1B+tX66U7nhSi4vlkrMKKKKBBRRRQAUUUUAFFFFABRRRQAUUU13WNGd2CqoySTgAUAOJAGTXAeLPiTbaXvs9J2XN4OGkzmOM/1Pt/8AqrnfG3xCk1FpNN0iQpacrJOpwZfYei/z+nXzyuStieX3Ybn0+VZC61quJ0j0XV+pb1HU73Vrprm+uZJ5T3Y9PYDoB9KqUUVwNtu7PsqdKFKKhBWQUUUVJYUUUUAFFFFABRRRQAUUUUAWtP1K80u6W5sbiSCZf4kPX2I7j2Nes+E/iVbajss9YKW10eFl6Ryf/En9P5V45RW1OtKm9NjzsfldDGR99Wl3W59RggjIORS1414K+IMulGPTtWdpLLhY5jy0XsfVf5V7HHIksayRsGRhlWByCK9KnUjUV0fA47AVcHU5Ki06PuOooorQ4gooooAKKKKACiiigBCcDNePfEHxu2oTS6PpsmLNDtmlU/60+g/2R+v069D8SvFjaZaDSbKTbdXC5lZTzGn+J/ln2rxyuTE1uX3I7n0+Q5V7V/Waq91bLu+4UUUV5x9qFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABXoHw+8bNpk8ek6jJmykOIpGP8AqmPb/dP6V5/RWlOo4SujlxmEp4uk6VRf8DzPqMEEZFLXnfw08WNqFsdHvZM3MC5hZurp6fUfy+hr0SvVhNTjzI/NsXhZ4Ws6U91+IUUUVZzBRRRQAVQ1nVIdG0m51C4P7uFN2O7HsB7k4FX68l+LGuGS7t9Ghf5Ih5swB6sfug/QZP4ioqT5IuR14HCvFV40l1/Lqefahf3GqahPe3T7ppnLMf6D2HSq1FFeO227s/TqdONOChFWSCiivVvA3gCxm0uPU9Xg8+S4XdFCx+VFPQn1JHNXTpuo7IwxmMpYSl7Srt+Z5TRXqfjvwDZW2mSarpEPkmAbpYV5Vl7kehHX6V5ZRUpypuzJwOPpY2n7Sl+IUUUVmdgUV3Pw/wDBcWvvJf6gGNlE21Ywcea3fJ9BxXbeIPhzo99prjTrZLS7QExuhOCfRh6H17VvDDznHmR5OKzrC4at7Gd79bdDxCinSRvFI0cilXQlWU9QR2ptYnrJpq6Ciit/wj4bfxNrItSzR28Y3zSL1C+g9zTScnZEVakaUHUm7JGBRXvU/wAPPDk1gbZLBY224WVGO8H1z3/GvFtc0ibQtYuNPnOWibhsY3KeQfyrSpQlTV2edgc3w+Nm4U7pruZ1FFFYnqBRRRQBYsb2fTr6G8tXKTQsGRvf/CvovQtWh1vRrbUIcbZUyVz91u4/A5r5sr0f4Ua4YNQn0eVv3c482EHs46j8Rz/wGurC1OWXK+p8/wAQ4FVsP7aK96P5df8AM9dooor0j4MKKKKAI55UggklkYKiKWYnsBXzXq2oSarq11fykl55C/PYdh+AwK9u+ImoGw8G3m1sPPiFf+BHn9M14LXFjJ7RPruGMP8AHXfovzf6BRRRXAfXFrTbNtQ1S1s1zmeVY+O2TjNfS8UawwpGihUVQAB2FeG/DSw+2eMYJCMpbRtKfrjaP1b9K91r0MHH3XI+L4nr3qwpLor/AH/8MRXMCXNrLBKu6ORCrA9wRivme8tnsr64tX+/DI0bfUHFfTteDfEaw+w+MroqMJcKsy/iMH9QaeLjeCfYz4Zr8mIlTf2l+RylFFXdIsjqWs2dkAT50yocehPP6Zrz9z7eUlFNs958Gaf/AGb4S06ArtcxCRx33N8x/nW9TUUKiqBgAYxTq9mMeWKR+VYiq61WVR9W2eA+P9PGn+Mr1VXCTETL/wACHP8A49muZr0/4vafiXTtRUdQ0Ln9V/8AZq8wrzMRHlqM/Qsmre2wUH20+7QK9i+Eun+RoVzfMuGuZsA+qrx/MtXjtfRfhSw/szwvp9qVwywgsP8AaPJ/Umrwkbzv2OTiOv7PCci+0/y1NmvJfi7p4jv7DUFX/Wo0Tn3ByP5n8q9arjviZp/23wfNKBl7V1lH0zg/oT+VdtaPNTaPksqrexxlOXnb79DwyiiivIP0wKKKKACrWm30umalbXsJxJBIHHvg9Px6VVopp2FKKknF7M+n7WeO6tYp4m3RyIHU+oIyKlrkvhxqBv8AwdaqzZe3LQn6A8f+OkV1tezCXNFM/LMVRdCtKk+jCiiiqOc8y+MF2VtNMsx0kkeU/wDAQAP/AEI15RXq3xM0XV9Y1Wz+w2Ms8UUJyyYwCT0/QVw//CF+I/8AoEXH5D/GvNxKk6mx97kNSjTwUbySbb6+Zg0Vvf8ACF+I/wDoEXH5D/Gj/hC/Ef8A0CLj8h/jXPyS7Hs/WaP86+9HdfCGw22eoagw5kdYlPsoyf8A0IflXb+JtV/sTwvqep5Aa2tnkTPdsfKPzxVXwbpEmieF7OznTbcAF5R6MxJx+GcfhXI/HLVfsPgRbJWw9/cpGR/sL85/UL+derRjy00j86zauq+MnNPS9l8tDvdD1JdY0HT9STGLq3SbA7FlBI/A8V598XrD5NO1BR0LQufryv8AJqt/BPVf7Q+H0VszZksZ3gOeu0neP/QsfhW98QbD7f4NvQBl4QJl9tpyf0zTqx5oNEZbW9ji6c/P89DwOu0+F9h9r8WrcFcpaxNJn3Pyj+Z/KuLr134R2HlaVe3zLgzyiNT7KP8AFj+VebQjzVEj7zN6/scFOS6q336Ho9c14J8Tp4q0q8u1YHyL+eAEd0DZT/xxlqz4x1X+xPBur6iG2vDbP5Z/2yML/wCPEV5L+z9quy+1jSGb/WRpcxj/AHTtb/0Jfyr1j81PSviPYC+8G3TAZe3KzL7YPP6E14PX05fWqXthcWsgyk0bI30IxXzPPC9vcSwSDDxuUYe4ODXBjI6qR9jwvWvCpS7O/wB//DFzQrA6nrtjZbdwlmVWH+znn9M19JqMKB6CvFPhZYfavFTXRXK2sJYH0ZvlH6Fq9rzWmDjaLZycT1uavCkui/P/AIY5uw8Tpd/EDVvDoI/0O0hlUd9xJL/o8Vbep2aahpl1ZyfcmiaM/iMV87+DvFRm+OLamX/c6ldSwfVHyIx+YT8q+kjyK6z5rZ3R8uyRtFI0bjDoSrD0IptdB430/wDs3xhqEQGEeTzV+jfN/MkfhXP14048smj9UwtVVqEKi6pBRVux0u/1NyljZz3BHXy0LAfU9q0/+EL8R/8AQIuPyH+NJRb2Rcq1ODtKSXzMGit7/hC/Ef8A0CLj8h/jR/whfiP/AKBFx+Q/xo5JdifrNH+dfejt/g/dkwanZnorJKv4gg/+givT68u+GmiavpGtXRvrCWCGSDh3AxuDDA/U16jXp4a/s0mfA56ofXZSg7p2/IKKKK3PHCjA9K8b+MnizxH4Z1zTl0jU5LW3ntiWRUUgsGOTyD2IrzX/AIWp43/6D83/AH6j/wDiaBn1dgelGB6V8o/8LU8b/wDQfm/79R//ABNH/C1PG/8A0H5v+/Uf/wATQB9VyyxwRPLLIscaAszucBQO5PavmL4s+M4fFviSOOwcvp1gpjiftIxPzOPY4AH0z3rnNZ8ZeI/EEPk6pq9zcQ5B8ottQn1KjANYdAHsX7P+qeVrWq6UzfLPAs6g+qHBx+D/AKV7xcwJc2ssEgykiFWHqCMV8ofDTVf7H+IWj3BbEck32d/TEg2c/QkH8K+tKAPmG7tns72e1k+/DI0bfUHFe/8Agqw/s7whp0BGHMXmMD6t8x/nXl/i3Qy/xJ+xIuEvpY3GPRuGP5hjXtqKERVAwAMACuPD0+WpLyPqM6xvtcFRX82r+SPL/jvqv2PwXBp6th765UMPVE+Y/wDj2yvI/hZqn9lfEbSZC2I55DbOPXeNo/8AHiv5V0nx51X7X4vtNOVspZWwLD0dzk/+OhK8vtriS0uoriFtssTh0PoQciuw+XPtqvAPH1h/Z/jK+VRhJmEy++4ZP65r3XTb6PU9LtL+L/VXMKTJ9GUEfzrzP4vaftn07UVH3g0Ln6cr/Nq58TG9M9nIK3s8bFfzJr9f0NP4S2HkaHd3zLhrmbaD6qo/xLV0XjrVf7F8DaxfBtrpbMkZ9Hf5F/VhU3hCw/szwpp1sV2sIQzD0ZvmP6k1wPx71X7L4VsNMVsPeXO9h6pGMn/x5l/KtKMeWCRyZpW9tjKk/P8ALQ8AsruSwv7e8hOJYJVlQ+jKcj+VfaNldx39hb3kJzFPEsqH1Vhkfzr4nr6n+Eeq/wBq/DnTtzZktN1q/ttPyj/vkrWhws5z4u6f5eoWGoKOJY2iY+6nI/8AQj+Vcz4L8Nf8JLrXkylltIV3zMvcZ4X2z/Q16f8AE3T/ALZ4QlmAy9rIso+mcH9CT+FUvhPp/wBn8PT3jL811McH1VeB+u6uKpS5q6vsz6zBZjKjlEpR+KLsvn/kdvZ2Nrp9slvaQRwwoOERQAKsYHpXO+Otek8NeC9T1SBlW4ij2wlhnDsQqnHfBOfwr5zPxV8bk5/t+bn/AKZR/wDxNdiSWx8pKUpvmk7s+rsD0owPSvlH/hanjf8A6D83/fqP/wCJo/4Wp43/AOg/N/36j/8AiaYj6uxRXjHwc8XeI/EviG/j1fVJLq2gtNwRkUAOXXB4A7Bvzr2egQUUUUAeL/tB2LPp+iagB8sUssDH3YBh/wCgNXhFfU3xd0ptV+HOoeWu6S0K3Sj2U/Mf++S1fLNA0FFFFAwooooAdHI8UqSRsVdCGVh2I6V9n6LqKavoVhqSY23Vuk2B23KDivi6vpv4K6r/AGj8PYLdmzJYzPbnPXGd4/RsfhQJnS6hoIu/F+l6ttGLWKUOfUnAX+bVv0VjeLNV/sTwlqupBtrwWztGf9vGF/8AHiKSSTbLnVlOMYvZaL77nyv411X+2/Gmr6gG3JLcuIz6ovyr/wCOgVg0UUyT6i+Duq/2n8ObJGbdJZu9s/4HK/8AjrLW94t0Ia/pMdrtBZbiJ/w3AN/46Wryn9n7Vdt3rGkM330S5jH0O1v/AEJPyr3Wk1dWZVOo6c1OO61EUbVAHQCvnH466r9s8bxWCtlLG2VWHo7/ADH9ClfR9fHHizVf7b8W6rqQbck9y7If9jOF/wDHQKZG7uY9e3/s+6r/AMhjR2b+5dRr/wCOuf8A0CvEK7n4Q6r/AGX8RtPDNtjuw1q/vuGVH/fQWgD6b1OyXUdLurJ/uzxNGfxGKq+GtNOk+HbGxZdrxRAOP9o8t+pNatFKyvctVJKDp9G7/wBfeeQ/H7VfI8PaZpSthrq4MrAf3UGMfm4/Kvn6vSvjhqn27x8bRWylhbpFjtub5yfyYD8K81pkIKKKKBnun7Pliy22uagw+V3igQ+4DM3/AKEte11wXwd0ptM+HNkzrtkvHe6YezHCn/vlVNd7QSwooooAiubeK7tZraZQ0UyGN1PdSMEflXxprmlTaHrl7pdwCJLWZoySOoB4P4jB/GvtCvBPjz4aNvqdp4jgj/dXKi3uCB0kUfKT9V4/4DQNHjdFFFAwooooAK9j/Z/1bytY1XSXbi4hWdAfVDg4+ocflXjla/hfX5/C/iSy1i3Xc1u+WTON6EYZfxBNAH2RXl/x11X7F4Ih09Ww99cqpHqifMf/AB4JXR2XxM8H3mmLe/25awKVy0M7hZVPoV6k/TNeBfEzxsPGniJZbYOunWqmO2Vxgtk/M5HbOB+AFAjiqKKKBnZfCvVv7I+IulSM22O4c2z++8YH/j238q+ra+IopXhlSWNisiMGVh1BHQ19O+Efiv4f1vRon1PUbbT9QRQJ4rhxGrMByyk8EH069vqCZ0HjjVf7E8E6xfhtrx2zLGfR2+Vf1Ir5Ar1z4v8AxGsvEEUWhaLN51nG/mXFwo+WRh91V9QOST3OPSvI6AQVYsLyTT9Qtr2E4lt5VlQ/7SkEfyqvRQM+2bO6ivrK3u4G3RTxrKh9VYZH6GpWYKpZiAoGST2rxn4VfE/S4dCh0HXbtLSa0G23uJThHj7KT2I6c9sVf+JXxT0i28P3Ol6FfRXt9doYjLA25IUPDHcOCSMgY+v1CTwzxJqh1vxLqepkki5uXkXPZSTtH4DArLoooKCrmk6bPrGr2em2wzNdTLEvtk4z9B1qnXr/AMCPDTXetXPiGeM+TZqYYGI4MrD5iPop/wDHxQB7zZ2kVhY29nAu2GCNYox6KowP0FT0UUEhRRRQAVleJNCt/Evh690m5wEuIyqtjOxuqsPocGtWigD4r1TTbrR9UudOvYzHc28hjkU+o7j2PUH0NVK+hPjP4EbV7EeI9Nh3XtqmLlFHMsQ/i9yv8voK+e6BhRRRQMKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigCzp9hc6rqNvYWcRlubhxHGg7k19feFvD9v4X8N2ekW+CIE+d/wC+55ZvxOfwxXnPwX8Btplp/wAJLqUO27uUxaIw5jjPV/Yt29vrXr1AmFFFFAgooooAKKKKACvnX4sfDV9Cupde0iHOlzNmaJB/x7Ofb+4T+R49K+iqZLFHPC8UqLJG6lXRxkMD1BHcUAfEdFerfEr4TTaE02saDG02l8vLbjl7f1I9U/Ud/WvKaCgooooAKKKKACiiigAooooAKKKKACiiigAooooAK9S+FHw2k8Q3ceuatCRpMLZijcf8fLD/ANkB6+vT1o+G/wAJ5/ETRavraPBpOQ0cXR7n/BPfqe3rX0TDDFbQRwQRrHFGoREQYCgcAAelAmSAYGB0ooooEFFFFABRRRQAUUUUAFFFFAB1ryTx58GbXVvN1Lw2sdpenLPan5YpT/s/3D+n06163RQB8WanpV/o189lqVpLa3KdY5VwfqPUe44qnX2Vr3hvSPEtibTVrKO5j/hLDDIfVWHIP0rxrxP8B7uDfceG7wXKdfstyQsg9g/Q/jj60DueNUVoaroWq6HP5Oqafc2j5wPNjIDfQ9D+FZ9AwooooAKKKKACiiigAoq/pWiaprlx5Gl6fc3cncQxlgv1PQfjXqfhj4D311suPEd4LOM8m2tyHkPsW+6v4bqAPJ9O0y+1e9Sz061lurl/uxxLuP19h717v4D+C9tpnl6j4mWO6vBhkswd0UZ/2v759un1r0jQPDOj+GLL7LpFjHbofvsOXc+rMeTWtQK4gAUAAAAcACloooEFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAEVzbW95A0FzBHPC4w0cqBlb6g1xeq/CLwbqu5v7MNnIf47SQx4/4Dyv6V3NFAHi97+z5Ztk2PiCeL0We3En6gr/KsSb4Aa8pbyNX01x/Dv3rn64U4r6DooC585/8KD8Vf8/+jf8Af6X/AON1Yh+AGvsV87VtNQfxbN7Y+mVGa+hKKB3PFrL9ny1Ug33iCaQd1gtwn6kn+VdfpXwh8G6XtY6a15IP47uQvn/gIwv6V3VFAiG2tbeyt1t7WCKCFPuxxIFUfQDipqKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD/2Q==" alt="GAA Custom Electronics logo" />
+        <div class="footer-logo-text">GAA Custom Electronics</div>
+      </div>
+      <p>Supporting mass spectrometry research through custom electronics monitoring and control systems. Kennewick, WA — Est. 2014.</p>
+    </div>
+    <div>
+      <div class="fcol-title">Products</div>
+      <ul class="fcol-links">
+        <li><a href="index.html#products">MIPS System</a></li>
+        <li><a href="index.html#products">RF Generator</a></li>
+        <li><a href="index.html#products">RF Mega</a></li>
+        <li><a href="index.html#products">MFT Twave</a></li>
+        <li><a href="index.html#products">Electrometer</a></li>
+        <li><a href="ion-optics.html">Ion Optics</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fcol-title">Company</div>
+      <ul class="fcol-links">
+        <li><a href="index.html#about">About Us</a></li>
+        <li><a href="index.html#capabilities">Capabilities</a></li>
+        <li><a href="index.html#facility">Our Facility</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="open-source.html">Open Source</a></li>
+        <li><a href="index.html#support">Downloads</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fcol-title">Resources</div>
+      <ul class="fcol-links">
+        <li><a href="tools.html">MS Calculators</a></li>
+        <li><a href="https://github.com/GordonAnderson" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://scholar.google.com/citations?hl=en&amp;user=u2xMtMgAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener">Publications</a></li>
+        <li><a href="index.html#support">Manuals</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-btm">
+    <div class="footer-copy">© 2026 GAA CUSTOM ELECTRONICS, LLC — ALL RIGHTS RESERVED</div>
+    <div class="footer-copy">KENNEWICK, WASHINGTON, USA</div>
+  </div>
+</footer>
+
+<script>
+  function toggleDrawer(){ document.getElementById('nav-drawer').classList.toggle('open'); }
+  function closeDrawer(){ document.getElementById('nav-drawer').classList.remove('open'); }
+
+  var nav = document.getElementById('main-nav');
+  function onScroll(){
+    if (window.scrollY > 60) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  }
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade').forEach(function(el){ io.observe(el); });
+</script>
+
+</body>
+</html>

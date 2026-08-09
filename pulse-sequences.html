@@ -1,0 +1,1890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TBTBP7GLEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-TBTBP7GLEK');
+  </script>
+  <!-- End Google Analytics -->
+  <title>MIPS Pulse Sequence Builder &amp; Visualizer | GAA Custom Electronics</title>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="favicons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicons/favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="favicons/favicon-192x192.png" />
+  <meta name="description" content="Build and visualise MIPS pulse sequences in the browser. Parameterised patterns for digital pulses, gated DC bias, time sweeps and multi-segment voltage ramps, plus a visualiser that parses any MIPS sequence and draws the waveform." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --red:      #CC1F1F;
+      --red-dk:   #A01515;
+      --red-pale: #FDF0F0;
+      --ink:      #1A1A1C;
+      --ink2:     #2E2E32;
+      --ink3:     #4A4A52;
+      --mid:      #7A7A84;
+      --rule:     #E4E4EA;
+      --rule2:    #EFEFF4;
+      --surface:  #F7F7FA;
+      --white:    #FFFFFF;
+      /* dark palette for hero / contact */
+      --d-bg:     #0E0E10;
+      --d-bg2:    #1A1A1D;
+      --d-bg3:    #252528;
+      --d-rule:   #2E2E33;
+      --d-mid:    #5A5A62;
+      --d-silver: #B8B8C0;
+      --mono:    'DM Mono', monospace;
+      --serif:   'Fraunces', serif;
+      --sans:    'DM Sans', sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--sans);background:var(--white);color:var(--ink);overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:1160px;margin:0 auto;padding:0 2rem}
+    .lbl{font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:.75rem}
+    .lbl-lt{color:rgba(204,31,31,.75)}
+    .h2{font-family:var(--serif);font-size:clamp(2rem,5vw,3rem);font-weight:600;line-height:1.1;color:var(--ink)}
+    .h2 em{font-style:italic;color:var(--red);font-weight:300}
+    .h2-lt{color:var(--white)}
+    .h2-lt em{color:var(--red)}
+
+    /* ── NAV — always light bg, transitions on scroll ── */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:200;
+      background:rgba(14,14,16,.96);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--d-rule);
+      transition:background .3s,border-color .3s;
+    }
+    nav.scrolled{
+      background:rgba(255,255,255,.97);
+      border-bottom:1px solid var(--rule);
+    }
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 1.5rem;max-width:1400px;margin:0 auto;gap:1rem}
+    .nav-logo{display:flex;align-items:center;gap:.6rem;flex-shrink:0;text-decoration:none}
+    .nav-logo img{width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0}
+    .nav-logo-words{display:flex;flex-direction:column;line-height:1.15}
+    .nav-logo-words strong{font-family:var(--serif);font-weight:600;font-size:.92rem;color:var(--white);letter-spacing:.01em;transition:color .3s;white-space:nowrap}
+    .nav-logo-words span{display:none}
+    nav.scrolled .nav-logo-words strong{color:var(--ink)}
+    .nav-links{display:flex;align-items:center;gap:0;list-style:none;flex-wrap:nowrap}
+    .nav-links a{font-size:.78rem;font-weight:500;color:rgba(255,255,255,.65);transition:color .2s;padding:.25rem .55rem;white-space:nowrap;border-radius:3px}
+    .nav-links a:hover{color:var(--white)}
+    nav.scrolled .nav-links a{color:var(--ink3)}
+    nav.scrolled .nav-links a:hover{color:var(--red)}
+    .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:.35rem 1rem!important;border-radius:3px;font-size:.78rem!important;white-space:nowrap}
+    .nav-cta:hover{background:var(--red-dk)!important;color:var(--white)!important}
+    nav.scrolled .nav-cta{color:var(--white)!important}
+    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;flex-shrink:0}
+    .hamburger span{display:block;width:22px;height:1.5px;background:rgba(255,255,255,.7);margin:5px 0;transition:.3s}
+    nav.scrolled .hamburger span{background:var(--ink3)}
+    @media(max-width:1100px){
+      .nav-links a{padding:.25rem .4rem;font-size:.74rem}
+    }
+    .nav-drawer{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(14,14,16,.98);border-bottom:1px solid rgba(255,255,255,.08);padding:1rem 1.5rem;z-index:199;flex-direction:column;gap:.25rem}
+    .nav-drawer.open{display:flex}
+    .nav-drawer a{font-size:.88rem;font-weight:500;color:rgba(255,255,255,.7);padding:.6rem 0;border-bottom:0.5px solid rgba(255,255,255,.06);display:block;text-decoration:none}
+    .nav-drawer a:last-child{border-bottom:none}
+    .nav-drawer a:hover{color:var(--white)}
+    .nav-drawer .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:.6rem 1rem!important;border-radius:3px;margin-top:.5rem;text-align:center;border-bottom:none}
+
+    /* ── HERO — dark ── */
+    #hero{
+      min-height:100vh;display:flex;align-items:center;
+      padding-top:64px;
+      background:var(--d-bg);
+      position:relative;overflow:hidden;
+    }
+    .hero-grid{
+      position:absolute;inset:0;
+      background-image:
+        linear-gradient(rgba(204,31,31,.05) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(204,31,31,.05) 1px,transparent 1px);
+      background-size:52px 52px;
+    }
+    .hero-glow{
+      position:absolute;width:700px;height:700px;
+      background:radial-gradient(circle,rgba(204,31,31,.12) 0%,transparent 68%);
+      top:-120px;right:-120px;pointer-events:none;
+    }
+    .hero-glow2{
+      position:absolute;width:400px;height:400px;
+      background:radial-gradient(circle,rgba(204,31,31,.07) 0%,transparent 70%);
+      bottom:-80px;left:10%;pointer-events:none;
+    }
+    .hero-content{
+      position:relative;z-index:2;
+      max-width:1160px;margin:0 auto;padding:5rem 2rem;
+      display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;
+    }
+    .hero-kicker{display:flex;align-items:center;gap:.65rem;margin-bottom:1.5rem}
+    .hero-kicker-line{width:28px;height:1px;background:var(--red)}
+    .hero-kicker span{font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--red)}
+    .hero-h1{
+      font-family:var(--serif);font-size:clamp(3rem,7vw,5.2rem);
+      font-weight:600;line-height:.98;color:var(--white);margin-bottom:1.5rem;
+    }
+    .hero-h1 em{font-style:italic;color:var(--red);font-weight:300}
+    .hero-sub{font-size:1rem;font-weight:300;color:var(--d-silver);line-height:1.75;margin-bottom:2.5rem;max-width:480px}
+    .hero-stats{display:flex;gap:2rem;padding:1.25rem 0;border-top:1px solid var(--d-rule);border-bottom:1px solid var(--d-rule);margin-bottom:2rem}
+    .stat-num{font-family:var(--serif);font-size:2.2rem;font-weight:600;color:var(--red);line-height:1}
+    .stat-lbl{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--d-mid);margin-top:.25rem}
+    .hero-btns{display:flex;gap:.75rem;flex-wrap:wrap}
+    .btn-p{display:inline-flex;align-items:center;gap:.4rem;background:var(--red);color:var(--white);font-weight:500;font-size:.9rem;padding:.8rem 1.6rem;border-radius:3px;transition:background .2s,transform .15s}
+    .btn-p:hover{background:var(--red-dk);transform:translateY(-1px)}
+    .btn-s{display:inline-flex;align-items:center;gap:.4rem;background:transparent;color:var(--d-silver);font-weight:500;font-size:.9rem;padding:.8rem 1.6rem;border-radius:3px;border:1px solid var(--d-rule);transition:border-color .2s,color .2s}
+    .btn-s:hover{border-color:var(--red);color:var(--white)}
+
+    /* hero right panel */
+    .hero-panel{background:var(--d-bg2);border:1px solid var(--d-rule);border-radius:8px;overflow:hidden}
+    .panel-bar{background:var(--d-bg3);border-bottom:1px solid var(--d-rule);padding:.75rem 1rem;display:flex;align-items:center;gap:.5rem}
+    .dot{width:10px;height:10px;border-radius:50%}
+    .dot-r{background:#FF5F56}.dot-y{background:#FFBD2E}.dot-g{background:#27C93F}
+    .panel-title-bar{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;color:var(--d-mid);text-transform:uppercase;margin-left:auto}
+    .panel-body{padding:1.5rem}
+    .panel-pname{font-family:var(--serif);font-size:1.7rem;font-weight:600;color:var(--white);margin-bottom:.15rem}
+    .panel-psub{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--d-mid);margin-bottom:1rem}
+    .panel-mods{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;margin-bottom:1rem}
+    .pmod{background:var(--d-bg);border:1px solid var(--d-rule);border-left:3px solid var(--red);border-radius:3px;padding:.6rem .75rem}
+    .pmod-n{font-family:var(--mono);font-size:.66rem;font-weight:500;color:var(--d-silver);letter-spacing:.05em}
+    .pmod-d{font-size:.7rem;color:var(--d-mid);margin-top:.1rem}
+    .panel-chips{display:flex;gap:.4rem;flex-wrap:wrap}
+    .chip{font-family:var(--mono);font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;background:var(--d-bg3);border:1px solid var(--d-rule);color:var(--d-mid);padding:.22rem .55rem;border-radius:2px}
+    .chip-r{background:rgba(204,31,31,.12);border-color:rgba(204,31,31,.25);color:rgba(204,31,31,.85)}
+    .panel-foot{border-top:1px solid var(--d-rule);padding:.75rem 1rem;display:flex;justify-content:space-between;align-items:center}
+    .panel-price{font-family:var(--serif);font-size:1.15rem;font-weight:600;color:var(--white)}
+    .panel-price small{font-size:.68rem;font-weight:300;color:var(--d-mid)}
+
+    /* ── TRANSITION WAVE ── */
+    .wave-divider{background:var(--d-bg);line-height:0;overflow:hidden}
+    .wave-divider svg{display:block;width:100%}
+
+    /* ── MARQUEE ── */
+    .marquee{background:var(--red);padding:.6rem 0;overflow:hidden;white-space:nowrap}
+    .marquee-inner{display:inline-flex;animation:mq 35s linear infinite}
+    .mq-item{font-family:var(--mono);font-size:.66rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.8);padding:0 2rem}
+    .mq-sep{color:rgba(255,255,255,.4)}
+    @keyframes mq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+    /* ── LIGHT BODY SECTIONS ── */
+    /* products */
+    #products{padding:6rem 0;background:var(--white)}
+    .sec-hd{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--rule)}
+    .sec-intro{font-size:.95rem;color:var(--mid);max-width:340px;line-height:1.7}
+
+    /* featured mips */
+    .mips-feat{display:grid;grid-template-columns:1fr 1.2fr;border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin-bottom:2rem;transition:border-color .2s;align-items:start;}
+    .mips-feat:hover{border-color:rgba(204,31,31,.3)}
+    .mips-vis{background:var(--ink);padding:0;display:flex;align-items:stretch;justify-content:flex-start;flex-direction:column;position:relative;overflow:hidden;}
+    .mips-vis::before{content:''}
+    /* photo slot in featured */
+    .mips-photo-slot{
+      width:100%;max-width:340px;position:relative;z-index:1;
+      background:var(--d-bg3);border:1px solid var(--d-rule);border-radius:4px;
+      overflow:hidden;aspect-ratio:4/3;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .mips-photo-slot img{width:100%;height:100%;object-fit:cover}
+    .photo-placeholder{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:.5rem;padding:2rem;text-align:center;
+    }
+    .photo-placeholder span{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;color:var(--d-mid);text-transform:uppercase}
+    .photo-placeholder svg{opacity:.2}
+
+    .mips-body{padding:2.5rem;display:flex;flex-direction:column;justify-content:center}
+    .mips-tag{display:inline-flex;font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);background:var(--red-pale);border:1px solid rgba(204,31,31,.15);padding:.22rem .6rem;border-radius:2px;margin-bottom:.75rem;width:fit-content}
+    .mips-name{font-family:var(--serif);font-size:2.4rem;font-weight:600;color:var(--ink);line-height:1;margin-bottom:.2rem}
+    .mips-subname{font-size:.8rem;color:var(--mid);margin-bottom:1rem}
+    .mips-desc{font-size:.92rem;color:var(--ink3);line-height:1.7;margin-bottom:1.25rem}
+    .mips-feats{list-style:none;margin-bottom:1.5rem}
+    .mips-feats li{font-size:.87rem;color:var(--ink3);padding:.4rem 0;border-bottom:1px solid var(--rule2);display:flex;gap:.6rem;align-items:flex-start}
+    .mips-feats li::before{content:'—';color:var(--red);flex-shrink:0}
+    .mips-foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+    .mips-pr{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--ink)}
+    .mips-pr small{font-size:.7rem;font-weight:300;color:var(--mid)}
+    .mips-cta{font-size:.85rem;font-weight:500;color:var(--red);display:inline-flex;align-items:center;gap:.4rem;transition:gap .2s}
+    .mips-cta:hover{gap:.7rem}
+
+    /* product grid */
+    .prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+    .prod-card{background:var(--white);padding:1.75rem;transition:background .2s;cursor:pointer}
+    .prod-card:hover{background:var(--surface)}
+    .prod-photo{width:100%;aspect-ratio:16/9;background:var(--surface);border-radius:4px;overflow:hidden;margin-bottom:1rem;display:flex;align-items:center;justify-content:center;border:1px solid var(--rule2)}
+    .prod-photo img{width:100%;height:100%;object-fit:cover}
+    .prod-badge{font-family:var(--mono);font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:.6rem}
+    .prod-badge span{background:var(--surface);border:1px solid var(--rule);padding:.18rem .5rem;border-radius:2px}
+    .prod-name{font-family:var(--serif);font-size:1.4rem;font-weight:600;color:var(--ink);margin-bottom:.15rem}
+    .prod-sub{font-size:.76rem;color:var(--mid);margin-bottom:.65rem}
+    .prod-desc{font-size:.84rem;color:var(--ink3);line-height:1.65;margin-bottom:.9rem}
+    .prod-specs{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.9rem}
+    .spec{font-family:var(--mono);font-size:.57rem;letter-spacing:.05em;color:var(--ink3);background:var(--surface);border:1px solid var(--rule);padding:.18rem .5rem;border-radius:2px}
+    .prod-price{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--red)}
+    .prod-price small{font-size:.68rem;font-weight:300;color:var(--mid)}
+
+    /* ── ARCHITECTURE — light bg ── */
+    #how-it-works{padding:6rem 0;background:var(--surface);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+    .arch-hd{text-align:center;margin-bottom:3.5rem}
+    .arch-hd .h2{margin-bottom:.75rem}
+    .arch-hd p{color:var(--mid);max-width:560px;margin:0 auto;font-size:.97rem;line-height:1.7}
+    .arch-wrap{background:var(--white);border:1px solid var(--rule);border-radius:8px;padding:2rem;margin-bottom:2rem;overflow-x:auto}
+    .arch-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin-top:2rem}
+    .arch-card{background:var(--white);padding:1.75rem}
+    .arch-card-bar{width:32px;height:2px;margin-bottom:1rem;border-radius:1px}
+    .arch-card-sub{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);margin-bottom:.4rem}
+    .arch-card-title{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:.5rem}
+    .arch-card p{font-size:.84rem;color:var(--ink3);line-height:1.65}
+    .photo-note{margin-top:1.5rem;padding:1rem 1.25rem;background:var(--red-pale);border:1px solid rgba(204,31,31,.15);border-radius:4px;display:flex;align-items:center;gap:.9rem;font-size:.82rem;color:var(--ink3);line-height:1.5}
+    .photo-note strong{color:var(--ink)}
+
+    /* ── CAPABILITIES — white ── */
+    #capabilities{padding:6rem 0;background:var(--white)}
+    .caps-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+    .caps-left .h2{margin-bottom:1.25rem}
+    .caps-left>p{color:var(--mid);font-size:.97rem;line-height:1.7;margin-bottom:2rem}
+    .steps{display:flex;flex-direction:column;gap:1.25rem}
+    .step{display:flex;gap:1.25rem;align-items:flex-start}
+    .step-n{font-family:var(--mono);font-size:.66rem;color:var(--red);background:var(--red-pale);border:1px solid rgba(204,31,31,.15);width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:3px;flex-shrink:0}
+    .step h4{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:.2rem}
+    .step p{font-size:.84rem;color:var(--mid);line-height:1.6}
+    .cap-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+    .cap-cell{background:var(--white);padding:1.5rem;transition:background .2s}
+    .cap-cell:hover{background:var(--surface)}
+    .cap-icon{font-size:1.2rem;margin-bottom:.55rem}
+    .cap-title{font-family:var(--serif);font-size:.97rem;font-weight:600;color:var(--ink);margin-bottom:.35rem}
+    .cap-desc{font-size:.8rem;color:var(--mid);line-height:1.55}
+
+    /* ── OFFER GRID (What We Offer) ── */
+    .offer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+    .offer-cell{background:var(--white);padding:1.75rem 1.5rem;transition:background .2s}
+    .offer-cell:hover{background:var(--surface)}
+
+    /* ── ABOUT — surface ── */
+    #about{padding:6rem 0;background:var(--surface);border-top:1px solid var(--rule)}
+    .about-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+    .about-left .h2{margin-bottom:1.25rem}
+    .about-left p{color:var(--mid);font-size:.97rem;line-height:1.7;margin-bottom:1rem}
+    .highlights{margin-top:1.5rem;display:flex;flex-direction:column;gap:.5rem}
+    .hi{display:flex;align-items:flex-start;gap:.6rem;font-size:.87rem;color:var(--ink3);padding:.5rem 0;border-bottom:1px solid var(--rule2)}
+    .hi::before{content:'✓';color:var(--red);flex-shrink:0;font-size:.8rem;margin-top:.1rem}
+    .team-lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);margin-bottom:1.25rem}
+    .team-list{display:flex;flex-direction:column;gap:.75rem}
+    .team-card{background:var(--white);border:1px solid var(--rule);border-radius:4px;padding:1.25rem;display:flex;gap:1rem;align-items:flex-start;transition:border-color .2s}
+    .team-card:hover{border-color:rgba(204,31,31,.3)}
+    .av{width:42px;height:42px;border-radius:3px;background:var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--white);flex-shrink:0}
+    .tc-name{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink)}
+    .tc-role{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin:.15rem 0 .4rem}
+    .tc-bio{font-size:.81rem;color:var(--mid);line-height:1.55}
+
+    /* ── DOWNLOADS — white ── */
+    #support{padding:6rem 0;background:var(--white);border-top:1px solid var(--rule)}
+    .sup-hd{text-align:center;margin-bottom:3.5rem}
+    .sup-hd .h2{margin-bottom:.75rem}
+    .sup-hd p{color:var(--mid);max-width:480px;margin:0 auto;font-size:.95rem}
+    .dl-sec{margin-bottom:2.5rem}
+    .dl-sec-title{font-family:var(--mono);font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid var(--rule)}
+    .dl-table{width:100%;border-collapse:collapse}
+    .dl-table tr{border-bottom:1px solid var(--rule2);transition:background .15s}
+    .dl-table tr:hover{background:var(--surface)}
+    .dl-table td{padding:.7rem .5rem;font-size:.87rem;color:var(--ink3);vertical-align:middle}
+    .dl-table td:first-child{font-weight:500;color:var(--ink)}
+    .dl-table td:nth-child(2){font-family:var(--mono);font-size:.7rem;color:var(--mid)}
+    .dl-link{display:inline-flex;align-items:center;gap:.3rem;font-family:var(--mono);font-size:.63rem;letter-spacing:.08em;text-transform:uppercase;color:var(--red);background:var(--red-pale);border:1px solid rgba(204,31,31,.15);padding:.22rem .55rem;border-radius:2px;transition:background .15s}
+    .dl-link:hover{background:rgba(204,31,31,.1)}
+    .warranty-bar{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--red);border-radius:4px;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1.25rem;margin-top:2.5rem}
+    .warranty-bar h4{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:.2rem}
+    .warranty-bar p{font-size:.84rem;color:var(--mid);line-height:1.55}
+
+    /* ── CONTACT — dark ── */
+    #contact{padding:6rem 0;background:var(--d-bg);border-top:1px solid var(--d-rule)}
+    .contact-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:5rem;align-items:start}
+    .c-head{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:600;color:var(--white);margin-bottom:1rem;line-height:1.1}
+    .c-head em{font-style:italic;color:var(--red);font-weight:300}
+    .c-sub{font-size:.97rem;color:rgba(255,255,255,.45);line-height:1.7;margin-bottom:2rem}
+    .c-items{display:flex;flex-direction:column;gap:1rem}
+    .ci{display:flex;gap:1rem;align-items:flex-start}
+    .ci-icon{width:34px;height:34px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+    .ci-lbl{font-family:var(--mono);font-size:.57rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.15rem}
+    .ci-val{font-size:.9rem;color:rgba(255,255,255,.7)}
+    .ci-val a{color:rgba(255,255,255,.7);transition:color .2s}
+    .ci-val a:hover{color:var(--red)}
+    .c-form{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:2rem}
+    .c-form-hd{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:1px solid rgba(255,255,255,.08)}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+    .fg{margin-bottom:.75rem}
+    .fg label{display:block;font-family:var(--mono);font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.35rem}
+    .fg input,.fg select,.fg textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:3px;padding:.65rem .9rem;font-family:var(--sans);font-size:.9rem;color:var(--white);transition:border-color .2s}
+    .fg input::placeholder,.fg textarea::placeholder{color:rgba(255,255,255,.2)}
+    .fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:rgba(204,31,31,.5)}
+    .fg select option{background:var(--d-bg2)}
+    .fg textarea{min-height:110px;resize:vertical}
+    .form-btn{width:100%;background:var(--red);color:var(--white);font-family:var(--sans);font-weight:500;font-size:.9rem;padding:.8rem;border:none;border-radius:3px;cursor:pointer;transition:background .2s;margin-top:.25rem}
+    .form-btn:hover{background:var(--red-dk)}
+    .form-note{font-size:.73rem;color:rgba(255,255,255,.22);text-align:center;margin-top:.6rem}
+
+    /* ── FOOTER — darkest ── */
+    footer{background:#0A0A0C;border-top:1px solid rgba(255,255,255,.06);padding:3rem 0 2rem}
+    .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:3rem;max-width:1160px;margin:0 auto;padding:0 2rem 2.5rem;border-bottom:1px solid rgba(255,255,255,.05)}
+    .footer-brand p{font-size:.82rem;color:rgba(255,255,255,.28);line-height:1.65;margin-top:.75rem;max-width:220px}
+    .footer-logo{display:flex;align-items:center;gap:.75rem}
+    .footer-logo img{width:30px;height:30px;border-radius:50%;object-fit:cover;opacity:.85}
+    .footer-logo-text{font-family:var(--serif);font-size:.95rem;font-weight:600;color:rgba(255,255,255,.6)}
+    .fcol-title{font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:1rem}
+    .fcol-links{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+    .fcol-links a{font-size:.84rem;color:rgba(255,255,255,.38);transition:color .2s}
+    .fcol-links a:hover{color:rgba(255,255,255,.75)}
+    .footer-btm{max-width:1160px;margin:0 auto;padding:1.5rem 2rem 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+    .footer-copy{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;color:rgba(255,255,255,.18)}
+
+    /* ── SCROLL ANIMATIONS ── */
+    .fade{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+    .fade.in{opacity:1;transform:translateY(0)}
+
+    /* ── MOBILE ── */
+    @media(max-width:900px){
+      .hero-content{grid-template-columns:1fr;gap:2.5rem}
+      .hero-panel{display:none}
+      .mips-feat{grid-template-columns:1fr}
+      .mips-vis{display:none}
+      .caps-layout,.about-layout,.contact-layout{grid-template-columns:1fr;gap:3rem}
+      .arch-cards{grid-template-columns:1fr}
+      .sec-hd{flex-direction:column;align-items:flex-start;gap:1rem}
+      .footer-grid{grid-template-columns:1fr 1fr}
+      .offer-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:860px){
+      .nav-links{display:none}
+      .hamburger{display:block}
+    }
+    @media(max-width:600px){
+      .cap-grid{grid-template-columns:1fr}
+      .offer-grid{grid-template-columns:1fr}
+      .footer-grid{grid-template-columns:1fr;gap:2rem}
+      .form-row{grid-template-columns:1fr}
+      .hero-stats{gap:1.25rem}
+      .prod-grid{grid-template-columns:1fr}
+    }
+  </style>
+
+  <!-- Open Graph — rich previews when shared on LinkedIn, Slack, etc. -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://www.GAAcustom.com/pulse-sequences.html" />
+  <meta property="og:title"       content="MIPS Pulse Sequence Builder &amp; Visualizer — GAA Custom Electronics" />
+  <meta property="og:description" content="Build MIPS pulse sequences from working patterns, or paste any sequence and see the waveform it produces." />
+  <meta property="og:image"       content="https://www.GAAcustom.com/images/og-preview.jpg" />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name"   content="GAA Custom Electronics" />
+  <meta property="og:locale"      content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Ion Optics Components — GAA Custom Electronics" />
+  <meta name="twitter:description" content="PCB-based ion funnels and KF vacuum feedthroughs for mass spectrometry instrument development." />
+  <meta name="twitter:image"       content="https://www.GAAcustom.com/images/og-preview.jpg" />
+
+  <!-- Additional SEO -->
+  <meta name="author"    content="GAA Custom Electronics, LLC" />
+  <meta name="keywords"  content="mass spectrometry electronics, MIPS controller, MIPS modular intelligent power supply, ion funnel electronics, RF generator mass spec, FAIMS electronics, SLIM traveling wave, ion mobility electronics, custom mass spec instruments, electrometer pico-ampere, FET high voltage pulser, ion trap controller, DC bias supply, ESI electronics, research instrument development, custom electronics university lab, national lab electronics, mass spectrometer control system, FTICR preamplifier, low-noise differential preamplifier, GAACE, GAA Custom Electronics" />
+  <link rel="canonical"  href="https://www.GAAcustom.com/pulse-sequences.html" />
+  <link rel="sitemap" type="application/xml" href="sitemap.xml" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Structured Data (JSON-LD) — helps Google understand the business and display rich results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "GAA Custom Electronics, LLC",
+    "alternateName": "GAACE",
+    "url": "https://www.GAAcustom.com",
+    "logo": "https://www.GAAcustom.com/images/logo.jpeg",
+    "image": "https://www.GAAcustom.com/images/og-preview.jpg",
+    "description": "GAA Custom Electronics designs and manufactures custom electronics monitoring and control systems for mass spectrometry research. Products include MIPS controllers, RF generators, FAIMS, SLIM, ion funnel, and electrometer systems, deployed at universities, national laboratories, and instrument manufacturers worldwide.",
+    "telephone": "+1-509-628-6851",
+    "email": "Gordon@GAAcustom.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "101-904 Weiser Parkway",
+      "addressLocality": "Kennewick",
+      "addressRegion": "WA",
+      "postalCode": "99338",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 46.2112,
+      "longitude": -119.1372
+    },
+    "foundingDate": "2014",
+    "numberOfEmployees": {
+      "@type": "QuantitativeValue",
+      "value": 2
+    },
+    "sameAs": [
+      "https://github.com/GordonAnderson"
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Mass Spectrometry Electronics",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "MIPS — Modular Intelligent Power Supply",
+            "description": "Modular controller for mass spectrometry research instruments. Supports ion funnels, ion traps, traveling wave, FAIMS, and SLIM experiments via USB, Ethernet, or wireless."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "RF Generator",
+            "description": "Standalone RF driver for ion funnel, ion trap, and FAIMS applications in mass spectrometry research."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "FAIMS and SLIM Electronics",
+            "description": "Custom electronics for Field Asymmetric Ion Mobility Spectrometry and Structures for Lossless Ion Manipulation research systems."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Custom Electronics Design",
+            "description": "Custom circuit design and embedded software development for mass spectrometry and research instrument applications."
+          }
+        }
+      ]
+    }
+  }
+  </script>
+
+  <!-- Leaflet CSS for deployment map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+/* ── pulse sequence tool ── */
+
+.psg-wrap{max-width:1080px;margin:0 auto}
+.psg .lbl{font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem}
+.psg h1{font-family:var(--serif);font-weight:600;font-size:2.1rem;letter-spacing:-.01em;margin-bottom:.5rem}
+.psg h1 em{font-style:italic;font-weight:300}
+.psg .sub{color:var(--ink3);max-width:60ch;margin-bottom:2rem;font-size:1.02rem}
+
+.layout{display:grid;grid-template-columns:290px 1fr;gap:1.75rem;align-items:start}
+@media(max-width:860px){.layout{grid-template-columns:1fr}}
+
+/* pattern list */
+.plist{border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+.plist-h{background:var(--surface);border-bottom:1px solid var(--rule);padding:.7rem 1rem;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.pitem{padding:.8rem 1rem;border-bottom:1px solid var(--rule2);cursor:pointer;transition:background .15s}
+.pitem:last-child{border-bottom:none}
+.pitem:hover{background:var(--surface)}
+.pitem.on{background:var(--red-pale);box-shadow:inset 3px 0 0 var(--red)}
+.pitem-n{font-weight:500;font-size:.93rem;margin-bottom:.15rem}
+.pitem-d{font-size:.78rem;color:var(--mid);line-height:1.45}
+.tagrow{margin-top:.35rem;display:flex;gap:.3rem;flex-wrap:wrap}
+.tag{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;padding:.1rem .4rem;border-radius:3px;background:var(--rule2);color:var(--ink3)}
+.tag.ramp{background:#FFF3E0;color:#8A5200}
+
+/* panel */
+.panel{border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+.panel-h{background:var(--surface);border-bottom:1px solid var(--rule);padding:1.1rem 1.4rem}
+.panel-h h2{font-family:var(--serif);font-weight:600;font-size:1.3rem;margin-bottom:.2rem}
+.goal{font-size:.9rem;color:var(--ink3)}
+.body{padding:1.4rem}
+
+.params{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:.9rem;margin-bottom:1.5rem}
+.p label{display:block;font-family:var(--mono);font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:.3rem}
+.p input,.p select{width:100%;font-family:var(--mono);font-size:.9rem;padding:.5rem .6rem;border:1px solid var(--rule);border-radius:4px;background:var(--white);color:var(--ink)}
+.p input:focus,.p select:focus{outline:none;border-color:var(--red)}
+.p .hint{font-size:.7rem;color:var(--mid);margin-top:.25rem;font-family:var(--mono)}
+
+.outbox{background:var(--d-bg);border-radius:5px;padding:1rem 1.1rem;margin-bottom:.6rem;position:relative}
+.outbox .cap{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.55rem}
+.outbox code{font-family:var(--mono);font-size:.85rem;color:#F0F0F2;word-break:break-all;display:block;line-height:1.75}
+.copy{position:absolute;top:.75rem;right:.8rem;font-family:var(--mono);font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;background:var(--d-bg3);color:var(--d-silver);border:1px solid var(--d-rule);border-radius:3px;padding:.28rem .6rem;cursor:pointer}
+.copy:hover{color:#fff;border-color:var(--red)}
+.copy.done{color:#7ED07E;border-color:#7ED07E}
+
+.setup{background:var(--surface);border-left:3px solid var(--red);border-radius:0 4px 4px 0;padding:.85rem 1.1rem;margin-bottom:1.2rem;position:relative}
+.setup .cap{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.45rem}
+.setup code{font-family:var(--mono);font-size:.8rem;color:var(--ink2);display:block;line-height:1.85;word-break:break-all;padding-right:5.5rem}
+.setup .seqin{color:var(--red-dk);font-weight:500}
+.copy.lt{background:var(--white);color:var(--ink3);border:1px solid var(--rule)}
+.copy.lt:hover{color:var(--red);border-color:var(--red)}
+.copy.lt.done{color:#1E8A1E;border-color:#1E8A1E}
+
+.readback{border:1px solid var(--rule);border-radius:5px;padding:1rem 1.1rem;margin-bottom:1.2rem}
+.readback .cap{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:.5rem}
+.readback ul{list-style:none;font-size:.88rem;color:var(--ink2)}
+.readback li{padding:.2rem 0 .2rem 1rem;position:relative}
+.readback li::before{content:"";position:absolute;left:0;top:.72em;width:4px;height:4px;border-radius:50%;background:var(--red)}
+.readback .tot{margin-top:.6rem;padding-top:.6rem;border-top:1px solid var(--rule2);font-family:var(--mono);font-size:.8rem;color:var(--ink3)}
+
+.warn{background:#FFF8E6;border-left:3px solid #D89000;border-radius:0 4px 4px 0;padding:.7rem 1rem;margin-bottom:1rem;font-size:.83rem;color:#6B4A00}
+.warn.err{background:var(--red-pale);border-left-color:var(--red);color:var(--red-dk)}
+.warn b{font-weight:600}
+
+.note{font-size:.8rem;color:var(--mid);border-top:1px solid var(--rule2);padding-top:.9rem;margin-top:.3rem}
+.note a{color:var(--red);text-decoration:none;border-bottom:1px solid rgba(204,31,31,.3)}
+
+.tabs{display:flex;gap:.4rem;margin-bottom:1.5rem;border-bottom:1px solid var(--rule)}
+.tab{font-family:var(--sans);font-size:.9rem;font-weight:500;background:none;border:none;border-bottom:2px solid transparent;padding:.6rem 1rem;cursor:pointer;color:var(--mid);margin-bottom:-1px}
+.tab:hover{color:var(--ink)}
+.tab.on{color:var(--red);border-bottom-color:var(--red)}
+#vin{width:100%;min-height:5.5rem;font-family:var(--mono);font-size:.82rem;line-height:1.7;padding:.7rem .8rem;border:1px solid var(--rule);border-radius:4px;resize:vertical;color:var(--ink);word-break:break-all}
+#vin:focus{outline:none;border-color:var(--red)}
+#vclk{font-family:var(--mono);font-size:.72rem;padding:.15rem .3rem;border:1px solid var(--rule);border-radius:3px}
+#vclkhz{font-family:var(--mono);font-size:.72rem;padding:.15rem .35rem;border:1px solid var(--rule);border-radius:3px;width:9em}
+#vclkhz:focus{outline:none;border-color:var(--red)}
+#vclkinfo{font-family:var(--mono);font-size:.68rem;color:var(--mid);margin-left:.5rem}
+.viz{border:1px solid var(--rule);border-radius:5px;margin-bottom:1.2rem;overflow:hidden}
+.viz-h{background:var(--surface);border-bottom:1px solid var(--rule);padding:.6rem 1.1rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.viz-h .cap{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.viz-h .zoom{display:flex;gap:.3rem}
+.zbtn{font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;background:var(--white);border:1px solid var(--rule);border-radius:3px;padding:.22rem .55rem;cursor:pointer;color:var(--ink3)}
+.zbtn:hover{border-color:var(--red);color:var(--red)}
+.zbtn.on{background:var(--red);border-color:var(--red);color:#fff}
+.viz-body{padding:.9rem 1.1rem 1.1rem;overflow-x:auto}
+#wave{display:block;width:100%}
+.viz-note{font-family:var(--mono);font-size:.65rem;color:var(--mid);padding:0 1.1rem .8rem}
+.exrow{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem}
+.lanesel{padding:.55rem 1.1rem 0;display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
+.lanesel .sl{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-right:.2rem}
+.lchip{font-family:var(--mono);font-size:.66rem;border:1px solid var(--rule);border-radius:12px;padding:.16rem .6rem;cursor:pointer;background:var(--white);color:var(--mid);user-select:none}
+.lchip.on{background:var(--red-pale);border-color:rgba(204,31,31,.4);color:var(--red-dk)}
+
+  </style>
+</head>
+<body>
+
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="data:image/jpeg;base64,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" alt="GAA Custom Electronics logo" />
+      <div class="nav-logo-words">
+        <strong>GAA Custom Electronics</strong>
+        <span>Mass Spec Research Electronics</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#offer">What We Offer</a></li>
+      <li><a href="index.html#products">Products</a></li>
+      <li><a href="index.html#how-it-works">Software</a></li>
+      <li><a href="index.html#applications">Applications</a></li>
+      <li><a href="index.html#testimonials">Testimonials</a></li>
+      <li><a href="index.html#capabilities">Capabilities</a></li>
+      <li><a href="index.html#facility">Facility</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#support">Downloads</a></li>
+      <li><a href="tools.html" style="font-weight:700;border-bottom:2px solid var(--red);">Tools</a></li>
+      <li><a href="ion-optics.html">Ion Optics</a></li>
+      <li><a href="index.html#contact" class="nav-cta">Request Quote</a></li>
+    </ul>
+    <button class="hamburger" id="nav-hamburger" aria-label="Open menu" onclick="toggleDrawer()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ── MOBILE NAV DRAWER ── -->
+<div class="nav-drawer" id="nav-drawer">
+  <a href="index.html#offer"        onclick="closeDrawer()">What We Offer</a>
+  <a href="index.html#products"     onclick="closeDrawer()">Products</a>
+  <a href="index.html#how-it-works" onclick="closeDrawer()">Software</a>
+  <a href="index.html#applications" onclick="closeDrawer()">Applications</a>
+  <a href="index.html#testimonials" onclick="closeDrawer()">Testimonials</a>
+  <a href="index.html#capabilities" onclick="closeDrawer()">Capabilities</a>
+  <a href="index.html#facility"     onclick="closeDrawer()">Facility</a>
+  <a href="index.html#about"        onclick="closeDrawer()">About</a>
+  <a href="index.html#support"      onclick="closeDrawer()">Downloads</a>
+  <a href="tools.html"    onclick="closeDrawer()" style="font-weight:700;border-bottom:2px solid var(--red);">Tools</a>
+  <a href="ion-optics.html" onclick="closeDrawer()">Ion Optics</a>
+  <a href="index.html#contact" class="nav-cta" onclick="closeDrawer()">Request Quote</a>
+</div>
+
+<section class="psg" style="padding:7rem 0 5rem;"><div class="psg-wrap container">
+  <div class="lbl">Tools — prototype</div>
+  <h1>MIPS Pulse Sequence <em>Builder</em></h1>
+  <p class="sub">Pick a pattern close to your experiment, adjust the parameters, copy the sequence. Every pattern is taken from the worked-examples application note and runs as written.</p>
+
+  <div class="tabs">
+    <button class="tab on" data-tab="build">Pattern builder</button>
+    <button class="tab" data-tab="viz">Sequence visualizer</button>
+  </div>
+
+  <div id="tab-viz" style="display:none">
+    <div class="panel">
+      <div class="panel-h">
+        <h2>Sequence visualizer</h2>
+        <div class="goal">Paste any MIPS pulse sequence. It is parsed, run, and drawn.</div>
+      </div>
+      <div class="body">
+        <div class="p" style="margin-bottom:1rem">
+          <label>Sequence <span style="color:#B0B0B8">(with or without the STBLDAT wrapper)</span></label>
+          <textarea id="vin" spellcheck="false">STBLDAT;0:[A:5,100:B:1:3:30,300:B:0:3:0,600:];</textarea>
+          <div class="hint">Clock: <select id="vclk">
+            <option value="656250" selected>656250 Hz (internal)</option>
+            <option value="2625000">2625000 Hz (internal)</option>
+            <option value="10500000">10500000 Hz (internal)</option>
+            <option value="42000000">42000000 Hz (internal)</option>
+            <option value="custom">External / custom&hellip;</option>
+          </select><span id="vclkwrap" style="display:none"> <input id="vclkhz" type="number" min="1" step="any" value="1000000" /> Hz</span>
+          <span id="vclkinfo"></span></div>
+        </div>
+
+        <div class="exrow">
+          <span class="sl">Try</span>
+          <span class="lchip" data-ex="0:[A:5,100:B:1:3:30,300:B:0:3:0,600:]">Digital + DC bias</span>
+          <span class="lchip" data-ex="0:[A:10,-100:B:1,-200:B:0,400:d:5:]">Time sweep</span>
+          <span class="lchip" data-ex="0:65:0:[P:100,0:&lt;:50:129:2:&gt;:75:129:-4,656:],100:193:0">Two-segment ramp</span>
+          <span class="lchip" data-ex="0:[A:3,0:65:0:[P:100,0:&lt;:50:129:2:&gt;:75:129:-4,656:],100:193:0],100:u:0:A:1,200:A:0:u:1">Ramp + pulse</span>
+        </div>
+
+        <div id="vwarn"></div>
+
+        <div class="viz">
+          <div class="viz-h">
+            <div class="cap">Waveform</div>
+            <div class="zoom">
+              <button class="zbtn on" data-vz="all">Full run</button>
+              <button class="zbtn" data-vz="first">First pass</button>
+              <button class="zbtn" data-vz="3">First 3 passes</button>
+              <button class="zbtn" data-vz="last">Last pass</button>
+              <button class="zbtn" data-vz="tail">End</button>
+              <button class="zbtn" id="vmarkbtn">Pass marks</button>
+              <button class="zbtn" id="vpngbtn">PNG</button>
+            </div>
+          </div>
+          <div class="lanesel" id="vlanesel"></div>
+          <div class="viz-body"><canvas id="vwave"></canvas></div>
+          <div class="viz-note" id="vviznote"></div>
+        </div>
+
+        <div class="readback">
+          <div class="cap">Structure</div>
+          <ul id="vrb"></ul>
+          <div class="tot" id="vtot"></div>
+        </div>
+
+        <div class="note">The visualizer runs the sequence the way the documentation describes it. It is a reading aid, not a hardware simulator \u2014 settling time, slew limits and module voltage ranges are not modelled. Always confirm on a scope before running an experiment.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-build">
+  <div class="layout">
+    <div class="plist">
+      <div class="plist-h">Patterns</div>
+      <div id="plist"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h">
+        <h2 id="pname">—</h2>
+        <div class="goal" id="pgoal">—</div>
+      </div>
+      <div class="body">
+        <div class="params" id="params"></div>
+        <div id="warnings"></div>
+
+        <div class="setup" id="setup">
+          <div class="cap">Send these, in order</div>
+          <button class="copy lt" id="copysetup">Copy all</button>
+          <code id="setupcode"></code>
+        </div>
+
+        <div class="viz">
+          <div class="viz-h">
+            <div class="cap">Waveform</div>
+            <div class="zoom">
+              <button class="zbtn on" data-z="all">Full run</button>
+              <button class="zbtn" data-z="first">First pass</button>
+              <button class="zbtn" data-z="3">First 3 passes</button>
+              <button class="zbtn" data-z="last">Last pass</button>
+              <button class="zbtn" id="markbtn">Pass marks</button>
+              <button class="zbtn" id="pngbtn">PNG</button>
+            </div>
+          </div>
+          <div class="lanesel" id="lanesel"></div>
+          <div class="viz-body"><canvas id="wave"></canvas></div>
+          <div class="viz-note" id="viznote"></div>
+        </div>
+
+        <div class="outbox">
+          <div class="cap">Sequence</div>
+          <button class="copy" id="copybtn">Copy</button>
+          <code id="seqout">—</code>
+        </div>
+
+        <div class="readback">
+          <div class="cap">What this does</div>
+          <ul id="rb"></ul>
+          <div class="tot" id="tot"></div>
+        </div>
+
+        <div class="note" id="src"></div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div></section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <img src="data:image/jpeg;base64,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" alt="GAA Custom Electronics logo" />
+        <div class="footer-logo-text">GAA Custom Electronics</div>
+      </div>
+      <p>Supporting mass spectrometry research through custom electronics monitoring and control systems. Kennewick, WA — Est. 2014.</p>
+    </div>
+    <div>
+      <div class="fcol-title">Products</div>
+      <ul class="fcol-links">
+        <li><a href="index.html#products">MIPS System</a></li>
+        <li><a href="index.html#products">RF Generator</a></li>
+        <li><a href="index.html#products">RF Mega</a></li>
+        <li><a href="index.html#products">MFT Twave</a></li>
+        <li><a href="index.html#products">SLIM Reverser</a></li>
+        <li><a href="index.html#products">Electrometer</a></li>
+        <li><a href="index.html#products">FET Switch</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fcol-title">Company</div>
+      <ul class="fcol-links">
+        <li><a href="index.html#about">About Us</a></li>
+        <li><a href="index.html#capabilities">Capabilities</a></li>
+        <li><a href="index.html#facility">Our Facility</a></li>
+        <li><a href="index.html#how-it-works">Software</a></li>
+        <li><a href="index.html#applications">Applications</a></li>
+        <li><a href="index.html#support">Downloads</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fcol-title">Resources</div>
+      <ul class="fcol-links">
+        <li><a href="index.html#support">Operations Manuals</a></li>
+        <li><a href="https://github.com/GordonAnderson" target="_blank">GitHub Repository</a></li>
+        <li><a href="index.html#support">Rate Sheet</a></li>
+        <li><a href="index.html#support">Warranty Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-btm">
+    <div class="footer-copy">&copy; 2025 GAA Custom Electronics, LLC &middot; Kennewick, WA &middot; All Rights Reserved</div>
+    <div class="footer-copy">GAAcustom.com &middot; gaa@gaa-ce.com &middot; 509.628.6851</div>
+  </div>
+</footer>
+<script>
+
+/* ---------- clock helpers ---------- */
+var CLK = 656250;                       // Hz, app-note default
+function ms(c){ return c/CLK*1000; }    // clocks -> ms
+function fmt(v){
+  if (v >= 100) return v.toFixed(0);
+  if (v >= 10)  return v.toFixed(1);
+  if (v >= 1)   return v.toFixed(2);
+  return v.toFixed(3);
+}
+function t(c){                          // clocks -> friendly time
+  var m = ms(c);
+  return m < 1 ? fmt(m*1000)+' \u00B5s' : fmt(m)+' ms';
+}
+
+/* ---------- shared ramp simulation ----------
+   Single source of truth: both the readback text and the waveform trace
+   are derived from this, so they can never disagree.
+   Pass counter k runs 0 .. passes-1. Tests are k<upto and k>dnfrom,
+   matching the < and > conditional tests.
+--------------------------------------------------- */
+function simRamp(o){
+  var pts=[], v=o.v0, k, MAXPTS=4000, trunc=false;
+  var stride = Math.max(1, Math.ceil(o.passes/MAXPTS));
+  pts.push({t:0, v:v});
+  for(k=0;k<o.passes;k++){
+    if (k < o.upto)   v += o.upstep;
+    if (o.dnfrom!=null && k > o.dnfrom) v += o.dnstep;
+    // the ramp event sits at count 0 inside the pass, so the step lands
+    // at the START of pass k, not at its end
+    if (k % stride === 0 || k === o.passes-1) pts.push({t:k*o.len, v:v});
+  }
+  if (stride>1) trunc=true;
+  // the INITIAL value and the pass-0 step both land at t=0; the later wins.
+  // Consecutive points with an unchanged value carry no information in a
+  // sample-and-hold render, so drop them.
+  var dedup=[];
+  pts.forEach(function(q){
+    var L=dedup[dedup.length-1];
+    if(L && L.t===q.t){ dedup[dedup.length-1]=q; return; }
+    if(L && L.v===q.v) return;
+    dedup.push(q);
+  });
+  return {pts:dedup, vend:v, trunc:trunc};
+}
+
+/* ---------- pattern definitions ----------
+   Every `build` returns { seq, rb[], warn[], total }
+   seq is the bare table (STBLDAT wrapper added on output).
+------------------------------------------------------- */
+var PATTERNS = [
+{
+  id:'pulse1', name:'Single digital pulse', tags:['digital'],
+  desc:'One pulse on a digital output, then stop.',
+  goal:'Produce one pulse \u2014 high, then low \u2014 on a digital output.',
+  src:'Application note, Example 1.',
+  setup:['SMOD,LOC','STBLDAT;<sequence>;','STBLCLK,656250','STBLTRG,SW','SMOD,TBL','TBLSTRT'],
+  params:[
+    {k:'out',  l:'Output',      type:'sel', opts:'ABCDEFGHIJKLMNOP'.split(''), def:'B'},
+    {k:'start',l:'Rise at',     type:'num', def:100, unit:'clocks'},
+    {k:'width',l:'Pulse width', type:'num', def:200, unit:'clocks'},
+    {k:'len',  l:'Loop length', type:'num', def:400, unit:'clocks'}
+  ],
+  build:function(p){
+    var fall = p.start + p.width, w=[], rb=[];
+    if (p.len < fall) w.push({e:1,m:'Loop length ('+p.len+') is less than the last event count ('+fall+'). The loop must be at least as long as its last event.'});
+    rb.push('At count '+p.start+' ('+t(p.start)+' after trigger) output '+p.out+' goes high.');
+    rb.push('At count '+fall+' ('+t(fall)+') output '+p.out+' goes low \u2014 a '+t(p.width)+' pulse.');
+    rb.push('The loop runs once and stops.');
+    return {seq:'0:[A:1,'+p.start+':'+p.out+':1,'+fall+':'+p.out+':0,'+p.len+':]', rb:rb, warn:w, total:p.len,
+            trace:{tEnd:p.len, period:p.len, lanes:[
+              {label:p.out, type:'dig', pts:[{t:0,v:0},{t:p.start,v:1},{t:fall,v:0}]}
+            ]}};
+  }
+},
+{
+  id:'train', name:'Repeating pulse train', tags:['digital'],
+  desc:'The same pulse repeated N times at a fixed period.',
+  goal:'Repeat a digital pulse at a fixed period.',
+  src:'Application note, Example 2.',
+  setup:['SMOD,LOC','STBLDAT;<sequence>;','STBLCLK,656250','STBLTRG,SW','SMOD,TBL','TBLSTRT'],
+  params:[
+    {k:'out',   l:'Output',      type:'sel', opts:'ABCDEFGHIJKLMNOP'.split(''), def:'B'},
+    {k:'cycles',l:'Repeats',     type:'num', def:10, hint:'0 = forever'},
+    {k:'start', l:'Rise at',     type:'num', def:100, unit:'clocks'},
+    {k:'width', l:'Pulse width', type:'num', def:200, unit:'clocks'},
+    {k:'len',   l:'Period',      type:'num', def:400, unit:'clocks'}
+  ],
+  build:function(p){
+    var fall=p.start+p.width, w=[], rb=[];
+    if (p.len < fall) w.push({e:1,m:'Period ('+p.len+') is shorter than the last event ('+fall+'). Increase the period.'});
+    rb.push('Each pass: '+p.out+' high at count '+p.start+', low at '+fall+' \u2014 a '+t(p.width)+' pulse.');
+    rb.push('Period is '+p.len+' clocks ('+t(p.len)+'), so '+p.out+' stays low for '+t(p.len-fall)+' between pulses.');
+    rb.push(p.cycles===0 ? 'Repeats forever \u2014 stop with TBLSTOP or TBLABRT.' : 'Repeats '+p.cycles+' times.');
+    var n = p.cycles===0 ? 12 : p.cycles, pts=[{t:0,v:0}];
+    for (var i=0;i<Math.min(n,600);i++){ pts.push({t:i*p.len+p.start,v:1}); pts.push({t:i*p.len+fall,v:0}); }
+    return {seq:'0:[A:'+p.cycles+','+p.start+':'+p.out+':1,'+fall+':'+p.out+':0,'+p.len+':]', rb:rb, warn:w,
+            total:p.cycles===0?null:p.cycles*p.len,
+            trace:{tEnd:Math.min(n,600)*p.len, period:p.len, forever:p.cycles===0,
+                   lanes:[{label:p.out, type:'dig', pts:pts}]}};
+  }
+},
+{
+  id:'gate', name:'Digital + DC bias together', tags:['digital','dc bias'],
+  desc:'Pulse a digital line while stepping a DC bias channel, then return both.',
+  goal:'Gate a digital output and step a DC bias channel in the same event.',
+  src:'Application note, Example 3.',
+  setup:['SMOD,LOC','STBLDAT;<sequence>;','STBLCLK,656250','STBLTRG,SW','SMOD,TBL','TBLSTRT'],
+  params:[
+    {k:'out',   l:'Output',      type:'sel', opts:'ABCDEFGHIJKLMNOP'.split(''), def:'B'},
+    {k:'ch',    l:'DC bias ch',  type:'num', def:3,  hint:'1\u201332'},
+    {k:'v',     l:'On voltage',  type:'num', def:30, unit:'V', step:'any'},
+    {k:'vrest', l:'Off voltage', type:'num', def:0,  unit:'V', step:'any'},
+    {k:'cycles',l:'Repeats',     type:'num', def:5},
+    {k:'start', l:'On at',       type:'num', def:100, unit:'clocks'},
+    {k:'width', l:'On duration', type:'num', def:200, unit:'clocks'},
+    {k:'len',   l:'Period',      type:'num', def:600, unit:'clocks'}
+  ],
+  build:function(p){
+    var off=p.start+p.width, w=[], rb=[];
+    if (p.len < off) w.push({e:1,m:'Period ('+p.len+') is shorter than the last event ('+off+').'});
+    if (p.ch<1||p.ch>32) w.push({e:1,m:'DC bias channel must be 1\u201332.'});
+    if (p.width < 27) w.push({e:0,m:'Two values change at each event. Allow roughly 20 \u00B5s of settling per value \u2014 about 27 clocks for two. This event spacing is tighter than that.'});
+    rb.push('At count '+p.start+': '+p.out+' high and DC bias channel '+p.ch+' to '+p.v+' V, in one event.');
+    rb.push('At count '+off+': '+p.out+' low and channel '+p.ch+' back to '+p.vrest+' V.');
+    rb.push('Repeats '+p.cycles+' times with a '+t(p.len)+' period.');
+    var dp=[{t:0,v:0}], ap=[{t:0,v:0}];
+    for (var i=0;i<Math.min(p.cycles,600);i++){
+      dp.push({t:i*p.len+p.start,v:1}); dp.push({t:i*p.len+off,v:0});
+      ap.push({t:i*p.len+p.start,v:p.v}); ap.push({t:i*p.len+off,v:p.vrest});
+    }
+    return {seq:'0:[A:'+p.cycles+','+p.start+':'+p.out+':1:'+p.ch+':'+p.v+','+off+':'+p.out+':0:'+p.ch+':'+p.vrest+','+p.len+':]',
+            rb:rb, warn:w, total:p.cycles*p.len,
+            trace:{tEnd:Math.min(p.cycles,600)*p.len, period:p.len, lanes:[
+              {label:p.out, type:'dig', pts:dp},
+              {label:'DC '+p.ch, type:'ana', unit:'V', pts:ap}
+            ]}};
+  }
+},
+{
+  id:'sweep', name:'Time sweep (moving pulse)', tags:['digital','sweep'],
+  desc:'A pulse that steps later in time on every pass \u2014 for time-resolved work.',
+  goal:'Step a pulse progressively later on each pass using dynamic time points.',
+  src:'Application note, Example 4.',
+  setup:['SMOD,LOC','STBLDAT;<sequence>;','STBLCLK,656250','STBLTRG,SW','SMOD,TBL','TBLSTRT'],
+  params:[
+    {k:'out',   l:'Moving output',type:'sel', opts:'ABCDEFGHIJKLMNOP'.split(''), def:'B'},
+    {k:'refon', l:'Fixed reference',type:'sel', opts:['yes','no'], def:'yes'},
+    {k:'ref',   l:'Reference out',type:'sel', opts:'ABCDEFGHIJKLMNOP'.split(''), def:'C'},
+    {k:'refw',  l:'Reference width',type:'num',def:40, unit:'clocks'},
+    {k:'cycles',l:'Steps',       type:'num', def:10},
+    {k:'start', l:'First rise',  type:'num', def:100, unit:'clocks'},
+    {k:'width', l:'Pulse width', type:'num', def:100, unit:'clocks'},
+    {k:'delta', l:'Step per pass',type:'num',def:5,   unit:'clocks'},
+    {k:'len',   l:'Period',      type:'num', def:400, unit:'clocks'}
+  ],
+  build:function(p){
+    var fall=p.start+p.width, last=fall+p.delta*(p.cycles-1), w=[], rb=[];
+    var useRef = p.refon==='yes' && p.ref!==p.out;
+    if (p.len < last) w.push({e:1,m:'By the final pass the falling edge reaches count '+last+', beyond the period ('+p.len+'). Increase the period or reduce the step.'});
+    if (p.refon==='yes' && p.ref===p.out) w.push({e:1,m:'The reference output and the moving output are the same line. Pick a different reference.'});
+    if (useRef && p.refw >= p.start) w.push({e:1,m:'The reference pulse (ends at '+p.refw+') overlaps the first moving edge (count '+p.start+'). Time points must stay in ascending order.'});
+    if (useRef) rb.push('Output '+p.ref+' pulses at count 0 for '+t(p.refw)+' every pass. Its counts are positive, so the d channel leaves it alone \u2014 it marks the start of each pass.');
+    rb.push('First pass: '+p.out+' high at count '+p.start+', low at '+fall+'.');
+    rb.push('Every pass both '+p.out+' edges move '+p.delta+' clocks ('+t(p.delta)+') later; the width stays '+t(p.width)+'.');
+    rb.push('After '+p.cycles+' passes the rising edge has walked to count '+(p.start+p.delta*(p.cycles-1))+' ('+t(p.start+p.delta*(p.cycles-1))+').');
+    rb.push('Negative counts mark a time point adjustable; the d channel sets the per-pass increment.');
+    var sp=[{t:0,v:0}], rp=[{t:0,v:0}];
+    for (var i=0;i<Math.min(p.cycles,600);i++){
+      var sh=i*p.delta;
+      sp.push({t:i*p.len+p.start+sh,v:1}); sp.push({t:i*p.len+fall+sh,v:0});
+      rp.push({t:i*p.len,v:1}); rp.push({t:i*p.len+p.refw,v:0});
+    }
+    var refev = useRef ? '0:'+p.ref+':1,'+p.refw+':'+p.ref+':0,' : '';
+    var lanes = [{label:p.out, type:'dig', pts:sp}];
+    if (useRef) lanes.push({label:p.ref+' (ref)', type:'dig', pts:rp});
+    return {seq:'0:[A:'+p.cycles+','+refev+'-'+p.start+':'+p.out+':1,-'+fall+':'+p.out+':0,'+p.len+':d:'+p.delta+':]',
+            rb:rb, warn:w, total:p.cycles*p.len,
+            trace:{tEnd:Math.min(p.cycles,600)*p.len, period:p.len, lanes:lanes}};
+  }
+},
+{
+  id:'ramp1', name:'Linear voltage ramp', tags:['dc bias','ramp'],
+  desc:'A single ramp on one DC bias channel using conditional logic.',
+  goal:'Ramp a DC bias channel linearly from a start voltage.',
+  src:'Application note, Example 5. Conditional-logic ramping.',
+  setup:['STBLVDLT,TRUE','SMOD,LOC','STBLDAT;<sequence>;','STBLCLK,656250','STBLTRG,SW','SMOD,TBL','TBLSTRT'],
+  params:[
+    {k:'ch',    l:'DC bias ch',   type:'num', def:1, hint:'1\u201332'},
+    {k:'v0',    l:'Start voltage',type:'num', def:0,  unit:'V', step:'any'},
+    {k:'step',  l:'Step / pass',  type:'num', def:1,  unit:'V', step:'any'},
+    {k:'passes',l:'Passes',       type:'num', def:100},
+    {k:'len',   l:'Pass length',  type:'num', def:656, unit:'clocks', hint:'656 \u2248 1 ms'},
+    {k:'rel',   l:'Release slot', type:'sel', opts:['yes','no'], def:'yes'}
+  ],
+  build:function(p){
+    var w=[], rb=[], init=p.ch+64, rmp=p.ch+128, relc=p.ch+192;
+    if (p.ch<1||p.ch>32) w.push({e:1,m:'DC bias channel must be 1\u201332.'});
+    if (p.rel==='no') w.push({e:0,m:'Without a release event the ramp slot stays occupied. There are only eight conditional-ramp slots.'});
+    var sim = simRamp({v0:p.v0, upstep:p.step, upto:p.passes, dnfrom:null, dnstep:0, passes:p.passes, len:p.len});
+    rb.push('Channel '+init+' = channel '+p.ch+' + INITIAL (64): sets the start voltage to '+p.v0+' V, once, before the loop.');
+    rb.push('Channel '+rmp+' = channel '+p.ch+' + RAMP (128): adds '+p.step+' V on every pass.');
+    rb.push(p.passes+' passes of '+t(p.len)+' \u2014 the ramp reaches '+fmt(sim.vend)+' V after '+t(p.passes*p.len)+'.');
+    if (p.rel==='yes') rb.push('Channel '+relc+' = channel '+p.ch+' + RAMP + INITIAL: releases the ramp slot when the loop ends.');
+    var s = '0:'+init+':'+p.v0+':[P:'+p.passes+',0:'+rmp+':'+p.step+','+p.len+':]';
+    if (p.rel==='yes') s += ',100:'+relc+':0';
+    return {seq:s, rb:rb, warn:w, total:p.passes*p.len,
+            trace:{tEnd:p.passes*p.len, period:p.len, trunc:sim.trunc, lanes:[
+              {label:'DC '+p.ch, type:'ana', unit:'V', pts:sim.pts}
+            ]}};
+  }
+},
+{
+  id:'ramp2', name:'Two-segment ramp (up, hold, down)', tags:['dc bias','ramp'],
+  desc:'Rise, hold, then fall \u2014 using > and < tests to change the step mid-loop.',
+  goal:'Ramp up, hold, and ramp back down on one DC bias channel.',
+  src:'Application note, Examples 6\u20137. This is the sequence in the scope capture.',
+  setup:['STBLVDLT,TRUE','SMOD,LOC','STBLDAT;<sequence>;','STBLCLK,656250','STBLTRG,SW','SMOD,TBL','TBLSTRT'],
+  params:[
+    {k:'ch',    l:'DC bias ch',    type:'num', def:1, hint:'1\u201332'},
+    {k:'v0',    l:'Start voltage', type:'num', def:0, unit:'V', step:'any'},
+    {k:'upto',  l:'Rise until pass',type:'num',def:50},
+    {k:'upstep',l:'Rise step',     type:'num', def:2, unit:'V/pass', step:'any'},
+    {k:'dnfrom',l:'Fall after pass',type:'num',def:75},
+    {k:'dnstep',l:'Fall step',     type:'num', def:-4, unit:'V/pass', step:'any'},
+    {k:'passes',l:'Total passes',  type:'num', def:100},
+    {k:'len',   l:'Pass length',   type:'num', def:656, unit:'clocks'},
+    {k:'reps',  l:'Repeat whole ramp',type:'num',def:3}
+  ],
+  build:function(p){
+    var w=[], rb=[], init=p.ch+64, rmp=p.ch+128, relc=p.ch+192;
+    if (p.ch<1||p.ch>32) w.push({e:1,m:'DC bias channel must be 1\u201332.'});
+    if (p.dnfrom <= p.upto) w.push({e:0,m:'The fall threshold is not above the rise threshold, so there is no hold segment.'});
+    if (p.dnfrom >= p.passes) w.push({e:1,m:'The fall threshold ('+p.dnfrom+') is at or beyond the total passes ('+p.passes+') \u2014 the ramp never falls.'});
+    var sim = simRamp({v0:p.v0, upstep:p.upstep, upto:p.upto, dnfrom:p.dnfrom, dnstep:p.dnstep, passes:p.passes, len:p.len});
+    var vpeak = p.v0 + p.upstep*p.upto;
+    var unit = p.passes*p.len + 100;
+    rb.push('Passes 0\u2013'+(p.upto-1)+': add '+p.upstep+' V each pass \u2014 climbs to '+fmt(vpeak)+' V over '+t(p.upto*p.len)+'.');
+    rb.push('Passes '+p.upto+'\u2013'+p.dnfrom+': neither test fires, so the voltage holds for '+t((p.dnfrom-p.upto+1)*p.len)+'.');
+    rb.push('Passes '+(p.dnfrom+1)+'\u2013'+(p.passes-1)+': add '+p.dnstep+' V each pass \u2014 ends at '+fmt(sim.vend)+' V.');
+    rb.push('Channel '+relc+' releases the ramp slot after each pass through the outer loop.');
+    if (p.reps>1) rb.push('The whole initialize\u2013ramp\u2013release unit repeats '+p.reps+' times.');
+    if (Math.abs(sim.vend - p.v0) > 1e-9)
+      w.push({e:0,m:'The ramp ends at '+fmt(sim.vend)+' V rather than returning to '+p.v0+' V. Adjust the fall step or the fall threshold if you want it to close.'});
+    var inner = '0:'+init+':'+p.v0+':[P:'+p.passes+',0:<:'+p.upto+':'+rmp+':'+p.upstep+':>:'+p.dnfrom+':'+rmp+':'+p.dnstep+','+p.len+':],100:'+relc+':0';
+    var s = p.reps>1 ? '0:[A:'+p.reps+','+inner+']' : inner;
+    var pts=[];
+    for (var rr=0; rr<Math.min(p.reps,40); rr++){
+      var off = rr*unit;
+      sim.pts.forEach(function(q){ pts.push({t:off+q.t, v:q.v}); });
+      // The release event (channel + 192) frees the ramp slot. Whether it also
+      // drives the output to the value given is not stated in the reference,
+      // so no voltage change is drawn here.
+    }
+    return {seq:s, rb:rb, warn:w, total:p.reps*unit,
+            trace:{tEnd:Math.min(p.reps,40)*unit, period:unit, trunc:sim.trunc, lanes:[
+              {label:'DC '+p.ch, type:'ana', unit:'V', pts:pts}
+            ]}};
+  }
+},
+{
+  id:'ramppulse', name:'Digital pulse after a ramp', tags:['ramp','digital'],
+  desc:'Fire a digital output once the ramps finish \u2014 needs the u channel.',
+  goal:'Pulse a digital output after conditional ramping completes.',
+  src:'Application note, Example 8. The u channel steps out of ramp mode.',
+  setup:['STBLVDLT,TRUE','SMOD,LOC','STBLDAT;<sequence>;','STBLCLK,656250','STBLTRG,SW','SMOD,TBL','TBLSTRT'],
+  params:[
+    {k:'ch',    l:'DC bias ch',    type:'num', def:1},
+    {k:'v0',    l:'Start voltage', type:'num', def:0, unit:'V', step:'any'},
+    {k:'upto',  l:'Rise until pass',type:'num',def:50},
+    {k:'upstep',l:'Rise step',     type:'num', def:2, unit:'V/pass', step:'any'},
+    {k:'dnfrom',l:'Fall after pass',type:'num',def:75},
+    {k:'dnstep',l:'Fall step',     type:'num', def:-4, unit:'V/pass', step:'any'},
+    {k:'passes',l:'Total passes',  type:'num', def:100},
+    {k:'len',   l:'Pass length',   type:'num', def:656, unit:'clocks'},
+    {k:'reps',  l:'Ramp repeats',  type:'num', def:3},
+    {k:'out',   l:'Digital output',type:'sel', opts:'ABCDEFGHIJKLMNOP'.split(''), def:'A'},
+    {k:'pdel',  l:'Pulse delay',   type:'num', def:100, unit:'clocks'},
+    {k:'pwid',  l:'Pulse width',   type:'num', def:100, unit:'clocks'}
+  ],
+  build:function(p){
+    var w=[], rb=[], init=p.ch+64, rmp=p.ch+128, relc=p.ch+192;
+    if (p.ch<1||p.ch>32) w.push({e:1,m:'DC bias channel must be 1\u201332.'});
+    var pend = p.pdel + p.pwid;
+    rb.push('The ramp section is unchanged from the two-segment pattern, repeated '+p.reps+' times.');
+    rb.push('At count '+p.pdel+' after the loop: u:0 turns ramp processing off and '+p.out+' goes high.');
+    rb.push('At count '+pend+': '+p.out+' goes low and u:1 turns ramp processing back on.');
+    rb.push('Result: a '+t(p.pwid)+' pulse on '+p.out+', '+t(p.pdel)+' after the ramps complete.');
+    rb.push('Without the u channel the digital output would be ignored, because while conditional ramping is enabled the processor services only DC bias ramp channels.');
+    var inner = '0:'+init+':'+p.v0+':[P:'+p.passes+',0:<:'+p.upto+':'+rmp+':'+p.upstep+':>:'+p.dnfrom+':'+rmp+':'+p.dnstep+','+p.len+':],100:'+relc+':0';
+    var s = '0:[A:'+p.reps+','+inner+'],'+p.pdel+':u:0:'+p.out+':1,'+pend+':'+p.out+':0:u:1';
+    var sim = simRamp({v0:p.v0, upstep:p.upstep, upto:p.upto, dnfrom:p.dnfrom, dnstep:p.dnstep, passes:p.passes, len:p.len});
+    var unit = p.passes*p.len + 100, apts=[], rampEnd;
+    for (var rr=0; rr<Math.min(p.reps,40); rr++){
+      var off = rr*unit;
+      sim.pts.forEach(function(q){ apts.push({t:off+q.t, v:q.v}); });
+    }
+    rampEnd = Math.min(p.reps,40)*unit;
+    return {seq:s, rb:rb, warn:w, total:p.reps*unit+pend,
+            trace:{tEnd:rampEnd+pend, period:unit, trunc:sim.trunc, lanes:[
+              {label:'DC '+p.ch, type:'ana', unit:'V', pts:apts},
+              {label:p.out, type:'dig', pts:[{t:0,v:0},{t:rampEnd+p.pdel,v:1},{t:rampEnd+pend,v:0}]},
+              {label:'u', type:'dig', pts:[{t:0,v:1},{t:rampEnd+p.pdel,v:0},{t:rampEnd+pend,v:1}], faint:true}
+            ]}};
+  }
+}
+];
+
+/* ---------- waveform renderer ----------
+   Draws a trace model: lanes of {t,v} points. Digital lanes are drawn as
+   square waves; analog lanes as sample-and-hold staircases, which is what
+   a stepped DC bias ramp physically is.
+------------------------------------------------- */
+var ZOOM = 'all', MARKS = false, HIDDEN = {};
+var VZOOM = 'all', VMARKS = false, VHIDDEN = {};
+
+function laneKey(l){ return l.label; }
+
+function renderLaneSel(tr, boxId, hid, redraw){
+  var box=document.getElementById(boxId||'lanesel');
+  box.innerHTML='';
+  if(!tr || tr.lanes.length<2){ box.style.display='none'; return; }
+  box.style.display='flex';
+  hid = hid || HIDDEN;
+  redraw = redraw || update;
+  box.appendChild(el('span','sl','Show'));
+  tr.lanes.forEach(function(l){
+    var k=laneKey(l), on=!hid[k];
+    var c=el('span','lchip'+(on?' on':''),esc(l.label));
+    c.onclick=function(){ hid[k]=on; redraw(); };
+    box.appendChild(c);
+  });
+}
+
+function drawWave(tr, o){
+  o = o || {};
+  var cvId   = o.cv   || 'wave';
+  var noteId = o.note || 'viznote';
+  var hid    = o.hidden || HIDDEN;
+  var zoom   = o.zoom   || ZOOM;
+  var marks  = o.marks !== undefined ? o.marks : MARKS;
+  var cv = document.getElementById(cvId);
+  var note = document.getElementById(noteId);
+  if (!tr || !tr.lanes || !tr.lanes.length){ note.textContent=''; return; }
+
+  var all = tr.lanes;
+  var lanes = all.filter(function(l){ return !hid[laneKey(l)]; });
+  if (!lanes.length) lanes = all;   // never show an empty plot
+
+  var GUT=62, PADR=14, PADT=8, AXH=26;
+  var laneH = lanes.map(function(l){ return l.type==='ana'?66:34; });
+  var H = PADT + laneH.reduce(function(a,b){return a+b;},0) + AXH;
+  var cssW = cv.parentNode.clientWidth - 2;
+  var dpr = window.devicePixelRatio || 1;
+  cv.width = cssW*dpr; cv.height = H*dpr;
+  cv.style.height = H+'px';
+  var g = cv.getContext('2d');
+  g.setTransform(dpr,0,0,dpr,0,0);
+  g.clearRect(0,0,cssW,H);
+
+  // time window
+  var t0=0, t1=tr.tEnd;
+  if (zoom==='first' && tr.period) t1 = Math.min(tr.period, tr.tEnd);
+  if (zoom==='3'     && tr.period) t1 = Math.min(tr.period*3, tr.tEnd);
+  if (zoom==='last'  && tr.period){ t0 = Math.max(0, tr.tEnd - tr.period); t1 = tr.tEnd; }
+  if (zoom==='tail'){ t0 = Math.max(0, tr.tEnd - (tr.tEnd*0.04 || 1)); t1 = tr.tEnd; }
+  // breathing room so the final transition is not on the frame edge
+  t1 = t1 + (t1-t0)*0.02;
+  if (!(t1>t0)) t1 = t0+1;
+  var W = cssW-GUT-PADR;
+  function X(t){ return GUT + (t-t0)/(t1-t0)*W; }
+
+  // grid
+  var ticks=6, i;
+  g.strokeStyle='#EFEFF4'; g.lineWidth=1;
+  for(i=0;i<=ticks;i++){
+    var x=Math.round(GUT+W*i/ticks)+.5;
+    g.beginPath(); g.moveTo(x,PADT); g.lineTo(x,H-AXH); g.stroke();
+  }
+
+  // pass boundaries
+  if (marks && tr.period && (t1-t0)/tr.period <= 200){
+    g.strokeStyle='#D8D8E0'; g.lineWidth=1; g.setLineDash([2,4]);
+    for(var pt=0; pt<=t1; pt+=tr.period){
+      var mx=Math.round(X(pt))+.5;
+      g.beginPath(); g.moveTo(mx,PADT); g.lineTo(mx,H-AXH); g.stroke();
+    }
+    g.setLineDash([]);
+  }
+
+  var y=PADT;
+  lanes.forEach(function(ln,li){
+    var h=laneH[li], top=y+7, bot=y+h-9;
+
+    // label
+    g.fillStyle= ln.faint ? '#A8A8B2' : '#4A4A52';
+    g.font='500 11px "DM Mono",monospace';
+    g.textAlign='right'; g.textBaseline='middle';
+    g.fillText(ln.label, GUT-10, (top+bot)/2);
+
+    // baseline
+    g.strokeStyle='#E4E4EA'; g.beginPath();
+    g.moveTo(GUT,Math.round(bot)+.5); g.lineTo(cssW-PADR,Math.round(bot)+.5); g.stroke();
+
+    var pts=ln.pts;
+    if(!pts.length){ y+=h; return; }
+
+    if (ln.type==='dig'){
+      g.save(); g.beginPath(); g.rect(GUT,0,cssW-GUT-PADR+1,H-AXH); g.clip();
+      g.strokeStyle = ln.faint ? '#B8B8C0' : '#CC1F1F';
+      g.lineWidth = ln.faint ? 1.2 : 1.8;
+      if (ln.faint) g.setLineDash([3,3]);
+      g.beginPath();
+      var cy = pts[0].v ? top : bot, started=false;
+      for(i=0;i<pts.length;i++){
+        var px=X(pts[i].t), pv=pts[i].v?top:bot;
+        if(pts[i].t>t1) break;
+        if(!started){ g.moveTo(Math.max(GUT,px),cy); started=true; }
+        g.lineTo(px,cy); g.lineTo(px,pv); cy=pv;
+      }
+      g.lineTo(Math.min(cssW-PADR,X(t1)),cy);
+      g.stroke(); g.setLineDash([]);
+      g.restore();
+    } else {
+      // analog: autoscale
+      var vs=pts.map(function(q){return q.v;});
+      var vmin=Math.min.apply(null,vs), vmax=Math.max.apply(null,vs);
+      if (vmax-vmin < 1e-9){ vmax=vmin+1; }
+      var pad=(vmax-vmin)*0.12; vmin-=pad; vmax+=pad;
+      function Y(v){ return bot - (v-vmin)/(vmax-vmin)*(bot-top); }
+
+      g.fillStyle='#A8A8B2'; g.font='400 9.5px "DM Mono",monospace';
+      g.textAlign='right'; g.textBaseline='top';
+      g.fillText(fmt(vmax)+(ln.unit||''), GUT-10, top-2);
+      g.textBaseline='bottom';
+      g.fillText(fmt(vmin)+(ln.unit||''), GUT-10, bot+3);
+
+      g.save(); g.beginPath(); g.rect(GUT,0,cssW-GUT-PADR+1,H-AXH); g.clip();
+      g.strokeStyle='#CC1F1F'; g.lineWidth=1.6; g.beginPath();
+      var cyy=Y(pts[0].v), st=false;
+      for(i=0;i<pts.length;i++){
+        if(pts[i].t>t1) break;
+        var px2=X(pts[i].t), py=Y(pts[i].v);
+        if(!st){ g.moveTo(Math.max(GUT,px2),cyy); st=true; }
+        g.lineTo(px2,cyy); g.lineTo(px2,py); cyy=py;
+      }
+      g.lineTo(Math.min(cssW-PADR,X(t1)),cyy);
+      g.stroke();
+      g.restore();
+    }
+    y+=h;
+  });
+
+  // time axis
+  g.strokeStyle='#E4E4EA'; g.beginPath();
+  g.moveTo(GUT,Math.round(H-AXH)+.5); g.lineTo(cssW-PADR,Math.round(H-AXH)+.5); g.stroke();
+  g.fillStyle='#7A7A84'; g.font='400 9.5px "DM Mono",monospace';
+  g.textBaseline='top';
+  for(i=0;i<=ticks;i++){
+    var tv=t0+(t1-t0)*i/ticks, xx=GUT+W*i/ticks;
+    g.textAlign = i===0?'left':(i===ticks?'right':'center');
+    g.fillText(t(tv), xx, H-AXH+7);
+  }
+
+  var msg=[];
+  var nHid = all.length - lanes.length;
+  if (nHid>0) msg.push(nHid+' channel'+(nHid>1?'s':'')+' hidden.');
+  if (tr.forever) msg.push('Loop repeats forever \u2014 showing 12 passes.');
+  if (tr.trunc)   msg.push('Ramp steps downsampled for display.');
+  msg.push('Sample-and-hold rendering; settling time not shown.');
+  note.textContent = msg.join('  \u00B7  ');
+}
+
+/* ==========================================================
+   GENERAL SEQUENCE PARSER + INTERPRETER
+
+   Grammar, as documented in the reference:
+     seq   := node (',' node)*
+     node  := count ':' pair* (':' loop)?      pairs are ch ':' value
+            | count ':' loop
+     loop  := '[' name ':' cycles ',' seq ',' length ':' extras? ']'
+   Counts are clock cycles from the start of the enclosing pass.
+   A negative count marks an adjustable time point; the d channel adds a
+   fixed increment to those points on each pass, p applies an offset.
+   A loop named P is conditional: '<', '>' or '=' followed by a threshold
+   gates the single channel:value pair that follows it.
+   Channel numbers carry ramp flags: +64 INITIAL, +128 RAMP, +192 release.
+   ========================================================== */
+
+function ParseError(msg, pos){ this.msg=msg; this.pos=pos; }
+
+function tokenize(src){
+  var toks=[], i=0, n=src.length;
+  while(i<n){
+    var c=src[i];
+    if (c===' '||c==='\t'||c==='\n'||c==='\r'){ i++; continue; }
+    if (c===':'||c===','||c==='['||c===']'){ toks.push({v:c,t:'p',i:i}); i++; continue; }
+    var j=i;
+    while(j<n && ':,[] \t\n\r'.indexOf(src[j])<0) j++;
+    if (j===i) throw new ParseError('Unexpected character "'+c+'"', i);
+    toks.push({v:src.slice(i,j), t:'w', i:i});
+    i=j;
+  }
+  return toks;
+}
+
+function parseSequence(src){
+  // strip the STBLDAT wrapper and any trailing semicolon
+  var s = src.trim();
+  s = s.replace(/^STBLDAT\s*;?/i,'').trim();
+  s = s.replace(/;\s*$/,'').trim();
+  if (!s) throw new ParseError('Nothing to parse.',0);
+
+  var toks = tokenize(s), k = 0;
+  function peek(){ return toks[k]; }
+  function next(){ return toks[k++]; }
+  function expect(v){
+    var t=toks[k];
+    if(!t || t.v!==v) throw new ParseError('Expected "'+v+'"'+(t?' but found "'+t.v+'"':' but the sequence ended'), t?t.i:s.length);
+    k++; return t;
+  }
+  function isNum(x){ return /^-?\d+(\.\d+)?$/.test(x); }
+  function num(){
+    var t=next();
+    if(!t) throw new ParseError('Sequence ended early.', s.length);
+    if(!isNum(t.v)) throw new ParseError('Expected a number, found "'+t.v+'"', t.i);
+    return parseFloat(t.v);
+  }
+
+  function parsePairs(stopOnLoop){
+    // returns {pairs:[{cond,thr,ch,val}], loop:node|null}
+    var pairs=[], loop=null;
+    while(true){
+      var t=peek();
+      if(!t) break;
+      if(t.v===','||t.v===']') break;
+      if(t.v==='['){ loop=parseLoop(); break; }
+      if(t.v===':'){ next(); continue; }
+      // conditional test?
+      var cond=null, thr=null;
+      if(t.v==='<'||t.v==='>'||t.v==='='){ cond=next().v; expect(':'); thr=num(); expect(':'); }
+      var chTok=next();
+      if(!chTok) throw new ParseError('Sequence ended after a channel.', s.length);
+      expect(':');
+      var valTok=peek();
+      if(!valTok) throw new ParseError('Channel "'+chTok.v+'" has no value.', chTok.i);
+      var val = isNum(valTok.v) ? num() : (next(), valTok.v);
+      pairs.push({cond:cond, thr:thr, ch:chTok.v, val:val});
+      // a loop can follow a pair at the same count
+      if(peek() && peek().v===':' && toks[k+1] && toks[k+1].v==='['){ next(); loop=parseLoop(); break; }
+    }
+    return {pairs:pairs, loop:loop};
+  }
+
+  function parseLoop(){
+    var open=expect('[');
+    var nameTok=next();
+    if(!nameTok) throw new ParseError('Loop has no name.', open.i);
+    expect(':');
+    var cycles=num();
+    var body=[], length=null, extras=[];
+    while(true){
+      var t=peek();
+      if(!t) throw new ParseError('Loop "'+nameTok.v+'" is never closed \u2014 missing "]".', open.i);
+      if(t.v===','){ next(); continue; }
+      if(t.v===']'){ next(); break; }
+      // a node; if it turns out to be followed directly by ']' it is the length
+      var cnt=num();
+      var r=parsePairs();
+      if(peek() && peek().v===']'){
+        // Closing item. It is the loop LENGTH only if it carries no real
+        // channel:value pairs -- "400:]" or "400:d:5:]". If it carries real
+        // channels, as in "...,100:193:0]", the documentation describes it as
+        // an event inside the loop and the loop has no explicit length.
+        var onlyMods = r.pairs.every(function(e){ return e.ch==='d'||e.ch==='p'; });
+        if(onlyMods){ length=cnt; extras=r.pairs; next(); break; }
+        body.push({count:cnt, pairs:r.pairs, loop:r.loop});
+        next(); break;
+      }
+      body.push({count:cnt, pairs:r.pairs, loop:r.loop});
+    }
+    if(length===null && !body.length) throw new ParseError('Loop "'+nameTok.v+'" has no length before its closing "]".', open.i);
+    return {type:'loop', name:nameTok.v, cycles:cycles, body:body, length:length, extras:extras, pos:open.i};
+  }
+
+  var nodes=[];
+  while(k<toks.length){
+    if(peek().v===','){ next(); continue; }
+    if(peek().v==='['){                       // bare leading loop, count 0
+      nodes.push({count:0, pairs:[], loop:parseLoop()});
+      continue;
+    }
+    var cnt=num();
+    var r=parsePairs();
+    nodes.push({count:cnt, pairs:r.pairs, loop:r.loop});
+  }
+  return nodes;
+}
+
+/* ---------- interpreter ---------- */
+var DIGITAL = 'ABCDEFGHIJKLMNOP';
+
+function runSequence(nodes){
+  var chans={}, order=[], warn=[], info=[];
+  var rampVal={}, rampStep={}, rampOn=true, maxT=0, budget=400000, over=false;
+
+  function lane(label,type,unit){
+    if(!chans[label]){ chans[label]={label:label,type:type,unit:unit,pts:[]}; order.push(label); }
+    return chans[label];
+  }
+  function put(label,type,t,v,unit){
+    var L=lane(label,type,unit);
+    var last=L.pts[L.pts.length-1];
+    if(last && last.t===t){ last.v=v; return; }
+    if(last && last.v===v) return;
+    L.pts.push({t:t,v:v});
+    if(t>maxT) maxT=t;
+  }
+
+  function applyPair(pr, t, passIdx){
+    if(budget-- < 0){ over=true; return; }
+    if(pr.cond!==null && pr.cond!==undefined){
+      var ok = pr.cond==='<' ? passIdx<pr.thr : pr.cond==='>' ? passIdx>pr.thr : passIdx===pr.thr;
+      if(!ok) return;
+    }
+    var ch=pr.ch, v=pr.val;
+    if(ch==='u'){ rampOn = (Number(v)!==0); put('u','dig',t,rampOn?1:0); return; }
+    if(ch==='d'||ch==='p') return;                  // handled by the loop
+    if(DIGITAL.indexOf(ch)>=0 && ch.length===1){
+      if(isNaN(Number(v))){ warn.push('Digital output '+ch+' has a non-numeric value "'+v+'" \u2014 ignored.'); return; }
+      put(ch,'dig',t,Number(v)?1:0); return;
+    }
+    var n=Number(ch);
+    if(isNaN(n)){ warn.push('Unknown channel "'+ch+'" \u2014 ignored.'); return; }
+    if(isNaN(Number(v))){ warn.push('Channel '+ch+' has a non-numeric value "'+v+'" \u2014 ignored.'); return; }
+    if(n>=1 && n<=32){ put('DC '+n,'ana',t,Number(v),'V'); return; }
+    if(n>=193 && n<=224){ var c3=n-192; rampStep['DC '+c3]=0; info.push('Channel '+n+' releases the ramp slot on DC '+c3+'.'); return; }
+    if(n>=129 && n<=160){ var c2=n-128; var L='DC '+c2;
+      if(!rampOn) return;
+      rampVal[L]=(rampVal[L]||0)+Number(v); put(L,'ana',t,rampVal[L],'V'); return; }
+    if(n>=65 && n<=96){ var c1=n-64; var L1='DC '+c1;
+      rampVal[L1]=Number(v); put(L1,'ana',t,rampVal[L1],'V');
+      info.push('Channel '+n+' initialises DC '+c1+' to '+v+' V.'); return; }
+    warn.push('Channel number '+n+' is outside the documented ranges \u2014 ignored.');
+  }
+
+  function runNodes(list, base, depth){
+    if(depth>8){ warn.push('Loop nesting deeper than 8 \u2014 stopped.'); return base; }
+    // The cursor advances past a loop, so counts on later nodes are measured
+    // from the end of that loop -- "100:193:0 waits 100 clocks after the loop".
+    var cursor=base, end=base;
+    list.forEach(function(nd){
+      var t=cursor+Math.abs(nd.count);
+      nd.pairs.forEach(function(pr){ applyPair(pr,t,0); });
+      if(t>end) end=t;
+      if(nd.loop){ var le=runLoop(nd.loop, t, depth+1); cursor=le; if(le>end) end=le; }
+    });
+    return end;
+  }
+
+  /* A loop written without an explicit length runs for as long as its
+     contents take. Measure that by walking the body once. */
+  function naturalLength(lp, depth){
+    var cursor=0, end=0;
+    lp.body.forEach(function(nd){
+      var t=cursor+Math.abs(nd.count);
+      if(t>end) end=t;
+      if(nd.loop){
+        var inner=nd.loop, il=inner.length!=null?inner.length:naturalLength(inner,depth+1);
+        var cyc=inner.cycles===0?12:inner.cycles;
+        var le=t+il*cyc;
+        cursor=le; if(le>end) end=le;
+      }
+    });
+    return end;
+  }
+
+  function runLoop(lp, base, depth){
+    if(over) return base;
+    if(depth>8){ warn.push('Loop nesting deeper than 8 \u2014 stopped.'); return base; }
+    var d=0,pOff=0;
+    lp.extras.forEach(function(e){
+      if(e.ch==='d') d=Number(e.val);
+      if(e.ch==='p') pOff=Number(e.val);
+    });
+    var length = lp.length;
+    if(length==null){
+      length = naturalLength(lp, depth);
+      info.push('Loop "'+lp.name+'" has no explicit length; using '+Math.round(length)+' clocks, the time its contents take.');
+    }
+    var cycles=lp.cycles, forever=false;
+    if(cycles===0){ cycles=12; forever=true; }
+    if(cycles*Math.max(1,lp.body.length) > 60000){
+      warn.push('Loop "'+lp.name+'" expands to a very large number of events \u2014 display truncated.');
+      cycles=Math.min(cycles, Math.ceil(60000/Math.max(1,lp.body.length)));
+    }
+    var last=base;
+    for(var k2=0;k2<cycles;k2++){
+      if(over) break;
+      var passBase=base+k2*length, cursor=passBase;
+      lp.body.forEach(function(nd){
+        var adj = nd.count<0 ? (k2*d + pOff) : 0;
+        var t=cursor+Math.abs(nd.count)+adj;
+        nd.pairs.forEach(function(pr){ applyPair(pr,t,k2); });
+        if(nd.loop) cursor=runLoop(nd.loop, t, depth+1);
+      });
+      last=passBase+length;
+    }
+    if(forever) info.push('Loop "'+lp.name+'" repeats forever \u2014 showing 12 passes.');
+    return last;
+  }
+
+  var end=runNodes(nodes,0,0);
+  if(over) warn.push('Event budget exhausted \u2014 the drawing is truncated.');
+
+  var lanes=order.map(function(n2){ return chans[n2]; })
+                 .sort(function(a,b){ return (a.type===b.type)?0:(a.type==='ana'?-1:1); });
+  // Before its first event a channel's value is unknown; both the builder and
+  // the parser show it at zero, and the note under the plot says so.
+  lanes.forEach(function(L){
+    if(L.pts.length && L.pts[0].t>0) L.pts.unshift({t:0, v:(L.label==='u'?1:0)});
+  });
+
+  var period=null;
+  var outer=nodes.filter(function(nd){return nd.loop;})[0];
+  if(outer) period = outer.loop.length!=null ? outer.loop.length : naturalLength(outer.loop,0);
+
+  return {lanes:lanes, tEnd:Math.max(end,maxT)||1, period:period, warn:warn, info:info};
+}
+
+var cur = PATTERNS[0], state = {};
+
+function el(tag, cls, html){ var e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; }
+
+/* Escape text destined for innerHTML. Sequence strings contain < and >
+   (the conditional-loop tests), and the setup lines contain a <sequence>
+   placeholder \u2014 both are eaten by the HTML parser if left raw. */
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function renderList(){
+  var box = document.getElementById('plist'); box.innerHTML='';
+  PATTERNS.forEach(function(p){
+    var d = el('div','pitem'+(p.id===cur.id?' on':''));
+    d.appendChild(el('div','pitem-n',esc(p.name)));
+    d.appendChild(el('div','pitem-d',esc(p.desc)));
+    var tr = el('div','tagrow');
+    p.tags.forEach(function(t){ tr.appendChild(el('span','tag'+(t==='ramp'?' ramp':''),esc(t))); });
+    d.appendChild(tr);
+    d.onclick=function(){ cur=p; initState(); renderList(); renderPanel(); };
+    box.appendChild(d);
+  });
+}
+
+function initState(){ state={}; HIDDEN={}; cur.params.forEach(function(q){ state[q.k]=q.def; }); }
+
+function renderPanel(){
+  document.getElementById('pname').textContent = cur.name;
+  document.getElementById('pgoal').textContent = cur.goal;
+  document.getElementById('src').innerHTML = 'Source: '+esc(cur.src)+' &nbsp;\u00B7&nbsp; All counts assume the 656250 Hz internal clock.';
+
+  var pw = document.getElementById('params'); pw.innerHTML='';
+  cur.params.forEach(function(q){
+    var d = el('div','p');
+    d.appendChild(el('label',null,q.l + (q.unit?' <span style="color:#B0B0B8">('+q.unit+')</span>':'')));
+    var inp;
+    if (q.type==='sel'){
+      inp = document.createElement('select');
+      q.opts.forEach(function(o){ var op=document.createElement('option'); op.value=o; op.textContent=o; if(o===state[q.k])op.selected=true; inp.appendChild(op); });
+      inp.onchange=function(){ state[q.k]=inp.value; update(); };
+    } else {
+      inp = document.createElement('input'); inp.type='number'; inp.value=state[q.k];
+      if(q.step) inp.step=q.step;
+      inp.oninput=function(){ var v=parseFloat(inp.value); state[q.k]= isNaN(v)?0:v; update(); };
+    }
+    d.appendChild(inp);
+    if(q.hint) d.appendChild(el('div','hint',q.hint));
+    pw.appendChild(d);
+  });
+
+  update();
+}
+
+function update(){
+  CLK = 656250;              // the setup block sends STBLCLK,656250
+  var r = cur.build(state);
+  var full = 'STBLDAT;'+r.seq+';';
+  document.getElementById('seqout').textContent = full;
+
+  /* Setup block, with the real sequence substituted in place of the
+     placeholder so the whole thing is paste-ready. */
+  var lines = cur.setup.map(function(l){
+    return l.indexOf('STBLDAT;') === 0
+      ? '<span class="seqin">'+esc(full)+'</span>'
+      : esc(l);
+  });
+  document.getElementById('setupcode').innerHTML = lines.join('<br>');
+  window.__setupPlain = cur.setup.map(function(l){
+    return l.indexOf('STBLDAT;') === 0 ? full : l;
+  }).join('\n');
+
+  var wb = document.getElementById('warnings'); wb.innerHTML='';
+  r.warn.forEach(function(w){
+    wb.appendChild(el('div','warn'+(w.e?' err':''),'<b>'+(w.e?'Problem: ':'Check: ')+'</b>'+esc(w.m)));
+  });
+
+  var rb = document.getElementById('rb'); rb.innerHTML='';
+  r.rb.forEach(function(line){ rb.appendChild(el('li',null,esc(line))); });
+
+  document.getElementById('tot').textContent =
+    r.total==null ? 'Runs continuously until stopped.'
+                  : 'Total run time \u2248 '+t(r.total)+'  ('+r.total+' clocks)';
+
+  drawWave(r.trace);
+  renderLaneSel(r.trace);
+  window.__trace = r.trace;
+}
+
+[].forEach.call(document.querySelectorAll('.zbtn[data-z]'), function(b){
+  b.onclick=function(){
+    [].forEach.call(document.querySelectorAll('.zbtn[data-z]'),function(x){x.classList.remove('on');});
+    b.classList.add('on'); ZOOM=b.getAttribute('data-z'); update();
+  };
+});
+
+document.getElementById('markbtn').onclick=function(){
+  MARKS=!MARKS; this.classList.toggle('on',MARKS); update();
+};
+
+/* Export the plot as a PNG, composited onto white so it drops
+   straight into a notebook, a report, or a support email. */
+document.getElementById('pngbtn').onclick=function(){
+  var src=document.getElementById('wave');
+  var out=document.createElement('canvas');
+  out.width=src.width; out.height=src.height;
+  var o=out.getContext('2d');
+  o.fillStyle='#FFFFFF'; o.fillRect(0,0,out.width,out.height);
+  o.drawImage(src,0,0);
+  out.toBlob(function(blob){
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='mips-'+cur.id+'.png';
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },500);
+  });
+};
+window.addEventListener('resize', function(){ update(); });
+
+function bindCopy(btn, getText, label){
+  btn.onclick = function(){
+    navigator.clipboard.writeText(getText()).then(function(){
+      btn.textContent='Copied'; btn.classList.add('done');
+      setTimeout(function(){ btn.textContent=label; btn.classList.remove('done'); },1600);
+    });
+  };
+}
+bindCopy(document.getElementById('copybtn'),
+         function(){ return document.getElementById('seqout').textContent; }, 'Copy');
+bindCopy(document.getElementById('copysetup'),
+         function(){ return window.__setupPlain || ''; }, 'Copy all');
+
+/* ---------- visualizer tab ---------- */
+function vUpdate(){
+  var src=document.getElementById('vin').value;
+  var wb=document.getElementById('vwarn'); wb.innerHTML='';
+  var rb=document.getElementById('vrb'); rb.innerHTML='';
+
+  /* Clock. All counts are clock cycles, so every time on this page is
+     relative to whatever drives the table -- internal or an external source
+     on the C input. */
+  var sel=document.getElementById('vclk').value;
+  var custom = sel==='custom';
+  document.getElementById('vclkwrap').style.display = custom ? '' : 'none';
+  var hz = custom ? parseFloat(document.getElementById('vclkhz').value) : parseFloat(sel);
+  var clkBad = !(hz>0) || !isFinite(hz);
+  if(clkBad){
+    wb.appendChild(el('div','warn err','<b>Problem: </b>Enter a clock frequency greater than zero. Times cannot be computed without it.'));
+    hz = 656250;
+  }
+  CLK = hz;
+  document.getElementById('vclkinfo').textContent =
+    clkBad ? '' : '1 cycle = '+(1e6/hz<1 ? (1e9/hz).toFixed(1)+' ns' : (1e6/hz).toFixed(3)+' \u00B5s');
+
+  var res;
+  try{
+    var ast=parseSequence(src);
+    res=runSequence(ast);
+  }catch(e){
+    if(e instanceof ParseError){
+      wb.appendChild(el('div','warn err','<b>Parse error: </b>'+esc(e.msg)));
+      drawWave({lanes:[],tEnd:1},{cv:'vwave',note:'vviznote',hidden:VHIDDEN,zoom:VZOOM,marks:VMARKS});
+      document.getElementById('vtot').textContent='';
+      document.getElementById('vlanesel').innerHTML='';
+      return;
+    }
+    wb.appendChild(el('div','warn err','<b>Error: </b>'+esc(e.message||String(e))));
+    return;
+  }
+  res.warn.forEach(function(m){ wb.appendChild(el('div','warn','<b>Check: </b>'+esc(m))); });
+  if(!res.lanes.length){
+    wb.appendChild(el('div','warn','<b>Check: </b>The sequence parsed but sets no recognised channels.'));
+  }
+  var seen={};
+  res.info.forEach(function(m){ if(seen[m])return; seen[m]=1; rb.appendChild(el('li',null,esc(m))); });
+  res.lanes.forEach(function(L){
+    var vs=L.pts.map(function(q){return q.v;});
+    rb.appendChild(el('li',null,esc(L.label+' \u2014 '+L.pts.length+' transition'+(L.pts.length===1?'':'s')+
+      (L.type==='ana'?', '+fmt(Math.min.apply(null,vs))+' to '+fmt(Math.max.apply(null,vs))+' V':''))));
+  });
+  document.getElementById('vtot').textContent='Total run time \u2248 '+t(res.tEnd)+'  ('+Math.round(res.tEnd)+' clocks at '+
+    (CLK>=1e6?(CLK/1e6)+' MHz':CLK+' Hz')+')  \u00B7  '+res.lanes.length+' channel'+(res.lanes.length===1?'':'s')+' active';
+  drawWave(res,{cv:'vwave',note:'vviznote',hidden:VHIDDEN,zoom:VZOOM,marks:VMARKS});
+  renderLaneSel(res,'vlanesel',VHIDDEN,vUpdate);
+  window.__vtrace=res;
+}
+
+document.getElementById('vin').addEventListener('input',function(){ VHIDDEN={}; vUpdate(); });
+[].forEach.call(document.querySelectorAll('.exrow .lchip'),function(c){
+  c.onclick=function(){
+    document.getElementById('vin').value='STBLDAT;'+c.getAttribute('data-ex')+';';
+    VHIDDEN={}; VZOOM='all';
+    [].forEach.call(document.querySelectorAll('.zbtn[data-vz]'),function(x){
+      x.classList.toggle('on', x.getAttribute('data-vz')==='all');
+    });
+    vUpdate();
+  };
+});
+document.getElementById('vclk').addEventListener('change',vUpdate);
+document.getElementById('vclkhz').addEventListener('input',vUpdate);
+[].forEach.call(document.querySelectorAll('.zbtn[data-vz]'),function(b){
+  b.onclick=function(){
+    [].forEach.call(document.querySelectorAll('.zbtn[data-vz]'),function(x){x.classList.remove('on');});
+    b.classList.add('on'); VZOOM=b.getAttribute('data-vz'); vUpdate();
+  };
+});
+document.getElementById('vmarkbtn').onclick=function(){ VMARKS=!VMARKS; this.classList.toggle('on',VMARKS); vUpdate(); };
+document.getElementById('vpngbtn').onclick=function(){ exportPng('vwave','mips-sequence.png'); };
+
+function exportPng(cvId,name){
+  var src=document.getElementById(cvId);
+  var out=document.createElement('canvas');
+  out.width=src.width; out.height=src.height;
+  var o=out.getContext('2d');
+  o.fillStyle='#FFFFFF'; o.fillRect(0,0,out.width,out.height);
+  o.drawImage(src,0,0);
+  out.toBlob(function(blob){
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob); a.download=name;
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },500);
+  });
+}
+
+[].forEach.call(document.querySelectorAll('.tab'),function(b){
+  b.onclick=function(){
+    [].forEach.call(document.querySelectorAll('.tab'),function(x){x.classList.remove('on');});
+    b.classList.add('on');
+    var which=b.getAttribute('data-tab');
+    document.getElementById('tab-build').style.display = which==='build'?'':'none';
+    document.getElementById('tab-viz').style.display   = which==='viz'?'':'none';
+    if(which==='viz') vUpdate(); else update();
+  };
+});
+
+initState(); renderList(); renderPanel(); vUpdate();
+
+</script>
+
+
+<script>
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  });
+  function toggleDrawer() {
+    const d = document.getElementById('nav-drawer');
+    const b = document.getElementById('nav-hamburger');
+    const open = d.classList.toggle('open');
+    b.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+  function closeDrawer() {
+    document.getElementById('nav-drawer').classList.remove('open');
+    document.getElementById('nav-hamburger').setAttribute('aria-label','Open menu');
+  }
+  document.addEventListener('click', function(e) {
+    const drawer = document.getElementById('nav-drawer');
+    const btn    = document.getElementById('nav-hamburger');
+    if (drawer && drawer.classList.contains('open') && !drawer.contains(e.target) && !btn.contains(e.target)) closeDrawer();
+  });
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('in'), i * 80);
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+</script>
+
+<!-- ── PRICE LOADER ── -->
+<script>
+(function() {
+  var fallback = {
+    "mips_range":       "$3,000 – $10,000",
+    "mips_range_sub":   "configured to order",
+    "rf_generator":     "$2,295",
+    "rf_generator_sub": "starting",
+    "rf_mega":          "$1,995",
+    "rf_mega_sub":      "+ options",
+    "mft":              "$995",
+    "slim_reverser":    "$395",
+    "fet_switch":       "$295",
+    "electrometer":     "Contact for pricing",
+    "dc50":             "$795",
+    "dc250":            "$1,295",
+    "dc750":            "$1,995",
+    "rfdrv":            "$695",
+    "rfhqh":            "$695",
+    "uprfhqh":          "$995",
+    "twaverf":          "$1,995",
+    "rf_quad_head":     "$1,995",
+    "twave":            "$1,595",
+    "arb":              "$1,595",
+    "psg":              "Contact us",
+    "faims_system":     "$8,995",
+    "faims_sub":        "system",
+    "quad_module":      "$1,295",
+    "esi_b":            "$1,395",
+    "esi_c":            "$1,595",
+    "filament":         "$695",
+    "dac":              "$695",
+    "adc":              "Contact us",
+    "dio_iso":          "$495",
+    "levdet":           "$295",
+    "ethernet":         "$95",
+    "wifi":             "$95",
+    "interlock":        "$295",
+    "heater":           "$795",
+    "consulting_rate":  "$140",
+    "consulting_sub":   "per hour",
+    "astraea":          "$1,995",
+    "astraea_100v":     "$1,999",
+    "quad_driver_250v": "$2,995",
+    "fticr_preamp":     "$995",
+    "ion_funnel":       "$995",
+    "kf_feedthrough":   "$35",
+    "kf_feedthrough_sub": "each"
+  };
+
+  function applyPrices(prices) {
+    var els = document.querySelectorAll('[data-price]');
+    console.log('GAACE prices: applying to', els.length, 'elements');
+    els.forEach(function(el) {
+      var key = el.getAttribute('data-price');
+      if (prices[key] !== undefined) {
+        el.textContent = prices[key];
+      }
+    });
+  }
+
+  function loadPrices() {
+    // Apply fallback first so prices always show
+    applyPrices(fallback);
+
+    // Then try to load prices.json and override
+    fetch('prices.json?v=' + Date.now())
+      .then(function(r) {
+        if (!r.ok) throw new Error('prices.json returned ' + r.status);
+        return r.json();
+      })
+      .then(function(data) {
+        console.log('GAACE prices: loaded prices.json successfully');
+        applyPrices(data);
+      })
+      .catch(function(err) {
+        console.log('GAACE prices: using fallback values -', err.message);
+      });
+  }
+
+  // Wait for DOM to be fully ready before applying prices
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadPrices);
+  } else {
+    loadPrices();
+  }
+})();
+</script>
+<!-- ── END PRICE LOADER ── -->
+
+</body>
+</html>

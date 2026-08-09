@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TBTBP7GLEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-TBTBP7GLEK');
+  </script>
+  <!-- End Google Analytics -->
+  <title>Published Research Using GAACE Electronics | GAA Custom Electronics</title>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="favicons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicons/favicon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="favicons/favicon-192x192.png" />
+  <meta name="description" content="Peer-reviewed mass spectrometry research published using GAA Custom Electronics hardware — MIPS controllers, FET pulsers, RF drivers and ion mobility electronics — with guidance on citing GAACE instruments in your methods section." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --red:      #CC1F1F;
+      --red-dk:   #A01515;
+      --red-pale: #FDF0F0;
+      --ink:      #1A1A1C;
+      --ink2:     #2E2E32;
+      --ink3:     #4A4A52;
+      --mid:      #7A7A84;
+      --rule:     #E4E4EA;
+      --rule2:    #EFEFF4;
+      --surface:  #F7F7FA;
+      --white:    #FFFFFF;
+      /* dark palette for hero / contact */
+      --d-bg:     #0E0E10;
+      --d-bg2:    #1A1A1D;
+      --d-bg3:    #252528;
+      --d-rule:   #2E2E33;
+      --d-mid:    #5A5A62;
+      --d-silver: #B8B8C0;
+      --mono:    'DM Mono', monospace;
+      --serif:   'Fraunces', serif;
+      --sans:    'DM Sans', sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--sans);background:var(--white);color:var(--ink);overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:1160px;margin:0 auto;padding:0 2rem}
+    .lbl{font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:.75rem}
+    .lbl-lt{color:rgba(204,31,31,.75)}
+    .h2{font-family:var(--serif);font-size:clamp(2rem,5vw,3rem);font-weight:600;line-height:1.1;color:var(--ink)}
+    .h2 em{font-style:italic;color:var(--red);font-weight:300}
+    .h2-lt{color:var(--white)}
+    .h2-lt em{color:var(--red)}
+
+    /* ── NAV — always light bg, transitions on scroll ── */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:200;
+      background:rgba(14,14,16,.96);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--d-rule);
+      transition:background .3s,border-color .3s;
+    }
+    nav.scrolled{
+      background:rgba(255,255,255,.97);
+      border-bottom:1px solid var(--rule);
+    }
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 1.5rem;max-width:1400px;margin:0 auto;gap:1rem}
+    .nav-logo{display:flex;align-items:center;gap:.6rem;flex-shrink:0;text-decoration:none}
+    .nav-logo img{width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0}
+    .nav-logo-words{display:flex;flex-direction:column;line-height:1.15}
+    .nav-logo-words strong{font-family:var(--serif);font-weight:600;font-size:.92rem;color:var(--white);letter-spacing:.01em;transition:color .3s;white-space:nowrap}
+    .nav-logo-words span{display:none}
+    nav.scrolled .nav-logo-words strong{color:var(--ink)}
+    .nav-links{display:flex;align-items:center;gap:0;list-style:none;flex-wrap:nowrap}
+    .nav-links a{font-size:.78rem;font-weight:500;color:rgba(255,255,255,.65);transition:color .2s;padding:.25rem .55rem;white-space:nowrap;border-radius:3px}
+    .nav-links a:hover{color:var(--white)}
+    nav.scrolled .nav-links a{color:var(--ink3)}
+    nav.scrolled .nav-links a:hover{color:var(--red)}
+    .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:.35rem 1rem!important;border-radius:3px;font-size:.78rem!important;white-space:nowrap}
+    .nav-cta:hover{background:var(--red-dk)!important;color:var(--white)!important}
+    nav.scrolled .nav-cta{color:var(--white)!important}
+    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;flex-shrink:0}
+    .hamburger span{display:block;width:22px;height:1.5px;background:rgba(255,255,255,.7);margin:5px 0;transition:.3s}
+    nav.scrolled .hamburger span{background:var(--ink3)}
+    @media(max-width:1100px){
+      .nav-links a{padding:.25rem .4rem;font-size:.74rem}
+    }
+    .nav-drawer{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(14,14,16,.98);border-bottom:1px solid rgba(255,255,255,.08);padding:1rem 1.5rem;z-index:199;flex-direction:column;gap:.25rem}
+    .nav-drawer.open{display:flex}
+    .nav-drawer a{font-size:.88rem;font-weight:500;color:rgba(255,255,255,.7);padding:.6rem 0;border-bottom:0.5px solid rgba(255,255,255,.06);display:block;text-decoration:none}
+    .nav-drawer a:last-child{border-bottom:none}
+    .nav-drawer a:hover{color:var(--white)}
+    .nav-drawer .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:.6rem 1rem!important;border-radius:3px;margin-top:.5rem;text-align:center;border-bottom:none}
+
+    /* ── HERO — dark ── */
+    #hero{
+      min-height:100vh;display:flex;align-items:center;
+      padding-top:64px;
+      background:var(--d-bg);
+      position:relative;overflow:hidden;
+    }
+    .hero-grid{
+      position:absolute;inset:0;
+      background-image:
+        linear-gradient(rgba(204,31,31,.05) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(204,31,31,.05) 1px,transparent 1px);
+      background-size:52px 52px;
+    }
+    .hero-glow{
+      position:absolute;width:700px;height:700px;
+      background:radial-gradient(circle,rgba(204,31,31,.12) 0%,transparent 68%);
+      top:-120px;right:-120px;pointer-events:none;
+    }
+    .hero-glow2{
+      position:absolute;width:400px;height:400px;
+      background:radial-gradient(circle,rgba(204,31,31,.07) 0%,transparent 70%);
+      bottom:-80px;left:10%;pointer-events:none;
+    }
+    .hero-content{
+      position:relative;z-index:2;
+      max-width:1160px;margin:0 auto;padding:5rem 2rem;
+      display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;
+    }
+    .hero-kicker{display:flex;align-items:center;gap:.65rem;margin-bottom:1.5rem}
+    .hero-kicker-line{width:28px;height:1px;background:var(--red)}
+    .hero-kicker span{font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--red)}
+    .hero-h1{
+      font-family:var(--serif);font-size:clamp(3rem,7vw,5.2rem);
+      font-weight:600;line-height:.98;color:var(--white);margin-bottom:1.5rem;
+    }
+    .hero-h1 em{font-style:italic;color:var(--red);font-weight:300}
+    .hero-sub{font-size:1rem;font-weight:300;color:var(--d-silver);line-height:1.75;margin-bottom:2.5rem;max-width:480px}
+    .hero-stats{display:flex;gap:2rem;padding:1.25rem 0;border-top:1px solid var(--d-rule);border-bottom:1px solid var(--d-rule);margin-bottom:2rem}
+    .stat-num{font-family:var(--serif);font-size:2.2rem;font-weight:600;color:var(--red);line-height:1}
+    .stat-lbl{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--d-mid);margin-top:.25rem}
+    .hero-btns{display:flex;gap:.75rem;flex-wrap:wrap}
+    .btn-p{display:inline-flex;align-items:center;gap:.4rem;background:var(--red);color:var(--white);font-weight:500;font-size:.9rem;padding:.8rem 1.6rem;border-radius:3px;transition:background .2s,transform .15s}
+    .btn-p:hover{background:var(--red-dk);transform:translateY(-1px)}
+    .btn-s{display:inline-flex;align-items:center;gap:.4rem;background:transparent;color:var(--d-silver);font-weight:500;font-size:.9rem;padding:.8rem 1.6rem;border-radius:3px;border:1px solid var(--d-rule);transition:border-color .2s,color .2s}
+    .btn-s:hover{border-color:var(--red);color:var(--white)}
+
+    /* hero right panel */
+    .hero-panel{background:var(--d-bg2);border:1px solid var(--d-rule);border-radius:8px;overflow:hidden}
+    .panel-bar{background:var(--d-bg3);border-bottom:1px solid var(--d-rule);padding:.75rem 1rem;display:flex;align-items:center;gap:.5rem}
+    .dot{width:10px;height:10px;border-radius:50%}
+    .dot-r{background:#FF5F56}.dot-y{background:#FFBD2E}.dot-g{background:#27C93F}
+    .panel-title-bar{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;color:var(--d-mid);text-transform:uppercase;margin-left:auto}
+    .panel-body{padding:1.5rem}
+    .panel-pname{font-family:var(--serif);font-size:1.7rem;font-weight:600;color:var(--white);margin-bottom:.15rem}
+    .panel-psub{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--d-mid);margin-bottom:1rem}
+    .panel-mods{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;margin-bottom:1rem}
+    .pmod{background:var(--d-bg);border:1px solid var(--d-rule);border-left:3px solid var(--red);border-radius:3px;padding:.6rem .75rem}
+    .pmod-n{font-family:var(--mono);font-size:.66rem;font-weight:500;color:var(--d-silver);letter-spacing:.05em}
+    .pmod-d{font-size:.7rem;color:var(--d-mid);margin-top:.1rem}
+    .panel-chips{display:flex;gap:.4rem;flex-wrap:wrap}
+    .chip{font-family:var(--mono);font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;background:var(--d-bg3);border:1px solid var(--d-rule);color:var(--d-mid);padding:.22rem .55rem;border-radius:2px}
+    .chip-r{background:rgba(204,31,31,.12);border-color:rgba(204,31,31,.25);color:rgba(204,31,31,.85)}
+    .panel-foot{border-top:1px solid var(--d-rule);padding:.75rem 1rem;display:flex;justify-content:space-between;align-items:center}
+    .panel-price{font-family:var(--serif);font-size:1.15rem;font-weight:600;color:var(--white)}
+    .panel-price small{font-size:.68rem;font-weight:300;color:var(--d-mid)}
+
+    /* ── TRANSITION WAVE ── */
+    .wave-divider{background:var(--d-bg);line-height:0;overflow:hidden}
+    .wave-divider svg{display:block;width:100%}
+
+    /* ── MARQUEE ── */
+    .marquee{background:var(--red);padding:.6rem 0;overflow:hidden;white-space:nowrap}
+    .marquee-inner{display:inline-flex;animation:mq 35s linear infinite}
+    .mq-item{font-family:var(--mono);font-size:.66rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.8);padding:0 2rem}
+    .mq-sep{color:rgba(255,255,255,.4)}
+    @keyframes mq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+    /* ── LIGHT BODY SECTIONS ── */
+    /* products */
+    #products{padding:6rem 0;background:var(--white)}
+    .sec-hd{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--rule)}
+    .sec-intro{font-size:.95rem;color:var(--mid);max-width:340px;line-height:1.7}
+
+    /* featured mips */
+    .mips-feat{display:grid;grid-template-columns:1fr 1.2fr;border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin-bottom:2rem;transition:border-color .2s;align-items:start;}
+    .mips-feat:hover{border-color:rgba(204,31,31,.3)}
+    .mips-vis{background:var(--ink);padding:0;display:flex;align-items:stretch;justify-content:flex-start;flex-direction:column;position:relative;overflow:hidden;}
+    .mips-vis::before{content:''}
+    /* photo slot in featured */
+    .mips-photo-slot{
+      width:100%;max-width:340px;position:relative;z-index:1;
+      background:var(--d-bg3);border:1px solid var(--d-rule);border-radius:4px;
+      overflow:hidden;aspect-ratio:4/3;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .mips-photo-slot img{width:100%;height:100%;object-fit:cover}
+    .photo-placeholder{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:.5rem;padding:2rem;text-align:center;
+    }
+    .photo-placeholder span{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;color:var(--d-mid);text-transform:uppercase}
+    .photo-placeholder svg{opacity:.2}
+
+    .mips-body{padding:2.5rem;display:flex;flex-direction:column;justify-content:center}
+    .mips-tag{display:inline-flex;font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);background:var(--red-pale);border:1px solid rgba(204,31,31,.15);padding:.22rem .6rem;border-radius:2px;margin-bottom:.75rem;width:fit-content}
+    .mips-name{font-family:var(--serif);font-size:2.4rem;font-weight:600;color:var(--ink);line-height:1;margin-bottom:.2rem}
+    .mips-subname{font-size:.8rem;color:var(--mid);margin-bottom:1rem}
+    .mips-desc{font-size:.92rem;color:var(--ink3);line-height:1.7;margin-bottom:1.25rem}
+    .mips-feats{list-style:none;margin-bottom:1.5rem}
+    .mips-feats li{font-size:.87rem;color:var(--ink3);padding:.4rem 0;border-bottom:1px solid var(--rule2);display:flex;gap:.6rem;align-items:flex-start}
+    .mips-feats li::before{content:'—';color:var(--red);flex-shrink:0}
+    .mips-foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+    .mips-pr{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--ink)}
+    .mips-pr small{font-size:.7rem;font-weight:300;color:var(--mid)}
+    .mips-cta{font-size:.85rem;font-weight:500;color:var(--red);display:inline-flex;align-items:center;gap:.4rem;transition:gap .2s}
+    .mips-cta:hover{gap:.7rem}
+
+    /* product grid */
+    .prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+    .prod-card{background:var(--white);padding:1.75rem;transition:background .2s;cursor:pointer}
+    .prod-card:hover{background:var(--surface)}
+    .prod-photo{width:100%;aspect-ratio:16/9;background:var(--surface);border-radius:4px;overflow:hidden;margin-bottom:1rem;display:flex;align-items:center;justify-content:center;border:1px solid var(--rule2)}
+    .prod-photo img{width:100%;height:100%;object-fit:cover}
+    .prod-badge{font-family:var(--mono);font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:.6rem}
+    .prod-badge span{background:var(--surface);border:1px solid var(--rule);padding:.18rem .5rem;border-radius:2px}
+    .prod-name{font-family:var(--serif);font-size:1.4rem;font-weight:600;color:var(--ink);margin-bottom:.15rem}
+    .prod-sub{font-size:.76rem;color:var(--mid);margin-bottom:.65rem}
+    .prod-desc{font-size:.84rem;color:var(--ink3);line-height:1.65;margin-bottom:.9rem}
+    .prod-specs{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.9rem}
+    .spec{font-family:var(--mono);font-size:.57rem;letter-spacing:.05em;color:var(--ink3);background:var(--surface);border:1px solid var(--rule);padding:.18rem .5rem;border-radius:2px}
+    .prod-price{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--red)}
+    .prod-price small{font-size:.68rem;font-weight:300;color:var(--mid)}
+
+    /* ── ARCHITECTURE — light bg ── */
+    #how-it-works{padding:6rem 0;background:var(--surface);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+    .arch-hd{text-align:center;margin-bottom:3.5rem}
+    .arch-hd .h2{margin-bottom:.75rem}
+    .arch-hd p{color:var(--mid);max-width:560px;margin:0 auto;font-size:.97rem;line-height:1.7}
+    .arch-wrap{background:var(--white);border:1px solid var(--rule);border-radius:8px;padding:2rem;margin-bottom:2rem;overflow-x:auto}
+    .arch-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin-top:2rem}
+    .arch-card{background:var(--white);padding:1.75rem}
+    .arch-card-bar{width:32px;height:2px;margin-bottom:1rem;border-radius:1px}
+    .arch-card-sub{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);margin-bottom:.4rem}
+    .arch-card-title{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:.5rem}
+    .arch-card p{font-size:.84rem;color:var(--ink3);line-height:1.65}
+    .photo-note{margin-top:1.5rem;padding:1rem 1.25rem;background:var(--red-pale);border:1px solid rgba(204,31,31,.15);border-radius:4px;display:flex;align-items:center;gap:.9rem;font-size:.82rem;color:var(--ink3);line-height:1.5}
+    .photo-note strong{color:var(--ink)}
+
+    /* ── CAPABILITIES — white ── */
+    #capabilities{padding:6rem 0;background:var(--white)}
+    .caps-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+    .caps-left .h2{margin-bottom:1.25rem}
+    .caps-left>p{color:var(--mid);font-size:.97rem;line-height:1.7;margin-bottom:2rem}
+    .steps{display:flex;flex-direction:column;gap:1.25rem}
+    .step{display:flex;gap:1.25rem;align-items:flex-start}
+    .step-n{font-family:var(--mono);font-size:.66rem;color:var(--red);background:var(--red-pale);border:1px solid rgba(204,31,31,.15);width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:3px;flex-shrink:0}
+    .step h4{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:.2rem}
+    .step p{font-size:.84rem;color:var(--mid);line-height:1.6}
+    .cap-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+    .cap-cell{background:var(--white);padding:1.5rem;transition:background .2s}
+    .cap-cell:hover{background:var(--surface)}
+    .cap-icon{font-size:1.2rem;margin-bottom:.55rem}
+    .cap-title{font-family:var(--serif);font-size:.97rem;font-weight:600;color:var(--ink);margin-bottom:.35rem}
+    .cap-desc{font-size:.8rem;color:var(--mid);line-height:1.55}
+
+    /* ── OFFER GRID (What We Offer) ── */
+    .offer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+    .offer-cell{background:var(--white);padding:1.75rem 1.5rem;transition:background .2s}
+    .offer-cell:hover{background:var(--surface)}
+
+    /* ── ABOUT — surface ── */
+    #about{padding:6rem 0;background:var(--surface);border-top:1px solid var(--rule)}
+    .about-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+    .about-left .h2{margin-bottom:1.25rem}
+    .about-left p{color:var(--mid);font-size:.97rem;line-height:1.7;margin-bottom:1rem}
+    .highlights{margin-top:1.5rem;display:flex;flex-direction:column;gap:.5rem}
+    .hi{display:flex;align-items:flex-start;gap:.6rem;font-size:.87rem;color:var(--ink3);padding:.5rem 0;border-bottom:1px solid var(--rule2)}
+    .hi::before{content:'✓';color:var(--red);flex-shrink:0;font-size:.8rem;margin-top:.1rem}
+    .team-lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);margin-bottom:1.25rem}
+    .team-list{display:flex;flex-direction:column;gap:.75rem}
+    .team-card{background:var(--white);border:1px solid var(--rule);border-radius:4px;padding:1.25rem;display:flex;gap:1rem;align-items:flex-start;transition:border-color .2s}
+    .team-card:hover{border-color:rgba(204,31,31,.3)}
+    .av{width:42px;height:42px;border-radius:3px;background:var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--white);flex-shrink:0}
+    .tc-name{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink)}
+    .tc-role{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin:.15rem 0 .4rem}
+    .tc-bio{font-size:.81rem;color:var(--mid);line-height:1.55}
+
+    /* ── DOWNLOADS — white ── */
+    #support{padding:6rem 0;background:var(--white);border-top:1px solid var(--rule)}
+    .sup-hd{text-align:center;margin-bottom:3.5rem}
+    .sup-hd .h2{margin-bottom:.75rem}
+    .sup-hd p{color:var(--mid);max-width:480px;margin:0 auto;font-size:.95rem}
+    .dl-sec{margin-bottom:2.5rem}
+    .dl-sec-title{font-family:var(--mono);font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid var(--rule)}
+    .dl-table{width:100%;border-collapse:collapse}
+    .dl-table tr{border-bottom:1px solid var(--rule2);transition:background .15s}
+    .dl-table tr:hover{background:var(--surface)}
+    .dl-table td{padding:.7rem .5rem;font-size:.87rem;color:var(--ink3);vertical-align:middle}
+    .dl-table td:first-child{font-weight:500;color:var(--ink)}
+    .dl-table td:nth-child(2){font-family:var(--mono);font-size:.7rem;color:var(--mid)}
+    .dl-link{display:inline-flex;align-items:center;gap:.3rem;font-family:var(--mono);font-size:.63rem;letter-spacing:.08em;text-transform:uppercase;color:var(--red);background:var(--red-pale);border:1px solid rgba(204,31,31,.15);padding:.22rem .55rem;border-radius:2px;transition:background .15s}
+    .dl-link:hover{background:rgba(204,31,31,.1)}
+    .warranty-bar{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--red);border-radius:4px;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1.25rem;margin-top:2.5rem}
+    .warranty-bar h4{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:.2rem}
+    .warranty-bar p{font-size:.84rem;color:var(--mid);line-height:1.55}
+
+    /* ── CONTACT — dark ── */
+    #contact{padding:6rem 0;background:var(--d-bg);border-top:1px solid var(--d-rule)}
+    .contact-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:5rem;align-items:start}
+    .c-head{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:600;color:var(--white);margin-bottom:1rem;line-height:1.1}
+    .c-head em{font-style:italic;color:var(--red);font-weight:300}
+    .c-sub{font-size:.97rem;color:rgba(255,255,255,.45);line-height:1.7;margin-bottom:2rem}
+    .c-items{display:flex;flex-direction:column;gap:1rem}
+    .ci{display:flex;gap:1rem;align-items:flex-start}
+    .ci-icon{width:34px;height:34px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+    .ci-lbl{font-family:var(--mono);font-size:.57rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.15rem}
+    .ci-val{font-size:.9rem;color:rgba(255,255,255,.7)}
+    .ci-val a{color:rgba(255,255,255,.7);transition:color .2s}
+    .ci-val a:hover{color:var(--red)}
+    .c-form{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:2rem}
+    .c-form-hd{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:1px solid rgba(255,255,255,.08)}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+    .fg{margin-bottom:.75rem}
+    .fg label{display:block;font-family:var(--mono);font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.35rem}
+    .fg input,.fg select,.fg textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:3px;padding:.65rem .9rem;font-family:var(--sans);font-size:.9rem;color:var(--white);transition:border-color .2s}
+    .fg input::placeholder,.fg textarea::placeholder{color:rgba(255,255,255,.2)}
+    .fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:rgba(204,31,31,.5)}
+    .fg select option{background:var(--d-bg2)}
+    .fg textarea{min-height:110px;resize:vertical}
+    .form-btn{width:100%;background:var(--red);color:var(--white);font-family:var(--sans);font-weight:500;font-size:.9rem;padding:.8rem;border:none;border-radius:3px;cursor:pointer;transition:background .2s;margin-top:.25rem}
+    .form-btn:hover{background:var(--red-dk)}
+    .form-note{font-size:.73rem;color:rgba(255,255,255,.22);text-align:center;margin-top:.6rem}
+
+    /* ── FOOTER — darkest ── */
+    footer{background:#0A0A0C;border-top:1px solid rgba(255,255,255,.06);padding:3rem 0 2rem}
+    .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:3rem;max-width:1160px;margin:0 auto;padding:0 2rem 2.5rem;border-bottom:1px solid rgba(255,255,255,.05)}
+    .footer-brand p{font-size:.82rem;color:rgba(255,255,255,.28);line-height:1.65;margin-top:.75rem;max-width:220px}
+    .footer-logo{display:flex;align-items:center;gap:.75rem}
+    .footer-logo img{width:30px;height:30px;border-radius:50%;object-fit:cover;opacity:.85}
+    .footer-logo-text{font-family:var(--serif);font-size:.95rem;font-weight:600;color:rgba(255,255,255,.6)}
+    .fcol-title{font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:1rem}
+    .fcol-links{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+    .fcol-links a{font-size:.84rem;color:rgba(255,255,255,.38);transition:color .2s}
+    .fcol-links a:hover{color:rgba(255,255,255,.75)}
+    .footer-btm{max-width:1160px;margin:0 auto;padding:1.5rem 2rem 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+    .footer-copy{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;color:rgba(255,255,255,.18)}
+
+    /* ── SCROLL ANIMATIONS ── */
+    .fade{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+    .fade.in{opacity:1;transform:translateY(0)}
+
+    /* ── MOBILE ── */
+    @media(max-width:900px){
+      .hero-content{grid-template-columns:1fr;gap:2.5rem}
+      .hero-panel{display:none}
+      .mips-feat{grid-template-columns:1fr}
+      .mips-vis{display:none}
+      .caps-layout,.about-layout,.contact-layout{grid-template-columns:1fr;gap:3rem}
+      .arch-cards{grid-template-columns:1fr}
+      .sec-hd{flex-direction:column;align-items:flex-start;gap:1rem}
+      .footer-grid{grid-template-columns:1fr 1fr}
+      .offer-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:860px){
+      .nav-links{display:none}
+      .hamburger{display:block}
+    }
+    @media(max-width:600px){
+      .cap-grid{grid-template-columns:1fr}
+      .offer-grid{grid-template-columns:1fr}
+      .footer-grid{grid-template-columns:1fr;gap:2rem}
+      .form-row{grid-template-columns:1fr}
+      .hero-stats{gap:1.25rem}
+      .prod-grid{grid-template-columns:1fr}
+    }
+  </style>
+
+  <!-- Open Graph — rich previews when shared on LinkedIn, Slack, etc. -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://www.GAAcustom.com/publications.html" />
+  <meta property="og:title"       content="Published Research Using GAACE Electronics" />
+  <meta property="og:description" content="Peer-reviewed work from university groups and national laboratories built on GAA Custom Electronics hardware." />
+  <meta property="og:image"       content="https://www.GAAcustom.com/images/og-preview.jpg" />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name"   content="GAA Custom Electronics" />
+  <meta property="og:locale"      content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Ion Optics Components — GAA Custom Electronics" />
+  <meta name="twitter:description" content="PCB-based ion funnels and KF vacuum feedthroughs for mass spectrometry instrument development." />
+  <meta name="twitter:image"       content="https://www.GAAcustom.com/images/og-preview.jpg" />
+
+  <!-- Additional SEO -->
+  <meta name="author"    content="GAA Custom Electronics, LLC" />
+  <meta name="keywords"  content="mass spectrometry electronics, MIPS controller, MIPS modular intelligent power supply, ion funnel electronics, RF generator mass spec, FAIMS electronics, SLIM traveling wave, ion mobility electronics, custom mass spec instruments, electrometer pico-ampere, FET high voltage pulser, ion trap controller, DC bias supply, ESI electronics, research instrument development, custom electronics university lab, national lab electronics, mass spectrometer control system, FTICR preamplifier, low-noise differential preamplifier, GAACE, GAA Custom Electronics" />
+  <link rel="canonical"  href="https://www.GAAcustom.com/publications.html" />
+  <link rel="sitemap" type="application/xml" href="sitemap.xml" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Structured Data (JSON-LD) — helps Google understand the business and display rich results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "GAA Custom Electronics, LLC",
+    "alternateName": "GAACE",
+    "url": "https://www.GAAcustom.com",
+    "logo": "https://www.GAAcustom.com/images/logo.jpeg",
+    "image": "https://www.GAAcustom.com/images/og-preview.jpg",
+    "description": "GAA Custom Electronics designs and manufactures custom electronics monitoring and control systems for mass spectrometry research. Products include MIPS controllers, RF generators, FAIMS, SLIM, ion funnel, and electrometer systems, deployed at universities, national laboratories, and instrument manufacturers worldwide.",
+    "telephone": "+1-509-628-6851",
+    "email": "Gordon@GAAcustom.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "101-904 Weiser Parkway",
+      "addressLocality": "Kennewick",
+      "addressRegion": "WA",
+      "postalCode": "99338",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 46.2112,
+      "longitude": -119.1372
+    },
+    "foundingDate": "2014",
+    "numberOfEmployees": {
+      "@type": "QuantitativeValue",
+      "value": 2
+    },
+    "sameAs": [
+      "https://github.com/GordonAnderson"
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Mass Spectrometry Electronics",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "MIPS — Modular Intelligent Power Supply",
+            "description": "Modular controller for mass spectrometry research instruments. Supports ion funnels, ion traps, traveling wave, FAIMS, and SLIM experiments via USB, Ethernet, or wireless."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "RF Generator",
+            "description": "Standalone RF driver for ion funnel, ion trap, and FAIMS applications in mass spectrometry research."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "FAIMS and SLIM Electronics",
+            "description": "Custom electronics for Field Asymmetric Ion Mobility Spectrometry and Structures for Lossless Ion Manipulation research systems."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Custom Electronics Design",
+            "description": "Custom circuit design and embedded software development for mass spectrometry and research instrument applications."
+          }
+        }
+      ]
+    }
+  }
+  </script>
+
+  <!-- Leaflet CSS for deployment map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+/* ── publications page ── */
+.pubs-h1{font-family:var(--serif);font-weight:600;font-size:2.4rem;letter-spacing:-.015em;line-height:1.15;margin:.4rem 0 .7rem}
+.pubs-h1 em{font-style:italic;font-weight:300}
+.pubs-sub{color:var(--ink3);max-width:62ch;font-size:1.03rem;line-height:1.65}
+.pubs-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:5px;overflow:hidden;margin-top:2.2rem}
+.pstat{background:var(--white);padding:1.1rem 1.2rem}
+.pstat strong{display:block;font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--red);line-height:1}
+.pstat span{display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-top:.35rem}
+
+.pub-sec{margin-bottom:3.5rem}
+.pub-sec-hd{border-bottom:1px solid var(--rule);padding-bottom:.9rem;margin-bottom:.5rem}
+.pub-h2{font-family:var(--serif);font-size:1.45rem;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.pub-sec-note{font-size:.88rem;color:var(--mid);margin-top:.4rem;max-width:70ch;line-height:1.6}
+.pub-sec-note a{color:var(--red);text-decoration:none;border-bottom:1px solid rgba(204,31,31,.3)}
+
+.pub{display:grid;grid-template-columns:64px 1fr;gap:1.1rem;padding:1.35rem 0;border-bottom:1px solid var(--rule2)}
+.pub:last-child{border-bottom:none}
+.pub-yr{font-family:var(--mono);font-size:.75rem;color:var(--mid);padding-top:.2rem;letter-spacing:.04em}
+.pub-title{display:block;font-family:var(--serif);font-size:1.02rem;font-weight:600;color:var(--ink);line-height:1.4;text-decoration:none;margin-bottom:.35rem}
+.pub-title:hover{color:var(--red)}
+.pub-auth{font-size:.83rem;color:var(--ink3);line-height:1.5}
+.pub-jrnl{font-size:.83rem;color:var(--mid);margin-top:.15rem}
+.pub-hw{font-size:.84rem;color:var(--ink2);background:var(--surface);border-left:3px solid var(--red);border-radius:0 4px 4px 0;padding:.6rem .85rem;margin-top:.6rem;line-height:1.55}
+.pub-links{margin-top:.55rem;display:flex;gap:1rem;flex-wrap:wrap}
+.pub-links a{font-family:var(--mono);font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;color:var(--red);text-decoration:none;border-bottom:1px solid rgba(204,31,31,.25)}
+.pub-links a:hover{border-bottom-color:var(--red)}
+
+.cite-box{border:1px solid var(--rule);border-radius:6px;padding:2rem 2.1rem;background:var(--white);margin-bottom:2.5rem}
+.cite-intro{font-size:.94rem;color:var(--ink3);line-height:1.65;max-width:68ch;margin-bottom:1.5rem}
+.cite-item{position:relative;margin-bottom:1.1rem}
+.cite-lab{font-family:var(--mono);font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-bottom:.35rem}
+.cite-code{font-family:var(--mono);font-size:.82rem;line-height:1.7;color:var(--ink2);background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:.75rem 5.5rem .75rem .9rem}
+.cite-copy{position:absolute;right:.6rem;bottom:.6rem;font-family:var(--mono);font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;background:var(--white);color:var(--ink3);border:1px solid var(--rule);border-radius:3px;padding:.28rem .6rem;cursor:pointer}
+.cite-copy:hover{color:var(--red);border-color:var(--red)}
+.cite-copy.done{color:#1E8A1E;border-color:#1E8A1E}
+.cite-note{font-size:.86rem;color:var(--ink3);line-height:1.65;border-top:1px solid var(--rule2);padding-top:1rem;margin-top:1.3rem}
+.cite-note a{color:var(--red);text-decoration:none;border-bottom:1px solid rgba(204,31,31,.3)}
+
+.pub-cta{display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:1.6rem 1.9rem}
+.pub-cta-h{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--ink)}
+.pub-cta-d{font-size:.87rem;color:var(--mid);margin-top:.3rem;max-width:60ch;line-height:1.6}
+.pub-cta-btn{flex-shrink:0;font-size:.87rem;font-weight:500;background:var(--red);color:#fff;text-decoration:none;padding:.65rem 1.3rem;border-radius:3px}
+.pub-cta-btn:hover{background:var(--red-dk)}
+
+@media(max-width:640px){
+  .pubs-h1{font-size:1.9rem}
+  .pub{grid-template-columns:1fr;gap:.3rem}
+  .pub-yr{padding-top:0}
+  .cite-box{padding:1.4rem 1.2rem}
+  .cite-code{padding-right:.9rem;padding-bottom:2.6rem}
+  .cite-copy{bottom:.5rem;right:.5rem}
+}
+
+  </style>
+</head>
+<body>
+
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="data:image/jpeg;base64,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" alt="GAA Custom Electronics logo" />
+      <div class="nav-logo-words">
+        <strong>GAA Custom Electronics</strong>
+        <span>Mass Spec Research Electronics</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#offer">What We Offer</a></li>
+      <li><a href="index.html#products">Products</a></li>
+      <li><a href="index.html#how-it-works">Software</a></li>
+      <li><a href="index.html#applications">Applications</a></li>
+      <li><a href="index.html#testimonials">Testimonials</a></li>
+      <li><a href="index.html#capabilities">Capabilities</a></li>
+      <li><a href="index.html#facility">Facility</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#support">Downloads</a></li>
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="ion-optics.html">Ion Optics</a></li>
+      <li><a href="index.html#contact" class="nav-cta">Request Quote</a></li>
+    </ul>
+    <button class="hamburger" id="nav-hamburger" aria-label="Open menu" onclick="toggleDrawer()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ── MOBILE NAV DRAWER ── -->
+<div class="nav-drawer" id="nav-drawer">
+  <a href="index.html#offer"        onclick="closeDrawer()">What We Offer</a>
+  <a href="index.html#products"     onclick="closeDrawer()">Products</a>
+  <a href="index.html#how-it-works" onclick="closeDrawer()">Software</a>
+  <a href="index.html#applications" onclick="closeDrawer()">Applications</a>
+  <a href="index.html#testimonials" onclick="closeDrawer()">Testimonials</a>
+  <a href="index.html#capabilities" onclick="closeDrawer()">Capabilities</a>
+  <a href="index.html#facility"     onclick="closeDrawer()">Facility</a>
+  <a href="index.html#about"        onclick="closeDrawer()">About</a>
+  <a href="index.html#support"      onclick="closeDrawer()">Downloads</a>
+  <a href="tools.html"    onclick="closeDrawer()" style="color:var(--red);font-weight:500">Tools</a>
+  <a href="ion-optics.html" onclick="closeDrawer()">Ion Optics</a>
+  <a href="index.html#contact" class="nav-cta" onclick="closeDrawer()">Request Quote</a>
+</div>
+
+<section class="pubs" style="padding:7rem 0 2rem;">
+  <div class="container" style="max-width:980px;">
+    <div class="lbl">Published Research</div>
+    <h1 class="pubs-h1">Work Published Using <em>GAACE Electronics</em></h1>
+    <p class="pubs-sub">Peer-reviewed research from university groups, national laboratories, and instrument developers whose instruments are built on or controlled by GAA Custom Electronics hardware.</p>
+
+    <div class="pubs-stats">
+      <div class="pstat"><strong id="ct-co">15</strong><span>co-authored papers</span></div>
+      <div class="pstat"><strong id="ct-ind">1</strong><span>independent papers</span></div>
+      <div class="pstat"><strong>2019&ndash;2026</strong><span>publication years</span></div>
+      <div class="pstat"><strong>200+</strong><span>systems deployed</span></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:1rem 0 4rem;">
+  <div class="container" style="max-width:980px;">
+
+    <!-- ── INDEPENDENT ────────────────────────────────────────────────── -->
+    <div class="pub-sec">
+      <div class="pub-sec-hd">
+        <h2 class="pub-h2">Research Using GAACE Hardware</h2>
+        <p class="pub-sec-note">Published by groups with no GAACE involvement, where our electronics appear in the instrument description or methods. This is the set we are least able to find on our own &mdash; if your paper belongs here, please <a href="index.html#contact">tell us</a>.</p>
+      </div>
+
+      <article class="pub">
+        <div class="pub-yr">2024</div>
+        <div class="pub-main">
+          <a class="pub-title" href="https://doi.org/10.1021/jasms.4c00057" target="_blank" rel="noopener">Development of a Modular, Open-Source, Reduced-Pressure, Drift Tube-Ion Mobility Spectrometer</a>
+          <div class="pub-auth">Buzitis NW, Clowers BH</div>
+          <div class="pub-jrnl"><em>Journal of the American Society for Mass Spectrometry</em> <b>35</b>(4), 804&ndash;813</div>
+          <div class="pub-hw">Three MIPS units supply all DC and RF power for the system. A GAACE FET pulser drives the tri-grid ion gate and a FET switcher gates ions into the planar ion shuttle.</div>
+          <div class="pub-links">
+            <a href="https://doi.org/10.1021/jasms.4c00057" target="_blank" rel="noopener">DOI</a>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/38512132/" target="_blank" rel="noopener">PubMed</a>
+            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11753826/" target="_blank" rel="noopener">Full text</a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- ── CO-AUTHORED ────────────────────────────────────────────────── -->
+    <div class="pub-sec">
+      <div class="pub-sec-hd">
+        <h2 class="pub-h2">Peer-Reviewed Work Co-Authored by GAACE</h2>
+        <p class="pub-sec-note">Instrument development projects where we contributed to the research itself, not only the electronics.</p>
+      </div>
+
+      <article class="pub">
+        <div class="pub-yr">2026</div>
+        <div class="pub-main">
+          <a class="pub-title" href="https://doi.org/10.1021/acs.analchem.6c01829" target="_blank" rel="noopener">Digital Revitalization of a Legacy Linear Ion Trap System</a>
+          <div class="pub-auth">Huntley AP, Reilly PTA, Anderson GA, Anderson CG, Clowers BH</div>
+          <div class="pub-jrnl"><em>Analytical Chemistry</em> <b>98</b>(28), 20945&ndash;20954</div>
+          <div class="pub-links">
+            <a href="https://doi.org/10.1021/acs.analchem.6c01829" target="_blank" rel="noopener">DOI</a>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/42417384/" target="_blank" rel="noopener">PubMed</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-yr">2026</div>
+        <div class="pub-main">
+          <a class="pub-title" href="https://doi.org/10.1021/acs.analchem.5c07730" target="_blank" rel="noopener">Optimized Low-Field Differential Ion Mobility Separations with High-Resolution Mass Spectrometry for Top-Down Proteomics</a>
+          <div class="pub-auth">Thurman HA, Pathak P, Gusachenko E, Anderson GA, Shvartsburg AA</div>
+          <div class="pub-jrnl"><em>Analytical Chemistry</em> <b>98</b>(12), 9174&ndash;9185</div>
+          <div class="pub-links">
+            <a href="https://doi.org/10.1021/acs.analchem.5c07730" target="_blank" rel="noopener">DOI</a>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/41838787/" target="_blank" rel="noopener">PubMed</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-yr">2025</div>
+        <div class="pub-main">
+          <a class="pub-title" href="https://doi.org/10.1021/jasms.5c00142" target="_blank" rel="noopener">Improving the Quadrupole to Ion Mobility Region in a Digital Quadrupole/Ion Mobility/Orbitrap Mass Spectrometer</a>
+          <div class="pub-auth">Schrader RL, Anderson GA, Evans KA, Russell DH</div>
+          <div class="pub-jrnl"><em>Journal of the American Society for Mass Spectrometry</em> <b>36</b>(11), 2389&ndash;2396</div>
+          <div class="pub-links">
+            <a href="https://doi.org/10.1021/jasms.5c00142" target="_blank" rel="noopener">DOI</a>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/41037334/" target="_blank" rel="noopener">PubMed</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-yr">2025</div>
+        <div class="pub-main">
+          <a class="pub-title" href="https://doi.org/10.1021/acs.analchem.5c00361" target="_blank" rel="noopener">OpenDMS: An Open-Source Approach to Differential Mobility Spectrometry</a>
+          <div class="pub-auth">Koch DT, Belous Y, Chew BS, Anderson G, Haun J, Gibson P, McCartney MM, Kenyon NJ, Davis CE</div>
+          <div class="pub-jrnl"><em>Analytical Chemistry</em> <b>97</b>(28), 14974&ndash;14982</div>
+          <div class="pub-links">
+            <a href="https://doi.org/10.1021/acs.analchem.5c00361" target="_blank" rel="noopener">DOI</a>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/40536044/" target="_blank" rel="noopener">PubMed</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-yr">2025</div>
+        <div class="pub-main">
+          <a class="pub-title" href="https://doi.org/10.1021/acs.analchem.4c06841" target="_blank" rel="noopener">Superior Differential Ion Mobility Spectrometry of Pendular Macromolecules Using Low-Frequency Rectangular Waveforms</a>
+          <div class="pub-auth">Thurman HA, Gusachenko E, Anderson GA, Shvartsburg AA</div>
+          <div class="pub-jrnl"><em>Analytical Chemistry</em> <b>97</b>(16), 8841&ndash;8851</div>
+          <div class="pub-links">
+            <a href="https://doi.org/10.1021/acs.analchem.4c06841" target="_blank" rel="noopener">DOI</a>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/40228027/" target="_blank" rel="noopener">PubMed</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-yr">2024</div>
+        <div class="pub-main">
+          <a class="pub-title" href="https://doi.org/10.1021/jasms.4c00110" target="_blank" rel="noopener">Experimental Evaluation of Higher Order Stability Zones Using a Digitally Operated Quadrupole Mass Filter</a>
+          <div class="pub-auth">Chakravorty S, Groetsema E, Obe FO, Huntley AP, Anderson GA, Clowers BH, Reilly PTA</div>
+          <div class="pub-jrnl"><em>Journal of the American Society for Mass Spectrometry</em> <b>35</b>(8), 1702&ndash;1712</div>
+          <div class="pub-links">
+            <a href="https://doi.org/10.1021/jasms.4c00110" target="_blank" rel="noopener">DOI</a>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/38995676/" target="_blank" rel="noopener">PubMed</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-yr">2024</div>
+        <div class="pub-main">
+          <a class="pub-title" href="https://doi.org/10.1021/jasms.4c00051" target="_blank" rel="noopener">Increasing Isolation Efficiency Using a Segmented Quadrupole Mass Filter Operated with Rectangular Waveforms</a>
+          <div class="pub-auth">Schrader RL, Anderson GA, Russell DH</div>
+          <div class="pub-jrnl"><em>Journal of the American Society for Mass Spectrometry</em> <b>35</b>(6), 1237&ndash;1244</div>
+          <div class="pub-links">
+            <a href="https://doi.org/10.1021/jasms.4c00051" target="_blank" rel="noopener">DOI</a>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/38687674/" target="_blank" rel="noopener">PubMed</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-yr">2024</div>
+        <div class="pub-main">
+          <a class="pub-title" href="https://doi.org/10.1021/acs.analchem.3c05594" target="_blank" rel="noopener">Cyclable Variable Path Length Multilevel Structures for Lossless Ion Manipulations (SLIM) Platform for Enhanced Ion Mobility Separations</a>
+          <div class="pub-auth">Huntley AP, Hollerbach AL, Norheim RV, Hamid AM, Anderson GA, Garimella SVB, Ibrahim YM</div>
+          <div class="pub-jrnl"><em>Analytical Chemistry</em></div>
+          <div class="pub-links">
+            <a href="https://doi.org/10.1021/acs.analchem.3c05594" target="_blank" rel="noopener">DOI</a>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/38336463/" target="_blank" rel="noopener">PubMed</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-yr">2023</div>
+        <div class="pub-main">
+          <a class="pub-title" href="https://doi.org/10.1021/acs.analchem.3c02405" target="_blank" rel="noopener">Top/Middle-Down Characterization of &alpha;-Synuclein Glycoforms</a>
+          <div class="pub-auth">Miller SA, Jeanne Dit Fouque K, Hard ER, Balana AT, Kaplan D, Voinov VG, Ridgeway ME, Park MA, Anderson GA, Pratt MR, Fernandez-Lima F</div>
+          <div class="pub-jrnl"><em>Analytical Chemistry</em> <b>95</b>(49), 18039&ndash;18045</div>
+          <div class="pub-links">
+            <a href="https://doi.org/10.1021/acs.analchem.3c02405" target="_blank" rel="noopener">DOI</a>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/38047498/" target="_blank" rel="noopener">PubMed</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-yr">2023</div>
+        <div class="pub-main">
+          <a class="pub-title" href="https://doi.org/10.1002/rcm.9610" target="_blank" rel="noopener">A planar quadrupole device for transmitting and trapping ions in high vacuum</a>
+          <div class="pub-auth">Park SG, Mohr JP, Anderson GA, Bruce JE</div>
+          <div class="pub-jrnl"><em>Rapid Communications in Mass Spectrometry</em> <b>37</b>(18), e9610</div>
+          <div class="pub-links">
+            <a href="https://doi.org/10.1002/rcm.9610" target="_blank" rel="noopener">DOI</a>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/37580843/" target="_blank" rel="noopener">PubMed</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-yr">2022</div>
+        <div class="pub-main">
+          <a class="pub-title" href="https://doi.org/10.1016/j.talanta.2022.123446" target="_blank" rel="noopener">Accelerating prototyping experiments for traveling wave structures for lossless ion manipulations</a>
+          <div class="pub-auth">Kinlein ZR, Anderson GA, Clowers BH</div>
+          <div class="pub-jrnl"><em>Talanta</em> <b>244</b>, 123446</div>
+          <div class="pub-links">
+            <a href="https://doi.org/10.1016/j.talanta.2022.123446" target="_blank" rel="noopener">DOI</a>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/35397327/" target="_blank" rel="noopener">PubMed</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-yr">2021</div>
+        <div class="pub-main">
+          <a class="pub-title" href="https://doi.org/10.1021/jasms.1c00245" target="_blank" rel="noopener">Implementing Digital-Waveform Technology for Extended m/z Range Operation on a Native Dual-Quadrupole FT-IM-Orbitrap Mass Spectrometer</a>
+          <div class="pub-auth">McCabe JW, Jones BJ, Walker TE, Schrader RL, Huntley AP, Lyu J, Hoffman NM, Anderson GA, Reilly PTA, Laganowsky A, Wysocki VH, Russell DH</div>
+          <div class="pub-jrnl"><em>Journal of the American Society for Mass Spectrometry</em> <b>32</b>(12), 2812&ndash;2820</div>
+          <div class="pub-links">
+            <a href="https://doi.org/10.1021/jasms.1c00245" target="_blank" rel="noopener">DOI</a>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/34797072/" target="_blank" rel="noopener">PubMed</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-yr">2021</div>
+        <div class="pub-main">
+          <a class="pub-title" href="https://doi.org/10.1021/acs.analchem.1c03009" target="_blank" rel="noopener">Design and Performance of a Soft-Landing Instrument for Fragment Ion Deposition</a>
+          <div class="pub-auth">Samayoa-Oviedo HY, Behrend KA, Kawa S, Knorke H, Su P, Belov ME, Anderson G, Warneke J, Laskin J</div>
+          <div class="pub-jrnl"><em>Analytical Chemistry</em> <b>93</b>(43), 14489&ndash;14496</div>
+          <div class="pub-links">
+            <a href="https://doi.org/10.1021/acs.analchem.1c03009" target="_blank" rel="noopener">DOI</a>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/34672519/" target="_blank" rel="noopener">PubMed</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-yr">2019</div>
+        <div class="pub-main">
+          <a class="pub-title" href="https://doi.org/10.1021/acs.analchem.9b01309" target="_blank" rel="noopener">High-Resolution Differential Ion Mobility Separations/Orbitrap Mass Spectrometry without Buffer Gas Limitations</a>
+          <div class="pub-auth">Baird MA, Shliaha PV, Anderson GA, Moskovets E, Laiko V, Makarov AA, Jensen ON, Shvartsburg AA</div>
+          <div class="pub-jrnl"><em>Analytical Chemistry</em> <b>91</b>(10), 6918&ndash;6925</div>
+          <div class="pub-links">
+            <a href="https://doi.org/10.1021/acs.analchem.9b01309" target="_blank" rel="noopener">DOI</a>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/31034203/" target="_blank" rel="noopener">PubMed</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-yr">2019</div>
+        <div class="pub-main">
+          <a class="pub-title" href="https://doi.org/10.1021/acs.analchem.8b04518" target="_blank" rel="noopener">Differential Ion Mobility Separations/Mass Spectrometry with High Resolution in Both Dimensions</a>
+          <div class="pub-auth">Baird MA, Anderson GA, Shliaha PV, Jensen ON, Shvartsburg AA</div>
+          <div class="pub-jrnl"><em>Analytical Chemistry</em> <b>91</b>(2), 1479&ndash;1485</div>
+          <div class="pub-links">
+            <a href="https://doi.org/10.1021/acs.analchem.8b04518" target="_blank" rel="noopener">DOI</a>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/30543404/" target="_blank" rel="noopener">PubMed</a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- ── HOW TO CITE ────────────────────────────────────────────────── -->
+    <div class="cite-box">
+      <div class="lbl" style="margin-bottom:.8rem;">How to Reference</div>
+      <h2 class="pub-h2" style="margin-bottom:.6rem;">Citing GAACE Hardware in Your Methods</h2>
+      <p class="cite-intro">We don't ask anyone to cite us. But naming the electronics in your instrument description helps other groups reproduce your work &mdash; and it's how we find out what our hardware is being used for. If it's useful, here is the wording.</p>
+
+      <div class="cite-item">
+        <div class="cite-lab">Standard vendor form</div>
+        <div class="cite-code" id="c1">GAA Custom Electronics, LLC, Kennewick, WA, USA</div>
+        <button class="cite-copy" data-t="c1">Copy</button>
+      </div>
+
+      <div class="cite-item">
+        <div class="cite-lab">A MIPS controller in an instrument description</div>
+        <div class="cite-code" id="c2">All DC and RF potentials were supplied by Modular Intelligent Power Sources (MIPS) controllers (GAA Custom Electronics, LLC, Kennewick, WA).</div>
+        <button class="cite-copy" data-t="c2">Copy</button>
+      </div>
+
+      <div class="cite-item">
+        <div class="cite-lab">A standalone instrument or module</div>
+        <div class="cite-code" id="c3">Ion gating was performed with a FET pulser (GAA Custom Electronics, LLC, Kennewick, WA).</div>
+        <button class="cite-copy" data-t="c3">Copy</button>
+      </div>
+
+      <div class="cite-note">
+        <b>Two things worth getting right.</b> The company name is GAA Custom <em>Electronics</em> &mdash; "GAA Custom Engineering" appears in some published papers and refers to the same company under a former name. And MIPS stands for Modular Intelligent Power Sources; spelling it out on first use avoids confusion with the processor architecture of the same name, which also makes your paper findable by other groups searching for the platform.
+      </div>
+
+      <div class="cite-note">
+        <b>Design files.</b> Firmware, host application source, and an increasing number of hardware design packages are published on <a href="https://github.com/GordonAnderson" target="_blank" rel="noopener">GitHub</a> under open licences. If you need a schematic or board file that isn't posted yet, <a href="index.html#contact">ask us</a> &mdash; we share technical data with researchers using our hardware and we don't require an NDA. See our <a href="open-source.html">open source practice</a> for the licence details.
+      </div>
+    </div>
+
+    <div class="pub-cta">
+      <div>
+        <div class="pub-cta-h">Published work we've missed?</div>
+        <div class="pub-cta-d">This list is compiled by hand and is certainly incomplete &mdash; papers that mention our hardware only in a methods section are difficult to find. Send us a DOI and we'll add it.</div>
+      </div>
+      <a href="index.html#contact" class="pub-cta-btn">Send us a paper &rarr;</a>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <img src="data:image/jpeg;base64,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" alt="GAA Custom Electronics logo" />
+        <div class="footer-logo-text">GAA Custom Electronics</div>
+      </div>
+      <p>Supporting mass spectrometry research through custom electronics monitoring and control systems. Kennewick, WA — Est. 2014.</p>
+    </div>
+    <div>
+      <div class="fcol-title">Products</div>
+      <ul class="fcol-links">
+        <li><a href="index.html#products">MIPS System</a></li>
+        <li><a href="index.html#products">RF Generator</a></li>
+        <li><a href="index.html#products">RF Mega</a></li>
+        <li><a href="index.html#products">MFT Twave</a></li>
+        <li><a href="index.html#products">SLIM Reverser</a></li>
+        <li><a href="index.html#products">Electrometer</a></li>
+        <li><a href="index.html#products">FET Switch</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fcol-title">Company</div>
+      <ul class="fcol-links">
+        <li><a href="index.html#about">About Us</a></li>
+        <li><a href="index.html#capabilities">Capabilities</a></li>
+        <li><a href="index.html#facility">Our Facility</a></li>
+        <li><a href="index.html#how-it-works">Software</a></li>
+        <li><a href="index.html#applications">Applications</a></li>
+        <li><a href="index.html#support">Downloads</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fcol-title">Resources</div>
+      <ul class="fcol-links">
+        <li><a href="index.html#support">Operations Manuals</a></li>
+        <li><a href="https://github.com/GordonAnderson" target="_blank">GitHub Repository</a></li>
+        <li><a href="index.html#support">Rate Sheet</a></li>
+        <li><a href="index.html#support">Warranty Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-btm">
+    <div class="footer-copy">&copy; 2025 GAA Custom Electronics, LLC &middot; Kennewick, WA &middot; All Rights Reserved</div>
+    <div class="footer-copy">GAAcustom.com &middot; gaa@gaa-ce.com &middot; 509.628.6851</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  document.querySelectorAll('.cite-copy').forEach(function(b){
+    b.addEventListener('click', function(){
+      var el = document.getElementById(b.getAttribute('data-t'));
+      if(!el) return;
+      navigator.clipboard.writeText(el.textContent.trim()).then(function(){
+        b.textContent='Copied'; b.classList.add('done');
+        setTimeout(function(){ b.textContent='Copy'; b.classList.remove('done'); },1600);
+      });
+    });
+  });
+  // keep the headline counts honest: derive them from the list itself
+  var secs = document.querySelectorAll('.pub-sec');
+  if(secs.length===2){
+    var ind = secs[0].querySelectorAll('.pub').length;
+    var co  = secs[1].querySelectorAll('.pub').length;
+    var a=document.getElementById('ct-ind'), b2=document.getElementById('ct-co');
+    if(a) a.textContent=ind;
+    if(b2) b2.textContent=co;
+  }
+})();
+</script>
+
+
+
+<script>
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  });
+  function toggleDrawer() {
+    const d = document.getElementById('nav-drawer');
+    const b = document.getElementById('nav-hamburger');
+    const open = d.classList.toggle('open');
+    b.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+  function closeDrawer() {
+    document.getElementById('nav-drawer').classList.remove('open');
+    document.getElementById('nav-hamburger').setAttribute('aria-label','Open menu');
+  }
+  document.addEventListener('click', function(e) {
+    const drawer = document.getElementById('nav-drawer');
+    const btn    = document.getElementById('nav-hamburger');
+    if (drawer && drawer.classList.contains('open') && !drawer.contains(e.target) && !btn.contains(e.target)) closeDrawer();
+  });
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('in'), i * 80);
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+</script>
+
+<!-- ── PRICE LOADER ── -->
+<script>
+(function() {
+  var fallback = {
+    "mips_range":       "$3,000 – $10,000",
+    "mips_range_sub":   "configured to order",
+    "rf_generator":     "$2,295",
+    "rf_generator_sub": "starting",
+    "rf_mega":          "$1,995",
+    "rf_mega_sub":      "+ options",
+    "mft":              "$995",
+    "slim_reverser":    "$395",
+    "fet_switch":       "$295",
+    "electrometer":     "Contact for pricing",
+    "dc50":             "$795",
+    "dc250":            "$1,295",
+    "dc750":            "$1,995",
+    "rfdrv":            "$695",
+    "rfhqh":            "$695",
+    "uprfhqh":          "$995",
+    "twaverf":          "$1,995",
+    "rf_quad_head":     "$1,995",
+    "twave":            "$1,595",
+    "arb":              "$1,595",
+    "psg":              "Contact us",
+    "faims_system":     "$8,995",
+    "faims_sub":        "system",
+    "quad_module":      "$1,295",
+    "esi_b":            "$1,395",
+    "esi_c":            "$1,595",
+    "filament":         "$695",
+    "dac":              "$695",
+    "adc":              "Contact us",
+    "dio_iso":          "$495",
+    "levdet":           "$295",
+    "ethernet":         "$95",
+    "wifi":             "$95",
+    "interlock":        "$295",
+    "heater":           "$795",
+    "consulting_rate":  "$140",
+    "consulting_sub":   "per hour",
+    "astraea":          "$1,995",
+    "astraea_100v":     "$1,999",
+    "quad_driver_250v": "$2,995",
+    "fticr_preamp":     "$995",
+    "ion_funnel":       "$995",
+    "kf_feedthrough":   "$35",
+    "kf_feedthrough_sub": "each"
+  };
+
+  function applyPrices(prices) {
+    var els = document.querySelectorAll('[data-price]');
+    console.log('GAACE prices: applying to', els.length, 'elements');
+    els.forEach(function(el) {
+      var key = el.getAttribute('data-price');
+      if (prices[key] !== undefined) {
+        el.textContent = prices[key];
+      }
+    });
+  }
+
+  function loadPrices() {
+    // Apply fallback first so prices always show
+    applyPrices(fallback);
+
+    // Then try to load prices.json and override
+    fetch('prices.json?v=' + Date.now())
+      .then(function(r) {
+        if (!r.ok) throw new Error('prices.json returned ' + r.status);
+        return r.json();
+      })
+      .then(function(data) {
+        console.log('GAACE prices: loaded prices.json successfully');
+        applyPrices(data);
+      })
+      .catch(function(err) {
+        console.log('GAACE prices: using fallback values -', err.message);
+      });
+  }
+
+  // Wait for DOM to be fully ready before applying prices
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadPrices);
+  } else {
+    loadPrices();
+  }
+})();
+</script>
+<!-- ── END PRICE LOADER ── -->
+
+</body>
+</html>

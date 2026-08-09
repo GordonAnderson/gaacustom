@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
@@ -7,155 +6,95 @@
 
   <!--
     GAA Custom Electronics, LLC — sitemap.xml
-    Submit to Google Search Console at:
-    https://search.google.com/search-console
 
-    After uploading, go to:
-    Search Console → Sitemaps → Add sitemap URL:
-    https://www.gaacustom.com/sitemap.xml
+    Submit once at: Search Console → Sitemaps → https://www.gaacustom.com/sitemap.xml
+    Google re-reads it automatically after that; no need to resubmit on edits.
 
-    Update <lastmod> dates whenever a page is significantly changed.
-    Priority scale: 1.0 = most important, 0.1 = least important.
-    Changefreq hint to Google: always/hourly/daily/weekly/monthly/yearly/never
+    NOTES ON MAINTENANCE
+    - List real pages only. Fragment URLs (/#products, /tools.html#quad-calc)
+      are the same page to a crawler and add nothing.
+    - <lastmod> is only useful if it is accurate. Update it when a page's
+      content actually changes; do not touch it for cosmetic edits. Entries
+      whose real date is unknown omit it, which is valid and better than a
+      guess Google will learn to distrust.
+    - <priority> is a hint about relative importance within this site only.
+      It has no effect on ranking against other sites.
+    - Add a new <url> block whenever a page is added.
   -->
 
   <!-- ── HOMEPAGE ─────────────────────────────────────────────────────── -->
   <url>
     <loc>https://www.gaacustom.com/</loc>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- ── TOOLS & CALCULATORS PAGE ─────────────────────────────────────── -->
+  <!-- ── TOOLS & CALCULATORS ──────────────────────────────────────────── -->
   <url>
     <loc>https://www.gaacustom.com/tools.html</loc>
-    <lastmod>2025-05-29</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!--
-    The sections below are anchor links within index.html.
-    Including them helps Google understand the depth of content
-    on each page and may generate sitelinks in search results.
-  -->
-
-  <!-- ── PRODUCTS SECTION ─────────────────────────────────────────────── -->
+  <!-- ── PULSE SEQUENCE BUILDER & VISUALIZER ──────────────────────────── -->
   <url>
-    <loc>https://www.gaacustom.com/#products</loc>
-    <lastmod>2025-05-01</lastmod>
+    <loc>https://www.gaacustom.com/pulse-sequences.html</loc>
+    <lastmod>2026-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- ── ION OPTICS COMPONENTS ────────────────────────────────────────── -->
+  <url>
+    <loc>https://www.gaacustom.com/ion-optics.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- ── SOFTWARE / MIPS SECTION ──────────────────────────────────────── -->
+  <!-- ── RESEARCH PROGRAMS ────────────────────────────────────────────── -->
   <url>
-    <loc>https://www.gaacustom.com/#how-it-works</loc>
-    <lastmod>2025-05-01</lastmod>
+    <loc>https://www.gaacustom.com/research.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
-  <!-- ── APPLICATIONS SECTION ─────────────────────────────────────────── -->
+  <!-- ── OPEN SOURCE PRACTICE ─────────────────────────────────────────── -->
   <url>
-    <loc>https://www.gaacustom.com/#applications</loc>
-    <lastmod>2025-05-01</lastmod>
+    <loc>https://www.gaacustom.com/open-source.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-
-  <!-- ── CAPABILITIES SECTION ─────────────────────────────────────────── -->
-  <url>
-    <loc>https://www.gaacustom.com/#capabilities</loc>
-    <lastmod>2025-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- ── FACILITY SECTION ─────────────────────────────────────────────── -->
-  <url>
-    <loc>https://www.gaacustom.com/#facility</loc>
-    <lastmod>2025-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <!-- ── ABOUT SECTION ────────────────────────────────────────────────── -->
-  <url>
-    <loc>https://www.gaacustom.com/#about</loc>
-    <lastmod>2025-05-01</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <!-- ── TESTIMONIALS SECTION ─────────────────────────────────────────── -->
-  <url>
-    <loc>https://www.gaacustom.com/#testimonials</loc>
-    <lastmod>2025-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <!-- ── DOWNLOADS / SUPPORT SECTION ─────────────────────────────────── -->
-  <url>
-    <loc>https://www.gaacustom.com/#support</loc>
-    <lastmod>2025-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <!-- ── CONTACT SECTION ──────────────────────────────────────────────── -->
-  <url>
-    <loc>https://www.gaacustom.com/#contact</loc>
-    <lastmod>2025-05-01</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
   </url>
 
   <!--
-    INDIVIDUAL TOOL ANCHORS — helps Google index each calculator
-    separately and potentially show them as sitelinks or rich results.
+    ── APPLICATION NOTES (PDF) ───────────────────────────────────────────
+    Google indexes PDFs and ranks them for long-tail technical queries.
+    These are listed because they are content people search for, not just
+    reference material for existing customers. Manuals are deliberately
+    left out to keep this focused.
   -->
-
-  <!-- ── QUADRUPOLE CALCULATOR ────────────────────────────────────────── -->
   <url>
-    <loc>https://www.gaacustom.com/tools.html#quad-calc</loc>
-    <lastmod>2025-05-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.gaacustom.com/docs/appnotes/Pulse_Sequence_Examples.pdf</loc>
+    <lastmod>2026-08-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
   </url>
-
-  <!-- ── RF RESONANT CIRCUIT CALCULATOR ──────────────────────────────── -->
   <url>
-    <loc>https://www.gaacustom.com/tools.html#rf-circuit</loc>
-    <lastmod>2025-05-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.gaacustom.com/docs/appnotes/Specifying_Waveforms.pdf</loc>
+    <lastmod>2026-08-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
   </url>
-
-  <!-- ── ION KINETIC ENERGY CALCULATOR ───────────────────────────────── -->
   <url>
-    <loc>https://www.gaacustom.com/tools.html#ion-ke</loc>
-    <lastmod>2025-05-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.gaacustom.com/docs/software/Pulse_Sequence_Generation.pdf</loc>
+    <lastmod>2026-08-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
   </url>
-
-  <!-- ── CAPACITIVE LOAD POWER CALCULATOR ────────────────────────────── -->
   <url>
-    <loc>https://www.gaacustom.com/tools.html#cap-power</loc>
-    <lastmod>2025-05-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- ── USEFUL LINKS SECTION ─────────────────────────────────────────── -->
-  <url>
-    <loc>https://www.gaacustom.com/tools.html#useful-links</loc>
-    <lastmod>2025-05-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://www.gaacustom.com/docs/appnotes/ESI_Spray_Emitters.pdf</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
   </url>
 
 </urlset>

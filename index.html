@@ -2120,7 +2120,7 @@
     <div style="display:flex;flex-direction:column;gap:.5rem;" class="fade">
 
       <!-- MIPS SYSTEM -->
-      <div class="dl-cat">
+      <div class="dl-cat" id="mips">
         <button onclick="toggleDL(this)" class="dl-cat-btn">
           <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;">
             <span class="dl-badge" style="background:var(--red);">MIPS</span>
@@ -2150,7 +2150,7 @@
       </div>
 
       <!-- MIPS SOFTWARE -->
-      <div class="dl-cat">
+      <div class="dl-cat" id="software">
         <button onclick="toggleDL(this)" class="dl-cat-btn">
           <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;">
             <span class="dl-badge" style="background:#0F6E56;">SW</span>
@@ -2169,7 +2169,7 @@
       </div>
 
       <!-- STANDALONE INSTRUMENTS -->
-      <div class="dl-cat">
+      <div class="dl-cat" id="instruments">
         <button onclick="toggleDL(this)" class="dl-cat-btn">
           <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;">
             <span class="dl-badge" style="background:#BA7517;">INST</span>
@@ -2197,25 +2197,28 @@
       </div>
 
       <!-- APPLICATION NOTES -->
-      <div class="dl-cat">
-        <button onclick="toggleDL(this)" class="dl-cat-btn">
+      <div class="dl-cat" id="appnotes">
+        <button onclick="toggleDL(this)" class="dl-cat-btn" style="background:var(--white);border-bottom-left-radius:0;border-bottom-right-radius:0;">
           <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;">
             <span class="dl-badge" style="background:#2A9D5C;">APP</span>
             <span class="dl-cat-title">Application Notes</span>
             <span class="dl-cat-sub">Guides, design files, and resources for common applications</span>
           </div>
-          <span class="dl-arrow">&#9660;</span>
+          <span class="dl-arrow" style="transform:rotate(180deg);">&#9660;</span>
         </button>
-        <div class="dl-cat-body" style="display:none;">
+        <div class="dl-cat-body" style="display:block;">
           <a href="docs/appnotes/ESI_Spray_Emitters.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">ESI Spray Emitters</div><div class="dl-desc">Details on ESI spray emitter selection, geometry, and practical setup for electrospray ionization sources used with GAACE systems</div></div><div class="dl-btn">PDF &#8595;</div></a>
           <a href="docs/appnotes/ESI_Emitter_3D_Models.zip" class="dl-row" download><div class="dl-icon">&#128230;</div><div class="dl-info"><div class="dl-name">ESI Emitter — 3D Models &amp; Print Files</div><div class="dl-desc">3D CAD models and 3D printer-ready files for ESI spray emitter hardware</div></div><div class="dl-btn">ZIP &#8595;</div></a>
           <a href="docs/appnotes/Pulse_Sequence_Examples.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">Pulse Sequence Generation — Worked Examples</div><div class="dl-desc">Nine complete, copy-and-paste MIPS pulse sequences building from a single digital pulse to multi-segment voltage ramps, with a troubleshooting guide and quick reference</div></div><div class="dl-btn">PDF &#8595;</div></a>
           <a href="docs/appnotes/Specifying_Waveforms.pdf" class="dl-row" download><div class="dl-icon">&#128196;</div><div class="dl-info"><div class="dl-name">From Sentence to Signal — Specifying Waveforms</div><div class="dl-desc">A checklist and fill-in template for pinning down a waveform before writing a pulse sequence — how to describe timing unambiguously to a colleague, to us, or to an AI assistant</div></div><div class="dl-btn">PDF &#8595;</div></a>
+          <div style="padding:.85rem 1.1rem;background:var(--surface);border-top:1px solid var(--rule2);font-size:.84rem;color:var(--ink3);line-height:1.6;">
+            The two pulse sequence notes above are companions to the <b>Pulse Sequence Generation</b> reference manual, filed under <a href="#software" onclick="openDL('software')" style="color:var(--red);text-decoration:none;border-bottom:1px solid rgba(204,31,31,.3);">MIPS Host Software</a>. You can also build and visualize sequences in the browser with the <a href="pulse-sequences.html" style="color:var(--red);text-decoration:none;border-bottom:1px solid rgba(204,31,31,.3);">pulse sequence tool</a>.
+          </div>
         </div>
       </div>
 
       <!-- TECHNICAL & BUSINESS -->
-      <div class="dl-cat">
+      <div class="dl-cat" id="business">
         <button onclick="toggleDL(this)" class="dl-cat-btn">
           <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;">
             <span class="dl-badge" style="background:#378ADD;">BIZ</span>
@@ -2249,6 +2252,33 @@
       btn.style.borderBottomLeftRadius = isOpen ? '4px' : '0';
       btn.style.borderBottomRightRadius = isOpen ? '4px' : '0';
     }
+
+    /* Open a download category by id and scroll to it. Used by the deep links
+       (#appnotes, #software, ...) so a link from elsewhere lands on an open
+       category rather than a row of closed bars. */
+    function openDL(id, scroll) {
+      var cat = document.getElementById(id);
+      if (!cat || !cat.classList.contains('dl-cat')) return false;
+      var btn  = cat.querySelector('.dl-cat-btn');
+      var body = cat.querySelector('.dl-cat-body');
+      if (!btn || !body) return false;
+      if (body.style.display !== 'block') toggleDL(btn);
+      if (scroll) setTimeout(function(){
+        cat.scrollIntoView({behavior:'smooth', block:'center'});
+      }, 60);
+      return true;
+    }
+
+    (function(){
+      function fromHash(){
+        var h = (location.hash || '').replace('#','');
+        if (h) openDL(h, true);
+      }
+      window.addEventListener('hashchange', fromHash);
+      if (document.readyState === 'loading')
+        document.addEventListener('DOMContentLoaded', fromHash);
+      else fromHash();
+    })();
     </script>
 
     <style>
